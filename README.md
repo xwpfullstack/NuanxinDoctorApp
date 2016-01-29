@@ -7,3 +7,5 @@
 4.组件中的方法,要添加注释,包括(param,return),具体格式参考index.android.js文件中的注释;
 
 5.和后台交互的URL在statics/js/UrlConfig.js文件中;
+
+6.有问题及时交流;
