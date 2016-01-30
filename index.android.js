@@ -19,7 +19,7 @@ import Srorage from 'react-native-storage';
 import SplashScreen from './statics/js/SplashScreen';
 import DoctorMainScreen from './statics/js/DoctorMainScreen';
 import DoctorLogIn from './statics/js/DoctorLogIn';
-
+import Index from './statics/js/Index';
 var _navigator;
 //监听硬件返回功能
 BackAndroid.addEventListener('hardwareBackPress', ()=>{
@@ -69,7 +69,7 @@ class NuanXinDoctorApp extends Component {
       )
     }else if(route.name === 'doctorHomePage') {
       return (
-        <DoctorMainScreen navigator={navigator}/>
+        <Index navigator={navigator}/>
       )
     }/*else if(route.name === 'patientInfo') {
       return (
