@@ -15,10 +15,11 @@ import React, {
 } from 'react-native';
 
 import TimerMixin from 'react-timer-mixin';
-import Srorage from 'react-native-storage';
-import SplashScreen from './statics/js/SplashScreen';
-import DoctorMainScreen from './statics/js/DoctorMainScreen';
-import DoctorLogIn from './statics/js/DoctorLogIn';
+import Srorage from './statics/js/public/Storage';
+import SplashScreen from './statics/js/login/SplashScreen';
+import DoctorMainScreen from './statics/js/public/DoctorMainScreen';
+import DoctorLogIn from './statics/js/login/DoctorLogIn';
+import ModifyPwd from './statics/js/login/DoctorModifyPwd';
 
 var _navigator;
 //监听硬件返回功能
@@ -35,6 +36,7 @@ class NuanXinDoctorApp extends Component {
     super(props);
     this.state={
       pageLoading: false,
+      routeInfo: {},
     }
   }
 
@@ -42,10 +44,11 @@ class NuanXinDoctorApp extends Component {
   componentDidMount() {
     this.timer=setTimeout(
       ()=>{
-        this.setState({pageLoading: true})
+        this.setState({pageLoading: true});
       },
-      2000,
+      1000,
     );
+    this.InitialRouteName();
   }
 
   //清空定时器
@@ -55,7 +58,7 @@ class NuanXinDoctorApp extends Component {
   
   /****************************
    * param: route导航器路由信息，
-   *        navigator导航器对象，用来切换页面
+   * navigator导航器对象，用来切换页面
    * return: 渲染页面
    * logIn: 登陆页面
    * doctorHomePage: app主页
@@ -69,7 +72,11 @@ class NuanXinDoctorApp extends Component {
       )
     }else if(route.name === 'doctorHomePage') {
       return (
-        <DoctorMainScreen navigator={navigator}/>
+        <DoctorMainScreen navigator={navigator} doctorId={route.doctorId}/>
+      )
+    }else if(route.name === 'modifyPwd') {
+      return (
+        <ModifyPwd navigator={navigator} />
       )
     }/*else if(route.name === 'patientInfo') {
       return (
@@ -77,14 +84,42 @@ class NuanXinDoctorApp extends Component {
       )
     }*/
   }
+  
+  InitialRouteName() {
+    storage.load({
+      key: 'loginState',
+      autoSync: true,
+      syncInBackground: true,
+    }).then( ret => {
+      if(ret.state === 'error') {
+        this.setState({
+          routeInfo:{
+            name: 'doctorHomePage',
+            doctorId: ret.userId,
+          }
+        })
+      }else{
+        this.setState({
+          routeInfo:{
+            name: 'logIn',
+          }
+        })
+      }
+    }).catch ( err => {
+      this.setState({
+        routeInfo:{
+          name: 'logIn',
+        }
+      })
+    })  
+  }
 
   render() {
     if(this.state.pageLoading) {
-      var initialRoute = {name: 'doctorHomePage'};
       return (
         <Navigator
           style={styles.container}
-          initialRoute={initialRoute}
+          initialRoute={this.state.routeInfo}
           configureScene={() => {return Navigator.SceneConfigs.FadeAndroid}}
           renderScene={(route,navigator) => {return this.RouteMapper(route,navigator)}}
         />
