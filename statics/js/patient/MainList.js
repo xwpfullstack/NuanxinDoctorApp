@@ -65,7 +65,7 @@ class MainList extends Component{
         <View style={styles.item}>
             <View style={styles.itemImage}>
               <Image 
-                source={require('../images/load/kobe.jpg')}
+                source={require('../../images/load/kobe.jpg')}
                 style={styles.image} />
             </View>
 

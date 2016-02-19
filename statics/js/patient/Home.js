@@ -22,7 +22,7 @@ class Hometwo extends Component{
     };
     render(){
       return <Image
-        source={require('../images/load/background.png')}
+        source={require('../../images/load/background.png')}
         style={styles.background}
       > 
       <View style={styles.topTitle}>

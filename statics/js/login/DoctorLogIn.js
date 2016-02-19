@@ -152,6 +152,7 @@ class DoctorLogIn extends Component {
               ref='username'
               style={styles.userInput}
               placeholder='请输入手机号码'
+              
               textAlign='center'
               numberOfLines={1}
               keyboardType='numeric'
@@ -168,6 +169,7 @@ class DoctorLogIn extends Component {
               ref='passwd'
               style={styles.userPwd}
               placeholder='请输入密码'
+             
               underlineColorAndroid={'transparent'}
               secureTextEntry={true} 
               textAlign='center'

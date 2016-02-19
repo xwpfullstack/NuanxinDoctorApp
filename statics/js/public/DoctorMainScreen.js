@@ -8,6 +8,8 @@ import React,{
   StyleSheet,
 } from 'react-native';
 
+import Index from "../patient/Index"
+
 class DoctorMainScreen extends Component {
   constructor(props) {
     super(props);
@@ -15,11 +17,7 @@ class DoctorMainScreen extends Component {
 
   render() {
     return (
-      <View>
-        <Image source={require('image!person')} />
-        <Text>
-        </Text>
-      </View>
+      <Index />
     )
   }
 }
