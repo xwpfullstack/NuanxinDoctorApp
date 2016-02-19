@@ -14,7 +14,7 @@ import React, {
 
 import Home from "./Home"
 import ViewPager from 'react-native-scrollable-tab-view'
-import BottomTabBar from './BottomTabBar'
+import BottomTabBar from '../BottomTabBar'
 class nuanxin extends Component {
   render() {
     return (

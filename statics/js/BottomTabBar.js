@@ -14,18 +14,18 @@ const icon_name=[
 '病人','日程','发布','患教','我'
 ];
 const icon_selected=[
-require('image!person'),
-require('image!cal'),
-require('image!editor'),
-require('image!patient'),
-require('image!myself'),
+require('../images/tabbar_icons/person.png'),
+require('../images/tabbar_icons/cal.png'),
+require('../images/tabbar_icons/editor.png'),
+require('../images/tabbar_icons/patient.png'),
+require('../images/tabbar_icons/myself.png'),
 ];
 const icon_unselecte=[
-require('image!normal_person'),
-require('image!normal_cal'),
-require('image!normal_editor'),
-require('image!normal_patient'),
-require('image!normal_myself'),
+require('../images/tabbar_icons/normal_person.png'),
+require('../images/tabbar_icons/normal_cal.png'),
+require('../images/tabbar_icons/normal_editor.png'),
+require('../images/tabbar_icons/normal_patient.png'),
+require('../images/tabbar_icons/normal_myself.png'),
 ];
 
 var styles = StyleSheet.create({
