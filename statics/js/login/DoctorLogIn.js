@@ -8,6 +8,7 @@ import React,{
   TextInput,
   Component,
   StyleSheet,
+  ScrollView,
   Dimensions,
   TouchableNativeFeedback,
   TouchableOpacity,
@@ -97,6 +98,8 @@ class DoctorLogIn extends Component {
       if(data['msg'] === 'error') {
         alert('密码或者用户名错误,请重新输入');
       }else if(data['msg'] === 'success') {
+        this.refs.username.blur();
+        this.refs.passwd.blur();
         if(data['state'] === '0') {
           alert('您的个人信息正在审核中，请您耐心等待，感谢您的理解与支持。');
         }else if(data['state'] === '1') {
@@ -152,13 +155,10 @@ class DoctorLogIn extends Component {
               ref='username'
               style={styles.userInput}
               placeholder='请输入手机号码'
-              
               textAlign='center'
-              numberOfLines={1}
               keyboardType='numeric'
-              underlineColorAndroid={'transparent'}
+              onFocus={()=>{this.refs.username.focus()}}
               defaultValue={this.fields.username}
-              onFocus={() => {this.refs.username.focus()}}
               onChangeText={(text) => {this.fields.username = text}}
               onSubmitEditing={() => {this.refs.passwd.focus()}}
             />
@@ -169,12 +169,10 @@ class DoctorLogIn extends Component {
               ref='passwd'
               style={styles.userPwd}
               placeholder='请输入密码'
-             
-              underlineColorAndroid={'transparent'}
               secureTextEntry={true} 
               textAlign='center'
-              onFocus={() => {this.refs.passwd.focus()}}
               defaultValue={this.fields.passwd}
+              onFocus={()=>{this.refs.passwd.focus()}}
               onChangeText={(text) => {this.fields.passwd = text}}
             />
           </View>
@@ -198,15 +196,15 @@ class DoctorLogIn extends Component {
               </Text>
             </View>
           </TouchableOpacity>
-          <TouchableOpacity
-            onPress={()=>{return this._onPressPwdButton()}}
-          >
-            <View style={styles.forgetPwd}>
+          <View style={styles.forgetPwd}>
+            <TouchableOpacity
+              onPress={()=>{return this._onPressPwdButton()}}
+            >
               <Text style={{color: 'white'}}>
                 忘记密码?
               </Text>
-            </View>
-          </TouchableOpacity>
+            </TouchableOpacity>
+          </View>
         </Image>
         <Modal
           visible={this.state.loading}
