@@ -15,6 +15,8 @@ import React, {
 import Home from "./Home"
 import ViewPager from 'react-native-scrollable-tab-view'
 import BottomTabBar from '../BottomTabBar'
+import Schedule from '../cal/Schedule';
+
 class nuanxin extends Component {
   render() {
     return (
@@ -22,8 +24,8 @@ class nuanxin extends Component {
           <View tabLabel='one'>
           <Home />
           </View>
-            <View tabLabel='two'>
-          <Text>two</Text>
+          <View tabLabel='two'>
+            <Schedule navigator={this.props.navigator} />
           </View>
            <View tabLabel='three'>
           <Text>three</Text>
