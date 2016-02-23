@@ -76,7 +76,7 @@ class CalendarWeek extends Component{
 
 const styles=StyleSheet.create({
   container: {
-    height: 120,
+    height: 114,
     flex: 1,
   },
   topBar: {

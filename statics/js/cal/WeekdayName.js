@@ -8,6 +8,8 @@ import React, {
   View,
 } from 'react-native';
 
+import WeekdayNameItem from './WeekdayNameItem';
+
 const WEEKDAY=['日','一','二','三','四','五','六'];
 
 class WeekdayName extends Component {
@@ -19,7 +21,7 @@ class WeekdayName extends Component {
     let i = 0;
     let names = [];
     for (i = 0; i < 7; i++) {
-      names.push(<Text style={styles.weekdayNameText}>{WEEKDAY[i]}</Text>);
+      names.push(<WeekdayNameItem dayName = {WEEKDAY[i]} />);
     }
     return (
       <View style={styles.weekdayName}>
@@ -33,12 +35,6 @@ const styles = StyleSheet.create({
   weekdayName: {
     flexDirection: 'row',
     justifyContent: 'space-around',
-  },
-  weekdayNameText: {
-    fontFamily: 'PingFang-SC-Regular',
-		fontSize: 12,
-		fontWeight: '100',
-		color: '#666666',
   },
 });
 

@@ -29,18 +29,14 @@ let orderData=[
     {date:'2015年9月22日', name: '石秋雨', state: '预约中'},
     {date:'2015年9月25日', name: '王安琴', state: '已完成'},
     {date:'2015年9月24日', name: '王琴', state: '患者候诊中'},
-    {date:'2015年9月22日', name: '白保成', state: '患者候诊中'},
-    {date:'2015年9月24日', name: '石秋雨', state: '预约中'},
-    {date:'2015年9月23日', name: '王安琴', state: '已完成'},
-    {date:'2015年9月26日', name: '王琴', state: '患者候诊中'},
-    {date:'2015年9月27日', name: '白保成', state: '患者候诊中'},
-    {date:'2015年9月24日', name: '石秋雨', state: '预约中'},
-    {date:'2015年9月22日', name: '王安琴', state: '已完成'},
-    {date:'2015年9月24日', name: '王琴', state: '患者候诊中'},
-    {date:'2015年9月22日', name: '白保成', state: '患者候诊中'},
-    {date:'2015年9月24日', name: '石秋雨', state: '预约中'},
     {date:'2015年9月24日', name: '王安琴', state: '已完成'},
-    {date:'2015年9月26日', name: '王琴', state: '患者候诊中'}
+    {date:'2015年9月23日', name: '王琴', state: '患者候诊中'},
+    {date:'2015年9月24日', name: '白保成', state: '患者候诊中'},
+    {date:'2015年9月22日', name: '石秋雨', state: '预约中'},
+    {date:'2015年9月25日', name: '王安琴', state: '已完成'},
+    {date:'2015年9月24日', name: '王琴', state: '患者候诊中'},
+    {},
+    {},
 ];
 
 class OrderList extends Component {
@@ -49,6 +45,7 @@ class OrderList extends Component {
     this.dataSource = new ListView.DataSource({
       rowHasChanged:(row1, row2)=>row1 !== row2,
     });
+
 }
 
   renderHeader() {
@@ -91,23 +88,17 @@ class OrderList extends Component {
     );
   }
 
-  _renderScrollComponent(){
-      return <ScrollView></ScrollView>
-  };
   render() {
     return (
-      <ScrollView style={{height:Dimensions.get('window').height-305,}}>
-        <ListView
-          dataSource={this.dataSource.cloneWithRows(orderData)}
-          renderRow={this.renderRow.bind(this)}
-          automaticallyAdjustContentInsets={false}
-          keyboardDismissMode='on-drag'
-          keyboardShouldPersistTaps={true}
-          showsVerticalScrollIndicator={true}
-          renderHeader={this.renderHeader}
-          renderScrollComponent={()=>{return this._renderScrollComponent()}}
-        />
-      </ScrollView>
+      <ListView
+        dataSource={this.dataSource.cloneWithRows(orderData)}
+        renderRow={this.renderRow.bind(this)}
+        automaticallyAdjustContentInsets={false}
+        keyboardDismissMode='on-drag'
+        keyboardShouldPersistTaps={true}
+        showsVerticalScrollIndicator={true}
+        renderHeader={this.renderHeader}
+      />
     );
   }
 }
@@ -143,7 +134,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     borderBottomWidth: 1,
-    borderBottomColor: 'rgba(51,51,51,0.2)',
+    borderBottomColor: 'rgba(118,104,103,0.6)',
   },
   listItemName: {
 

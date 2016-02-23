@@ -17,23 +17,6 @@ import  React, {
 import OrderList from './OrderList';
 import Calendar from './Calendar';
 
-const {_width,_height}=Dimensions.get('window');
-
-let orderData=[
-    {date:'2015年9月28日', name: '白保成', state: '患者候诊中'},
-    {date:'2015年9月28日', name: '石秋雨', state: '预约中'},
-    {date:'2015年9月28日', name: '王安琴', state: '已完成'},
-    {date:'2015年9月28日', name: '王琴', state: '患者候诊中'},
-    {date:'2015年9月28日', name: '白保成', state: '患者候诊中'},
-    {date:'2015年9月28日', name: '石秋雨', state: '预约中'},
-    {date:'2015年9月28日', name: '王安琴', state: '已完成'},
-    {date:'2015年9月28日', name: '王琴', state: '患者候诊中'},
-    {date:'2015年9月28日', name: '白保成', state: '患者候诊中'},
-    {date:'2015年9月28日', name: '石秋雨', state: '预约中'},
-    {date:'2015年9月28日', name: '王安琴', state: '已完成'},
-    {date:'2015年9月28日', name: '王琴', state: '患者候诊中'}
-];
-
 class Schedule extends Component {
   constructor(props) {
     super(props);
@@ -43,10 +26,10 @@ class Schedule extends Component {
   }
   changeType(type) {
     if (type=='weekly'){
-      this.setState({calendarType:'monthly'});
+      this.setState({calendarType: 'monthly'});
     }
     else if (type=='monthly') {
-      this.setState({calendarType:'weekly'});
+      this.setState({calendarType: 'weekly'});
     }
   }
 
@@ -61,9 +44,11 @@ class Schedule extends Component {
             </View>
 
             <View style={styles.calendar}>
-              <Calendar type={this.state.calendarType} changeType={(type)=>{this.changeType(type)}}/>
+              <Calendar type={this.state.calendarType}
+                changeType={(type)=>{this.changeType(type)}}
+              />
             </View>
-            <OrderList navigator={this.props.navigator}/>
+            <OrderList navigator={this.props.navigator} />
         </Image>
     );
   }
@@ -71,9 +56,9 @@ class Schedule extends Component {
 
 const styles=StyleSheet.create({
 	backgroundImage: {
-    width:_width,
-    height:_height,
-    flex:1,
+    width: Dimensions.get('window').width,
+    height: Dimensions.get('window').height,
+    flex: 1,
 	},
   title: {
     height: 45,

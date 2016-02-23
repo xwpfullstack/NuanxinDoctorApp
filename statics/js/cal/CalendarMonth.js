@@ -69,7 +69,8 @@ class CalendarMonth extends Component {
 
       <TouchableHighlight
         underlayColor='rgba(34,26,38,0.1)'
-        onPress={()=>{this.props.changeType('monthly')}}>
+        onPress={()=>{this.props.changeType('monthly')}}
+      >
       <View style={styles.container}>
         <View style={styles.topBar}>
           <TouchableHighlight underlayColor='rgba(34,26,38,0.1)' onPress={()=>this.changeMonth(-1)}>

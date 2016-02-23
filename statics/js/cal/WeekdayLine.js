@@ -8,6 +8,8 @@ import React, {
   StyleSheet,
 } from 'react-native';
 
+import WeekdayLineItem from './WeekdayLineItem';
+
 class WeekdayLine extends Component {
   constructor(props) {
     super(props);
@@ -17,7 +19,7 @@ class WeekdayLine extends Component {
     let i = 0;
     let line = [];
     for (i = 0; i < 7; i++) {
-      line.push(<Text style={styles.weekdayDaysText}>{this.props.weekDayData[i].getDate()}</Text>);
+      line.push(<WeekdayLineItem itemDate={this.props.weekDayData[i]} />);
     }
     return (
       <View style={styles.weekdayDays}>

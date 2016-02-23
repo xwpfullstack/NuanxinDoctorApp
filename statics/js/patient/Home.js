@@ -24,14 +24,14 @@ class Hometwo extends Component{
       return <Image
         source={require('../../images/load/background.png')}
         style={styles.background}
-      > 
+      >
       <View style={styles.topTitle}>
       <Text style={[styles.textColor,styles.topText]}> 病人</Text>
       </View>
 
       <Head />
 
-      <View 
+      <View
         style={styles.container}
       >
       <MainList />
