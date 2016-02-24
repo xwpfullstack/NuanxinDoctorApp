@@ -21,7 +21,8 @@ class Schedule extends Component {
   constructor(props) {
     super(props);
     this.state={
-      calendarType: 'monthly',
+      calendarType: 'weekly',
+      monthShowed: new Date(),
     };
   }
   changeType(type) {
@@ -33,6 +34,9 @@ class Schedule extends Component {
     }
   }
 
+  changeMonth(month) {
+    this.setState({monthShowed: month});
+  }
   render() {
     return (
         <Image
@@ -44,9 +48,14 @@ class Schedule extends Component {
             </View>
 
             <View style={styles.calendar}>
-              <Calendar type={this.state.calendarType}
+              <Calendar type={this.state.calendarType }
+                monthShowed={this.state.monthShowed}
                 changeType={(type)=>{this.changeType(type)}}
+                changeMonth={(month)=>{this.changeMonth(month)}}
               />
+            </View>
+            <View style={styles.listHeader}>
+             <Text style={styles.listHeaderText}>订单列表</Text>
             </View>
             <OrderList navigator={this.props.navigator} />
         </Image>
@@ -74,6 +83,18 @@ const styles=StyleSheet.create({
   calendar: {
     backgroundColor: 'rgba(255,255,255,0.9)',
     justifyContent: 'center',
+  },
+  listHeader: {
+    backgroundColor: '#F08300',
+    justifyContent: 'center',
+    height: 30,
+  },
+  listHeaderText: {
+    fontFamily: 'PingFang-SC-Regular',
+    fontSize: 14,
+		fontWeight: '100',
+    color: '#FFFFFF',
+    marginLeft: 11,
   },
 });
 

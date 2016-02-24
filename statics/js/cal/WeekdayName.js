@@ -21,7 +21,7 @@ class WeekdayName extends Component {
     let i = 0;
     let names = [];
     for (i = 0; i < 7; i++) {
-      names.push(<WeekdayNameItem dayName = {WEEKDAY[i]} />);
+      names.push(<WeekdayNameItem key={i} dayName = {WEEKDAY[i]} />);
     }
     return (
       <View style={styles.weekdayName}>

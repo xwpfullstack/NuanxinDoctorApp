@@ -17,14 +17,13 @@ var weekSquence=[25,26,27,28,29,30,31];
 
 const DAYDIFF=86400000;
 
-function initWeekDayData(weekOffset) {
-  let today = new Date();
-  let index = today.getDay();
-  let weekFirstDay = new Date(today.getTime() - DAYDIFF * index);
+function initWeekDayData(monthShowed) {
+  let index = monthShowed.getDay();
+  let weekFirstDay = new Date(monthShowed.getTime() - DAYDIFF * index);
   let weekDayData = new Array(7);
   let i = 0;
   for (i = 0; i < 7; i++) {
-    weekDayData[i]= new Date(weekFirstDay.getTime() + DAYDIFF * (weekOffset * 7 + i));
+    weekDayData[i]= new Date(weekFirstDay.getTime() + DAYDIFF * i);
   }
 
   return weekDayData;
@@ -34,20 +33,20 @@ class CalendarWeek extends Component{
   constructor(props) {
     super(props)
     this.state={
-      monthShowed: new Date().getFullYear() + '-' + (new Date().getMonth() + 1),
-      weekDayData: initWeekDayData(0),
-      offset: 0,
+      // monthShowed: new Date().getFullYear() + '-' + (new Date().getMonth() + 1),
+      // monthShowed: this.props.monthShowed,
+      weekDayData: initWeekDayData(this.props.monthShowed),
     }
   }
 
   changeWeek(direct) {
-    this.setState({offset: this.state.offset + direct})
-    let today=new Date();
-    this.setState({weekDayData: initWeekDayData(this.state.offset)});
-    this.setState({monthShowed: this.state.weekDayData[3].getFullYear() + '-' + (this.state.weekDayData[3].getMonth() + 1)});
+    let newDate = new Date(this.props.monthShowed.getTime() + direct * DAYDIFF * 7);
+    this.setState({weekDayData: initWeekDayData(newDate)});
+    this.props.changeMonth(newDate);
   }
 
   render() {
+    let calendarTitle = this.props.monthShowed.getFullYear()+'-'+(this.props.monthShowed.getMonth()+1);
     return (
       <TouchableHighlight
         underlayColor='rgba(34,26,38,0.1)'
@@ -57,7 +56,7 @@ class CalendarWeek extends Component{
           <TouchableHighlight underlayColor='rgba(34,26,38,0.1)' onPress={()=>this.changeWeek(-1)}>
             <Text style={styles.switchText}>上一周</Text>
           </TouchableHighlight>
-          <Text style={styles.monthShowedText}>{this.state.monthShowed}</Text>
+          <Text style={styles.monthShowedText}>{calendarTitle}</Text>
 
           <TouchableHighlight underlayColor='rgba(34,26,38,0.1)' onPress={()=>this.changeWeek(1)}>
             <Text style={styles.switchText}>下一周</Text>
@@ -65,7 +64,7 @@ class CalendarWeek extends Component{
         </View>
         <View style={styles.body}>
           <WeekdayName />
-          <WeekdayLine weekDayData={this.state.weekDayData}/>
+          <WeekdayLine weekDayData={this.state.weekDayData} monthShowed={this.props.monthShowed}/>
         </View>
       </View>
 

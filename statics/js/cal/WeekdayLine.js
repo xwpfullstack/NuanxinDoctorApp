@@ -19,7 +19,7 @@ class WeekdayLine extends Component {
     let i = 0;
     let line = [];
     for (i = 0; i < 7; i++) {
-      line.push(<WeekdayLineItem itemDate={this.props.weekDayData[i]} />);
+      line.push(<WeekdayLineItem key={i} itemDate={this.props.weekDayData[i]} monthShowed={this.props.monthShowed}/>);
     }
     return (
       <View style={styles.weekdayDays}>

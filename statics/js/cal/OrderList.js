@@ -45,16 +45,8 @@ class OrderList extends Component {
     this.dataSource = new ListView.DataSource({
       rowHasChanged:(row1, row2)=>row1 !== row2,
     });
-
-}
-
-  renderHeader() {
-    return (
-      <View style={styles.listHeader}>
-       <Text style={styles.listHeaderText}>订单列表</Text>
-      </View>
-    );
   }
+
   showOrderDetails(orderData) {
     this.props.navigator.push({name: 'orderDetails', passProps: orderData});
   }
@@ -97,25 +89,12 @@ class OrderList extends Component {
         keyboardDismissMode='on-drag'
         keyboardShouldPersistTaps={true}
         showsVerticalScrollIndicator={true}
-        renderHeader={this.renderHeader}
       />
     );
   }
 }
 
 const styles = StyleSheet.create({
-  listHeader: {
-    backgroundColor: '#F08300',
-    justifyContent: 'center',
-    height: 30,
-  },
-  listHeaderText: {
-    fontFamily: 'PingFang-SC-Regular',
-    fontSize: 14,
-		fontWeight: '100',
-    color: '#FFFFFF',
-    marginLeft: 11,
-  },
 	itemText: {
     fontFamily: 'PingFang-SC-Regular',
 		fontSize: 18,

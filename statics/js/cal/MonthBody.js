@@ -20,7 +20,7 @@ class MonthBody extends Component {
     let i = 0;
     let body = [];
     for (i = 0; i < 6; i++) {
-      body.push(<WeekdayLine weekDayData={this.props.monthDayData[i]} />)
+      body.push(<WeekdayLine key={i} weekDayData={this.props.monthDayData[i]} monthShowed={this.props.monthShowed}/>)
     }
     return (
       <View style={styles.body}>

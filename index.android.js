@@ -21,6 +21,7 @@ import DoctorMainScreen from './statics/js/public/DoctorMainScreen';
 import DoctorLogIn from './statics/js/login/DoctorLogIn';
 import ModifyPwd from './statics/js/login/DoctorModifyPwd';
 import OrderDetails from './statics/js/cal/OrderDetails';
+import NewsDetails from './statics/js/cal/NewsDatails';
 
 var _navigator;
 //监听硬件返回功能
@@ -82,6 +83,10 @@ class NuanXinDoctorApp extends Component {
     }else if(route.name === 'orderDetails') {
       return (
         <OrderDetails navigator={navigator} orderData={route.passProps}/>
+      )
+    }else if(route.name === 'newsDetails') {
+      return (
+        <NewsDetails navigator={navigator} newsData={route.passProps}/>
       )
     }/*else if(route.name === 'patientInfo') {
       return (

@@ -18,12 +18,12 @@ class Calendar extends Component {
   render() {
     if (this.props.type=='weekly'){
       return (
-        <CalendarWeek changeType={this.props.changeType}/>
+        <CalendarWeek changeType={this.props.changeType} changeMonth={this.props.changeMonth} monthShowed={this.props.monthShowed}/>
       );
     }
     else if(this.props.type=='monthly'){
       return (
-        <CalendarMonth changeType={this.props.changeType}/>
+        <CalendarMonth changeType={this.props.changeType} changeMonth={this.props.changeMonth} monthShowed={this.props.monthShowed}/>
       );
     }
   }

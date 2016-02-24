@@ -12,21 +12,11 @@ import React, {
 import MonthBody from './MonthBody';
 
 const DAYDIFF=86400000;
-let weekSquence=[
-  ['27','28','29','30',' 1',' 2',' 3'],
-  [' 4',' 5',' 6',' 7',' 8',' 9','10'],
-  ['11','12','13','14','15','16','17'],
-  ['18','19','20','21','22','23','24'],
-  ['25','26','27','28','29','30','31'],
-  [' 1',' 2',' 3',' 4',' 5',' 6',' 7']
-];
 
-function initMonthDayData(monthOffset) {
-  let today = new Date();
-  let monthFirstDay= new Date(today.getFullYear(), today.getMonth() + monthOffset, today.getDate(), 0, 0, 0, 0);
-  monthFirstDay.setDate(1);
-  let index = monthFirstDay.getDay();
-  let pageFirstDay = new Date(monthFirstDay.getTime() - DAYDIFF * index);
+function initMonthDayData(monthShowed) {
+  monthShowed.setDate(1);
+  let index = monthShowed.getDay();
+  let pageFirstDay = new Date(monthShowed.getTime() - DAYDIFF * index);
   let monthDayData = new Array(6);
   let i = 0;
   let j = 0;
@@ -38,7 +28,6 @@ function initMonthDayData(monthOffset) {
     for (j = 0; j < 7; j++) {
       monthDayData[i][j]=new Date(pageFirstDay.getTime()+DAYDIFF*dayOffset);
       dayOffset++;
-
     }
   }
   return monthDayData;
@@ -49,22 +38,21 @@ class CalendarMonth extends Component {
   constructor(props) {
     super(props)
     this.state={
-      monthShowed: new Date().getFullYear() + '-' + (new Date().getMonth() + 1),
-      monthDayData: initMonthDayData(0),
-      offset: 0,
+      // monthShowed: new Date().getFullYear() + '-' + (new Date().getMonth() + 1),
+      //monthShowed: this.props.monthShowed,
+      monthDayData: initMonthDayData(this.props.monthShowed),
     }
   }
 
   changeMonth(direct) {
-    this.setState({offset: this.state.offset + direct})
-    let today=new Date();
-    let tmp=new Date(today.getFullYear(), today.getMonth() + this.state.offset, today.getDate(), 0, 0, 0, 0);
-    this.state.monthShowed= tmp.getFullYear() + '-' + (tmp.getMonth() + 1);
-    this.setState({monthDayData: initMonthDayData(this.state.offset)});
+    let tmp=new Date(this.props.monthShowed.getFullYear(), this.props.monthShowed.getMonth() + direct, this.props.monthShowed.getDate(), 0, 0, 0, 0);
+    this.props.changeMonth(tmp)
+    this.setState({monthDayData: initMonthDayData(tmp)});
 
   }
 
   render() {
+    let calendarTitle = this.props.monthShowed.getFullYear()+'-'+(this.props.monthShowed.getMonth()+1);
     return (
 
       <TouchableHighlight
@@ -76,15 +64,14 @@ class CalendarMonth extends Component {
           <TouchableHighlight underlayColor='rgba(34,26,38,0.1)' onPress={()=>this.changeMonth(-1)}>
             <Text style={styles.switchText}>上一月</Text>
           </TouchableHighlight>
-          <Text style={styles.monthShowedText}>{this.state.monthShowed}</Text>
+          <Text style={styles.monthShowedText}>{calendarTitle}</Text>
 
           <TouchableHighlight underlayColor='rgba(34,26,38,0.1)' onPress={()=>this.changeMonth(1)}>
             <Text style={styles.switchText}>下一月</Text>
           </TouchableHighlight>
         </View>
 
-          <MonthBody monthDayData={this.state.monthDayData} />
-
+          <MonthBody monthDayData={this.state.monthDayData} monthShowed={this.props.monthShowed}/>
 
       </View>
 
