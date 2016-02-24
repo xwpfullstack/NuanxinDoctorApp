@@ -11,6 +11,7 @@ import React,{
   TextInput,
   StyleSheet,
   ToolbarAndroid,
+  ToastAndroid,
 } from 'react-native';
 
 import '../public/UrlConfig'
@@ -29,6 +30,8 @@ class ModifyPwd extends Component {
       verify: '',
       passWd: '',
       newPassWd: '',
+      errorMsg: false,
+      verifyError: '',
     }
   }
   
@@ -98,10 +101,19 @@ class ModifyPwd extends Component {
       })
       .then((responseData) => {
         var data = responseData;
-        alert(data['state']);
+        if(data['state'] === 'error') {
+          if(data['msg'] === 'unregist') {
+            this.setState({errorMsg: true});            
+            return null;
+          }
+        }else if(data['state'] === 'success') {
+          this.setState({
+            addNewPwd: true,
+            errorMsg: false,
+          });
+        }
       })
       .done();
-      this.setState({addNewPwd: true});
     }else {
       return null;
     }
@@ -115,8 +127,100 @@ class ModifyPwd extends Component {
     return tel;
   }
   
+  /*******************************
+   *确认修改密码
+   *1.先判断两个密码是否一致
+   *2.POST提交
+   ******************************/
   _onPressSubmitPassWd() {
-     
+    if(this.state.passWd.length > 0 && this.state.passWd != this.state.newPassWd && this.state.verify.length > 0) {
+      this.setState({errorMsg: true});    
+    }else if(this.state.verify.length > 0 && this.state.passWd.length > 0 && this.state.passWd === this.state.newPassWd) {
+      fetch(ModifyPass_URL,{
+        method: 'post',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          tel: this.state.tel,
+          code: this.state.verify,
+          passwd: this.state.passWd,
+        })
+      })
+      .then((response) => {
+        return response.json();
+      })
+      .then((responseData) => {
+        var data = responseData;
+        if(data['state'] === 'error') {
+          if(data['info'] === 'verify error') {
+            this.setState({verifyError: '输入的验证码错误'});
+          }else if(data['info'] === 'verify invaild') {
+            this.setState({verifyError: '验证码失效，请重新获取'}); 
+          }else if(data['info'] === 'modify error') {
+            this.setState({verifyError: '网络错误，请稍后再试'});
+          }
+        }else if(data['state'] === 'success') {
+          if(this.state.verifyError.length > 0) {
+            this.setState({verifyError: ''});
+          }
+          ToastAndroid.show('密码修改成功,请您重新登陆。', ToastAndroid.SHORT)
+          this.props.navigator.pop();
+        }
+      })
+      .done();
+    }else {
+      return null;
+    }
+  }
+
+  /*判断两次输入的密码是否一致*/
+  _showPasswdError() {
+    if(this.state.errorMsg) {
+      return(
+        <Text
+          style={{
+            textAlign: 'center',
+            color: 'red',
+          }}
+        >
+          两次输入的密码不一致,请重新输入。
+        </Text>
+      )
+    }
+  }
+  
+  /*若验证码失效则显示错误信息*/
+  _showVerifyError() {
+    if(this.state.verifyError.length > 0) {
+      return (
+        <Text
+          style={{
+            color: 'red',
+            textAlign: 'center',
+          }}
+        >
+          {this.state.verifyError}
+        </Text>
+      )
+    }
+  }
+
+  /*判断手机号码是否注册*/
+  _showErrorMsg() {
+    if(this.state.errorMsg) {
+      return(
+        <Text
+          style={{
+            textAlign: 'center',
+            color: 'red',
+          }}
+        >
+          您输入的手机号码未注册
+        </Text>
+      )
+    }
   }
 
   render() {
@@ -133,21 +237,29 @@ class ModifyPwd extends Component {
           <View style={styles.telInput}>
             <TextInput
               ref='verify'
+              style={{textAlign: 'center'}}
               placeholder='请输入手机验证码'
-              textAlign='center'
               defaultValue={this.state.verify}
               onChangeText={(text) => {this.setState({verify: text})}}
             />
           </View>
-          <Text style={{textAlign: 'center'}}>
+          <View>
+           {this._showVerifyError()}
+          </View>
+          <Text 
+            style={{
+              textAlign: 'center',
+              marginTop: 20,  
+            }}
+          >
             请设置您的新密码
           </Text>
           <View style={styles.telInput}>
             <TextInput
               ref='passWd'
               placeholder='请输入新密码'
+              style={{textAlign: 'center'}}
               secureTextEntry={true}
-              textAlign='center'
               defaultValue={this.state.passWd}
               onChangeText={(text) => {this.setState({passWd: text})}}
             />
@@ -156,16 +268,17 @@ class ModifyPwd extends Component {
             <TextInput
               ref='newPassWd'
               placeholder='请确认新密码'
-              textAlign='center'
+              style={{textAlign: 'center'}}
               secureTextEntry={true}
               defaultValue={this.state.newPassWd}
               onChangeText={(text) => {this.setState({newPassWd: text})}}
             />
           </View>
+          {this._showPasswdError()}
           <TouchableOpacity
             onPress={() => {return this._onPressSubmitPassWd()}}
           >
-            <View style={this.state.passWd.length > 0 && this.state.passWd == this.state.newPassWd ? styles.verifyBtn : styles.unVerifyBtn}>
+            <View style={this.state.passWd.length > 0 && this.state.newPassWd.length > 0 && this.state.verify.length > 0 ? styles.verifyBtn : styles.unVerifyBtn}>
               <Text>
                 确认
               </Text>
@@ -175,6 +288,8 @@ class ModifyPwd extends Component {
         </ScrollView>
       )
     }
+
+    
     return (
       <View style={styles.container}>
         {this._renderHeader()}
@@ -185,13 +300,14 @@ class ModifyPwd extends Component {
           <TextInput
             ref='tel'
             placeholder='请输入手机号码'
-            textAlign='center'
             keyboardType='numeric'
+            style={{textAlign: 'center'}}
             maxLength={11}
             defaultValue={this.state.tel}
             onChangeText={(text) => {this.setState({tel: text})}}
           />
         </View>
+        {this._showErrorMsg()}
         <TouchableOpacity
           onPress={() => {return this._onPressGetVerify()}}         
           activeOpacity={this.state.tel.length == 11 ? 0.5 : 1}
@@ -228,7 +344,9 @@ var styles = StyleSheet.create({
     marginTop: 30,
   },
   telInput: {
-    margin: 20,
+    marginTop: 20,
+    marginLeft: 20,
+    marginRight: 20,
     height: 40,
     borderWidth: 1,
     borderColor: 'gray',
@@ -238,6 +356,7 @@ var styles = StyleSheet.create({
   },
   pwdInput: {
     marginLeft: 20,
+    marginTop: 20,
     marginRight: 20,
     marginBottom: 10,
     height: 40,
@@ -248,6 +367,7 @@ var styles = StyleSheet.create({
     justifyContent: 'center',
   },
   verifyBtn: {
+    marginTop: 20,
     marginLeft: 20,
     marginRight: 20,
     height: 40,
@@ -259,6 +379,7 @@ var styles = StyleSheet.create({
     justifyContent: 'center',
   },
   unVerifyBtn: {
+    marginTop: 20,
     marginLeft: 20,
     marginRight: 20,
     height: 40,

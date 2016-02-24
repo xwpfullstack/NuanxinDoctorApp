@@ -6,7 +6,8 @@
     "start": "node node_modules/react-native/local-cli/cli.js start"
   },
   "dependencies": {
-    "react-native": "^0.18.1",
+    "react-native": "^0.20.0",
+    "react-native-picker": "^2.0.2",
     "react-native-root-modal": "^1.0.3",
     "react-native-scrollable-tab-view": "^0.3.7",
     "react-native-storage": "0.0.12",

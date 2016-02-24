@@ -17,6 +17,7 @@ import React, {
 import TimerMixin from 'react-timer-mixin';
 import Srorage from './statics/js/public/Storage';
 import SplashScreen from './statics/js/login/SplashScreen';
+import DoctorRegist from './statics/js/login/DoctorRegist';
 import DoctorMainScreen from './statics/js/public/DoctorMainScreen';
 import DoctorLogIn from './statics/js/login/DoctorLogIn';
 import ModifyPwd from './statics/js/login/DoctorModifyPwd';
@@ -78,7 +79,12 @@ class NuanXinDoctorApp extends Component {
       return (
         <ModifyPwd navigator={navigator} />
       )
-    }/*else if(route.name === 'patientInfo') {
+    }else if(route.name === 'regist') {
+      return (
+        <DoctorRegist navigator={navigator} />
+      )
+    }
+    /*else if(route.name === 'patientInfo') {
       return (
         <PatientInfo navigator={navigator}/>
       )
@@ -91,7 +97,7 @@ class NuanXinDoctorApp extends Component {
       autoSync: true,
       syncInBackground: true,
     }).then( ret => {
-      if(ret.state === 'success') {
+      if(ret.state === 'error') {
         this.setState({
           routeInfo:{
             name: 'doctorHomePage',
