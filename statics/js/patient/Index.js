@@ -13,27 +13,28 @@ import React, {
 } from 'react-native';
 
 import Home from "./Home"
+import DoctorMainMessage from '../me/doctorMainMessage'
 import ViewPager from 'react-native-scrollable-tab-view'
 import BottomTabBar from '../BottomTabBar'
 class nuanxin extends Component {
   render() {
     return (
         <ViewPager tabBarPosition='bottom'  locked='true'  renderTabBar={()=><BottomTabBar />}>
-          <View tabLabel='one'>
-          <Home />
-          </View>
+            <View tabLabel='one'>
+                <Home />
+            </View>
             <View tabLabel='two'>
-          <Text>two</Text>
-          </View>
-           <View tabLabel='three'>
-          <Text>three</Text>
-          </View>
-           <View tabLabel='four'>
-          <Text>four</Text>
-          </View>
-           <View tabLabel='five'>
-          <Text>five</Text>
-          </View>
+            <Text>two</Text>
+            </View>
+            <View tabLabel='three'>
+            <Text>three</Text>
+            </View>
+            <View tabLabel='four'>
+            <Text>four</Text>
+            </View>
+            <View tabLabel='five'>
+                <DoctorMainMessage navigator={this.props.navigator}/>
+            </View>
         </ViewPager>
     );
   }

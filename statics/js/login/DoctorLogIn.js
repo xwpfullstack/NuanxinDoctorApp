@@ -52,7 +52,7 @@ class DoctorLogIn extends Component {
       );
       return null;
     }else if(passwd === null) {
-      Alert.alert(    
+      Alert.alert(
         '提示',
         '密码不能为空',
         [
@@ -68,7 +68,7 @@ class DoctorLogIn extends Component {
     });
     this._CheckUserLogInfo();
   }
-  
+
   /****************************
    * 验证用户名密码
    * 1.判断用户名密码是否为空
@@ -125,34 +125,34 @@ class DoctorLogIn extends Component {
   }
 
   _onPressRegistButton() {
-    
+
   }
-    
+
   //点击忘记密码的回调函数
   _onPressPwdButton() {
     this.props.navigator.push({
       name: 'modifyPwd',
-    })    
+    })
   }
 
   render() {
     return (
       <View style={styles.container}>
-        <Image 
-          source={require('../../images/icon/background.png')} 
+        <Image
+          source={require('../../images/icon/background.png')}
           style={styles.backGround}
         >
-          <Image 
-            source={require('../../images/icon/logo3.png')} 
-            style={styles.logo}/>       
-          <View 
+          <Image
+            source={require('../../images/icon/logo3.png')}
+            style={styles.logo}/>
+          <View
             style={styles.login}
           >
             <TextInput
               ref='username'
               style={styles.userInput}
               placeholder='请输入手机号码'
-              
+
               textAlign='center'
               numberOfLines={1}
               keyboardType='numeric'
@@ -169,16 +169,16 @@ class DoctorLogIn extends Component {
               ref='passwd'
               style={styles.userPwd}
               placeholder='请输入密码'
-             
+
               underlineColorAndroid={'transparent'}
-              secureTextEntry={true} 
+              secureTextEntry={true}
               textAlign='center'
               onFocus={() => {this.refs.passwd.focus()}}
               defaultValue={this.fields.passwd}
               onChangeText={(text) => {this.fields.passwd = text}}
             />
           </View>
-          <TouchableOpacity 
+          <TouchableOpacity
             onPress={()=>{return this._onPressLoginButton()}}
             background={TouchableNativeFeedback.SelectableBackground()}
           >
@@ -188,7 +188,7 @@ class DoctorLogIn extends Component {
               </Text>
             </View>
           </TouchableOpacity>
-          <TouchableOpacity 
+          <TouchableOpacity
             onPress={()=>{return this._onPressRegistButton()}}
             background={TouchableNativeFeedback.SelectableBackground()}
           >
@@ -250,6 +250,7 @@ var styles = StyleSheet.create({
     alignSelf: 'center',
   },
   userInput: {
+    textAlign:'center',
     marginTop: 10,
     height: 40,
   },
