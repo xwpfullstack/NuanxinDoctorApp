@@ -1,144 +1,206 @@
-/**
- * The examples provided by Facebook are for non-commercial testing and
- * evaluation purposes only.
- *
- * Facebook reserves all rights not expressly granted.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
- * OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NON INFRINGEMENT. IN NO EVENT SHALL
- * FACEBOOK BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN
- * AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
- * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
- *
- * @flow weak
- */
-'use strict';
+'use strict'
 
-var React = require('react-native');
-var {
-  PanResponder,
+import React, {
+  Alert,
+  Component,
   StyleSheet,
+  Text,
+  TextInput,
+  TouchableHighlight,
   View,
-  processColor,
-} = React;
+} from 'react-native';
 
-var CIRCLE_SIZE = 80;
-var CIRCLE_COLOR = 'blue';
-var CIRCLE_HIGHLIGHT_COLOR = 'green';
+class AddMedcine extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      name: '',
+      productor: '',
+      specification: '',
+      unit: '',
+      amount: '',
+      meathod: '',
+    }
+  }
 
-var ComponentTest = React.createClass({
+  popOut() {
 
-  statics: {
-    title: 'PanResponder Sample',
-    description: 'Shows the use of PanResponder to provide basic gesture handling.',
-  },
+  }
 
-  _panResponder: {},
-  _previousLeft: 0,
-  _previousTop: 0,
-  _circleStyles: {},
-  circle: (null : ?{ setNativeProps(props: Object): void }),
+  submit() {
+    let postData = {name: this.state.name,
+      productor: this.state.productor,
+      specification: this.state.specification,
+      unit: this.state.unit,
+      amount: this.state.amount,
+      meathod: this.state.meathod
+    }
+  }
 
-  componentWillMount: function() {
-    this._panResponder = PanResponder.create({
-      onStartShouldSetPanResponder: this._handleStartShouldSetPanResponder,
-      onMoveShouldSetPanResponder: this._handleMoveShouldSetPanResponder,
-      onPanResponderGrant: this._handlePanResponderGrant,
-      onPanResponderMove: this._handlePanResponderMove,
-      onPanResponderRelease: this._handlePanResponderEnd,
-      onPanResponderTerminate: this._handlePanResponderEnd,
-    });
-    this._previousLeft = 20;
-    this._previousTop = 84;
-    this._circleStyles = {
-      style: {
-        left: this._previousLeft,
-        top: this._previousTop
-      }
-    };
-  },
-
-  componentDidMount: function() {
-    this._updatePosition();
-  },
-
-  render: function() {
+  render() {
     return (
-      <View
-        style={styles.container}>
-        <View
-          ref={(circle) => {
-            this.circle = circle;
-          }}
-          style={styles.circle}
-          {...this._panResponder.panHandlers}
-        />
+      <View>
+        <View style={styles.title}>
+          <View style={styles.titleReturn}>
+            <TouchableHighlight
+              underlayColor='rgba(34,26,38,0.1)'
+              onPress={()=>this.popOut()}>
+              <Text style={styles.titleReturnText}>《 返回</Text>
+            </TouchableHighlight>
+          </View>
+          <View style={styles.titleName}>
+            <Text style={styles.titleNameText}>添加药物</Text>
+          </View>
+        </View>
+        <View style = {styles.inputLine}>
+          <Text style = {styles.label}>名称</Text>
+          <View style = {styles.inputStyle}>
+            <TextInput
+            style = {styles.searchInput}
+              onChangeText = {(text) => this.setState({name: text})}
+              selectTextOnFocus = {true}
+              underlineColorAndroid = {'transparent'}
+            />
+          </View>
+        </View>
+        <View style = {styles.inputLine}>
+          <Text style = {styles.label}>厂家</Text>
+          <View style = {styles.inputStyle}>
+            <TextInput
+            style = {styles.searchInput}
+              onChangeText = {(text) => this.setState({productor: text})}
+              selectTextOnFocus = {true}
+              underlineColorAndroid = {'transparent'}
+            />
+          </View>
+        </View>
+        <View style = {styles.inputLine}>
+          <Text style = {styles.label}>服用单位</Text>
+          <View style = {styles.inputStyle}>
+            <TextInput
+            style = {styles.searchInput}
+              onChangeText = {(text) => this.setState({unit: text})}
+              selectTextOnFocus = {true}
+              underlineColorAndroid = {'transparent'}
+            />
+          </View>
+        </View>
+        <View style = {styles.inputLine}>
+          <Text style = {styles.label}>服用剂量</Text>
+          <View style = {styles.inputStyle}>
+            <TextInput
+            style = {styles.searchInput}
+              onChangeText = {(text) => this.setState({amount: text})}
+              selectTextOnFocus = {true}
+              underlineColorAndroid = {'transparent'}
+            />
+          </View>
+        </View>
+        <View style = {styles.inputLine}>
+          <Text style = {styles.label}>服用方法</Text>
+          <View style = {styles.inputStyle}>
+            <TextInput
+            style = {styles.searchInput}
+              onChangeText = {(text) => this.setState({meathod: text})}
+              selectTextOnFocus = {true}
+              underlineColorAndroid = {'transparent'}
+            />
+          </View>
+        </View>
+        <View style = {styles.inputLine}>
+          <Text style = {styles.label}>说明书</Text>
+          <View style = {[styles.inputStyle, {height: 120}]}>
+            <TextInput
+            style = {styles.searchInput}
+              onChangeText = {(text) => this.setState({specification: text})}
+              selectTextOnFocus = {true}
+              multiline = {true}
+              numberOfLines = {6}
+              textAlignVertical = {'top'}
+              underlineColorAndroid = {'transparent'}
+            />
+          </View>
+        </View>
+
+        <TouchableHighlight
+          underlayColor='rgba(34,26,38,0.1)'
+          onPress={()=>this.submit()}
+          style={styles.buttonStyle}
+        >
+          <Text style={styles.buttonText}>提交</Text>
+        </TouchableHighlight>
       </View>
     );
-  },
+  }
+}
 
-  _highlight: function() {
-    const circle = this.circle;
-    circle && circle.setNativeProps({
-      style: {
-        backgroundColor: processColor(CIRCLE_HIGHLIGHT_COLOR)
-      }
-    });
+const styles = StyleSheet.create({
+  title: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#868181',
+    height: 45,
+    padding: 11,
   },
-
-  _unHighlight: function() {
-    const circle = this.circle;
-    circle && circle.setNativeProps({
-      style: {
-        backgroundColor: processColor(CIRCLE_COLOR)
-      }
-    });
+  titleReturn: {
+    flex: 3,
   },
-
-  _updatePosition: function() {
-    this.circle && this.circle.setNativeProps(this._circleStyles);
+  titleReturnText: {
+		fontFamily: 'PingFang-SC-Regular',
+		fontSize: 14,
+    color: '#FFFFFF',
   },
-
-  _handleStartShouldSetPanResponder: function(e: Object, gestureState: Object): boolean {
-    // Should we become active when the user presses down on the circle?
-    return true;
+  titleName: {
+    flex: 4
   },
-
-  _handleMoveShouldSetPanResponder: function(e: Object, gestureState: Object): boolean {
-    // Should we become active when the user moves a touch over the circle?
-    return true;
+  titleNameText: {
+		fontFamily: 'PingFang-SC-Regular',
+		fontSize: 18,
+    color: '#FFFFFF',
   },
-
-  _handlePanResponderGrant: function(e: Object, gestureState: Object) {
-    this._highlight();
+  inputLine: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingHorizontal: 11,
+    paddingVertical: 4,
   },
-  _handlePanResponderMove: function(e: Object, gestureState: Object) {
-    this._circleStyles.style.left = this._previousLeft + gestureState.dx;
-    this._circleStyles.style.top = this._previousTop + gestureState.dy;
-    this._updatePosition();
-  },
-  _handlePanResponderEnd: function(e: Object, gestureState: Object) {
-    this._unHighlight();
-    this._previousLeft += gestureState.dx;
-    this._previousTop += gestureState.dy;
-  },
-});
-
-var styles = StyleSheet.create({
-  circle: {
-    width: CIRCLE_SIZE,
-    height: CIRCLE_SIZE,
-    borderRadius: CIRCLE_SIZE / 2,
-    backgroundColor: CIRCLE_COLOR,
-    position: 'absolute',
-    left: 0,
-    top: 0,
-  },
-  container: {
+  label: {
     flex: 1,
-    paddingTop: 64,
+		fontFamily: 'PingFang-SC-Regular',
+		fontSize: 12,
+    color: '#666666',
+
+  },
+  inputStyle: {
+    flex: 3,
+    height: 30,
+    justifyContent: 'center',
+    borderColor: '#333333',
+    borderRadius: 4,
+    borderWidth: 1,
+  },
+	searchInput: {
+		fontSize: 12,
+	},
+  buttonStyle: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#F0F0F0',
+    height: 30,
+    width: 80,
+    borderWidth: 0.4,
+    borderColor: '#FEA501',
+    borderRadius: 15,
+    alignSelf: 'flex-end',
+    marginTop: 11,
+    marginRight: 11,
+  },
+  buttonText: {
+		fontFamily: 'PingFang-SC-Regular',
+		fontSize: 18,
+    color: '#FEA501',
   },
 });
 
-module.exports = ComponentTest;
+export default AddMedcine;

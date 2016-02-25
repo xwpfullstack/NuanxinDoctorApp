@@ -36,7 +36,6 @@ class OrderDetails extends Component{
         <TextInput
           multiline = {true}
           numberOfLines = {6}
-
           textAlignVertical = 'top'
           style = {styles.contentBox}
           value = {this.props.newsData.content}
