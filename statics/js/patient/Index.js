@@ -10,6 +10,7 @@ import React, {
   Text,
   View,
   ScrollView,
+    Navigator,
 } from 'react-native';
 
 import Home from "./Home"
@@ -20,17 +21,19 @@ import Release from '../cal/Release';
 import ComponentTest from '../cal/ComponentTest';
 
 class nuanxin extends Component {
+
   render() {
     return (
-        <ViewPager tabBarPosition='bottom'  locked='true'  renderTabBar={()=><BottomTabBar />}>
+
+        <ViewPager tabBarPosition='bottom'  locked='true' renderTabBar={()=><BottomTabBar />}>
           <View tabLabel='one'>
-          <Home />
+            <Home mainNavigator={this.props.mainNavigator}/>
           </View>
           <View tabLabel='two'>
-            <Schedule navigator={this.props.navigator} />
+            <Schedule navigator={this.props.mainNavigator} />
           </View>
           <View tabLabel='three'>
-            <Release navigator={this.props.navigator} />
+            <Release navigator={this.props.mainNavigator} />
           </View>
           <View tabLabel='four'>
             <ComponentTest />
@@ -39,6 +42,7 @@ class nuanxin extends Component {
             <Text>five</Text>
           </View>
         </ViewPager>
+
     );
   }
 }

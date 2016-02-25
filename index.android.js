@@ -22,7 +22,7 @@ import DoctorLogIn from './statics/js/login/DoctorLogIn';
 import ModifyPwd from './statics/js/login/DoctorModifyPwd';
 import OrderDetails from './statics/js/cal/OrderDetails';
 import NewsDetails from './statics/js/cal/NewsDatails';
-
+import AddOrder from './statics/js/patient/AddOrder';
 var _navigator;
 //监听硬件返回功能
 BackAndroid.addEventListener('hardwareBackPress', ()=>{
@@ -48,7 +48,7 @@ class NuanXinDoctorApp extends Component {
       ()=>{
         this.setState({pageLoading: true});
       },
-      1000,
+      1,
     );
     this.InitialRouteName();
   }
@@ -93,6 +93,11 @@ class NuanXinDoctorApp extends Component {
         <PatientInfo navigator={navigator}/>
       )
     }*/
+    else if(route.name === 'addOrder'){
+      return (
+          <AddOrder navigator={navigator}/>
+      );
+    }
   }
 
   InitialRouteName() {
@@ -101,7 +106,7 @@ class NuanXinDoctorApp extends Component {
       autoSync: true,
       syncInBackground: true,
     }).then( ret => {
-      if(ret.state === 'success') {
+      if(ret.state === 'success') {   //
         this.setState({
           routeInfo:{
             name: 'doctorHomePage',

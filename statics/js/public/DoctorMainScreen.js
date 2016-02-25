@@ -6,6 +6,7 @@ import React,{
   Text,
   Component,
   StyleSheet,
+  ScrollView,
 } from 'react-native';
 
 import Index from "../patient/Index"
@@ -17,7 +18,7 @@ class DoctorMainScreen extends Component {
 
   render() {
     return (
-      <Index navigator={this.props.navigator} />
+      <Index mainNavigator={this.props.navigator}/>
     )
   }
 }
