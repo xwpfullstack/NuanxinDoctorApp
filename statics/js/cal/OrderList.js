@@ -35,8 +35,6 @@ let orderData=[
     {date:'2015年9月22日', name: '石秋雨', state: '预约中'},
     {date:'2015年9月25日', name: '王安琴', state: '已完成'},
     {date:'2015年9月24日', name: '王琴', state: '患者候诊中'},
-    {},
-    {},
 ];
 
 class OrderList extends Component {

@@ -70,7 +70,7 @@ class Release extends Component {
             placeholder = {'你想说的...'}
             onChangeText = {(text) => this.setState({content: text})}
             autoFocus = {true}
-            textAlignVertical = 'top'
+            textAlignVertical = {'top'}
             multiline = {true}
             numberOfLines = {6}
             style = {styles.contentBox}
@@ -126,10 +126,6 @@ const styles = StyleSheet.create({
   contentBox: {
     backgroundColor: '#FFFFFF',
     height: 180,
-    alignSelf: 'flex-start',
-    justifyContent: 'flex-start',
-    alignItems: 'flex-start',
-    flexWrap: 'wrap',
   },
   subjectBox: {
     backgroundColor: '#FFFFFF',
