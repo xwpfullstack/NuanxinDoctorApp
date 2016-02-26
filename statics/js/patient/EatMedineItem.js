@@ -13,27 +13,43 @@ import React, {
   ScrollView,
 } from 'react-native';
                 
+import Modal from 'react-native-root-modal';
+import EatDatesModal from './EatDatesModal';
 
   var isCheack=[
   ['j',false],
   ['m',false],
   ['h',false],
 ];
-var MediaNums=[
-  [true,false,false,false,,],
-  [true,false,false,false,,],
-];
+var day=1;
 class EatMedineItem extends Component{
   constructor(props){
     super(props);  
     this.state={
       Cheack:isCheack,
       MediaNums:this.props.media['MediaNums'],
+      Lvisible:false,
+      modal:'',
     };
   };
 
+
+closeModal(){
+    this.setState({Lvisible:false});
+}
+
+changeDay(index,day){
+  this.state.MediaNums[index][6]=day;
+  this.setState({MediaNums:this.state.MediaNums});
+};
+
 cheackTime(name){
-  var newList=isCheack.map((value,index)=>{
+  let  dtTmp=new Date();
+  let newList=isCheack.map((value,index)=>{
+    if (name == value[0]) {
+      let date=new Date(dtTmp.getFullYear(), dtTmp.getMonth(), dtTmp.getDate()+index, dtTmp.getHours(), dtTmp.getMinutes(), dtTmp.getSeconds());  
+          this.props.media['startTime']=date.toLocaleDateString();
+    };
     return [value[0],name == value[0]];
   });
   this.setState({Cheack:newList});
@@ -43,22 +59,11 @@ more(){
     return [value[0],false];
   });
   this.setState({Cheack:newList});
+
 };
 cheackMedia(index,rows){
-    var newList=this.state.MediaNums[index].map((value,i)=>{
-      if (i <=3) {
-          if (rows == i) {
-              return true;
-          }
-          else{
-            return false;
-          }
-      }
-      else{
-        return value;
-      }
-    });
-    this.state.MediaNums[index]=newList;
+   this.state.MediaNums[index][rows]=this.state.MediaNums[index][rows]?false:true;
+  
     this.setState({MediaNums:this.state.MediaNums});
 };
 
@@ -112,16 +117,33 @@ delPage(index){
    
 };
 addPage(){
-     this.state.MediaNums.push([true,false,false,false,,]);
+     this.state.MediaNums.push([true,false,false,false,'','',1]);
      this.setState({MediaNums:this.state.MediaNums});
 };
+
+showModel(index,value){
+  day=value[6];
+  var modals=(
+          <EatDatesModal isEveryday={value[6]} changeDay={(day)=>this.changeDay(index,day)}   closeModal={()=>this.closeModal()}/>
+  );
+  if (this.state.Lvisible === false) {
+     this.setState({Lvisible:true,modal:modals});
+  }
+  else{
+       this.setState({Lvisible:false});
+  };
+};
+
+
 
 MedList(){
   var newList=this.state.MediaNums.map((value,index)=>{
       return (
         <View key={index}>
              <View style={styles.startTime}>
-                            <Text style={{color:'blue'}}>每日服用</Text>
+                           <TouchableOpacity onPress={()=>this.showModel(index,value)}>
+                                <Text style={{color:'blue'}}>{value[6]==1?'每日服用':`每${value[6]}日一次`}</Text>
+                           </TouchableOpacity> 
                             <View style={styles.startTimeCheack}>
                                 <TouchableOpacity 
                                     onPress={()=>this.cheackMedia(index,0)}
@@ -140,7 +162,7 @@ MedList(){
                                   </TouchableOpacity>
                                 <TouchableOpacity 
                                   onPress={()=>this.cheackMedia(index,3)}
-                               style={[styles.startTimeCheackItem,{backgroundColor:value[3]?'#FE9300':'rgb(244,241,245)',}]}>
+                                  style={[styles.startTimeCheackItem,{backgroundColor:value[3]?'#FE9300':'rgb(244,241,245)',}]}>
                                   <Text style={{color:value[3]?'white':'black',}}>睡前</Text>
                                 </TouchableOpacity>
                             </View>
@@ -246,7 +268,15 @@ return newList;
                             </View>
                       </View>
                       {this.MedList()}
+                      
                 </View>
+                <Modal visible={this.state.Lvisible}  
+                      style={{height:Dimensions.get('window').height,
+                                  width:Dimensions.get('window').width,top:0,bottom:0,left:0,right:0,backgroundColor:'rgba(0,0,0,0.5)'}}>
+                                  <View style={styles.modalStyle}>
+                                        {this.state.modal}
+                                  </View>
+                </Modal>
             </View>
         );
   };
@@ -355,6 +385,17 @@ const styles = StyleSheet.create({
       justifyContent:'center',
       marginLeft:20,
   },
+  modalStyle:{
+      top:(Dimensions.get('window').height-200)/2,
+      left:(Dimensions.get('window').width-200)/2,
+      height:200,
+      width:200,
+      borderWidth:1,
+      borderColor:'#ffffff',
+      borderRadius:20,
+      backgroundColor: '#ffffff',
+  },
+
   
 });
 

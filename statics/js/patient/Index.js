@@ -17,6 +17,10 @@ import Home from "./Home"
 import DoctorMainMessage from '../me/doctorMainMessage'
 import ViewPager from 'react-native-scrollable-tab-view'
 import BottomTabBar from '../BottomTabBar'
+import Schedule from '../cal/Schedule';
+import Release from '../cal/Release';
+import ComponentTest from '../cal/ComponentTest';
+
 class nuanxin extends Component {
 
   render() {

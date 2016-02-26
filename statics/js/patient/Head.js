@@ -1,6 +1,5 @@
 'use strict';
 import React, {
-  AppRegistry,
   Component,
   StyleSheet,
   Text,
@@ -12,18 +11,21 @@ import React, {
   Alert,
   TouchableOpacity,
   ScrollView,
-  Picker,
 } from 'react-native';
 
 class Head extends Component{
   constructor(){
     super();
+    this.state={
+      num:0,
+    }
     
 };
 
-
+changeNum(nums){
+    this.setState({num:nums});
+};
 showModel(){
-  //Alert.alert('aaa');
   this.props.showModel();
 };
 
@@ -35,7 +37,10 @@ showModel(){
                     <View style={{flexDirection: 'row',}}>
                       <Image source={require('../../images/load/search.png')}  style={{height:18,width:18,margin:5,}}/>
                       <View style={{height:30,width:200, justifyContent:'center',}} >
-                      <TextInput  style={{fontSize:14,color:'#ffffff'}} placeholder='按姓名或电话号码搜索' placeholderTextColor='#ffffff'   />
+                      <TextInput  
+                          style={{fontSize:14,color:'#ffffff'}} 
+                          placeholder='按姓名或电话号码搜索' 
+                          placeholderTextColor='#ffffff'   />
                       </View>
                     </View>
                     </View>
@@ -43,7 +48,7 @@ showModel(){
                 
                     <View style={styles.title}>
                       <View style={{padding:10,flexDirection: 'row',}}>
-                        <Text style={[styles.textColor,{fontSize:14,flex:6,}]}>今日有3名患者关注</Text>
+                        <Text style={[styles.textColor,{fontSize:14,flex:6,}]}>今日有{this.state.num}名患者关注</Text>
                           <TouchableOpacity style={styles.titleBtn} onPress={()=>this.showModel()}>
                             <Text style={[styles.textColor,{fontSize:14,flex:2}]}>分类</Text> 
                             <Image source={require('../../images/load/sort.png')}  style={{height:18,width:13}}/>    

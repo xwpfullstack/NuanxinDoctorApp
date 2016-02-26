@@ -12,7 +12,6 @@ import React, {
   Alert,
  TouchableHighlight,
   ScrollView,
-  Picker,
 } from 'react-native';
 class AddModal extends Component{
   constructor(){
@@ -28,9 +27,15 @@ class AddModal extends Component{
     }
     else if(name === 'date'){
            this.props.close();
+           this.props.mainNavigator.push({
+            name: 'DoctorRecord',
+          });
     }
     else if(name === 'sc'){
          this.props.close();
+          this.props.mainNavigator.push({
+            name: 'WriteTable',
+          });
     }
    
   };

@@ -24,7 +24,11 @@ import WebMainPage from './statics/js/me/webView'
 import AddOrder from './statics/js/patient/AddOrder';
 import DoctorMsgEdit from './statics/js/me/doctorMsgEdit'
 import Prescription from './statics/js/me/prescription'
-
+import OrderDetails from './statics/js/cal/OrderDetails';
+import NewsDetails from './statics/js/cal/NewsDatails';
+import AddOrder from './statics/js/patient/AddOrder';
+import DoctorRecord from  './statics/js/patient/DoctorRecord';
+import WriteTable from './statics/js/patient/WriteTable';
 var _navigator;
 //监听硬件返回功能
 BackAndroid.addEventListener('hardwareBackPress', ()=>{
@@ -71,42 +75,36 @@ class NuanXinDoctorApp extends Component {
    ***************************/
   RouteMapper(route,navigator) {
     _navigator=navigator;
-    if(route.name === 'logIn') {
-      return (
-        <DoctorLogIn navigator={navigator}/>
-      )
-    }else if(route.name === 'doctorHomePage') {
-      return (
-        <DoctorMainScreen navigator={navigator} doctorId={route.doctorId}/>
-      )
-    }else if(route.name === 'modifyPwd') {
-      return (
-        <ModifyPwd navigator={navigator} />
-      )
-  }else if(route.name === 'webMainPage'){
-      return (
-          <WebMainPage navigator={navigator} />
-      )
-  }else if(route.name === 'doctorMsgEdit') {
-      return (
-          <DoctorMsgEdit navigator={navigator} />
-      )
-  }else if(route.name === 'prescription'){
-      return (
-          <Prescription navigator={navigator} />
-      )
-  }
-    /*else if(route.name === 'patientInfo') {
-      return (
-        <PatientInfo navigator={navigator}/>
-      )
-    }*/
-    else if(route.name === 'addOrder'){
-      return (
-          <AddOrder navigator={navigator}/>
-      );
-    }
-  }
+    switch(route.name){
+      case 'logIn':
+             return  <DoctorLogIn navigator={navigator}/>;
+        break;
+        case 'doctorHomePage':
+             return   <DoctorMainScreen navigator={navigator} doctorId={route.doctorId}/>;
+        break;
+        case 'modifyPwd':
+             return  <ModifyPwd navigator={navigator} />;
+        break;
+        case 'addOrder':
+             return  <AddOrder navigator={navigator}/>;
+        break;
+        case 'DoctorRecord':
+             return  <DoctorRecord navigator={navigator}/>;
+        break;
+        case 'WriteTable':
+             return  <WriteTable navigator={navigator}/>;
+        break;
+        case 'prescription':
+             return  <Prescription navigator={navigator}/>;
+        break;
+        case 'doctorMsgEdit':
+             return  <DoctorMsgEdit navigator={navigator}/>;
+        break;
+        case 'webMainPage':
+             return  <WebMainPage navigator={navigator}/>;
+        break;
+    };
+  };
 
   InitialRouteName() {
     storage.load({
