@@ -19,6 +19,7 @@ import Head from './Head';
 import PatientSelf from './PatientSelf';
 import Modal from 'react-native-root-modal'
 import FLModal from './FLModal'
+import HomePage from './HomePage'
 const {_width,_height}=Dimensions.get('window');
 
 class Hometwo extends Component{
@@ -33,10 +34,11 @@ class Hometwo extends Component{
     };
 
 changeNums(num){
-  this.setState({
-    nums:num,
-  });
+  this.setState({nums:num});
 };
+
+
+
 closeModal(){
    if (this.state.Lvisible === true) {
      this.setState({Lvisible:false});
@@ -67,7 +69,7 @@ showModel(){
                     modalStyle:{
                       position: 'absolute',
                       right: 10,
-                      top: 127,
+                      top: 116.5,
                       height:100,
                       width:100,
                       backgroundColor: 'rgba(255, 255, 255,0.8)',},
@@ -83,30 +85,7 @@ RouteMapper(route, navigator){
     
       if (route.name === 'home') {
        return (
-          //<Text>aaa</Text>
-      <Image
-      source={require('../../images/load/background.png')}
-      style={styles.background}
-      > 
-      <View style={styles.topTitle}>
-      <Text style={[styles.textColor,styles.topText]}> 病人</Text>
-      </View>
-      <Head showModel={()=>this.showModel()} nums={this.state.nums}/>
-      <View 
-        style={styles.container}
-      >
-      <MainList closeModal={()=>this.closeModal()}  changeNums={(num)=>this.changeNums(num)} navigator={navigator}/>
-      <Modal visible={this.state.Lvisible} >
-                    <TouchableOpacity  onPress={()=>this.closeModal()} style={{height:Dimensions.get('window').height,width:Dimensions.get('window').width,}}>
-                          <View style={this.state.modalStyle}>
-                                {this.state.modalContent}
-                          </View>
-                    </TouchableOpacity>
-      </Modal>
-       
-
-      </View>
-      </Image>
+            <HomePage navigator={navigator}/>
         );
       }
       else if(route.name === 'self'){
