@@ -25,7 +25,7 @@ let recordData = {
   ]
 }
 
-class ComponentTest extends Component {
+class CompleteRecord extends Component {
   constructor(props) {
     super(props);
 
@@ -185,4 +185,4 @@ const styles = StyleSheet.create({
     color: '#FEA501',
   },
 })
-export default ComponentTest;
+export default CompleteRecord;
