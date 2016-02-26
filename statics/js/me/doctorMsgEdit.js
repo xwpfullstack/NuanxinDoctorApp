@@ -18,7 +18,9 @@ class DoctorMsgEdit extends Component {
     return (
         <View>
             <View style={styles.headNav}>
-                <TouchableOpacity  style={styles.back} onPress= {() => {this.props.changeEditShow()}}>
+                <TouchableOpacity
+                style={styles.back}
+                onPress= {() => {this.props.navigator.pop()}}>
                     <Image style={styles.headImg}
                     source = {require('../../images/me/back.png')} />
                     <Text style={[styles.textBold,{fontSize:15}]}>返回</Text>

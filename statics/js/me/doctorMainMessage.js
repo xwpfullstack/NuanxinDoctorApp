@@ -17,22 +17,12 @@ class DoctorMainMessage extends Component {
             editShow:false
         };
     }
-    changeEditShow() {
-        this.setState({
-            editShow:!this.state.editShow
-        })
-    };
   render() {
-      if(this.state.editShow){
-          return (
-            <View style={styles.body}><DoctorMsgEdit changeEditShow = {() => {this.changeEditShow()}}/></View>
-            );
-      }
-      else{
           return(
-             <View style={styles.body}><DoctorInfo navigator={this.props.navigator} changeEditShow = {() => {this.changeEditShow()}}/></View>
+             <View style={styles.body}>
+                <DoctorInfo navigator={this.props.navigator} changeEditShow = {() => {this.changeEditShow()}}/>
+            </View>
           );
-      }
   }
 }
 

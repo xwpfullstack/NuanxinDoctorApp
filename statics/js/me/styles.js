@@ -31,7 +31,6 @@ const styles = StyleSheet.create({
     //DoctorInfo
     headNav: {
         height:45,
-        flex:1,
         flexDirection:'row',
         alignItems:'center',
         backgroundColor:'#878181',
@@ -42,7 +41,7 @@ const styles = StyleSheet.create({
         justifyContent:'flex-end',
     },
     picture: {
-        flex:1,
+        width:WINDOW_WIDTH,
         height:WINDOW_HEIGHT * 0.3,
     },
     avatarMSG: {
@@ -63,6 +62,7 @@ const styles = StyleSheet.create({
         backgroundColor:'blue'
     },
     avatarImg: {
+        flex:1,
         alignItems:'center',
         justifyContent:'center',
         borderWidth:3,
@@ -166,6 +166,29 @@ const styles = StyleSheet.create({
           height:25,
           flex:0.1,
         },
+    //Prescription
+    drugTouch: {
+        paddingLeft:10,
+        paddingRight:10,
+    },
+    drugLogo: {
+        marginRight:10,
+        width:40,
+        height:40,
+        borderRadius:20,
+        backgroundColor:'#53AD55',
+        alignItems:'center',
+        justifyContent:'center'
+    },
+    drugLine: {
+        flex:1,
+        flexDirection:'row',
+        alignItems:'center',
+        paddingTop:5,
+        paddingBottom:5,
+        borderBottomWidth:1,
+        borderColor:'#EEEEEE',
+    },
 });
 
 export default styles;

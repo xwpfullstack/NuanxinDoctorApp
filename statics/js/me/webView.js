@@ -11,12 +11,12 @@ import React, {
     View,
 
 } from 'react-native';
-var DEFAULT_URL = 'https://www.baidu.com'
+var DEFAULT_URL = 'https://www.baidu.com';
 
 class WebMainPage extends Component{
     render(){
         return(
-            <View>
+            <View style={{flex:1}}>
                 <View style={styles.headNav}>
                     <TouchableOpacity  style={styles.back} onPress= {() => {this.props.navigator.pop()}}>
                         <Image style={styles.headImg}
@@ -26,7 +26,7 @@ class WebMainPage extends Component{
                     <View style={styles.headMenu}><Text style={styles.textBold}>我的主页</Text></View>
                 </View>
                 <WebView
-                    source={{uri:'https://www.baidu.com'}}
+                    source={{uri:DEFAULT_URL}}
                     startInLoadingState={true}
                     domStorageEnabled={true}
                     javaSvriptEnabled={true}

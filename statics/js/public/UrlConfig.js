@@ -58,4 +58,5 @@ global.GetDeparts_URL = Basic_URL + 'getdepars/';
 global.ForgetPass_URL = Basic_URL + 'forgetPass/';
 //修改密码
 global.ModifyPass_URL = Basic_URL + 'modifyPass/';
-
+//发送短信
+global.sendMsg_URL = Basic_URL + 'AppSendMsg/';

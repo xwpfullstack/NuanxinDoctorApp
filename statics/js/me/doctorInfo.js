@@ -3,6 +3,8 @@ import JobView from './jobView.js'
 import MyModal from './modal.js';
 import styles from './styles';
 import WebMainPage from './webView'
+import FLModal from './FLModal'
+import Modal from 'react-native-root-modal'
 
 import React, {
   Component,
@@ -21,6 +23,37 @@ var Doctor_Message = [
   price:49},
 ];
 class DoctorInfo extends Component {
+    constructor(){
+        super();
+        this.state={
+            ListMenu:false,
+            modalStyle:{},
+            modalContent:{},
+        }
+    }
+    _onPressEditButton(){
+        this.props.navigator.push({
+            name:'doctorMsgEdit',
+        })
+    };
+    showModal() {
+        if(!this.state.ListMenu) {
+            this.setState({
+                ListMenu:true,
+                modalStyle:{
+                    position: 'absolute',
+                    right:10,
+                    top:127,
+                    height:100,
+                    width:100,
+                    backgroundColor:'rgba(255,255,255,0.8)',
+                },
+                modalContent:<FLModal close={()=>this.closeModal()} openCenter={()=>this.openCenterModal()}/>,
+            });
+        }else{
+            this.setState({ListMenu:false});
+        }
+    }
     render() {
       var dctmsg = Doctor_Message[0];
     return (
@@ -31,16 +64,24 @@ class DoctorInfo extends Component {
                 </View>
                 <TouchableOpacity
                 style={styles.headImg}
-                onPress= {() => {this.props.changeEditShow()}}
+                onPress= {()=>this.showModal()}
                 >
                     <Image source = {require('../../images/me/edit.png')} />
                 </TouchableOpacity>
             </View>
+
+            <Modal visible={this.state.ListMenu}>
+                <View style={this.state.modalStyle}>
+                    {this.state.modalContent}
+                </View>
+            </Modal>
+
             <ScrollView style={styles.ScrollViewBody}>
                 {/*headerImage start*/}
                 <Image
                     source = {require('../../images/me/bg-11.png')}
-                    style = {styles.picture}>
+                    style = {styles.picture}
+                    resizeMode='stretch'>
                     <View style={styles.avatarMSG}>
                         <View style = {styles.avatarImage}>
                             <Image

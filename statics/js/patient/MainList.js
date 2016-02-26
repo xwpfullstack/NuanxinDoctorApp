@@ -12,26 +12,27 @@ import React, {
   Alert,
   TouchableOpacity,
   ScrollView,
+  ProgressBarAndroid,
 } from 'react-native';
 
 var json={
-  '2013-2-1':{},
-  '2013-2-1:1':{'id':2,'name':'zhansan','jb':'duoliang'},
-  '2013-2-1:2':{'id':3,'name':'zhansan','jb':'duoliang'},
-   '2013-2-1:3':{'id':4,'name':'zhansan','jb':'duoliang'},
-  '2013-2-2':{},
-  '2013-2-2:1':{'id':5,'name':'zhansan','jb':'duoliang'},
-  '2013-2-2:2':{'id':6,'name':'zhansan','jb':'duoliang'},
-   '2013-2-2:3':{'id':7,'name':'zhansan','jb':'duoliang'},
-    '2013-2-3':{},
-  '2013-2-3:1':{'id':8,'name':'zhansan','jb':'duoliang'},
-  '2013-2-3:2':{'id':9,'name':'zhansan','jb':'duoliang'},
-   '2013-2-3:3':{'id':10,'name':'zhansan','jb':'duoliang'},
+  '2013-02-01':{},
+  '2013-02-01:1':{'id':2,'name':'张三','jb':'duoliang'},
+  '2013-02-01:2':{'id':3,'name':'李四','jb':'duoliang'},
+   '2013-02-01:3':{'id':4,'name':'王五','jb':'duoliang'},
+  '2013-02-02':{},
+  '2013-02-02:1':{'id':5,'name':'王某某','jb':'duoliang'},
+  '2013-02-02:2':{'id':6,'name':'李某','jb':'duoliang'},
+   '2013-02-02:3':{'id':7,'name':'张某','jb':'duoliang'},
+    '2013-02-03':{},
+  '2013-02-03:1':{'id':8,'name':'zhansan','jb':'duoliang'},
+  '2013-02-03:2':{'id':9,'name':'zhansan','jb':'duoliang'},
+   '2013-02-03:3':{'id':10,'name':'zhansan','jb':'duoliang'},
 };
 var sectionIDS=[
-'2013-2-1',
-'2013-2-2',
- '2013-2-3',
+'2013-02-01',
+'2013-02-02',
+ '2013-02-03',
 ];
 var rowIDs=[
 ['1','2','3'],['1','2','3'],['1','2','3'],
@@ -55,13 +56,21 @@ class MainList extends Component{
       }); 
     this.state={
       dataSource:dataSource.cloneWithRowsAndSections(json,sectionIDS,rowIDs),
+      isLoad:true,
   };
+    //this.props.changeNums(json.length-sectionIDS.length);
 }
 
-
+handlePatient(rowdata){
+  this.props.closeModal();
+  this.props.navigator.push({
+    name:'self',
+    id:rowdata['id'],
+  });
+};
   renderRow(rowdata,sectionID,rowID){
     return (
-    <TouchableOpacity>
+    <TouchableOpacity onPress={(rowdata)=>this.handlePatient(rowdata)}>
         <View style={styles.item}>
             <View style={styles.itemImage}>
               <Image 
@@ -71,9 +80,13 @@ class MainList extends Component{
 
             <View style={styles.itemContent}>
               <Text style={styles.itemHeader}>{rowdata.name}</Text>
+              <View style={styles.jump}>
               <Text style={styles.redText}>
                 {rowdata.jb}
               </Text>
+                 <Image 
+                source={require('../../images/load/jump.png')} style={{borderWidth:1}}/>
+              </View>
             </View>
       </View>
    </TouchableOpacity>
@@ -83,7 +96,7 @@ class MainList extends Component{
   renderSectionHeader(sectionData,sectionID){
     return (
         <View style={{justifyContent:'center',padding:10}}>
-      <Text style={{color:'#F08300',fontSize:11}}>{sectionID.toString()}</Text>
+      <Text style={{color:'#F08300',fontSize:13}}>{sectionID.toString()}</Text>
       </View>
       );
   };
@@ -95,27 +108,44 @@ class MainList extends Component{
       return <ScrollView></ScrollView>
   };
   render(){
-    return (
-      <ScrollView style={{height:Dimensions.get('window').height-185,}}>
-        <ListView
-                              ref="listview"
-                              style={styles.listview}
-                              dataSource={this.state.dataSource}
-                              renderRow={(data)=>{return this.renderRow(data);}}
-                              onEndReached={this.onEndReached}
-                              renderSectionHeader={this.renderSectionHeader}
-                              automaticallyAdjustContentInsets={false}
-                              keyboardDismissMode="on-drag"
-                              keyboardShouldPersistTaps={true}
-                              showsVerticalScrollIndicator={false}
-                              renderScrollComponent={()=>{return this._renderScrollComponent()}}
-                             />
-                             </ScrollView>
-      );
+      if (this.state.isLoad === true) {
+           return (
+                    <ScrollView style={{height:Dimensions.get('window').height-185,}}>
+                            <ListView
+                                            ref="listview"
+                                            style={styles.listview}
+                                            dataSource={this.state.dataSource}
+                                            renderRow={(data)=>{return this.renderRow(data);}}
+                                            onEndReached={this.onEndReached}
+                                            renderSectionHeader={this.renderSectionHeader}
+                                            automaticallyAdjustContentInsets={false}
+                                            keyboardDismissMode="on-drag"
+                                            keyboardShouldPersistTaps={true}
+                                            showsVerticalScrollIndicator={false}
+                                            renderScrollComponent={()=>{return this._renderScrollComponent()}} />
+                    </ScrollView>
+            );
+      }
+      else{
+          return (
+                  <View style={{height:Dimensions.get('window').height-185, width:Dimensions.get('window').width,flexDirection: 'column',alignItems: 'center',justifyContent: 'center',}}>
+                          <ProgressBarAndroid />
+                          <Text style={{color:'#F08300',fontSize:16,}}>加载中.....</Text>
+                  </View>
+            );
+      }
+     
+      
   };
 };
 
 const styles = StyleSheet.create({
+  jump:{
+    flexDirection: 'row',
+    flex:2,
+    alignItems: 'center',
+    justifyContent: 'space-around',
+  },
   container:{
     flex:1,
     flexDirection: 'column',
@@ -168,7 +198,7 @@ const styles = StyleSheet.create({
   itemContent: {
     flex: 1,
     flexDirection: 'row',
-    justifyContent: 'space-between',
+   // justifyContent: 'space-between',
     alignItems: 'center',
     padding: 10,
     height: 74,
@@ -179,12 +209,14 @@ const styles = StyleSheet.create({
   itemHeader: {
     fontFamily: 'PingFang-SC-Regular',
     fontSize: 18,
+    flex:3,
     fontWeight: '300',
     color: '#ffffff',
   },
   redText: {
     fontFamily: 'PingFang-SC-Regular',
     fontSize: 14,
+   alignSelf:'center',
     fontWeight: '300',
     color: '#f5f5f5',
   },

@@ -21,6 +21,9 @@ import DoctorMainScreen from './statics/js/public/DoctorMainScreen';
 import DoctorLogIn from './statics/js/login/DoctorLogIn';
 import ModifyPwd from './statics/js/login/DoctorModifyPwd';
 import WebMainPage from './statics/js/me/webView'
+import AddOrder from './statics/js/patient/AddOrder';
+import DoctorMsgEdit from './statics/js/me/doctorMsgEdit'
+import Prescription from './statics/js/me/prescription'
 
 var _navigator;
 //监听硬件返回功能
@@ -47,7 +50,7 @@ class NuanXinDoctorApp extends Component {
       ()=>{
         this.setState({pageLoading: true});
       },
-      1000,
+      1,
     );
     this.InitialRouteName();
   }
@@ -84,12 +87,25 @@ class NuanXinDoctorApp extends Component {
       return (
           <WebMainPage navigator={navigator} />
       )
+  }else if(route.name === 'doctorMsgEdit') {
+      return (
+          <DoctorMsgEdit navigator={navigator} />
+      )
+  }else if(route.name === 'prescription'){
+      return (
+          <Prescription navigator={navigator} />
+      )
   }
     /*else if(route.name === 'patientInfo') {
       return (
         <PatientInfo navigator={navigator}/>
       )
     }*/
+    else if(route.name === 'addOrder'){
+      return (
+          <AddOrder navigator={navigator}/>
+      );
+    }
   }
 
   InitialRouteName() {
@@ -98,7 +114,7 @@ class NuanXinDoctorApp extends Component {
       autoSync: true,
       syncInBackground: true,
     }).then( ret => {
-      if(ret.state === 'success') {
+      if(ret.state === 'success') {   //
         this.setState({
           routeInfo:{
             name: 'doctorHomePage',

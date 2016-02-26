@@ -41,6 +41,11 @@ class MyModal extends Component {
             name:'webMainPage',
         })
     };
+    _onPressPrescriptionBtn() {
+        this.props.navigator.push({
+            name:'prescription',
+        })
+    }
   render() {
     return (
         <View>
@@ -69,7 +74,7 @@ class MyModal extends Component {
 
             <TouchableOpacity
               style={[styles.doctorMessage,{marginTop:0}]}
-              onPress={this.showModal}>
+              onPress={()=>{return this._onPressPrescriptionBtn()}}>
 
               <View style={styles.myqrcode}>
                   <Image
@@ -88,7 +93,7 @@ class MyModal extends Component {
                     </View>
                 </TouchableOpacity>
             </Modal>
-    </View>
+        </View>
 
       );
   }
