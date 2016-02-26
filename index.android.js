@@ -20,6 +20,8 @@ import SplashScreen from './statics/js/login/SplashScreen';
 import DoctorMainScreen from './statics/js/public/DoctorMainScreen';
 import DoctorLogIn from './statics/js/login/DoctorLogIn';
 import ModifyPwd from './statics/js/login/DoctorModifyPwd';
+import OrderDetails from './statics/js/cal/OrderDetails';
+import NewsDetails from './statics/js/cal/NewsDatails';
 import AddOrder from './statics/js/patient/AddOrder';
 import DoctorRecord from  './statics/js/patient/DoctorRecord';
 import WriteTable from './statics/js/patient/WriteTable';
@@ -57,7 +59,7 @@ class NuanXinDoctorApp extends Component {
   componentWillUnmount() {
     this.timer && clearTimeout(this.timer);
   }
-  
+
   /****************************
    * param: route导航器路由信息，
    * navigator导航器对象，用来切换页面
@@ -89,7 +91,7 @@ class NuanXinDoctorApp extends Component {
         break;
     };
   };
-  
+
   InitialRouteName() {
     storage.load({
       key: 'loginState',
@@ -116,7 +118,7 @@ class NuanXinDoctorApp extends Component {
           name: 'logIn',
         }
       })
-    })  
+    })
   }
 
   render() {

@@ -31,6 +31,7 @@ class Hometwo extends Component{
       modalStyle:{},
       modalContent:{},
     };
+
     };
 
 changeNums(num){
@@ -82,7 +83,7 @@ showModel(){
 };
 
 RouteMapper(route, navigator){
-    
+
       if (route.name === 'home') {
        return (
             <HomePage navigator={navigator}/>
@@ -106,7 +107,7 @@ const styles = StyleSheet.create({
   navigatorStyle:{
     flexDirection: 'row',
     height:Dimensions.get('window').width*2,
-   
+
   },
 container:{
   backgroundColor: 'rgba(255,255,255,0.102)',

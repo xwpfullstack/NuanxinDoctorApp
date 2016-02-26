@@ -16,28 +16,34 @@ import React, {
 import Home from "./Home"
 import ViewPager from 'react-native-scrollable-tab-view'
 import BottomTabBar from '../BottomTabBar'
+import Schedule from '../cal/Schedule';
+import Release from '../cal/Release';
+import ComponentTest from '../cal/ComponentTest';
+
 class nuanxin extends Component {
 
   render() {
     return (
-      
-        <ViewPager tabBarPosition='bottom'   locked='true' renderTabBar={()=><BottomTabBar />}>
+
+
+        <ViewPager tabBarPosition='bottom'  locked='true' renderTabBar={()=><BottomTabBar />}>
           <View tabLabel='one'>
             <Home mainNavigator={this.props.mainNavigator}/>
           </View>
-            <View tabLabel='two'>
+          <View tabLabel='two'>
+            <Schedule navigator={this.props.mainNavigator} />
           </View>
-           <View tabLabel='three'>
-          <Text>three</Text>
+          <View tabLabel='three'>
+            <Release navigator={this.props.mainNavigator} />
           </View>
-           <View tabLabel='four'>
-          <Text>four</Text>
+          <View tabLabel='four'>
+            <ComponentTest />
           </View>
-           <View tabLabel='five'>
-          <Text>five</Text>
+          <View tabLabel='five'>
+            <Text>five</Text>
           </View>
         </ViewPager>
-      
+
     );
   }
 }
