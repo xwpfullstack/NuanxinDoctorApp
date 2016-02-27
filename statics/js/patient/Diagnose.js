@@ -58,6 +58,11 @@ handleCheack(Msg){
      this.setState({isCheack:ischeack});
 };
 
+addDiannosis(){
+    this.props.navigator.push({
+          name:'addDianosis',
+    });
+};
 
 dSubmit(){
       this.props.gotoPage(1);
@@ -109,7 +114,7 @@ dSubmit(){
                 </View>
             </View>
             <View style={styles.Submit}>
-                    <TouchableOpacity style={styles.submitContent}><Text style={styles.txtSubStyle}>添加诊断</Text></TouchableOpacity>
+                    <TouchableOpacity onPress={()=>this.addDiannosis()} style={styles.submitContent}><Text style={styles.txtSubStyle}>添加诊断</Text></TouchableOpacity>
                     <TouchableOpacity onPress={()=>this.dSubmit()} style={[styles.submitContent,{marginRight:50,}]}><Text style={styles.txtSubStyle}>提交</Text></TouchableOpacity>
             </View>
             </ScrollView>

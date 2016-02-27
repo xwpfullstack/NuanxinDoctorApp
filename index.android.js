@@ -25,6 +25,8 @@ import NewsDetails from './statics/js/cal/NewsDatails';
 import AddOrder from './statics/js/patient/AddOrder';
 import DoctorRecord from  './statics/js/patient/DoctorRecord';
 import WriteTable from './statics/js/patient/WriteTable';
+import AddDianosis from './statics/js/patient/AddDiagnosis';
+import AddMedcine from './statics/js/patient/AddMedcine';
 var _navigator;
 //监听硬件返回功能
 BackAndroid.addEventListener('hardwareBackPress', ()=>{
@@ -89,6 +91,13 @@ class NuanXinDoctorApp extends Component {
         case 'WriteTable':
              return  <WriteTable navigator={navigator}/>;
         break;
+        case 'addDianosis':
+             return  <AddDianosis navigator={navigator}/>;
+        break;
+         case 'addMedcine':
+             return  <AddMedcine navigator={navigator}/>;
+        break;
+        
     };
   };
 
@@ -101,7 +110,7 @@ class NuanXinDoctorApp extends Component {
       if(ret.state === 'success') {   //
         this.setState({
           routeInfo:{
-            name: 'doctorHomePage',
+            name: 'addMedcine',
             doctorId: ret.userId,
           }
         })

@@ -66,8 +66,18 @@ render(){
           </View>
           <View style={styles.FGView}></View>
               <ViewPager  ref='page'  renderTabBar={()=><PatientTB />}>
-                  <View tabLabel='诊断'><Diagnose  changeMedia={(media,isdel)=>this.changeMedia(media,isdel,'sick')}  gotoPage={(num)=>this.gotoPage(num)}/></View>
-                  <View  tabLabel='选药'><ChooseMedis  changeMedia={(media,isdel)=>this.changeMedia(media,isdel,'media')}  gotoPage={(num)=>this.gotoPage(num)}/></View>
+                  <View tabLabel='诊断'>
+                        <Diagnose  
+                              navigator={this.props.navigator}
+                              changeMedia={(media,isdel)=>this.changeMedia(media,isdel,'sick')}  
+                              gotoPage={(num)=>this.gotoPage(num)}/>
+                  </View>
+                  <View  tabLabel='选药'>
+                        <ChooseMedis  
+                              navigator={this.props.navigator}
+                              changeMedia={(media,isdel)=>this.changeMedia(media,isdel,'media')}  
+                              gotoPage={(num)=>this.gotoPage(num)}/>
+                  </View>
                   <View tabLabel='服用方法'><EatMedine ref='EM' PatientMsg={PatientMsg} /></View>
               </ViewPager>
         </View>

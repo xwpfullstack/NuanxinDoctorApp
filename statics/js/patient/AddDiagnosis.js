@@ -19,7 +19,7 @@ class AddDiagnosis extends Component {
   }
 
   popOut() {
-
+      this.props.navigator.pop();
   }
 
   submit() {

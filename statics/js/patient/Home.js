@@ -32,56 +32,7 @@ class Hometwo extends Component{
       modalContent:{},
     };
 
-    };
-
-changeNums(num){
-  this.setState({nums:num});
-};
-
-
-
-closeModal(){
-   if (this.state.Lvisible === true) {
-     this.setState({Lvisible:false});
-  }
-};
-
-closeCenterModal(){
-  if (this.state.centerVisible === true) {
-     this.setState({centerVisible:false});
-  }
-};
-openCenterModal(){
-    this.setState({modalStyle:{
-                    top:(Dimensions.get('window').height-400)/2,
-                    left:(Dimensions.get('window').width-250)/2,
-                    height:400,
-                    width:250,
-                    backgroundColor: 'rgba(255, 255, 255,0.8)',
-                  },
-                  modalContent: <Text>aaa</Text>
-
-                });
-};
-showModel(){
-  if (this.state.Lvisible === false) {
-
-     this.setState({Lvisible:true,
-                    modalStyle:{
-                      position: 'absolute',
-                      right: 10,
-                      top: 116.5,
-                      height:100,
-                      width:100,
-                      backgroundColor: 'rgba(255, 255, 255,0.8)',},
-                    modalContent:<FLModal close={()=>this.closeModal()} openCenter={()=>this.openCenterModal()}/> ,
-                  });
-  }
-  else{
-       this.setState({Lvisible:false});
   };
-};
-
 RouteMapper(route, navigator){
 
       if (route.name === 'home') {
