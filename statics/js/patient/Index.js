@@ -25,6 +25,7 @@ class nuanxin extends Component {
   render() {
     return (
 
+
         <ViewPager tabBarPosition='bottom'  locked='true' renderTabBar={()=><BottomTabBar />}>
           <View tabLabel='one'>
             <Home mainNavigator={this.props.mainNavigator}/>

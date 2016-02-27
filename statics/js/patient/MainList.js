@@ -15,32 +15,26 @@ import React, {
   ProgressBarAndroid,
 } from 'react-native';
 
-var json={
-  '2013-02-01':{},
-  '2013-02-01:1':{'id':2,'name':'张三','jb':'duoliang'},
-  '2013-02-01:2':{'id':3,'name':'李四','jb':'duoliang'},
-   '2013-02-01:3':{'id':4,'name':'王五','jb':'duoliang'},
-  '2013-02-02':{},
-  '2013-02-02:1':{'id':5,'name':'王某某','jb':'duoliang'},
-  '2013-02-02:2':{'id':6,'name':'李某','jb':'duoliang'},
-   '2013-02-02:3':{'id':7,'name':'张某','jb':'duoliang'},
-    '2013-02-03':{},
-  '2013-02-03:1':{'id':8,'name':'zhansan','jb':'duoliang'},
-  '2013-02-03:2':{'id':9,'name':'zhansan','jb':'duoliang'},
-   '2013-02-03:3':{'id':10,'name':'zhansan','jb':'duoliang'},
-};
-var sectionIDS=[
-'2013-02-01',
-'2013-02-02',
- '2013-02-03',
+
+var tempData=[
+  {'id':2,'name':'张三','jb':'duoliang','time':'2013-02-01','isCollect':true},
+  {'id':3,'name':'李四','jb':'duoliang','time':'2013-02-01','isCollect':false},
+  {'id':4,'name':'王五','jb':'duoliang','time':'2013-02-01','isCollect':true},
+  {'id':5,'name':'王某某','jb':'duoliang','time':'2013-02-02','isCollect':true},
+  {'id':6,'name':'李某','jb':'duoliang','time':'2013-02-02','isCollect':true},
+  {'id':7,'name':'张某','jb':'duoliang','time':'2013-02-02','isCollect':false},
+  {'id':8,'name':'zhansan','jb':'duoliang','time':'2013-02-03','isCollect':false},
+  {'id':9,'name':'zhansan','jb':'duoliang','time':'2013-02-03','isCollect':false},
+  {'id':10,'name':'zhansan','jb':'duoliang','time':'2013-02-04','isCollect':true},
+  {'id':11,'name':'zhansan','jb':'duoliang','time':'2013-02-04','isCollect':false},
 ];
-var rowIDs=[
-['1','2','3'],['1','2','3'],['1','2','3'],
-];
+var json={};
+var sectionIDS=[];
+var rowIDs=[];
 
 class MainList extends Component{
-  constructor(){
-    super();
+  constructor(props){
+    super(props);
 
     var getSectionData = (dataBlob, sectionID) => {
           return dataBlob[sectionID];
@@ -58,8 +52,55 @@ class MainList extends Component{
       dataSource:dataSource.cloneWithRowsAndSections(json,sectionIDS,rowIDs),
       isLoad:true,
   };
-    //this.props.changeNums(json.length-sectionIDS.length);
-}
+   
+};
+
+
+componentWillMount(){
+     this.createData('time');
+};
+
+BaseCreateData(Datas,name){
+      json={};
+      sectionIDS=[];
+      rowIDs=[];
+      for (let data of Datas){
+           if (!json[data[name]]) {
+                 json[data[name]]={};
+                 sectionIDS.push(data[name]);
+                 rowIDs.push([]);
+            }
+            let index;
+            for (var i = 0; i < sectionIDS.length; i++) {
+                if (sectionIDS[i] == data[name]) {
+                    index=i;
+                    break;
+                }
+            };
+          let  row= (rowIDs[index].length+1)+'';
+          rowIDs[index].push(row)
+           json[data[name]+':'+row]=data;
+      };
+      this.setState({dataSource:this.state.dataSource.cloneWithRowsAndSections(json,sectionIDS,rowIDs),});
+};
+
+createData(name){
+      this.BaseCreateData(tempData,name);
+};
+
+isCollect(){
+      var collectValues=tempData.filter((value)=>{
+          value['isCollect'] = value['isCollect'] == true?'已收藏':value['isCollect'];
+          return value['isCollect'] != false;
+      });
+      this.BaseCreateData(collectValues,'isCollect');
+};
+
+
+
+componentDidMount(){
+    this.props.changeNums(tempData.length);
+};
 
 handlePatient(rowdata){
   this.props.closeModal();
@@ -114,6 +155,7 @@ handlePatient(rowdata){
                             <ListView
                                             ref="listview"
                                             style={styles.listview}
+                                            initialListSize={9}
                                             dataSource={this.state.dataSource}
                                             renderRow={(data)=>{return this.renderRow(data);}}
                                             onEndReached={this.onEndReached}

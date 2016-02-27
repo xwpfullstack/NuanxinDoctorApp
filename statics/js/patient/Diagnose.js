@@ -69,6 +69,7 @@ dSubmit(){
         var temp;
         if (data[1]) {
           temp= <TouchableOpacity 
+                activeOpacity={1}
                 onPress={()=>this.handleCheack(data[1])} 
                 style={[styles.rowData,{marginRight:20,backgroundColor:this.state.isCheack[data[1]['id']]?'#FE9300':'rgb(244,241,245)'}]}>
                 <Text style={[styles.rowDataText,{color:this.state.isCheack[data[1]['id']]?'white':'black'}]}>
@@ -78,6 +79,7 @@ dSubmit(){
         }
         else{
             temp= <TouchableOpacity 
+                
                 style={[styles.rowData,{marginRight:20,backgroundColor:'rgba(0,0,0,0)',borderWidth:0,}]}>
                 <Text style={[styles.rowDataText]}>
                 </Text>
@@ -87,6 +89,7 @@ dSubmit(){
         return (
           <View key={data[0]['id']} style={styles.row}>
               <TouchableOpacity 
+              activeOpacity={1}
               onPress={()=>this.handleCheack(data[0])} 
               style={[styles.rowData,{backgroundColor:this.state.isCheack[data[0]['id']]?'#FE9300':'rgb(244,241,245)'}]}>
                   <Text style={[styles.rowDataText,{color:this.state.isCheack[data[0]['id']]?'white':'black'}]}>{data[0]['name']}</Text>

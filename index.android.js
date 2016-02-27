@@ -23,6 +23,8 @@ import ModifyPwd from './statics/js/login/DoctorModifyPwd';
 import OrderDetails from './statics/js/cal/OrderDetails';
 import NewsDetails from './statics/js/cal/NewsDatails';
 import AddOrder from './statics/js/patient/AddOrder';
+import DoctorRecord from  './statics/js/patient/DoctorRecord';
+import WriteTable from './statics/js/patient/WriteTable';
 import ModifyPrescription from './statics/js/patient/ModifyPrescription';
 
 var _navigator;
@@ -70,42 +72,37 @@ class NuanXinDoctorApp extends Component {
    ***************************/
   RouteMapper(route,navigator) {
     _navigator=navigator;
-    if(route.name === 'logIn') {
-      return (
-        <DoctorLogIn navigator={navigator}/>
-      )
-    }else if(route.name === 'doctorHomePage') {
-      return (
-        <DoctorMainScreen navigator={navigator} doctorId={route.doctorId}/>
-      )
-    }else if(route.name === 'modifyPwd') {
-      return (
-        <ModifyPwd navigator={navigator} />
-      )
-    }else if(route.name === 'orderDetails') {
-      return (
-        <OrderDetails navigator={navigator} orderData={route.passProps}/>
-      )
-    }else if(route.name === 'newsDetails') {
-      return (
-        <NewsDetails navigator={navigator} newsData={route.passProps}/>
-      )
-    }/*else if(route.name === 'patientInfo') {
-      return (
-        <PatientInfo navigator={navigator}/>
-      )
-    }*/
-    else if(route.name === 'addOrder'){
-      return (
-          <AddOrder navigator={navigator}/>
-      );
-    }
-    else if(route.name === 'modifyPrescriptionPage'){
-      return (
-          <ModifyPrescription navigator={navigator} passProps={route.passProps}/>
-      );
-    }
-  }
+
+    switch(route.name){
+      case 'logIn':
+             return  <DoctorLogIn navigator={navigator}/>;
+        break;
+        case 'doctorHomePage':
+             return   <DoctorMainScreen navigator={navigator} doctorId={route.doctorId}/>;
+        break;
+        case 'modifyPwd':
+             return  <ModifyPwd navigator={navigator} />;
+        break;
+        case 'addOrder':
+             return  <AddOrder navigator={navigator}/>;
+        break;
+        case 'DoctorRecord':
+             return  <DoctorRecord navigator={navigator}/>;
+        break;
+        case 'WriteTable':
+             return  <WriteTable navigator={navigator}/>;
+        break;
+        case 'orderDetails':
+             return  <OrderDetails navigator={navigator} orderData={route.passProps}/>;
+        break;
+        case 'newsDetails':
+             return  <NewsDetails navigator={navigator} newsData={route.passProps}/>;
+        break;
+        case 'modifyPrescriptionPage':
+             return  <ModifyPrescription navigator={navigator} passProps={route.passProps}/>;
+        break;
+    };
+  };
 
   InitialRouteName() {
     storage.load({

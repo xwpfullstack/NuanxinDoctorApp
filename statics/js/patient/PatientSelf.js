@@ -46,9 +46,9 @@ import AddModal from './AddModal'
   			<View style={styles.container}>
   				<View style={styles.tittle}>
   					<View style={styles.titleContent}>
-						<TouchableOpacity onPress={()=>this.handlerBack()}><Image source={require('../../images/icon/back.png')}></Image></TouchableOpacity>
+						<TouchableOpacity style={{width:50}} onPress={()=>this.handlerBack()}><Image source={require('../../images/icon/back.png')}></Image></TouchableOpacity>
   						<Text style={styles.name}>{this.state.title}</Text>
-  						<TouchableOpacity onPress={()=>this.selfModal()}><Image source={require('../../images/icon/add.png')} /></TouchableOpacity>
+  						<TouchableOpacity style={{width:50}} onPress={()=>this.selfModal()}><Image style={{alignSelf:'flex-end'}} source={require('../../images/icon/add.png')} /></TouchableOpacity>
   					</View>
   				</View>
   				<View style={styles.selfMsg}>
@@ -94,16 +94,19 @@ import AddModal from './AddModal'
   					</View>
   				</View>
   				</TouchableOpacity>
-  				<Modal visible={this.state.addVisible} >
+          
+  				<Modal 
+                                visible={this.state.addVisible} 
+                                 style={{height:Dimensions.get('window').height,width:Dimensions.get('window').width,top:0,bottom:0,left:0,right:0}}>
                                       <TouchableOpacity  onPress={()=>this.closeAddModal()} style={{height:Dimensions.get('window').height,width:Dimensions.get('window').width,}}>
                                             <View style={{ 
                                                 position: 'absolute',
                                                 right: 1,
-                                                top: 52,
+                                                top: 41,
                                                 height:120,
                                                 width:150,
                                                 backgroundColor: 'rgba(0, 0, 0,0.8)',}}>
-                                                   <AddModal mainNavigator={this.props.mainNavigator} close={()=>this.closeAddModal()}/>
+                                                    <AddModal mainNavigator={this.props.mainNavigator} close={()=>this.closeAddModal()}/>
                                             </View>
                                       </TouchableOpacity>
                                 
