@@ -25,22 +25,22 @@ class nuanxin extends Component {
 
   render() {
     return (
-        <ViewPager tabBarPosition='bottom'  locked='true'  renderTabBar={()=><BottomTabBar />}>
-            <View tabLabel='one'>
-                <Home />
-            </View>
-            <View tabLabel='two'>
-            <Text>two</Text>
-            </View>
-            <View tabLabel='three'>
-            <Text>three</Text>
-            </View>
-            <View tabLabel='four'>
-            <Text>four</Text>
-            </View>
-            <View tabLabel='five'>
-                <DoctorMainMessage navigator={this.props.mainNavigator}/>
-            </View>
+        <ViewPager tabBarPosition='bottom'  locked='true' renderTabBar={()=><BottomTabBar />}>
+          <View tabLabel='one'>
+            <Home mainNavigator={this.props.mainNavigator}/>
+          </View>
+          <View tabLabel='two'>
+            <Schedule navigator={this.props.mainNavigator} />
+          </View>
+          <View tabLabel='three'>
+            <Release navigator={this.props.mainNavigator} />
+          </View>
+          <View tabLabel='four'>
+            <ComponentTest navigator={this.props.mainNavigator} />
+          </View>
+          <View tabLabel='five'>
+            <DoctorMainMessage navigator={this.props.mainNavigator}/>
+          </View>
         </ViewPager>
 
     );

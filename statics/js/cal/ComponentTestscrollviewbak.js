@@ -11,6 +11,7 @@ import React, {
 	Dimensions,
   StyleSheet,
 } from 'react-native';
+import Picker from 'react-native-picker';
 
 let recordData = {
   date: '16年1月21日',
@@ -22,10 +23,12 @@ let recordData = {
     {medcine: '可元', period: '1月21日~1月21日', amount: '中午： 0.5粒'},
     {medcine: 'a', period: '1月21日~1月21日', amount: '中午： 0.5粒'},
     {medcine: 'b', period: '1月21日~1月21日', amount: '中午： 0.5粒'},
+    {medcine: 'c', period: '1月21日~1月21日', amount: '中午： 0.5粒'},
+    {medcine: 'd', period: '1月21日~1月21日', amount: '中午： 0.5粒'},
   ]
 }
 
-class CompleteRecord extends Component {
+class ComponentTest extends Component {
   constructor(props) {
     super(props);
 
@@ -38,7 +41,7 @@ class CompleteRecord extends Component {
   }
 	render(){
 		return (
-      <View style = {styles.container}>
+      <ScrollView style = {styles.container}>
         <TouchableHighlight
           underlayColor='rgba(34,26,38,0.1)'
           onPress={()=>this.addRecord()}
@@ -106,14 +109,14 @@ class CompleteRecord extends Component {
           </View>
         </View>
 
-      </View>
+      </ScrollView>
 		);
 	}
 };
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    height: Dimensions.get('window').height - 40,
     backgroundColor: '#F0F0F0',
     padding: 11,
   },
@@ -185,4 +188,4 @@ const styles = StyleSheet.create({
     color: '#FEA501',
   },
 })
-export default CompleteRecord;
+export default ComponentTest;

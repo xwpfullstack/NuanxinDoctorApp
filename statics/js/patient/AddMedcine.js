@@ -37,6 +37,9 @@ class AddMedcine extends Component {
     }
   }
 
+  update() {
+
+  }
   render() {
     return (
       <View>
@@ -53,11 +56,25 @@ class AddMedcine extends Component {
           </View>
         </View>
         <View style = {styles.inputLine}>
+          <Text style = {styles.label}>请选择医生诊断</Text>
+          <View style = {[styles.inputStyle, {flexDirection: 'row', justifyContent: 'space-between'}]}>
+            <View style = {{paddingLeft: 11, justifyContent: 'center'}}>
+              <Text style = {{alignSelf: 'center', fontSize: 12, color: '#666666',}}>0 items</Text>
+            </View>
+            <TouchableHighlight
+              style = {styles.chooseButton}
+              underlayColor='rgba(34,26,38,0.1)'
+              onPress={()=>this.popOut()}>
+              <Text style={styles.titleReturnText}>···</Text>
+            </TouchableHighlight>
+          </View>
+        </View>
+        <View style = {styles.inputLine}>
           <Text style = {styles.label}>名称</Text>
           <View style = {styles.inputStyle}>
             <TextInput
             style = {styles.searchInput}
-              onChangeText = {(text) => this.setState({name: text})}
+              onChangeText = {(text) => this.setState({productor: text})}
               selectTextOnFocus = {true}
               underlineColorAndroid = {'transparent'}
             />
@@ -121,6 +138,23 @@ class AddMedcine extends Component {
             />
           </View>
         </View>
+        <View style = {[styles.inputLine, {justifyContent: 'flex-start'}]}>
+          <TouchableHighlight
+            underlayColor='rgba(34,26,38,0.1)'
+            onPress={()=>this.chooseFile()}
+            style={styles.filebuttonStyle}
+          >
+            <Text style={styles.filebuttonText}>选择文件</Text>
+          </TouchableHighlight>
+          <Text>未选择文件</Text>
+        </View>
+        <TouchableHighlight
+          underlayColor='rgba(34,26,38,0.1)'
+          onPress={()=>this.update()}
+          style={[styles.buttonStyle, {alignSelf: 'flex-start', marginLeft: 11,}]}
+        >
+          <Text style={styles.buttonText}>上传</Text>
+        </TouchableHighlight>
 
         <TouchableHighlight
           underlayColor='rgba(34,26,38,0.1)'
@@ -165,15 +199,23 @@ const styles = StyleSheet.create({
     paddingHorizontal: 11,
     paddingVertical: 4,
   },
+  chooseButton: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderLeftWidth: 1,
+    borderLeftColor: '#333333',
+    backgroundColor: '#666666',
+    width: 30,
+  },
   label: {
-    flex: 1,
+    flex: 2,
 		fontFamily: 'PingFang-SC-Regular',
 		fontSize: 12,
     color: '#666666',
 
   },
   inputStyle: {
-    flex: 3,
+    flex: 4,
     height: 30,
     justifyContent: 'center',
     borderColor: '#333333',
@@ -200,6 +242,21 @@ const styles = StyleSheet.create({
 		fontFamily: 'PingFang-SC-Regular',
 		fontSize: 18,
     color: '#FEA501',
+  },
+  filebuttonStyle: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#F0F0F0',
+    marginRight: 6,
+    height: 20,
+    width: 80,
+    borderWidth: 0.4,
+    borderRadius: 10,
+  },
+  filebuttonText: {
+		fontFamily: 'PingFang-SC-Regular',
+		fontSize: 12,
+    color: '#333333',
   },
 });
 

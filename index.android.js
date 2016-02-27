@@ -28,6 +28,8 @@ import NewsDetails from './statics/js/cal/NewsDatails';
 import AddOrder from './statics/js/patient/AddOrder';
 import DoctorRecord from  './statics/js/patient/DoctorRecord';
 import WriteTable from './statics/js/patient/WriteTable';
+import ModifyPrescription from './statics/js/patient/ModifyPrescription';
+
 var _navigator;
 //监听硬件返回功能
 BackAndroid.addEventListener('hardwareBackPress', ()=>{
@@ -74,6 +76,7 @@ class NuanXinDoctorApp extends Component {
    ***************************/
   RouteMapper(route,navigator) {
     _navigator=navigator;
+
     switch(route.name){
       case 'logIn':
              return  <DoctorLogIn navigator={navigator}/>;
@@ -101,6 +104,14 @@ class NuanXinDoctorApp extends Component {
         break;
         case 'webMainPage':
              return  <WebMainPage navigator={navigator}/>;
+        case 'orderDetails':
+             return  <OrderDetails navigator={navigator} orderData={route.passProps}/>;
+        break;
+        case 'newsDetails':
+             return  <NewsDetails navigator={navigator} newsData={route.passProps}/>;
+        break;
+        case 'modifyPrescriptionPage':
+             return  <ModifyPrescription navigator={navigator} passProps={route.passProps}/>;
         break;
     };
   };
