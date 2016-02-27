@@ -16,6 +16,32 @@ import React, {
 } from 'react-native';
 
 
+
+/*{}
+2013-02-01: {}
+'2013-02-01:1': Object
+2013-02-01:2: Object
+2013-02-01:3: Object
+
+2013-02-02: {}
+2013-02-02:1 : Object
+2013-02-02:2: Object
+2013-02-02:3: Object
+
+2013-02-03: {}
+2013-02-03:1: Object
+2013-02-03:2: Object
+
+2013-02-04: {}
+2013-02-04:1: Object
+2013-02-04:2: Object
+
+
+sectionIDS=['2013-02-01','2013-02-02']
+
+rowIDs=[['1','2','3'],[]]
+ */
+
 var tempData=[
   {'id':2,'name':'张三','jb':'duoliang','time':'2013-02-01','isCollect':true},
   {'id':3,'name':'李四','jb':'duoliang','time':'2013-02-01','isCollect':false},
@@ -47,12 +73,12 @@ class MainList extends Component{
       sectionHeaderHasChanged: (s1, s2) => s1 !== s2,
       getSectionData: getSectionData,
            getRowData: getRowData,
-      }); 
+      });
     this.state={
       dataSource:dataSource.cloneWithRowsAndSections(json,sectionIDS,rowIDs),
       isLoad:true,
   };
-   
+
 };
 
 
@@ -81,6 +107,7 @@ BaseCreateData(Datas,name){
           rowIDs[index].push(row)
            json[data[name]+':'+row]=data;
       };
+      console.log(json);
       this.setState({dataSource:this.state.dataSource.cloneWithRowsAndSections(json,sectionIDS,rowIDs),});
 };
 
@@ -114,7 +141,7 @@ handlePatient(rowdata){
     <TouchableOpacity onPress={(rowdata)=>this.handlePatient(rowdata)}>
         <View style={styles.item}>
             <View style={styles.itemImage}>
-              <Image 
+              <Image
                 source={require('../../images/load/kobe.jpg')}
                 style={styles.image} />
             </View>
@@ -125,14 +152,14 @@ handlePatient(rowdata){
               <Text style={styles.redText}>
                 {rowdata.jb}
               </Text>
-                 <Image 
+                 <Image
                 source={require('../../images/load/jump.png')} style={{borderWidth:1}}/>
               </View>
             </View>
       </View>
    </TouchableOpacity>
       );
-    
+
   };
   renderSectionHeader(sectionData,sectionID){
     return (
@@ -150,23 +177,23 @@ handlePatient(rowdata){
   };
   render(){
       if (this.state.isLoad === true) {
-           return (
-                    <ScrollView style={{height:Dimensions.get('window').height-185,}}>
-                            <ListView
-                                            ref="listview"
-                                            style={styles.listview}
-                                            initialListSize={9}
-                                            dataSource={this.state.dataSource}
-                                            renderRow={(data)=>{return this.renderRow(data);}}
-                                            onEndReached={this.onEndReached}
-                                            renderSectionHeader={this.renderSectionHeader}
-                                            automaticallyAdjustContentInsets={false}
-                                            keyboardDismissMode="on-drag"
-                                            keyboardShouldPersistTaps={true}
-                                            showsVerticalScrollIndicator={false}
-                                            renderScrollComponent={()=>{return this._renderScrollComponent()}} />
-                    </ScrollView>
-            );
+        return (
+            <ScrollView style={{height:Dimensions.get('window').height-185,}}>
+                <ListView
+                    ref="listview"
+                    style={styles.listview}
+                    initialListSize={9}
+                    dataSource={this.state.dataSource}
+                    renderRow={(data)=>{return this.renderRow(data);}}
+                    onEndReached={this.onEndReached}
+                    renderSectionHeader={this.renderSectionHeader}
+                    automaticallyAdjustContentInsets={false}
+                    keyboardDismissMode="on-drag"
+                    keyboardShouldPersistTaps={true}
+                    showsVerticalScrollIndicator={false}
+                    renderScrollComponent={()=>{return this._renderScrollComponent()}} />
+            </ScrollView>
+        );
       }
       else{
           return (
@@ -176,8 +203,8 @@ handlePatient(rowdata){
                   </View>
             );
       }
-     
-      
+
+
   };
 };
 
@@ -209,7 +236,7 @@ const styles = StyleSheet.create({
       backgroundColor:'#F08300',
       height:30,
        justifyContent:'center',
-      
+
   },
   titleBtn:{
       flex:1,
