@@ -31,6 +31,7 @@ var DataJson=[
   ];
 
 var useData=[];
+var subData=[];
 class AddMedcine extends Component {
   constructor(props) {
     super(props);
@@ -41,7 +42,8 @@ class AddMedcine extends Component {
       unit: '',
       amount: '',
       meathod: '',
-       Lvisible:true,
+       Lvisible:false,
+       txtMsg:'',
     }
   }
 
@@ -52,11 +54,33 @@ componentWillMount(){
      });
 };
 changeMedia(datas){
-
-}
+    useData=datas;
+    subData=[];
+    var msg='';
+    subData=useData.filter((value)=>{
+        if (value['isCheak']) {
+            msg+=(value['name']+'、');
+            return value;
+        }
+    });
+    if (msg.length>14) {
+      msg = msg.substring(0,14);
+      msg=msg[msg.length-1]=='、' ?msg.substring(0,msg.length-1):msg;
+      msg+='……';
+    }
+    else{
+      msg = msg.substring(0,msg.length-1);
+    }
+   
+    this.setState({txtMsg:msg});
+};
 
 closeModal(){
     this.setState({Lvisible:false});
+};
+
+openModal(){
+     this.setState({Lvisible:true});
 };
 
   popOut() {
@@ -69,10 +93,15 @@ closeModal(){
       specification: this.state.specification,
       unit: this.state.unit,
       amount: this.state.amount,
-      meathod: this.state.meathod
+      meathod: this.state.meathod,
+      cheakMedia:subData
     }
+    console.log(postData);
   }
 
+  update() {
+
+  }
   render() {
     return (
       <View>
@@ -89,23 +118,26 @@ closeModal(){
           </View>
         </View>
 
-
-          <View style = {styles.inputLine}>
+        <View style = {styles.inputLine}>
           <Text style = {styles.label}>请选择医生诊断</Text>
-          <View style = {[styles.inputStyle]}>
-          <Text style={{flex:4,backgroundColor:'red'}}></Text>
-            <View style={{flex:1}}>
-              <Text>...</Text>
+          <View style = {[styles.inputStyle, {flexDirection: 'row', justifyContent: 'space-between'}]}>
+            <View style = {{paddingLeft: 11, justifyContent: 'center'}}>
+              <Text style = {{alignSelf: 'center', fontSize: 12, color: '#0094ff',}}>{this.state.txtMsg}</Text>
             </View>
+            <TouchableHighlight
+              style = {styles.chooseButton}
+              underlayColor='rgba(34,26,38,0.1)'
+              onPress={()=>this.openModal()}>
+              <Text style={styles.titleReturnText}>···</Text>
+            </TouchableHighlight>
           </View>
         </View>
-
         <View style = {styles.inputLine}>
           <Text style = {styles.label}>名称</Text>
           <View style = {styles.inputStyle}>
             <TextInput
             style = {styles.searchInput}
-              onChangeText = {(text) => this.setState({name: text})}
+              onChangeText = {(text) => this.setState({productor: text})}
               selectTextOnFocus = {true}
               underlineColorAndroid = {'transparent'}  />
           </View>
@@ -168,6 +200,23 @@ closeModal(){
             />
           </View>
         </View>
+        <View style = {[styles.inputLine, {justifyContent: 'flex-start'}]}>
+          <TouchableHighlight
+            underlayColor='rgba(34,26,38,0.1)'
+            onPress={()=>this.chooseFile()}
+            style={styles.filebuttonStyle}
+          >
+            <Text style={styles.filebuttonText}>选择文件</Text>
+          </TouchableHighlight>
+          <Text>未选择文件</Text>
+        </View>
+        <TouchableHighlight
+          underlayColor='rgba(34,26,38,0.1)'
+          onPress={()=>this.update()}
+          style={[styles.buttonStyle, {alignSelf: 'flex-start', marginLeft: 11,}]}
+        >
+          <Text style={styles.buttonText}>上传</Text>
+        </TouchableHighlight>
 
         <TouchableHighlight
           underlayColor='rgba(34,26,38,0.1)'
@@ -221,15 +270,23 @@ const styles = StyleSheet.create({
     paddingHorizontal: 11,
     paddingVertical: 4,
   },
+  chooseButton: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderLeftWidth: 1,
+    borderLeftColor: '#333333',
+    backgroundColor: '#666666',
+    width: 30,
+  },
   label: {
-    flex: 1,
+    flex: 2,
 		fontFamily: 'PingFang-SC-Regular',
 		fontSize: 12,
     color: '#666666',
 
   },
   inputStyle: {
-    flex: 3,
+    flex: 4,
     height: 30,
     justifyContent: 'center',
     borderColor: '#333333',
@@ -266,6 +323,21 @@ const styles = StyleSheet.create({
       borderColor:'#ffffff',
       borderRadius:20,
       backgroundColor: '#ffffff',
+  },
+  filebuttonStyle: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#F0F0F0',
+    marginRight: 6,
+    height: 20,
+    width: 80,
+    borderWidth: 0.4,
+    borderRadius: 10,
+  },
+  filebuttonText: {
+		fontFamily: 'PingFang-SC-Regular',
+		fontSize: 12,
+    color: '#333333',
   },
 });
 
