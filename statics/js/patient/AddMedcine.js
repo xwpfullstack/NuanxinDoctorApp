@@ -8,8 +8,30 @@ import React, {
   TextInput,
   TouchableHighlight,
   View,
+  Dimensions,
 } from 'react-native';
 
+import Modal from 'react-native-root-modal';
+import MedcineModal from './MedcineModal';
+
+var DataJson=[
+     {'id':1,'name':'睡眠行为障碍'},
+      {'id':2,'name':'抑郁状态'},
+      {'id':3,'name':'帕金森'},
+      {'id':4,'name':'颠簸'},
+      {'id':5,'name':'脑血管病'},
+      {'id':6,'name':'不安腿综合症'},
+      {'id':7,'name':'运动神经元病'},
+      {'id':8,'name':'失眠'},
+      {'id':9,'name':'神经衰弱'},
+      {'id':10,'name':'阿尔茨海默'},
+      {'id':11,'name':'焦虑状态'},
+      {'id':12,'name':'神经症'},
+      {'id':13,'name':'发作性睡病'},
+  ];
+
+var useData=[];
+var subData=[];
 class AddMedcine extends Component {
   constructor(props) {
     super(props);
@@ -20,11 +42,49 @@ class AddMedcine extends Component {
       unit: '',
       amount: '',
       meathod: '',
+       Lvisible:false,
+       txtMsg:'',
     }
   }
 
-  popOut() {
+componentWillMount(){
+     useData=DataJson.map((value,index)=>{
+        value['isCheak']=false;
+        return value;
+     });
+};
+changeMedia(datas){
+    useData=datas;
+    subData=[];
+    var msg='';
+    subData=useData.filter((value)=>{
+        if (value['isCheak']) {
+            msg+=(value['name']+'、');
+            return value;
+        }
+    });
+    if (msg.length>14) {
+      msg = msg.substring(0,14);
+      msg=msg[msg.length-1]=='、' ?msg.substring(0,msg.length-1):msg;
+      msg+='……';
+    }
+    else{
+      msg = msg.substring(0,msg.length-1);
+    }
+   
+    this.setState({txtMsg:msg});
+};
 
+closeModal(){
+    this.setState({Lvisible:false});
+};
+
+openModal(){
+     this.setState({Lvisible:true});
+};
+
+  popOut() {
+         this.props.navigator.pop();
   }
 
   submit() {
@@ -33,8 +93,10 @@ class AddMedcine extends Component {
       specification: this.state.specification,
       unit: this.state.unit,
       amount: this.state.amount,
-      meathod: this.state.meathod
+      meathod: this.state.meathod,
+      cheakMedia:subData
     }
+    console.log(postData);
   }
 
   update() {
@@ -55,16 +117,17 @@ class AddMedcine extends Component {
             <Text style={styles.titleNameText}>添加药物</Text>
           </View>
         </View>
+
         <View style = {styles.inputLine}>
           <Text style = {styles.label}>请选择医生诊断</Text>
           <View style = {[styles.inputStyle, {flexDirection: 'row', justifyContent: 'space-between'}]}>
             <View style = {{paddingLeft: 11, justifyContent: 'center'}}>
-              <Text style = {{alignSelf: 'center', fontSize: 12, color: '#666666',}}>0 items</Text>
+              <Text style = {{alignSelf: 'center', fontSize: 12, color: '#0094ff',}}>{this.state.txtMsg}</Text>
             </View>
             <TouchableHighlight
               style = {styles.chooseButton}
               underlayColor='rgba(34,26,38,0.1)'
-              onPress={()=>this.popOut()}>
+              onPress={()=>this.openModal()}>
               <Text style={styles.titleReturnText}>···</Text>
             </TouchableHighlight>
           </View>
@@ -76,8 +139,7 @@ class AddMedcine extends Component {
             style = {styles.searchInput}
               onChangeText = {(text) => this.setState({productor: text})}
               selectTextOnFocus = {true}
-              underlineColorAndroid = {'transparent'}
-            />
+              underlineColorAndroid = {'transparent'}  />
           </View>
         </View>
         <View style = {styles.inputLine}>
@@ -163,6 +225,15 @@ class AddMedcine extends Component {
         >
           <Text style={styles.buttonText}>提交</Text>
         </TouchableHighlight>
+
+
+         <Modal visible={this.state.Lvisible}  
+                      style={{height:Dimensions.get('window').height,
+                                  width:Dimensions.get('window').width,top:0,bottom:0,left:0,right:0,backgroundColor:'rgba(0,0,0,0.1)'}}>
+                                  <View style={styles.modalStyle}>
+                                        <MedcineModal changeMedia={(datas)=>this.changeMedia(datas)} closeModal={()=>this.closeModal()}  DataJson={useData}/>
+                                  </View>
+                </Modal>
       </View>
     );
   }
@@ -242,6 +313,16 @@ const styles = StyleSheet.create({
 		fontFamily: 'PingFang-SC-Regular',
 		fontSize: 18,
     color: '#FEA501',
+  },
+    modalStyle:{
+      top:(Dimensions.get('window').height-300)/2,
+      left:(Dimensions.get('window').width-250)/2,
+      height:300,
+      width:250,
+      borderWidth:1,
+      borderColor:'#ffffff',
+      borderRadius:20,
+      backgroundColor: '#ffffff',
   },
   filebuttonStyle: {
     justifyContent: 'center',

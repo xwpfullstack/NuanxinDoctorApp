@@ -38,6 +38,12 @@ import AddModal from './AddModal'
                    this.setState({addVisible:false});
               };
       };
+      jump(value){
+          this.props.mainNavigator.push({
+            name:value,
+          });
+      };
+
       closeAddModal(){
             this.setState({addVisible:false});
       };
@@ -72,7 +78,8 @@ import AddModal from './AddModal'
 					
   				</View>
   				<PatientMsgImage />
-  				<TouchableOpacity>
+
+  				<TouchableOpacity onPress={()=>this.jump('completeRecord')}>
   				<View style={[styles.tRow,{marginBottom:1,}]}>
   					<View style={styles.tRowContent}>
   						<View style={{flexDirection: 'row'}}>
@@ -83,7 +90,8 @@ import AddModal from './AddModal'
   					</View>
   				</View>
   				</TouchableOpacity>
-  				<TouchableOpacity>
+
+  				<TouchableOpacity  onPress={()=>this.jump('orderList')}>
   				<View style={styles.tRow}>
   					<View style={styles.tRowContent}>
   						<View style={{flexDirection: 'row'}}>

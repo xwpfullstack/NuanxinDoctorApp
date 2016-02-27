@@ -28,8 +28,11 @@ import NewsDetails from './statics/js/cal/NewsDatails';
 import AddOrder from './statics/js/patient/AddOrder';
 import DoctorRecord from  './statics/js/patient/DoctorRecord';
 import WriteTable from './statics/js/patient/WriteTable';
+import AddDianosis from './statics/js/patient/AddDiagnosis';
+import AddMedcine from './statics/js/patient/AddMedcine';
 import ModifyPrescription from './statics/js/patient/ModifyPrescription';
-
+import CompleteRecord from './statics/js/patient/CompleteRecord';
+import OrderList from './statics/js/cal/OrderList';
 var _navigator;
 //监听硬件返回功能
 BackAndroid.addEventListener('hardwareBackPress', ()=>{
@@ -104,6 +107,12 @@ class NuanXinDoctorApp extends Component {
         break;
         case 'webMainPage':
              return  <WebMainPage navigator={navigator}/>;
+        case 'addDianosis':
+             return  <AddDianosis navigator={navigator}/>;
+        break;
+         case 'addMedcine':
+             return  <AddMedcine navigator={navigator}/>;
+        break;
         case 'orderDetails':
              return  <OrderDetails navigator={navigator} orderData={route.passProps}/>;
         break;
@@ -112,6 +121,12 @@ class NuanXinDoctorApp extends Component {
         break;
         case 'modifyPrescriptionPage':
              return  <ModifyPrescription navigator={navigator} passProps={route.passProps}/>;
+        break;
+         case 'completeRecord':
+             return  <CompleteRecord navigator={navigator} />;
+        break;
+         case 'orderList':
+             return  <OrderList navigator={navigator} />;
         break;
     };
   };
@@ -122,7 +137,7 @@ class NuanXinDoctorApp extends Component {
       autoSync: true,
       syncInBackground: true,
     }).then( ret => {
-      if(ret.state === 'success') {   //
+      if(ret.state === 'error') {   //success
         this.setState({
           routeInfo:{
             name: 'doctorHomePage',

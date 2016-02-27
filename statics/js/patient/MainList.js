@@ -13,6 +13,7 @@ import React, {
   TouchableOpacity,
   ScrollView,
   ProgressBarAndroid,
+  PullToRefreshViewAndroid,
 } from 'react-native';
 
 
@@ -170,30 +171,42 @@ handlePatient(rowdata){
   };
 
   _renderFooter(){
-      return <View style={{height:50}}></View>
+     // return <View style={{height:50}}></View>
   };
   _renderScrollComponent(){
       return <ScrollView></ScrollView>
   };
+  onEndReached(){
+      return (
+          <View style={{height:400}}>
+            <Text>yijindangzuihoula</Text>
+          </View>
+      );
+  };
   render(){
       if (this.state.isLoad === true) {
-        return (
-            <ScrollView style={{height:Dimensions.get('window').height-185,}}>
-                <ListView
-                    ref="listview"
-                    style={styles.listview}
-                    initialListSize={9}
-                    dataSource={this.state.dataSource}
-                    renderRow={(data)=>{return this.renderRow(data);}}
-                    onEndReached={this.onEndReached}
-                    renderSectionHeader={this.renderSectionHeader}
-                    automaticallyAdjustContentInsets={false}
-                    keyboardDismissMode="on-drag"
-                    keyboardShouldPersistTaps={true}
-                    showsVerticalScrollIndicator={false}
-                    renderScrollComponent={()=>{return this._renderScrollComponent()}} />
-            </ScrollView>
-        );
+           return (
+                    <PullToRefreshViewAndroid  
+                        enabled={true}
+                        style={{width:Dimensions.get('window').width}}>
+                          <ScrollView style={{height:Dimensions.get('window').height-185,}}>
+                                  <ListView
+                                                  ref="listview"
+                                                  style={styles.listview}
+                                                  initialListSize={9}
+                                                  dataSource={this.state.dataSource}
+                                                  renderRow={(data)=>{return this.renderRow(data);}}
+                                                  onEndReached={this.onEndReached}
+                                                  onEndReachedThreshold={200}
+                                                  renderSectionHeader={this.renderSectionHeader}
+                                                  automaticallyAdjustContentInsets={false}
+                                                  keyboardDismissMode="on-drag"
+                                                  keyboardShouldPersistTaps={true}
+                                                  showsVerticalScrollIndicator={false}
+                                                  renderScrollComponent={()=>{return this._renderScrollComponent()}} />
+                          </ScrollView>
+                    </PullToRefreshViewAndroid>
+            );
       }
       else{
           return (
