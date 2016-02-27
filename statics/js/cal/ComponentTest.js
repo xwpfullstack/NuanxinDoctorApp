@@ -15,8 +15,7 @@ class NAME extends Component {
 
   render() {
     return (
-      <View>
-      </View>
+      <View></View>
     );
   }
 }

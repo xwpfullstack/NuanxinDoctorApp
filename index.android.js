@@ -32,7 +32,7 @@ import AddDianosis from './statics/js/patient/AddDiagnosis';
 import AddMedcine from './statics/js/patient/AddMedcine';
 import ModifyPrescription from './statics/js/patient/ModifyPrescription';
 import CompleteRecord from './statics/js/patient/CompleteRecord';
-import OrderList from './statics/js/cal/OrderList';
+import OrderList from './statics/js/patient/OrderListIso';
 var _navigator;
 //监听硬件返回功能
 BackAndroid.addEventListener('hardwareBackPress', ()=>{
@@ -137,7 +137,7 @@ class NuanXinDoctorApp extends Component {
       autoSync: true,
       syncInBackground: true,
     }).then( ret => {
-      if(ret.state === 'error') {   //success
+      if(ret.state === 'success') {   //success
         this.setState({
           routeInfo:{
             name: 'doctorHomePage',
