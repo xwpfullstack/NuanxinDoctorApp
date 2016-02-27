@@ -23,6 +23,8 @@ import ModifyPwd from './statics/js/login/DoctorModifyPwd';
 import OrderDetails from './statics/js/cal/OrderDetails';
 import NewsDetails from './statics/js/cal/NewsDatails';
 import AddOrder from './statics/js/patient/AddOrder';
+import ModifyPrescription from './statics/js/patient/ModifyPrescription';
+
 var _navigator;
 //监听硬件返回功能
 BackAndroid.addEventListener('hardwareBackPress', ()=>{
@@ -96,6 +98,11 @@ class NuanXinDoctorApp extends Component {
     else if(route.name === 'addOrder'){
       return (
           <AddOrder navigator={navigator}/>
+      );
+    }
+    else if(route.name === 'modifyPrescriptionPage'){
+      return (
+          <ModifyPrescription navigator={navigator} passProps={route.passProps}/>
       );
     }
   }

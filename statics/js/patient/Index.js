@@ -36,7 +36,7 @@ class nuanxin extends Component {
             <Release navigator={this.props.mainNavigator} />
           </View>
           <View tabLabel='four'>
-            <ComponentTest />
+            <ComponentTest navigator={this.props.mainNavigator} />
           </View>
           <View tabLabel='five'>
             <Text>five</Text>
