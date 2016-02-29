@@ -16,3 +16,13 @@
   2.完成一个节点后，使用git add -A 提交代码，再使用git commit -m "xxxx" 提交代码，引号之间将你提交的内容描述的详细一点
   3.最后使用git push origin dev 上传到远程版本库中
   ```
+8.升级到0.20.0
+  ```
+  1,在命令行执行 npm i react-native@0.20.0 --save
+    将RN全局升级到0.20.0
+  2,在项目根目录的package.json中将react-native版本手动改为0.20.0
+  3,在项目根目录执行npm install
+  4,重启电脑以重启packager
+  5,执行react-native upgrade
+  6，重新run-android
+  ```

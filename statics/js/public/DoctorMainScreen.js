@@ -18,11 +18,7 @@ class DoctorMainScreen extends Component {
 
   render() {
     return (
-
       <Index mainNavigator={this.props.navigator}/>
-
-
-
     )
   }
 }

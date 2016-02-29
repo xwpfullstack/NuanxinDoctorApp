@@ -38,7 +38,7 @@ var styles = StyleSheet.create({
 
   tabs: {
     flexDirection: 'row',
-    marginTop:10,
+    marginTop:15,
     backgroundColor: 'rgba(255,255,255,1)',
     justifyContent: 'space-around',
     borderWidth: 1,
@@ -66,7 +66,7 @@ var DefaultTabBar = React.createClass({
     var inactiveTextColor = this.props.inactiveTextColor || "black";
     var pageImage=isTabActive?icon_selected[page]:icon_unselecte[page];
     return (
-      <TouchableOpacity style={[styles.tab]} key={name} onPress={() => this.props.goToPage(page)}>
+      <TouchableOpacity activeOpacity={1} style={[styles.tab]} key={name} onPress={() => this.props.goToPage(page)}>
         <View style={{alignItems:'center',justifyContent:'center',}}>
         <Image source={pageImage} style={{marginBottom:5}}/>
           <Text style={{color: isTabActive ? activeTextColor : inactiveTextColor,
@@ -88,7 +88,7 @@ var DefaultTabBar = React.createClass({
     };
 
     return (
-      <View style={{justifyContent:'center',height:40,  flexDirection: 'column',}}>
+      <View style={{justifyContent:'center',height:44,  flexDirection: 'column',}}>
       <View style={[styles.tabs, {backgroundColor : this.props.backgroundColor || null}]}>
         {this.props.tabs.map((tab, i) => this.renderTabOption(tab, i))}
       </View>

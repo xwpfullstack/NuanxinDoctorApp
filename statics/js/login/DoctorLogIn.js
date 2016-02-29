@@ -157,8 +157,7 @@ class DoctorLogIn extends Component {
               ref='username'
               style={styles.userInput}
               placeholder='请输入手机号码'
-              textAlign='right'
-              underlineColorAndroid={'transparent'} 
+              underlineColorAndroid={'transparent'}
               keyboardType='numeric'
               onFocus={()=>{this.refs.username.focus()}}
               defaultValue={this.fields.username}
@@ -172,9 +171,8 @@ class DoctorLogIn extends Component {
               ref='passwd'
               style={styles.userPwd}
               placeholder='请输入密码'
+              underlineColorAndroid={'transparent'}
               secureTextEntry={true} 
-              textAlign='center'
-              underlineColorAndroid={'transparent'} 
               defaultValue={this.fields.passwd}
               onFocus={()=>{this.refs.passwd.focus()}}
               onChangeText={(text) => {this.fields.passwd = text}}

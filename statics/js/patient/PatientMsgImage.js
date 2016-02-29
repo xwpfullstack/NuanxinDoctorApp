@@ -27,9 +27,9 @@ class PatientMsgImage extends Component{
 							</View>
 							<View  style={styles.DfImageCG}>
 								<View style={styles.DfImageCGContent}>
-									<TouchableOpacity><Image source={require('../../images/icon/prepM.png')}></Image></TouchableOpacity>
-									<Text> {'3月1号'}-{'3月7号'} </Text>
-									<TouchableOpacity><Image source={require('../../images/icon/nextM.png')}></Image></TouchableOpacity>
+									<TouchableOpacity style={styles.btnImage}><Image source={require('../../images/icon/prepM.png')}></Image></TouchableOpacity>
+									<Text style={{alignSelf:'center'}}> {'3月1号'}-{'3月7号'} </Text>
+									<TouchableOpacity style={styles.btnImage}><Image source={require('../../images/icon/nextM.png')}></Image></TouchableOpacity>
 								</View>
 							</View>
 						
@@ -48,6 +48,12 @@ const styles = StyleSheet.create({
     		backgroundColor:'#ffffff',
     		marginBottom:10,
   	},
+  	btnImage:{
+  		height:50,
+  		width:50,
+  		justifyContent:'center',
+  		alignItems:'center',
+  	},
 	DfImage:{
 		flexDirection: 'column',
 		flex:1,
@@ -64,7 +70,6 @@ const styles = StyleSheet.create({
 		justifyContent: 'center',
 	},
 	DfImageCGContent:{
-		
 		flexDirection:'row',
     		justifyContent: 'space-around',
 	},
