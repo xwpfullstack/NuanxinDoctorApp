@@ -4,6 +4,8 @@ import React, {
   Text,
   View,
   TouchableHighlight,
+  TouchableOpacity,
+  Image,
   Component,
   StyleSheet,
 
@@ -19,16 +21,11 @@ class OrderDetails extends Component{
   render() {
     return (
       <View style={styles.container}>
-        <View style={styles.title}>
-          <View style={styles.titleReturn}>
-            <TouchableHighlight
-              underlayColor='rgba(34,26,38,0.1)'
-              onPress={()=>this.popOut()}>
-              <Text style={styles.titleReturnText}>《 返回</Text>
-            </TouchableHighlight>
-          </View>
-          <View style={styles.titleName}>
-            <Text style={styles.titleNameText}>订单详情</Text>
+        <View style={styles.tittle}>
+          <View style={styles.titleContent}>
+          <TouchableOpacity style={{width:50}} onPress={()=>this.popOut()}><Image source={require('../../images/icon/back.png')}></Image></TouchableOpacity>
+            <Text style={styles.name}>订单详情</Text>
+            <View style={{width:50}}></View>
           </View>
         </View>
         <View style={styles.head}>
@@ -58,28 +55,21 @@ const styles=StyleSheet.create({
     flex: 1,
     backgroundColor: '#CCCCCC',
   },
-  title: {
+  tittle:{
+    backgroundColor:'#878181',
+    flexDirection: 'column',
+    height:40,
+    justifyContent: 'center',
+  },
+  titleContent:{
     flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: '#868181',
-    height: 45,
-    padding: 11,
+    justifyContent: 'space-between',
+    marginLeft:10,
+    marginRight:10,
   },
-  titleReturn: {
-    flex: 3,
-  },
-  titleReturnText: {
-		fontFamily: 'PingFang-SC-Regular',
-		fontSize: 14,
-    color: '#FFFFFF',
-  },
-  titleName: {
-    flex: 4
-  },
-  titleNameText: {
-		fontFamily: 'PingFang-SC-Regular',
-		fontSize: 18,
-    color: '#FFFFFF',
+  name:{
+    color:'white',
+     fontSize:18,
   },
   head: {
     flexDirection: 'row',

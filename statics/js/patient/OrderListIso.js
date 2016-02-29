@@ -4,8 +4,9 @@ import React, {
   Alert,
   Component,
   Dimensions,
-  Image,
   StyleSheet,
+  TouchableOpacity,
+  Image,
   Text,
   View,
 } from 'react-native';
@@ -16,6 +17,9 @@ class OrderListIso extends Component {
   constructor(props) {
     super(props);
   }
+  popOut() {
+      this.props.navigator.pop();
+  }
 
   render() {
     return (
@@ -23,6 +27,13 @@ class OrderListIso extends Component {
         source={require('../../images/load/background.png')}
         style={styles.backgroundImage}
       >
+        <View style={styles.tittle}>
+          <View style={styles.titleContent}>
+          <TouchableOpacity style={{width:50}} onPress={()=>this.popOut()}><Image source={require('../../images/icon/back.png')}></Image></TouchableOpacity>
+            <Text style={styles.name}>订单列表</Text>
+            <View style={{width:50}}></View>
+          </View>
+        </View>
         <View style={styles.listHeader}>
          <Text style={styles.listHeaderText}>订单列表</Text>
         </View>
@@ -49,6 +60,22 @@ const styles = StyleSheet.create({
 		fontWeight: '100',
     color: '#FFFFFF',
     marginLeft: 11,
+  },
+  tittle:{
+    backgroundColor:'#878181',
+    flexDirection: 'column',
+    height:40,
+    justifyContent: 'center',
+  },
+  titleContent:{
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginLeft:10,
+    marginRight:10,
+  },
+  name:{
+    color:'white',
+     fontSize:18,
   },
 });
 
