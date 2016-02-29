@@ -16,33 +16,6 @@ import React, {
   PullToRefreshViewAndroid,
 } from 'react-native';
 
-
-
-/*{}
-2013-02-01: {}
-'2013-02-01:1': Object
-2013-02-01:2: Object
-2013-02-01:3: Object
-
-2013-02-02: {}
-2013-02-02:1 : Object
-2013-02-02:2: Object
-2013-02-02:3: Object
-
-2013-02-03: {}
-2013-02-03:1: Object
-2013-02-03:2: Object
-
-2013-02-04: {}
-2013-02-04:1: Object
-2013-02-04:2: Object
-
-
-sectionIDS=['2013-02-01','2013-02-02']
-
-rowIDs=[['1','2','3'],[]]
- */
-
 var tempData=[
   {'id':2,'name':'张三','jb':'duoliang','time':'2013-02-01','isCollect':true},
   {'id':3,'name':'李四','jb':'duoliang','time':'2013-02-01','isCollect':false},
@@ -186,7 +159,7 @@ handlePatient(rowdata){
   render(){
       if (this.state.isLoad === true) {
            return (
-                    <PullToRefreshViewAndroid  
+                    <PullToRefreshViewAndroid
                         enabled={true}
                         style={{width:Dimensions.get('window').width}}>
                           <ScrollView style={{height:Dimensions.get('window').height-185,}}>

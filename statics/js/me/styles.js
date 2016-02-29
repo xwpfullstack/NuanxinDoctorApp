@@ -36,6 +36,7 @@ const styles = StyleSheet.create({
         backgroundColor:'#878181',
     },
     headImg: {
+        marginLeft:10,
         right:10,
         flexDirection:'row',
         justifyContent:'flex-end',

@@ -89,7 +89,7 @@ class MyModal extends Component {
                 <TouchableOpacity onPress={this.hideModal}>
                     <View style={styles.modalContainer}>
                         <Image source={require('../../images/me/erweima.png')} style={{width:200, height:200, margin:20}} />
-                        <View style={{paddingBottom:30}}><Text>扫一扫上面的二维码图案,加我微信</Text></View>
+                        <View style={{paddingBottom:30}}><Text>扫一扫二维码关注{this.props.name}医生</Text></View>
                     </View>
                 </TouchableOpacity>
             </Modal>

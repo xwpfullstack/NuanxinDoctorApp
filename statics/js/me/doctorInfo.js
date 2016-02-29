@@ -150,7 +150,7 @@ class DoctorInfo extends Component {
                 </View>
 
                 {/*my homepage*/}
-                <MyModal navigator={this.props.navigator}/>
+                <MyModal navigator={this.props.navigator} name={dctmsg.name}/>
                 </ScrollView>
         </View>
       );

@@ -69,6 +69,12 @@ class DrugList extends Component {
 componentWillMount(){
      this.BaseCreateData();
 };
+_onPressDrugBtn(rowdata){
+    this.props.navigator.push({
+        name:'drugDetailed',
+        drugName:rowdata,
+    });
+};
 
 
 BaseCreateData(){
@@ -89,7 +95,9 @@ BaseCreateData(){
 };
 renderRow(rowdata,sectionID,rowID){
   return (
-      <TouchableOpacity style={styles.drugTouch}>
+      <TouchableOpacity
+          onPress={(rowdata)=>this._onPressDrugBtn(rowdata)}
+          style={styles.drugTouch}>
         <View style={styles.drugLine}>
             <View style={styles.drugLogo}>
                 <Text style={{fontSize:23,color:'#fff'}}>{rowdata[0]}</Text>
