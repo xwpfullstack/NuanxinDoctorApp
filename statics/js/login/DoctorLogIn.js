@@ -53,7 +53,7 @@ class DoctorLogIn extends Component {
       );
       return null;
     }else if(passwd === null) {
-      Alert.alert(
+      Alert.alert(    
         '提示',
         '密码不能为空',
         [
@@ -69,7 +69,7 @@ class DoctorLogIn extends Component {
     });
     this._CheckUserLogInfo();
   }
-
+  
   /****************************
    * 验证用户名密码
    * 1.判断用户名密码是否为空
@@ -128,33 +128,36 @@ class DoctorLogIn extends Component {
   }
 
   _onPressRegistButton() {
-
+    this.props.navigator.push({
+      name: 'regist',
+    })   
   }
-
+    
   //点击忘记密码的回调函数
   _onPressPwdButton() {
     this.props.navigator.push({
       name: 'modifyPwd',
-    })
+    })    
   }
 
   render() {
     return (
       <View style={styles.container}>
-        <Image
-          source={require('../../images/icon/background.png')}
+        <Image 
+          source={require('../../images/icon/background.png')} 
           style={styles.backGround}
         >
-          <Image
-            source={require('../../images/icon/logo3.png')}
-            style={styles.logo}/>
-          <View
+          <Image 
+            source={require('../../images/icon/logo3.png')} 
+            style={styles.logo}/>       
+          <View 
             style={styles.login}
           >
             <TextInput
               ref='username'
               style={styles.userInput}
               placeholder='请输入手机号码'
+              underlineColorAndroid={'transparent'}
               keyboardType='numeric'
               onFocus={()=>{this.refs.username.focus()}}
               defaultValue={this.fields.username}
@@ -169,14 +172,13 @@ class DoctorLogIn extends Component {
               style={styles.userPwd}
               placeholder='请输入密码'
               underlineColorAndroid={'transparent'}
-              secureTextEntry={true}
-              textAlign='center'
+              secureTextEntry={true} 
               defaultValue={this.fields.passwd}
               onFocus={()=>{this.refs.passwd.focus()}}
               onChangeText={(text) => {this.fields.passwd = text}}
             />
           </View>
-          <TouchableOpacity
+          <TouchableOpacity 
             onPress={()=>{return this._onPressLoginButton()}}
             background={TouchableNativeFeedback.SelectableBackground()}
           >
@@ -186,7 +188,7 @@ class DoctorLogIn extends Component {
               </Text>
             </View>
           </TouchableOpacity>
-          <TouchableOpacity
+          <TouchableOpacity 
             onPress={()=>{return this._onPressRegistButton()}}
             background={TouchableNativeFeedback.SelectableBackground()}
           >
@@ -248,11 +250,12 @@ var styles = StyleSheet.create({
     alignSelf: 'center',
   },
   userInput: {
-    textAlign:'center',
+    textAlign: 'center',
     marginTop: 10,
     height: 40,
   },
   userPwd: {
+    textAlign: 'center',
     marginTop: 5,
     marginBottom: 5,
     height: 40,

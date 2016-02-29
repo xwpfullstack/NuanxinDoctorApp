@@ -9,7 +9,8 @@ import React,{
   Dimensions,
 } from 'react-native';
 
-const {height,width} = Dimensions.get('window');
+var _width = Dimensions.get('window').width;
+var _height = Dimensions.get('window').height;
 
 class SplashScreen extends Component { 
   constructor(props) {
@@ -18,7 +19,13 @@ class SplashScreen extends Component {
   render() {
     return(
       <View style={styles.container}>
-        <Image source={require('../../images/load/load_page.png')} style={styles.loadPage}/>
+        <Image 
+          source={require('../../images/load/load_page.png')} 
+          style={{
+            width: _width,
+            height: _height,
+          }}
+        />
       </View>
     )
   }
@@ -29,10 +36,6 @@ var styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'column',
   },
-  loadPage: {
-    width: width,
-    height: height,
-  }
 })
 
 export default SplashScreen;

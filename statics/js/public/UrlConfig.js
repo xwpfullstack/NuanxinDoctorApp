@@ -54,9 +54,7 @@ global.ModifyMethod_URL = Basic_URL + 'modifyMethod/';
 global.GetDocNum_URL = Basic_URL + 'getdocNum/';
 //得到科室信息
 global.GetDeparts_URL = Basic_URL + 'getdepars/';
-//忘记密码
-global.ForgetPass_URL = Basic_URL + 'forgetPass/';
 //修改密码
-global.ModifyPass_URL = Basic_URL + 'modifyPass/';
+global.ModifyPass_URL = Basic_URL + 'AppModifyPass/';
 //发送短信
 global.sendMsg_URL = Basic_URL + 'AppSendMsg/';

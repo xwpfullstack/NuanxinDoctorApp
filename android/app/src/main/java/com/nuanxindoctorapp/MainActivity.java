@@ -6,8 +6,12 @@ import com.facebook.react.shell.MainReactPackage;
 import java.util.Arrays;
 import java.util.List;
 
-public class MainActivity extends ReactActivity {
+import android.content.Intent; 
+import com.imagepicker.ImagePickerPackage; 
 
+public class MainActivity extends ReactActivity {
+    
+    private ImagePickerPackage mImagePicker;
     /**
      * Returns the name of the main component registered from JavaScript.
      * This is used to schedule rendering of the component.
@@ -32,8 +36,17 @@ public class MainActivity extends ReactActivity {
    */
     @Override
     protected List<ReactPackage> getPackages() {
+      mImagePicker = new ImagePickerPackage(this);
+
       return Arrays.<ReactPackage>asList(
-        new MainReactPackage()
+        new MainReactPackage(),
+        mImagePicker
       );
+    }
+
+    @Override
+    public void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
+      super.onActivityResult(requestCode, resultCode, data);
+      mImagePicker.handleActivityResult(requestCode, resultCode, data);
     }
 }

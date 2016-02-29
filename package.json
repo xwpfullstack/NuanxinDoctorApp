@@ -8,6 +8,7 @@
   "dependencies": {
     "react-native": "^0.20.0",
     "react-native-date": "^1.0.3",
+    "react-native-image-picker": "^0.15.0",
     "react-native-picker": "^2.0.4",
     "react-native-picker-android": "^0.3.8",
     "react-native-radio-buttons": "^0.8.2",
