@@ -82,51 +82,55 @@ class NuanXinDoctorApp extends Component {
     _navigator=navigator;
     switch(route.name){
       case 'logIn':
-             return  <DoctorLogIn navigator={navigator}/>;
+        return  <DoctorLogIn navigator={navigator}/>;
         break;
-        case 'doctorHomePage':
-             return   <DoctorMainScreen navigator={navigator} doctorId={route.doctorId}/>;
+      case 'doctorHomePage':
+        return   <DoctorMainScreen navigator={navigator} doctorId={route.doctorId}/>;
         break;
-        case 'modifyPwd':
-             return  <ModifyPwd navigator={navigator} />;
+      case 'modifyPwd':
+        return  <ModifyPwd navigator={navigator} />;
         break;
-        case 'addOrder':
-             return  <AddOrder navigator={navigator}/>;
+      case 'regist':
+        return <DoctorRegist navigator={navigator}/>;
         break;
-        case 'DoctorRecord':
-             return  <DoctorRecord navigator={navigator}/>;
+      case 'addOrder':
+        return  <AddOrder navigator={navigator}/>;
         break;
-        case 'WriteTable':
-             return  <WriteTable navigator={navigator}/>;
+      case 'DoctorRecord':
+        return  <DoctorRecord navigator={navigator}/>;
         break;
-        case 'prescription':
-             return  <Prescription navigator={navigator}/>;
+      case 'WriteTable':
+        return  <WriteTable navigator={navigator}/>;
         break;
-        case 'doctorMsgEdit':
-             return  <DoctorMsgEdit navigator={navigator}/>;
+      case 'prescription':
+        return  <Prescription navigator={navigator}/>;
         break;
-        case 'webMainPage':
-             return  <WebMainPage navigator={navigator}/>;
-        case 'addDianosis':
-             return  <AddDianosis navigator={navigator}/>;
+      case 'doctorMsgEdit':
+        return  <DoctorMsgEdit navigator={navigator}/>;
         break;
-         case 'addMedcine':
-             return  <AddMedcine navigator={navigator}/>;
+      case 'webMainPage':
+        return  <WebMainPage navigator={navigator}/>;
         break;
-        case 'orderDetails':
-             return  <OrderDetails navigator={navigator} orderData={route.passProps}/>;
+      case 'addDianosis':
+        return  <AddDianosis navigator={navigator}/>;
         break;
-        case 'newsDetails':
-             return  <NewsDetails navigator={navigator} newsData={route.passProps}/>;
+      case 'addMedcine':
+        return  <AddMedcine navigator={navigator}/>;
         break;
-        case 'modifyPrescriptionPage':
-             return  <ModifyPrescription navigator={navigator} passProps={route.passProps}/>;
+      case 'orderDetails':
+        return  <OrderDetails navigator={navigator} orderData={route.passProps}/>;
         break;
-         case 'completeRecord':
-             return  <CompleteRecord navigator={navigator} />;
+      case 'newsDetails':
+        return  <NewsDetails navigator={navigator} newsData={route.passProps}/>;
         break;
-         case 'orderList':
-             return  <OrderList navigator={navigator} />;
+      case 'modifyPrescriptionPage':
+        return  <ModifyPrescription navigator={navigator} passProps={route.passProps}/>;
+        break;
+      case 'completeRecord':
+        return  <CompleteRecord navigator={navigator} />;
+        break;
+      case 'orderList':
+        return  <OrderList navigator={navigator} />;
         break;
     };
   };
@@ -137,7 +141,7 @@ class NuanXinDoctorApp extends Component {
       autoSync: true,
       syncInBackground: true,
     }).then( ret => {
-      if(ret.state === 'success') {   //success
+      if(ret.state === 'error') {   //success
         this.setState({
           routeInfo:{
             name: 'doctorHomePage',
