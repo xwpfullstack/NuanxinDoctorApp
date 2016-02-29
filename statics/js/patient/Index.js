@@ -10,20 +10,22 @@ import React, {
   Text,
   View,
   ScrollView,
+    Navigator,
 } from 'react-native';
 
 import Home from "./Home"
 import ViewPager from 'react-native-scrollable-tab-view'
 import BottomTabBar from '../BottomTabBar'
 class nuanxin extends Component {
+
   render() {
     return (
-        <ViewPager tabBarPosition='bottom'  locked='true'  renderTabBar={()=><BottomTabBar />}>
+      
+        <ViewPager tabBarPosition='bottom'  locked='true' renderTabBar={()=><BottomTabBar />}>
           <View tabLabel='one'>
-          <Home />
+            <Home mainNavigator={this.props.mainNavigator}/>
           </View>
             <View tabLabel='two'>
-          <Text>two</Text>
           </View>
            <View tabLabel='three'>
           <Text>three</Text>
@@ -35,6 +37,7 @@ class nuanxin extends Component {
           <Text>five</Text>
           </View>
         </ViewPager>
+      
     );
   }
 }

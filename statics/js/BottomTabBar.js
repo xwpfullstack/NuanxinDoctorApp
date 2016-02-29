@@ -11,7 +11,7 @@ var {
 } = React;
 
 const icon_name=[
-'病人','日程','发布','患教','我'
+'病人','日程','发布','患教','我的'
 ];
 const icon_selected=[
 require('../images/tabbar_icons/person.png'),
@@ -38,7 +38,7 @@ var styles = StyleSheet.create({
 
   tabs: {
     flexDirection: 'row',
-    marginTop:15,
+    marginTop:10,
     backgroundColor: 'rgba(255,255,255,1)',
     justifyContent: 'space-around',
     borderWidth: 1,
@@ -68,7 +68,7 @@ var DefaultTabBar = React.createClass({
     return (
       <TouchableOpacity style={[styles.tab]} key={name} onPress={() => this.props.goToPage(page)}>
         <View style={{alignItems:'center',justifyContent:'center',}}>
-        <Image source={pageImage} />
+        <Image source={pageImage} style={{marginBottom:5}}/>
           <Text style={{color: isTabActive ? activeTextColor : inactiveTextColor,
             fontWeight: isTabActive ? 'bold' : 'normal',fontSize:11,}}>{icon_name[page]}</Text>
         </View>
@@ -88,7 +88,7 @@ var DefaultTabBar = React.createClass({
     };
 
     return (
-      <View style={{justifyContent:'center',height:50,  flexDirection: 'column',}}>
+      <View style={{justifyContent:'center',height:40,  flexDirection: 'column',}}>
       <View style={[styles.tabs, {backgroundColor : this.props.backgroundColor || null}]}>
         {this.props.tabs.map((tab, i) => this.renderTabOption(tab, i))}
       </View>
