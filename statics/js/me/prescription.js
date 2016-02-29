@@ -13,8 +13,6 @@ import React, {
   Dimensions,
 } from 'react-native';
 
-var COLOR=['#DC5947','#6C6CC6','#53AD55','#DC5947',];
-
 var WINDOW_HEIGHT = Dimensions.get('window').height;
 
 class Prescription extends Component {

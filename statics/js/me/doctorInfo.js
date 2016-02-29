@@ -12,8 +12,6 @@ import React, {
   View,
   ScrollView,
   Image,
-  Animated,
-  Navigator,
   TouchableOpacity,
 } from 'react-native';
 
@@ -59,15 +57,17 @@ class DoctorInfo extends Component {
     return (
         <View>
             <View style={styles.headNav}>
-                <View style={styles.lineCenter}>
+                <View style={[styles.lineCenter,{flex:10,justifyContent:'flex-end'}]}>
                     <Text style={styles.textBold}>我</Text>
                 </View>
-                <TouchableOpacity
-                style={styles.headImg}
-                onPress= {()=>this.showModal()}
-                >
-                    <Image source = {require('../../images/me/edit.png')} />
-                </TouchableOpacity>
+                <View style={{flex:9}}>
+                    <TouchableOpacity
+                    style={styles.headImg}
+                    onPress= {()=>this._onPressEditButton()}>
+                        <Image source = {require('../../images/me/edit.png')} />
+                    </TouchableOpacity>
+                </View>
+
             </View>
 
             <Modal visible={this.state.ListMenu}>

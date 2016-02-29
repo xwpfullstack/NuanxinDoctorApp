@@ -54,7 +54,10 @@ class DoctorRegist extends Component {
         tableState:tableArray,
     }
   }
-  
+
+  /***************************
+   *头部返回
+   **************************/
   _returnPage() {
     if(!this.state.switchInfo) {
       this.props.navigator.pop();
@@ -66,9 +69,12 @@ class DoctorRegist extends Component {
       this.setState({
         lastpage: false,
       })
-    } 
-  } 
+    }
+  }
 
+  /***************************
+   *头部标题
+   **************************/
   _renderHeader() {
     return(
       <View style={styles.toolbar}>
@@ -93,14 +99,11 @@ class DoctorRegist extends Component {
            {this.state.switchInfo ? (this.state.lastpage ? '设置您的头像' : '完善职业信息') : '完善个人信息'}
           </Text>
         </View>
-        <View
-          style={{flex: 1}}
-        >
-        </View>
+        <View style={{flex: 1}}></View>
       </View>
     )
   }
-  
+
   /***************************
    *信息名称显示为 *+名字
    **************************/
@@ -117,7 +120,7 @@ class DoctorRegist extends Component {
             color: 'red',
           }}
         >
-        * 
+        *
         <Text
           style={{
             color: 'black',
@@ -129,7 +132,7 @@ class DoctorRegist extends Component {
       </View>
     )
   }
-  
+
   /**************************
    *性别判断
    *************************/
@@ -157,7 +160,7 @@ class DoctorRegist extends Component {
         switchInfo: true,
       })
     }else{
-      
+
     }
   }
   /*******************************
@@ -320,8 +323,8 @@ class DoctorRegist extends Component {
           </View>
           <TouchableOpacity
             onPress={() => {return this._onPressSubmitPersonInfo()}}
-          > 
-            <View 
+          >
+            <View
               style={styles.submitBtn}
             >
               <Text>
@@ -370,7 +373,7 @@ class DoctorRegist extends Component {
               <View
                 style={{
                   flex: 0.8,
-                }}    
+                }}
               >
                 <Picker
                   style={{
@@ -395,7 +398,7 @@ class DoctorRegist extends Component {
               <View
                 style={{
                   flex: 0.8,
-                }}    
+                }}
               >
                 <Picker
                   style={{
@@ -419,7 +422,7 @@ class DoctorRegist extends Component {
               <View
                 style={{
                   flex: 0.8,
-                }}    
+                }}
               >
                 <TextInput
                   ref='price'
@@ -437,8 +440,8 @@ class DoctorRegist extends Component {
           </View>
           <TouchableOpacity
             onPress={() => {return this._onPressLastInfopage()}}
-          > 
-            <View 
+          >
+            <View
               style={styles.submitBtn}
             >
               <Text>
@@ -463,7 +466,7 @@ class DoctorRegist extends Component {
 
    _renderTable() {
     return(
-      <View 
+      <View
         style={{
           marginTop: 10,
           marginBottom: 10,
@@ -534,7 +537,7 @@ class DoctorRegist extends Component {
       </View>
     )
   }
-    
+
   _onPressTable(row,column) {
     var data = this.state.tableState;
     data[column][row]['check'] = !data[column][row]['check'];
@@ -552,14 +555,14 @@ class DoctorRegist extends Component {
     }else if(row == 2) {
       time = '晚上';
     }
-    
+
     var rowsData = [];
     var tableArray = [0,1,2,3,4,5,6,7];
     tableArray.map((value) => {
       var data = null;
       if(value == 0) {
         data = (
-          <View 
+          <View
             style={[styles.table,{borderTopWidth: 0}]}
             key={'table'+row+value}
           >
@@ -649,7 +652,7 @@ var styles = StyleSheet.create({
     color: 'red',
   },
   normalText: {
-  
+
   },
   submitBtn: {
     margin: 20,
@@ -661,7 +664,6 @@ var styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   }
-}) 
+})
 
 export default DoctorRegist;
-
