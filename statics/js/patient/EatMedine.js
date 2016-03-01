@@ -14,6 +14,7 @@ import React, {
 } from 'react-native';
                 
 import EatMedineItem from './EatMedineItem';
+import DatePicker from '../cal/DatePicker';
 class EatMedine extends Component{
   constructor(){
     super();  
@@ -22,6 +23,7 @@ class EatMedine extends Component{
     this.state={
       isLoad:true,
       PatientMsg:{'sick':[],'media':[],},
+      pickerData: '',
   };
 };
 
@@ -29,14 +31,19 @@ reDrawPage(Msg){
     this.setState({PatientMsg:Msg})
 };
 
+more(index){
+  this.setState({pickerData: this.state.PatientMsg['media'][index]})
+  this.refs['datepicker'].picker.show();
+  //Alert.alert('shiw');
+};
+
 submit(){
      var json= JSON.stringify(this.state.PatientMsg);
-     //Alert.alert(json);
      console.log(json);
 };
 mediaControl(){
     let MediaList=this.state.PatientMsg['media'].map((value,index)=>{
-        return   <EatMedineItem key={index} media={value} />
+        return   <EatMedineItem more={()=>this.more(index)} key={index} media={value} />
     });
     return MediaList;
 
@@ -50,6 +57,7 @@ mediaControl(){
                           <TouchableOpacity style={[styles.submitContent,{borderWidth:0,backgroundColor:'rgba(0,0,0,0)'}]}><Text></Text></TouchableOpacity>
                           <TouchableOpacity onPress={()=>this.submit()}  style={[styles.submitContent,{marginRight:50,}]}><Text style={styles.txtSubStyle}>提交</Text></TouchableOpacity>
                   </View>
+                  <View style={{height:150}}></View>
             </ScrollView>
     }
     else
@@ -63,9 +71,12 @@ mediaControl(){
   
     if (this.state.isLoad) {
       return  (
+        <View style={{flex:1,flexDirection:'column',height:Dimensions.get('window').height,}}>
           <View style={styles.container}>
             {Content}
           </View>
+        <DatePicker data={this.state.pickerData} ref='datepicker' style={{flex:1,}}/>
+        </View>
         );
       }
        else{
@@ -78,9 +89,9 @@ mediaControl(){
 
 const styles = StyleSheet.create({
   container:{
-    flex:1,
+    flex:4,
     flexDirection: 'column',
-    height:Dimensions.get('window').height-200,
+   height:Dimensions.get('window').height-200,
   },
   noSelect:{
       flex:1,

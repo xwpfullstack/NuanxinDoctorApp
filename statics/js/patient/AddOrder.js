@@ -80,6 +80,7 @@ render(){
                   </View>
                   <View tabLabel='服用方法'><EatMedine ref='EM' PatientMsg={PatientMsg} /></View>
               </ViewPager>
+             
         </View>
       );
 };

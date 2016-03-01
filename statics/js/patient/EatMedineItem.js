@@ -20,6 +20,7 @@ import EatDatesModal from './EatDatesModal';
   ['j',false],
   ['m',false],
   ['h',false],
+  ['mo',false],
 ];
 var day=1;
 class EatMedineItem extends Component{
@@ -56,10 +57,13 @@ cheackTime(name){
 };
 more(){
   var newList=isCheack.map((value,index)=>{
+    if (index == 3) {
+        return [value[0],true];
+    }
     return [value[0],false];
   });
   this.setState({Cheack:newList});
-
+  this.props.more();
 };
 cheackMedia(index,rows){
    this.state.MediaNums[index][rows]=this.state.MediaNums[index][rows]?false:true;
@@ -177,10 +181,9 @@ MedList(){
                                 </TouchableOpacity>
                                 <View style={{height:30,width:100, justifyContent:'center',alignItems:'center',borderWidth:0,}} >
                                       <TextInput  
-                                      style={{fontSize:15,color:'#000000'}} 
+                                      style={{fontSize:15,color:'#000000',textAlign:'center'}} 
                                       placeholder='请输入服用剂量' 
                                       placeholderTextColor='#BFBFBF'
-                                      textAlign='center'
                                       keyboardType='numeric'   
                                       value ={value[4]+''}
                                       onChangeText={(txt)=>this.changeTxt(index,4,txt)}/>
@@ -203,10 +206,9 @@ MedList(){
                                 </TouchableOpacity>
                                 <View style={{height:30,width:100, justifyContent:'center',alignItems:'center',borderWidth:0,}} >
                                       <TextInput  
-                                      style={{fontSize:15,color:'#000000'}} 
+                                      style={{fontSize:15,color:'#000000', textAlign:'center'}} 
                                       placeholder='请输入服用剂量' 
                                       placeholderTextColor='#BFBFBF'
-                                      textAlign='center'
                                       keyboardType='numeric'   
                                       value ={value[5]+''} 
                                       onChangeText={(txt)=>this.changeTxt(index,5,txt)}/>
@@ -226,6 +228,7 @@ MedList(){
                                     <TouchableOpacity onPress={()=>this.addPage()} style={styles.btnMDel}><Text style={{color:'#FE9300'}}>调量</Text></TouchableOpacity>
                             </View>
                       </View>
+                    
               </View>
         );
 
@@ -262,8 +265,8 @@ return newList;
                                   </TouchableOpacity>
                                 <TouchableOpacity 
                                   onPress={()=>this.more()}
-                                  style={[styles.startTimeCheackItem,{backgroundColor:'rgb(244,241,245)'}]}>
-                                  <Text style={{color:'black'}}>更多</Text>
+                                   style={[styles.startTimeCheackItem,{backgroundColor:this.state.Cheack[3][1]?'#FE9300':'rgb(244,241,245)',}]}>
+                                 <Text style={{color:this.state.Cheack[3][1]?'white':'black',}}>更多</Text>
                                 </TouchableOpacity>
                             </View>
                       </View>
@@ -277,6 +280,7 @@ return newList;
                                         {this.state.modal}
                                   </View>
                 </Modal>
+
             </View>
         );
   };

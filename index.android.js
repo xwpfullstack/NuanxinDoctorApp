@@ -125,7 +125,7 @@ class NuanXinDoctorApp extends Component {
       autoSync: true,
       syncInBackground: true,
     }).then( ret => {
-      if(ret.state === 'error') {   //success
+      if(ret.state === 'success') {   //
         this.setState({
           routeInfo:{
             name: 'doctorHomePage',

@@ -88,15 +88,15 @@ openModal(){
   }
 
   submit() {
-    let postData = {name: this.state.name,
-      productor: this.state.productor,
-      specification: this.state.specification,
-      unit: this.state.unit,
-      amount: this.state.amount,
-      meathod: this.state.meathod,
-      cheakMedia:subData
+    let postData = {'name': this.state.name,
+      'productor': this.state.productor,
+      'specification': this.state.specification,
+      'unit': this.state.unit,
+      'amount': this.state.amount,
+      'meathod': this.state.meathod,
+      'cheakMedia':subData
     }
-    console.log(postData);
+    console.log(JSON.stringify(postData));
   }
 
   update() {

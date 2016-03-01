@@ -28,6 +28,16 @@ var tempData=[
   {'id':9,'name':'zhansan','jb':'duoliang','time':'2013-02-03','isCollect':false},
   {'id':10,'name':'zhansan','jb':'duoliang','time':'2013-02-04','isCollect':true},
   {'id':11,'name':'zhansan','jb':'duoliang','time':'2013-02-04','isCollect':false},
+  {'id':12,'name':'张某','jb':'duoliang','time':'2013-02-02','isCollect':false},
+  {'id':13,'name':'zhansan','jb':'duoliang','time':'2013-02-03','isCollect':false},
+  {'id':14,'name':'zhansan','jb':'duoliang','time':'2013-02-03','isCollect':false},
+  {'id':15,'name':'zhansan','jb':'duoliang','time':'2013-02-04','isCollect':true},
+  {'id':16,'name':'zhansan','jb':'duoliang','time':'2013-02-04','isCollect':false},
+  {'id':17,'name':'张某','jb':'duoliang','time':'2013-02-02','isCollect':true},
+  {'id':18,'name':'zhansan','jb':'duoliang','time':'2013-02-03','isCollect':true},
+  {'id':19,'name':'zhansan','jb':'duoliang','time':'2013-02-03','isCollect':true},
+  {'id':20,'name':'zhansan','jb':'duoliang','time':'2013-02-04','isCollect':true},
+  {'id':21,'name':'zhansan','jb':'duoliang','time':'2013-02-04','isCollect':true},
 ];
 var json={};
 var sectionIDS=[];
@@ -111,6 +121,7 @@ handlePatient(rowdata){
   });
 };
   renderRow(rowdata,sectionID,rowID){
+    //console.log(rowdata.id);
     return (
     <TouchableOpacity onPress={(rowdata)=>this.handlePatient(rowdata)}>
         <View style={styles.item}>
@@ -144,17 +155,18 @@ handlePatient(rowdata){
   };
 
   _renderFooter(){
-     // return <View style={{height:50}}></View>
+      return <View style={{height:50}}><Text>到底了</Text></View>
   };
   _renderScrollComponent(){
       return <ScrollView></ScrollView>
   };
   onEndReached(){
-      return (
-          <View style={{height:400}}>
-            <Text>yijindangzuihoula</Text>
-          </View>
-      );
+    // console.log('到底了');
+    //Alert.alert('到底了');
+   //tempData.push({'id':(tempData.length+1),'name':'zhansan','jb':'duoliang','time':'2013-02-04','isCollect':true});
+    //this.createData('time');
+    //this.setState({dataSource:this.state.dataSource.cloneWithRowsAndSections(json,sectionIDS,rowIDs),});
+    //this.props.changeNums(tempData.length);
   };
   render(){
       if (this.state.isLoad === true) {
@@ -166,17 +178,15 @@ handlePatient(rowdata){
                                   <ListView
                                                   ref="listview"
                                                   style={styles.listview}
-                                                  initialListSize={9}
+                                                  pageSize={1}
+                                                  initialListSize={tempData.length}
+                                                  renderFooter={()=>this._renderFooter()}
                                                   dataSource={this.state.dataSource}
+                                                  scrollRenderAheadDistance={5}
+                                                  onEndReachedThreshold={20}
                                                   renderRow={(data)=>{return this.renderRow(data);}}
-                                                  onEndReached={this.onEndReached}
-                                                  onEndReachedThreshold={200}
-                                                  renderSectionHeader={this.renderSectionHeader}
-                                                  automaticallyAdjustContentInsets={false}
-                                                  keyboardDismissMode="on-drag"
-                                                  keyboardShouldPersistTaps={true}
-                                                  showsVerticalScrollIndicator={false}
-                                                  renderScrollComponent={()=>{return this._renderScrollComponent()}} />
+                                                  onEndReached={()=>this.onEndReached()}
+                                                  renderSectionHeader={this.renderSectionHeader} />
                           </ScrollView>
                     </PullToRefreshViewAndroid>
             );

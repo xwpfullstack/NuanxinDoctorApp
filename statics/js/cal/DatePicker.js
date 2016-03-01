@@ -5,7 +5,7 @@ import React, {
 	View,
 	Text,
 	TouchableOpacity,
-  Component,
+  	Component,
 	Dimensions
 } from 'react-native';
 import Picker from 'react-native-picker';
@@ -55,20 +55,28 @@ class datePicker extends Component {
 
   }
 
+dataBack(){
+	return [year,month,date];
+};
+
+pickerDone(pickedValue){
+	this.setState({year: pickedValue[0], month: pickedValue[1], date: pickedValue[2]});
+	this.props.data['startTime']=(new Date(parseInt(pickedValue[0]),parseInt(pickedValue[1]),parseInt(pickedValue[2]),0,0,0)).toLocaleDateString();
+};
   componentDidMount() {
-    this.picker.show();
+    //this.picker.show();
   }
 	render(){
 		return (
 				<Picker
-          ref={picker => this.picker = picker}
-					style={{height: 320}}
+          					ref={picker => this.picker = picker}
+					style={{height: 320,}}
 					showDuration={300}
+					 pickerBtnText={'提交'}
+                      				pickerCancelBtnText={'取消'}
 					pickerData={createDateData()}
 					selectedValue={[this.state.year, this.state.month, this.state.date]}
-					onPickerDone={(pickedValue) => {
-						this.setState({year: pickedValue[0], month: pickedValue[1], date: pickedValue[2]});
-					}}
+					onPickerDone={(pickedValue) => this.pickerDone(pickedValue)}
 				/>
 		);
 	}

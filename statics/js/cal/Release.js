@@ -69,7 +69,7 @@ class Release extends Component {
             ref = 'contentBox'
             placeholder = {'你想说的...'}
             onChangeText = {(text) => this.setState({content: text})}
-            autoFocus = {true}
+            autoFocus = {false}
             textAlignVertical = {'top'}
             multiline = {true}
             numberOfLines = {6}
