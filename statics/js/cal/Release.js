@@ -5,6 +5,7 @@ import React, {
   Component,
   Dimensions,
   StyleSheet,
+  ScrollView,
   Image,
   Text,
   TextInput,
@@ -22,6 +23,27 @@ const newsSet = [
   {date: '2016年01月20日',subject: '门诊停诊通知', content: '停止门诊一周。'},
   {date: '2016年01月10日',subject: '门诊价格调整', content: '本周门诊价格上涨，请知悉。'},
   {date: '2016年01月01日',subject: '元旦快乐', content: '祝大家元旦快乐。'},
+    {date: '2016年02月10日',subject: '门诊停诊通知', content: '本周因到外地参加学术讨论会，停止门诊一周，请谅解。'},
+    {date: '2016年02月03日',subject: '门诊停诊通知', content: '本周因家中，停止门诊，请谅解。'},
+    {date: '2016年02月01日',subject: '门诊降价通知', content: '门诊费用下调，请知悉。'},
+    {date: '2016年01月28日',subject: '门诊停诊通知', content: '本周停止门诊一周，请谅解。'},
+    {date: '2016年01月20日',subject: '门诊停诊通知', content: '停止门诊一周。'},
+    {date: '2016年01月10日',subject: '门诊价格调整', content: '本周门诊价格上涨，请知悉。'},
+    {date: '2016年01月01日',subject: '元旦快乐', content: '祝大家元旦快乐。'},
+      {date: '2016年02月10日',subject: '门诊停诊通知', content: '本周因到外地参加学术讨论会，停止门诊一周，请谅解。'},
+      {date: '2016年02月03日',subject: '门诊停诊通知', content: '本周因家中，停止门诊，请谅解。'},
+      {date: '2016年02月01日',subject: '门诊降价通知', content: '门诊费用下调，请知悉。'},
+      {date: '2016年01月28日',subject: '门诊停诊通知', content: '本周停止门诊一周，请谅解。'},
+      {date: '2016年01月20日',subject: '门诊停诊通知', content: '停止门诊一周。'},
+      {date: '2016年01月10日',subject: '门诊价格调整', content: '本周门诊价格上涨，请知悉。'},
+      {date: '2016年01月01日',subject: '元旦快乐', content: '祝大家元旦快乐。'},
+        {date: '2016年02月10日',subject: '门诊停诊通知', content: '本周因到外地参加学术讨论会，停止门诊一周，请谅解。'},
+        {date: '2016年02月03日',subject: '门诊停诊通知', content: '本周因家中，停止门诊，请谅解。'},
+        {date: '2016年02月01日',subject: '门诊降价通知', content: '门诊费用下调，请知悉。'},
+        {date: '2016年01月28日',subject: '门诊停诊通知', content: '本周停止门诊一周，请谅解。'},
+        {date: '2016年01月20日',subject: '门诊停诊通知', content: '停止门诊一周。'},
+        {date: '2016年01月10日',subject: '门诊价格调整', content: '本周门诊价格上涨，请知悉。'},
+        {date: '2016年01月01日',subject: '元旦快乐', content: '祝大家元旦快乐。'},
 ];
 class Release extends Component {
   constructor(props) {
@@ -64,12 +86,11 @@ class Release extends Component {
             <Text style={styles.cmdText}>发布</Text>
           </TouchableHighlight>
         </View>
-        <View style = {styles.container}>
+        <ScrollView style = {styles.container}>
           <TextInput
             ref = 'contentBox'
             placeholder = {'你想说的...'}
             onChangeText = {(text) => this.setState({content: text})}
-            autoFocus = {true}
             textAlignVertical = {'top'}
             multiline = {true}
             numberOfLines = {6}
@@ -88,7 +109,7 @@ class Release extends Component {
           </View>
 
           <NewsList navigator={this.props.navigator} newsSet = {newsSet}/>
-        </View>
+        </ScrollView>
       </Image>
     );
   }
@@ -97,8 +118,7 @@ class Release extends Component {
 const styles = StyleSheet.create({
 	backgroundImage: {
     width: Dimensions.get('window').width,
-    height: Dimensions.get('window').height,
-    flex: 1,
+    height: Dimensions.get('window').height -85,
 	},
   title: {
     flexDirection: 'row',

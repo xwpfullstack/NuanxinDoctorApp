@@ -5,6 +5,7 @@ import React, {
 	View,
   ScrollView,
 	Text,
+  Image,
 	TouchableOpacity,
   TouchableHighlight,
   Component,
@@ -121,9 +122,21 @@ class CompleteRecord extends Component {
     this.state.data[dateIndex].prescription[medcineIndex] = data;
     this.setState({data: this.state.data});
   }
+
+  popOut() {
+      this.props.navigator.pop();
+  }
+
 	render(){
 		return (
       <ScrollView style = {styles.container}>
+        <View style={styles.tittle}>
+          <View style={styles.titleContent}>
+          <TouchableOpacity style={{width:50}} onPress={()=>this.popOut()}><Image source={require('../../images/icon/back.png')}></Image></TouchableOpacity>
+            <Text style={styles.name}>完整病例</Text>
+            <View style={{width:50}}></View>
+          </View>
+        </View>
         <TouchableHighlight
           underlayColor='rgba(34,26,38,0.1)'
           onPress={()=>this.addRecord()}
@@ -151,7 +164,27 @@ const styles = StyleSheet.create({
   container: {
     height: Dimensions.get('window').height - 80,
     backgroundColor: '#F0F0F0',
-    padding: 11,
+  },
+  buttonNewText: {
+    fontFamily: 'PingFang-SC-Regular',
+    fontSize: 14,
+    color: '#FEA501',
+  },
+  tittle:{
+    backgroundColor:'#878181',
+    flexDirection: 'column',
+    height:40,
+    justifyContent: 'center',
+  },
+  titleContent:{
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginLeft:10,
+    marginRight:10,
+  },
+  name:{
+    color:'white',
+     fontSize:18,
   },
   buttonNewStyle: {
     flex: 1,
@@ -161,15 +194,11 @@ const styles = StyleSheet.create({
     borderColor: '#FEA501',
     borderWidth: 1,
     borderRadius: 20,
-    marginVertical: 11,
-  },
-  buttonNewText: {
-    fontFamily: 'PingFang-SC-Regular',
-    fontSize: 14,
-    color: '#FEA501',
+    margin: 11,
   },
   recordTable: {
     marginBottom: 11,
+    marginHorizontal: 11,
   }
 })
 export default CompleteRecord;
