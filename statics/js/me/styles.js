@@ -72,6 +72,18 @@ const styles = StyleSheet.create({
         borderColor:'#BFBFBF',
         borderRadius:WINDOW_HEIGHT * 0.075,//半径为正方形的边长的一半
     },
+    infoModal: {
+        height:WINDOW_HEIGHT,
+        width:WINDOW_WIDTH,
+        top:0,
+        bottom:0,
+        left:0,
+        right:0
+    },
+    touchExit: {
+        height:WINDOW_HEIGHT,
+        width:WINDOW_WIDTH,
+    },
     //
     imageText: {
         marginTop:-11,
