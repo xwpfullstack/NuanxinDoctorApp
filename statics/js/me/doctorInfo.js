@@ -3,7 +3,7 @@ import JobView from './jobView.js'
 import MyModal from './modal.js';
 import styles from './styles';
 import WebMainPage from './webView'
-import FLModal from './FLModal'
+import MenuModal from './menuModal'
 import Modal from 'react-native-root-modal'
 
 import React, {
@@ -13,6 +13,7 @@ import React, {
   ScrollView,
   Image,
   TouchableOpacity,
+  Dimensions,
 } from 'react-native';
 
 var Doctor_Message = [
@@ -20,6 +21,9 @@ var Doctor_Message = [
   tel:'12312312311',memo:'周日休息，不接待患者,有任何问题可以转到下周安排，及时通告患者，谢谢合作。',
   price:49},
 ];
+var WINDOW_WIDTH = Dimensions.get('window').width;
+var WINDOW_HEIGHT = Dimensions.get('window').height;
+
 class DoctorInfo extends Component {
     constructor(){
         super();
@@ -34,21 +38,40 @@ class DoctorInfo extends Component {
             name:'doctorMsgEdit',
         })
     };
-    showModal() {
+    closeModal(){
+         this.setState({ListMenu:false});
+    };
+    showModal(name) {
         if(!this.state.ListMenu) {
-            this.setState({
-                ListMenu:true,
-                modalStyle:{
-                    position: 'absolute',
-                    right:10,
-                    top:127,
-                    height:100,
-                    width:100,
-                    backgroundColor:'rgba(255,255,255,0.8)',
-                },
-                modalContent:<FLModal close={()=>this.closeModal()} openCenter={()=>this.openCenterModal()}/>,
+            if(name === 'Menuname') {
+                this.setState({
+                    ListMenu:true,
+                    modalStyle:{
+                        position: 'absolute',
+                        right:0,
+                        top:45,
+                        height:100,
+                        width:100,
+                        backgroundColor:'rgba(255,255,255,0.8)',
+                    },
+                    modalContent:<MenuModal close={()=>this.closeModal()} navigator={this.props.navigator} name='menuModal'/>,
+                });
+            }else if(name === 'ShowCode'){
+                this.setState({
+                    ListMenu:true,
+                    modalStyle:{
+                        position: 'absolute',
+                        left:0,
+                        right:0,
+                        top:0,
+                        bottom:0,
+                        backgroundColor:'rgba(0,0,0,0.3)',
+                    },
+                    modalContent:<MenuModal close={()=>this.closeModal()} navigator={this.props.navigator} dcrname={dctmsg.name} name='codeModal'/>,
             });
-        }else{
+            }
+        }
+        else{
             this.setState({ListMenu:false});
         }
     }
@@ -63,18 +86,14 @@ class DoctorInfo extends Component {
                 <View style={{flex:9}}>
                     <TouchableOpacity
                     style={styles.headImg}
-                    onPress= {()=>this._onPressEditButton()}>
+                    onPress= {()=>this.showModal('Menuname')}>
                         <Image source = {require('../../images/me/edit.png')} />
                     </TouchableOpacity>
                 </View>
 
             </View>
 
-            <Modal visible={this.state.ListMenu}>
-                <View style={this.state.modalStyle}>
-                    {this.state.modalContent}
-                </View>
-            </Modal>
+
 
             <ScrollView style={styles.ScrollViewBody}>
                 {/*headerImage start*/}
@@ -149,10 +168,27 @@ class DoctorInfo extends Component {
                     </View>
                 </View>
 
+
+                <MyModal
+                    navigator={this.props.navigator}
+                    showModal = {(name)=> this.showModal(name)}
+                    closeModal={()=>this.closeModal()}
+                />
+
                 {/*my homepage*/}
-                <MyModal navigator={this.props.navigator} name={dctmsg.name}/>
                 </ScrollView>
+
+                <Modal visible={this.state.ListMenu}
+                    style={styles.infoModal}>
+                    <TouchableOpacity onPress={()=>this.closeModal()}
+                        style={styles.touchExit}>
+                        <View style={this.state.modalStyle}>
+                            {this.state.modalContent}
+                        </View>
+                    </TouchableOpacity>
+                </Modal>
         </View>
+
       );
     }
 }

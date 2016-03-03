@@ -22,12 +22,12 @@ class MyModal extends Component {
             visible: false
         };
     }
-    showModal = ()=> {
+    showModal() {
         this.setState({
             visible: true
         });
     };
-    hideModal = ()=> {
+    hideModal() {
         this.setState({
             visible: false
         });
@@ -42,11 +42,18 @@ class MyModal extends Component {
             name:'prescription',
         })
     }
+
+    _onPressCaseBtn() {
+        this.props.navigator.push({
+            name:'caseHistory',
+        })
+    }
   render() {
     return (
         <View>
             {/*button*/}
-            <TouchableOpacity style={styles.doctorMessage} onPress={this.showModal}>
+
+            <TouchableOpacity style={styles.doctorMessage} onPress={()=>this.props.showModal('ShowCode')}>
               <View style={styles.myqrcode}>
                   <Image
                       style={styles.avatarImg}
@@ -55,7 +62,6 @@ class MyModal extends Component {
                 <Text>我的二维码</Text>
               </View>
             </TouchableOpacity>
-
             <TouchableOpacity
                 style={[styles.doctorMessage,{marginTop:0}]}
                 onPress={()=>{return this._onPressWebButton()}}>
@@ -71,7 +77,6 @@ class MyModal extends Component {
             <TouchableOpacity
               style={[styles.doctorMessage,{marginTop:0}]}
               onPress={()=>{return this._onPressPrescriptionBtn()}}>
-
               <View style={styles.myqrcode}>
                   <Image
                       style={styles.avatarImg}
@@ -80,15 +85,17 @@ class MyModal extends Component {
                 <Text>我的处方</Text>
               </View>
             </TouchableOpacity>
-
-            <Modal visible={this.state.visible}>
-                <TouchableOpacity onPress={this.hideModal}>
-                    <View style={styles.modalContainer}>
-                        <Image source={require('../../images/me/erweima.png')} style={{width:200, height:200, margin:20}} />
-                        <View style={{paddingBottom:30}}><Text>扫一扫二维码关注{this.props.name}医生</Text></View>
-                    </View>
-                </TouchableOpacity>
-            </Modal>
+            <TouchableOpacity
+              style={[styles.doctorMessage,{marginTop:0}]}
+              onPress={()=>{return this._onPressCaseBtn()}}>
+              <View style={styles.myqrcode}>
+                  <Image
+                      style={styles.avatarImg}
+                      source = {require('../../images/me/price.png')}>
+                  </Image>
+                <Text>经典病例</Text>
+              </View>
+            </TouchableOpacity>
         </View>
 
       );

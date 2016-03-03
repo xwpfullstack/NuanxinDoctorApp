@@ -35,6 +35,8 @@ import AddMedcine from './statics/js/patient/AddMedcine';
 import ModifyPrescription from './statics/js/patient/ModifyPrescription';
 import CompleteRecord from './statics/js/patient/CompleteRecord';
 import OrderList from './statics/js/patient/OrderListIso';
+import CaseHistory from './statics/js/me/caseHistory';
+
 var _navigator;
 //监听硬件返回功能
 BackAndroid.addEventListener('hardwareBackPress', ()=>{
@@ -136,8 +138,12 @@ class NuanXinDoctorApp extends Component {
       case 'orderList':
         return  <OrderList navigator={navigator} />;
         break;
-        case 'drugDetailed':
-            return <DrugDetailed navigator={navigator} />;
+      case 'drugDetailed':
+        return <DrugDetailed navigator={navigator} />;
+        break;
+      case 'caseHistory':
+        return <CaseHistory navigator={navigator} />;  
+        break;
     };
   };
 
