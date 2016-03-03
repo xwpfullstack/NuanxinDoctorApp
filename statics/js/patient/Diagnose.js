@@ -13,46 +13,50 @@ import React, {
   ScrollView,
 } from 'react-native';
                 
-var DataJson=[
-     [ {'id':1,'name':'睡眠行为障碍'},
-      {'id':2,'name':'抑郁状态'}],
-      [{'id':3,'name':'帕金森'},
-      {'id':4,'name':'颠簸'}],
-      [{'id':5,'name':'脑血管病'},
-      {'id':6,'name':'不安腿综合症'}],
-      [{'id':7,'name':'运动神经元病'},
-      {'id':8,'name':'失眠'}],
-      [{'id':9,'name':'神经衰弱'},
-      {'id':10,'name':'阿尔茨海默'}],
-      [{'id':11,'name':'焦虑状态'},
-      {'id':12,'name':'神经症'}],
-      [{'id':13,'name':'发作性睡病'},
-      ],
-  ];
+var DataJson=[];
 
-var ischeack=[<Text></Text>,<Text></Text>];
+var ischeack=[];
 class Diagnose extends Component{
-  constructor(){
-    super();
-    var dataSource=new ListView.DataSource({
-          rowHasChanged: (row1, row2) => row1 !== row2,
-      }); 
-    for (var i = 1 ; i <= DataJson.length*2; i++) {
-      ischeack[i]=false;
-    };
+  constructor(props){
+    super(props);
     this.state={
-      dataSource:dataSource.cloneWithRows(DataJson),
       isLoad:true,
-      isCheack:ischeack,
+      isCheack:[],
+      dataJson:[],
+      diags:this.props.diags,
   };
 };
-handleCheack(Msg){    
-    if (ischeack[Msg['id']] === false) {
-        ischeack[Msg['id']] =true;
+
+componentDidMount(){
+    //console.log(this.props.diags);
+      let dataJson=[]; 
+      let tempJson;
+      //
+     for (let i = 0; i <this.props.diags.length; i++) {
+            ischeack[i]=false;
+            if (i % 2 == 0) {
+                tempJson=[];
+                tempJson[0]=this.state.diags[i];
+                if (i == this.state.diags.length-1) {
+                    dataJson.push(tempJson);
+                }
+            }
+            else{
+                  tempJson[1]=this.state.diags[i];
+                   dataJson.push(tempJson);
+            }
+      };
+
+      this.setState({isCheack:ischeack,dataJson:dataJson});
+}
+
+handleCheack(index,Msg){    
+    if (ischeack[index] === false) {
+        ischeack[index] =true;
          this.props.changeMedia(Msg,false);
     }
     else{
-        ischeack[Msg['id']] =false;
+        ischeack[index] =false;
          this.props.changeMedia(Msg,true);
     }
      this.setState({isCheack:ischeack});
@@ -68,23 +72,25 @@ dSubmit(){
       this.props.gotoPage(1);
 
   };
+
   render(){
     if (this.state.isLoad) {
-      var ListContent=DataJson.map((data,index)=>{
+      var ListContent=this.state.dataJson.map((data,index)=>{
         var temp;
+
+        var two=(index+1)*2-1;
         if (data[1]) {
           temp= <TouchableOpacity 
                 activeOpacity={1}
-                onPress={()=>this.handleCheack(data[1])} 
-                style={[styles.rowData,{marginRight:20,backgroundColor:this.state.isCheack[data[1]['id']]?'#FE9300':'rgb(244,241,245)'}]}>
-                <Text style={[styles.rowDataText,{color:this.state.isCheack[data[1]['id']]?'white':'black'}]}>
-                  {data[1]['name']}
+                onPress={()=>this.handleCheack(two,data[1])} 
+                style={[styles.rowData,{marginRight:20,backgroundColor:this.state.isCheack[two]?'#FE9300':'rgb(244,241,245)'}]}>
+                <Text style={[styles.rowDataText,{color:this.state.isCheack[two]?'white':'black'}]}>
+                  {data[1]}
                 </Text>
               </TouchableOpacity>;
         }
         else{
             temp= <TouchableOpacity 
-                
                 style={[styles.rowData,{marginRight:20,backgroundColor:'rgba(0,0,0,0)',borderWidth:0,}]}>
                 <Text style={[styles.rowDataText]}>
                 </Text>
@@ -92,12 +98,12 @@ dSubmit(){
         }
 
         return (
-          <View key={data[0]['id']} style={styles.row}>
+          <View key={index} style={styles.row}>
               <TouchableOpacity 
               activeOpacity={1}
-              onPress={()=>this.handleCheack(data[0])} 
-              style={[styles.rowData,{backgroundColor:this.state.isCheack[data[0]['id']]?'#FE9300':'rgb(244,241,245)'}]}>
-                  <Text style={[styles.rowDataText,{color:this.state.isCheack[data[0]['id']]?'white':'black'}]}>{data[0]['name']}</Text>
+              onPress={()=>this.handleCheack((index*2),data[0])} 
+              style={[styles.rowData,{backgroundColor:this.state.isCheack[(index*2)]?'#FE9300':'rgb(244,241,245)'}]}>
+                  <Text style={[styles.rowDataText,{color:this.state.isCheack[(index*2)]?'white':'black'}]}>{data[0]}</Text>
               </TouchableOpacity>
               {temp}
           </View>

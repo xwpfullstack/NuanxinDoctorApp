@@ -37,11 +37,11 @@ RouteMapper(route, navigator){
 
       if (route.name === 'home') {
        return (
-            <HomePage navigator={navigator}/>
+            <HomePage navigator={navigator} doctorId={this.props.doctorId}/>
         );
       }
       else if(route.name === 'self'){
-          return <PatientSelf id={route.id} mainNavigator={this.props.mainNavigator} navigator={navigator}/>
+          return <PatientSelf diags={route.diags} patientData={route.patientData}  mainNavigator={this.props.mainNavigator} navigator={navigator}/>
       }
 
     };

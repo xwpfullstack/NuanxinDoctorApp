@@ -128,7 +128,9 @@ class DoctorLogIn extends Component {
   }
 
   _onPressRegistButton() {
-    
+    this.props.navigator.push({
+      name: 'regist',
+    })   
   }
     
   //点击忘记密码的回调函数
@@ -155,7 +157,7 @@ class DoctorLogIn extends Component {
               ref='username'
               style={styles.userInput}
               placeholder='请输入手机号码'
-              textAlign='center'
+              underlineColorAndroid={'transparent'}
               keyboardType='numeric'
               onFocus={()=>{this.refs.username.focus()}}
               defaultValue={this.fields.username}
@@ -169,8 +171,8 @@ class DoctorLogIn extends Component {
               ref='passwd'
               style={styles.userPwd}
               placeholder='请输入密码'
+              underlineColorAndroid={'transparent'}
               secureTextEntry={true} 
-              textAlign='center'
               defaultValue={this.fields.passwd}
               onFocus={()=>{this.refs.passwd.focus()}}
               onChangeText={(text) => {this.fields.passwd = text}}
@@ -248,10 +250,12 @@ var styles = StyleSheet.create({
     alignSelf: 'center',
   },
   userInput: {
+    textAlign: 'center',
     marginTop: 10,
     height: 40,
   },
   userPwd: {
+    textAlign: 'center',
     marginTop: 5,
     marginBottom: 5,
     height: 40,

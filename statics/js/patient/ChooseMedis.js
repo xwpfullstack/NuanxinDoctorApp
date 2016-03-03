@@ -13,47 +13,62 @@ import React, {
   ScrollView,
 } from 'react-native';
                 
-
+import Loading from './Loading';
+import NoSelect from './NoSelect';
 var DataJson=[
-     [ {'id':1,'name':'甜梦口服液'},
-      {'id':2,'name':'九味肝泰'}],
-      [{'id':3,'name':'九味镇心颗粒'},
-      {'id':4,'name':'可元'}],
-      [{'id':5,'name':'振源胶囊'},
-      {'id':6,'name':'心神宁片'}],
-      [{'id':7,'name':'运动神经元病'},
-      {'id':8,'name':'补肾益脑丸'}],
-      [{'id':9,'name':'神经衰弱'},
-      {'id':10,'name':'养心生脉'}],
-      [{'id':11,'name':'养心生脉颗粒'},
-      {'id':12,'name':'益气维血'}],
-      [{'id':13,'name':'脑心清片'},
-      {'id':14,'name':'青梅渣铜'}],
   ];
 var ischeack=[];
 class ChooseMedis extends Component{
   constructor(){
-    super();
-    var dataSource=new ListView.DataSource({
-          rowHasChanged: (row1, row2) => row1 !== row2,
-      }); 
-    for (var i = 1 ; i <= DataJson.length*2; i++) {
-      ischeack[i]=false;
-    };
+    super(); 
+    
     this.state={
-      dataSource:dataSource.cloneWithRows(DataJson),
-      isLoad:true,
-      isCheack:ischeack,
+      isLoad:false,
+      isEmpty:true,
+      dataJson:[],
+      data:[],
+      isCheack:[],
   };
 };
-handleCheack(Msg){    
-  Msg['MediaNums']=[[true,false,false,false,'','',1],];
-    if (ischeack[Msg['id']] === false) {
-        ischeack[Msg['id']] =true;
+
+tigglePar(key,is_open){
+  if (key == 'isLoad') {
+      this.setState({'isLoad':is_open});
+  }
+  else if(key == 'isEmpty'){
+    this.setState({'isEmpty':is_open});
+  }    
+}
+
+createData(postData){
+     let dataJson=[]; 
+      let tempJson;
+      //
+     for (let i = 0; i <postData.length; i++) {
+            ischeack[i]=false;
+            if (i % 2 == 0) {
+                tempJson=[];
+                tempJson[0]=postData[i];
+                if (i == postData.length-1) {
+                    dataJson.push(tempJson);
+                }
+            }
+            else{
+                  tempJson[1]=postData[i];
+                   dataJson.push(tempJson);
+            }
+      };
+      return dataJson;
+}
+
+handleCheack(index,Msg){    
+  Msg['mediaNums']=[[true,false,false,false,null,null,1],];
+    if (ischeack[index] === false) {
+        ischeack[index] =true;
         this.props.changeMedia(Msg,false);
     }
     else{
-        ischeack[Msg['id']] =false;
+        ischeack[index] =false;
         this.props.changeMedia(Msg,true);
     }
      this.setState({isCheack:ischeack});
@@ -65,20 +80,36 @@ addMedcine(){
        });
 };
 
+postData(data){
+  //Alert.alert(data[0]);
+  //console.log(data);
+  for (var i = 0 ; i < data['meds'].length; i++) {
+      ischeack[i]=false;
+    };
+  var dataJson = this.createData(data.meds)
+  this.setState({isLoad:true,data:data.meds,dataJson:dataJson,isCheack:ischeack});
+}
+
 dSubmit(){
       this.props.gotoPage(2);
 
   };
   render(){
+    if (this.state.isEmpty) {
+        return (
+            <NoSelect  txt='还没有选择任何症状...' style={{height:Dimensions.get('window').height-200,}}/>
+        );
+    }
     if (this.state.isLoad) {
-      var ListContent=DataJson.map((data,index)=>{
-        var temp;
+      var ListContent=this.state.dataJson.map((data,index)=>{
+      var temp;
+      var two=(index+1)*2-1;
         if (data[1]) {
           temp= <TouchableOpacity 
                 activeOpacity={1}
-                onPress={()=>this.handleCheack(data[1])} 
-                style={[styles.rowData,{marginRight:20,backgroundColor:this.state.isCheack[data[1]['id']]?'#FE9300':'rgb(244,241,245)'}]}>
-                <Text style={[styles.rowDataText,{color:this.state.isCheack[data[1]['id']]?'white':'black'}]}>
+                onPress={()=>this.handleCheack(two,data[1])} 
+                style={[styles.rowData,{marginRight:20,backgroundColor:this.state.isCheack[two]?'#FE9300':'rgb(244,241,245)'}]}>
+                <Text style={[styles.rowDataText,{color:this.state.isCheack[two]?'white':'black'}]}>
                   {data[1]['name']}
                 </Text>
               </TouchableOpacity>;
@@ -93,12 +124,12 @@ dSubmit(){
         }
 
         return (
-              <View key={data[0]['id']} style={styles.row}>
+              <View key={index} style={styles.row}>
               <TouchableOpacity 
               activeOpacity={1}
-              onPress={()=>this.handleCheack(data[0])} 
-              style={[styles.rowData,{backgroundColor:this.state.isCheack[data[0]['id']]?'#FE9300':'rgb(244,241,245)'}]}>
-                  <Text style={[styles.rowDataText,{color:this.state.isCheack[data[0]['id']]?'white':'black'}]}>{data[0]['name']}</Text>
+              onPress={()=>this.handleCheack(index*2,data[0])} 
+              style={[styles.rowData,{backgroundColor:this.state.isCheack[index*2]?'#FE9300':'rgb(244,241,245)'}]}>
+                  <Text style={[styles.rowDataText,{color:this.state.isCheack[index*2]?'white':'black'}]}>{data[0]['name']}</Text>
               </TouchableOpacity>
               {temp}
           </View>
@@ -123,7 +154,7 @@ dSubmit(){
         );
       }
        else{
-            return <Text>AAAA</Text>;
+            return <Loading style={{height:Dimensions.get('window').height-200}}/>;
         };
 };
 };

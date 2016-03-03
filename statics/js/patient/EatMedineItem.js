@@ -17,7 +17,7 @@ import Modal from 'react-native-root-modal';
 import EatDatesModal from './EatDatesModal';
 
   var isCheack=[
-  ['j',false],
+  ['j',true],
   ['m',false],
   ['h',false],
   ['mo',false],
@@ -28,12 +28,12 @@ class EatMedineItem extends Component{
     super(props);  
     this.state={
       Cheack:isCheack,
-      MediaNums:this.props.media['MediaNums'],
+      MediaNums:this.props.media['mediaNums'],
       Lvisible:false,
       modal:'',
     };
+     this.props.media['startTime']=new Date().toLocaleDateString();
   };
-
 
 closeModal(){
     this.setState({Lvisible:false});
@@ -55,14 +55,18 @@ cheackTime(name){
   });
   this.setState({Cheack:newList});
 };
-more(){
-  var newList=isCheack.map((value,index)=>{
+
+changeColor(){
+var newList=isCheack.map((value,index)=>{
     if (index == 3) {
         return [value[0],true];
     }
     return [value[0],false];
   });
   this.setState({Cheack:newList});
+};
+
+more(){
   this.props.more();
 };
 cheackMedia(index,rows){
@@ -72,18 +76,33 @@ cheackMedia(index,rows){
 };
 
 add(index,row){
-  if(this.state.MediaNums[index][row]){
-       this.state.MediaNums[index][row]+=1;
+  if(this.state.MediaNums[index][row]!=null){
+      if (row == 4) {
+        this.state.MediaNums[index][row]+=0.5;
+      }
+      else{
+        this.state.MediaNums[index][row]=parseInt( this.state.MediaNums[index][row])+1;
+      }
   }
   else{
-    this.state.MediaNums[index][row]=1;
+    if (row == 4) {
+        this.state.MediaNums[index][row]=0.5;
+      }
+      else{
+         this.state.MediaNums[index][row]=1;
+      }
   }
    this.setState({MediaNums:this.state.MediaNums});
 };
 minu(index,row){
-    if(this.state.MediaNums[index][row]){
+    if(this.state.MediaNums[index][row]!=null){
       if (this.state.MediaNums[index][row]>0) {
-         this.state.MediaNums[index][row]-=1;
+        if (row == 4) {
+        this.state.MediaNums[index][row]-=0.5;
+      }
+      else{
+        this.state.MediaNums[index][row]-=1;
+      }
        }
       }
       else{
@@ -120,8 +139,9 @@ delPage(index){
   }
    
 };
-addPage(){
-     this.state.MediaNums.push([true,false,false,false,'','',1]);
+addPage(index){
+  //Alert.alert(index+'');
+     this.state.MediaNums.splice(index+1,0,[true,false,false,false,null,null,1]);
      this.setState({MediaNums:this.state.MediaNums});
 };
 
@@ -182,10 +202,10 @@ MedList(){
                                 <View style={{height:30,width:100, justifyContent:'center',alignItems:'center',borderWidth:0,}} >
                                       <TextInput  
                                       style={{fontSize:15,color:'#000000',textAlign:'center'}} 
-                                      placeholder='请输入服用剂量' 
+                                      placeholder='服用剂量' 
                                       placeholderTextColor='#BFBFBF'
                                       keyboardType='numeric'   
-                                      value ={value[4]+''}
+                                      value ={value[4] != null?(value[4]+''):''}
                                       onChangeText={(txt)=>this.changeTxt(index,4,txt)}/>
                                 </View>
                                 <TouchableOpacity
@@ -194,7 +214,7 @@ MedList(){
                                     <Text  style={styles.quartTxt}>+</Text>
                                  </TouchableOpacity>
                           </View>
-                          <Text style={{flex:1,}}> 片/次</Text>
+                          <Text style={{flex:1,}}> {this.props.media['unit']}/次</Text>
                       </View>
                       <View style={styles.FYNums}>
                           <Text style={{flex:1,}}>服用周期</Text>
@@ -207,10 +227,10 @@ MedList(){
                                 <View style={{height:30,width:100, justifyContent:'center',alignItems:'center',borderWidth:0,}} >
                                       <TextInput  
                                       style={{fontSize:15,color:'#000000', textAlign:'center'}} 
-                                      placeholder='请输入服用剂量' 
+                                      placeholder='服用周期' 
                                       placeholderTextColor='#BFBFBF'
                                       keyboardType='numeric'   
-                                      value ={value[5]+''} 
+                                      value ={value[5] != null?(value[5]+''):''} 
                                       onChangeText={(txt)=>this.changeTxt(index,5,txt)}/>
                                 </View>
                                 <TouchableOpacity 
@@ -225,7 +245,7 @@ MedList(){
                             <View style={{flex:1}}></View>
                             <View style={{flex:1,alignItems:'center',justifyContent:'center', flexDirection: 'row',}}>
                                     <TouchableOpacity onPress={()=>this.delPage(index)} style={styles.btnMDel}><Text style={{color:'#FE9300'}}>删除</Text></TouchableOpacity>
-                                    <TouchableOpacity onPress={()=>this.addPage()} style={styles.btnMDel}><Text style={{color:'#FE9300'}}>调量</Text></TouchableOpacity>
+                                    <TouchableOpacity onPress={()=>this.addPage(index)} style={styles.btnMDel}><Text style={{color:'#FE9300'}}>调量</Text></TouchableOpacity>
                             </View>
                       </View>
                     

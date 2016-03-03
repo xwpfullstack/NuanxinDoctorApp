@@ -12,6 +12,14 @@ global.DocInfo = Basic_URL + 'info/';
 global.SaveDovInfo = Basic_URL + 'editorInfo/';
 //获取患者列表
 global.PatientList_URL = Basic_URL + 'patlist/';
+
+//新获取患者列表
+global.Apppatlist_URL = Basic_URL + 'Apppatlist/';
+//根据症状来返回药品
+global.Meds_URL = Basic_URL + 'meds/';
+//添加病人服用药品
+global.SavePrescript_URL = Basic_URL + 'savePrescript/';
+
 //获取医生诊断列表
 global.DocDiags_URL = Basic_URL + 'docDiags/';
 //添加医生诊断
@@ -54,9 +62,7 @@ global.ModifyMethod_URL = Basic_URL + 'modifyMethod/';
 global.GetDocNum_URL = Basic_URL + 'getdocNum/';
 //得到科室信息
 global.GetDeparts_URL = Basic_URL + 'getdepars/';
-//忘记密码
-global.ForgetPass_URL = Basic_URL + 'forgetPass/';
 //修改密码
-global.ModifyPass_URL = Basic_URL + 'modifyPass/';
+global.ModifyPass_URL = Basic_URL + 'AppModifyPass/';
 //发送短信
 global.sendMsg_URL = Basic_URL + 'AppSendMsg/';

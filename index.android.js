@@ -17,9 +17,14 @@ import React, {
 import TimerMixin from 'react-timer-mixin';
 import Srorage from './statics/js/public/Storage';
 import SplashScreen from './statics/js/login/SplashScreen';
+import DoctorRegist from './statics/js/login/DoctorRegist';
 import DoctorMainScreen from './statics/js/public/DoctorMainScreen';
 import DoctorLogIn from './statics/js/login/DoctorLogIn';
 import ModifyPwd from './statics/js/login/DoctorModifyPwd';
+import WebMainPage from './statics/js/me/webView';
+import DoctorMsgEdit from './statics/js/me/doctorMsgEdit';
+import Prescription from './statics/js/me/prescription';
+import DrugDetailed from './statics/js/me/drugDetailed';
 import OrderDetails from './statics/js/cal/OrderDetails';
 import NewsDetails from './statics/js/cal/NewsDatails';
 import AddOrder from './statics/js/patient/AddOrder';
@@ -29,7 +34,7 @@ import AddDianosis from './statics/js/patient/AddDiagnosis';
 import AddMedcine from './statics/js/patient/AddMedcine';
 import ModifyPrescription from './statics/js/patient/ModifyPrescription';
 import CompleteRecord from './statics/js/patient/CompleteRecord';
-import OrderList from './statics/js/cal/OrderList';
+import OrderList from './statics/js/patient/OrderListIso';
 var _navigator;
 //监听硬件返回功能
 BackAndroid.addEventListener('hardwareBackPress', ()=>{
@@ -39,6 +44,8 @@ BackAndroid.addEventListener('hardwareBackPress', ()=>{
   }
   return false;
 })
+
+var doctorId;
 
 class NuanXinDoctorApp extends Component {
   constructor(props) {
@@ -55,7 +62,7 @@ class NuanXinDoctorApp extends Component {
       ()=>{
         this.setState({pageLoading: true});
       },
-      1,
+      1000,
     );
     this.InitialRouteName();
   }
@@ -72,50 +79,65 @@ class NuanXinDoctorApp extends Component {
    * logIn: 登陆页面
    * doctorHomePage: app主页
    * patientInfo: 患者信息页面
+   * myMessage: 医生详情页
    ***************************/
   RouteMapper(route,navigator) {
     _navigator=navigator;
-
     switch(route.name){
       case 'logIn':
-             return  <DoctorLogIn navigator={navigator}/>;
+        return  <DoctorLogIn navigator={navigator}/>;
         break;
-        case 'doctorHomePage':
-             return   <DoctorMainScreen navigator={navigator} doctorId={route.doctorId}/>;
+      case 'doctorHomePage':
+        doctorId=route.doctorId;
+        return   <DoctorMainScreen navigator={navigator} doctorId={route.doctorId}/>;
         break;
-        case 'modifyPwd':
-             return  <ModifyPwd navigator={navigator} />;
+      case 'modifyPwd':
+        return  <ModifyPwd navigator={navigator} />;
         break;
-        case 'addOrder':
-             return  <AddOrder navigator={navigator}/>;
+      case 'regist':
+        return <DoctorRegist navigator={navigator}/>;
         break;
-        case 'DoctorRecord':
-             return  <DoctorRecord navigator={navigator}/>;
+      case 'addOrder':
+        return  <AddOrder patientId={route.patientId} doctorId={doctorId} diags={route.diags} navigator={navigator}/>;
         break;
-        case 'WriteTable':
-             return  <WriteTable navigator={navigator}/>;
+      case 'DoctorRecord':
+        return  <DoctorRecord navigator={navigator}/>;
         break;
-        case 'addDianosis':
-             return  <AddDianosis navigator={navigator}/>;
+      case 'WriteTable':
+        return  <WriteTable navigator={navigator}/>;
         break;
-         case 'addMedcine':
-             return  <AddMedcine navigator={navigator}/>;
+      case 'prescription':
+        return  <Prescription navigator={navigator}/>;
         break;
-        case 'orderDetails':
-             return  <OrderDetails navigator={navigator} orderData={route.passProps}/>;
+      case 'doctorMsgEdit':
+        return  <DoctorMsgEdit navigator={navigator}/>;
         break;
-        case 'newsDetails':
-             return  <NewsDetails navigator={navigator} newsData={route.passProps}/>;
+      case 'webMainPage':
+        return  <WebMainPage navigator={navigator}/>;
         break;
-        case 'modifyPrescriptionPage':
-             return  <ModifyPrescription navigator={navigator} passProps={route.passProps}/>;
+      case 'addDianosis':
+        return  <AddDianosis navigator={navigator}/>;
         break;
-         case 'completeRecord':
-             return  <CompleteRecord navigator={navigator} />;
+      case 'addMedcine':
+        return  <AddMedcine navigator={navigator}/>;
         break;
-         case 'orderList':
-             return  <OrderList navigator={navigator} />;
+      case 'orderDetails':
+        return  <OrderDetails navigator={navigator} orderData={route.passProps}/>;
         break;
+      case 'newsDetails':
+        return  <NewsDetails navigator={navigator} newsData={route.passProps}/>;
+        break;
+      case 'modifyPrescriptionPage':
+        return  <ModifyPrescription navigator={navigator} passProps={route.passProps}/>;
+        break;
+      case 'completeRecord':
+        return  <CompleteRecord navigator={navigator} />;
+        break;
+      case 'orderList':
+        return  <OrderList navigator={navigator} />;
+        break;
+        case 'drugDetailed':
+            return <DrugDetailed navigator={navigator} />;
     };
   };
 
@@ -125,7 +147,7 @@ class NuanXinDoctorApp extends Component {
       autoSync: true,
       syncInBackground: true,
     }).then( ret => {
-      if(ret.state === 'success') {   //
+      if(ret.state === 'success') {   //success
         this.setState({
           routeInfo:{
             name: 'doctorHomePage',

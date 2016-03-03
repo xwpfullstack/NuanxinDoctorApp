@@ -14,6 +14,7 @@ import React, {
 } from 'react-native';
 
 import Home from "./Home"
+import DoctorMainMessage from '../me/doctorMainMessage'
 import ViewPager from 'react-native-scrollable-tab-view'
 import BottomTabBar from '../BottomTabBar'
 import Schedule from '../cal/Schedule';
@@ -24,11 +25,9 @@ class nuanxin extends Component {
 
   render() {
     return (
-
-
         <ViewPager tabBarPosition='bottom'  locked='true' renderTabBar={()=><BottomTabBar />}>
           <View tabLabel='one'>
-            <Home mainNavigator={this.props.mainNavigator}/>
+            <Home mainNavigator={this.props.mainNavigator} doctorId={this.props.doctorId}/>
           </View>
           <View tabLabel='two'>
             <Schedule navigator={this.props.mainNavigator} />
@@ -40,7 +39,7 @@ class nuanxin extends Component {
             <ComponentTest navigator={this.props.mainNavigator} />
           </View>
           <View tabLabel='five'>
-            <Text>five</Text>
+            <DoctorMainMessage navigator={this.props.mainNavigator}/>
           </View>
         </ViewPager>
 

@@ -62,6 +62,7 @@ dataBack(){
 pickerDone(pickedValue){
 	this.setState({year: pickedValue[0], month: pickedValue[1], date: pickedValue[2]});
 	this.props.data['startTime']=(new Date(parseInt(pickedValue[0]),parseInt(pickedValue[1]),parseInt(pickedValue[2]),0,0,0)).toLocaleDateString();
+	this.props.changeColor();
 };
   componentDidMount() {
     //this.picker.show();

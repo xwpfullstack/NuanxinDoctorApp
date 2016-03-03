@@ -46,7 +46,7 @@ class NewsList extends Component {
       <ListView
         dataSource={this.dataSource.cloneWithRows(this.props.newsSet)}
         renderRow={this.renderRow.bind(this)}
-        automaticallyAdjustContentInsets={false}
+        automaticallyAdjustContentInsets={true}
         keyboardDismissMode='on-drag'
         keyboardShouldPersistTaps={true}
         showsVerticalScrollIndicator={true}
