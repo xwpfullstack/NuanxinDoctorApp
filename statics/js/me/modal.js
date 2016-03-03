@@ -42,6 +42,12 @@ class MyModal extends Component {
             name:'prescription',
         })
     }
+
+    _onPressCaseBtn() {
+        this.props.navigator.push({
+            name:'caseHistory',
+        })
+    }
   render() {
     return (
         <View>
@@ -77,6 +83,17 @@ class MyModal extends Component {
                       source = {require('../../images/me/price.png')}>
                   </Image>
                 <Text>我的处方</Text>
+              </View>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={[styles.doctorMessage,{marginTop:0}]}
+              onPress={()=>{return this._onPressCaseBtn()}}>
+              <View style={styles.myqrcode}>
+                  <Image
+                      style={styles.avatarImg}
+                      source = {require('../../images/me/price.png')}>
+                  </Image>
+                <Text>经典病例</Text>
               </View>
             </TouchableOpacity>
         </View>

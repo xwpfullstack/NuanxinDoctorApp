@@ -1,6 +1,7 @@
 'use strict';
 import styles from './styles';
 import DrugList from './drugList';
+import BackTitle from './back';
 
 import React, {
   Component,
@@ -19,15 +20,7 @@ class Prescription extends Component {
   render() {
     return (
         <View>
-            <View style={styles.headNav}>
-                <TouchableOpacity
-                style={styles.back}
-                onPress= {() => {this.props.navigator.pop()}}>
-                    <Image style={styles.headImg}
-                    source = {require('../../images/me/back.png')} />
-                </TouchableOpacity>
-                <View style={styles.headMenu}><Text style={styles.textBold}>我的药方</Text></View>
-            </View>
+            <BackTitle title={'wodeyaofang'} navigator = {this.props.navigator} />
             <ScrollView style={{height:WINDOW_HEIGHT-70}}>
                 <DrugList navigator={this.props.navigator}/>
             </ScrollView>
