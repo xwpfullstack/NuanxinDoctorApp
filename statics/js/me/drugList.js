@@ -26,15 +26,6 @@ var COLOR=[
     '#E9A737'
 ];
 
-function GetRandomNum(Min,Max)
-{
-var Range = Max - Min;
-var Rand = Math.random();
-return(Min + Math.round(Rand * Range));
-}
-
-var num = GetRandomNum(1,3);
-
 var tempData={
         A:['奥斯平','艾弗森','艾克'],
         B:['巴基斯坦','巴拿马','巴勒斯坦'],
