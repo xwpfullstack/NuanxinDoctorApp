@@ -36,8 +36,8 @@ renderOption(option, selected, onSelect, index) {
         marginTop: 10,
         marginBottom: 10,
         color: '#ccc',
-        flex: 1,
         fontSize: 14,
+        flex:1,
         textAlign:'center',
       };
       const baseStyle = {
@@ -63,20 +63,19 @@ renderOption(option, selected, onSelect, index) {
           borderTopWidth: 1,
         }];
         content=(
-          <TouchableOpacity style={[style,{justifyContent:'space-around'}]} onPress={onSelect} key={index}>
-              <Text style={textStyle}>每</Text>
-                 <View style={{height:30,width:50, justifyContent:'center',alignItems:'center',borderWidth:0,}} >
+          <TouchableOpacity style={[style,{justifyContent:'center'}]} onPress={onSelect} key={index}>
+              <Text style={[textStyle],{textAlign:'right'}}>每</Text>
+                 <TouchableOpacity onPress={onSelect} style={{height:40,width:50, flexDirection: 'column', justifyContent:'flex-end',alignItems:'flex-end',}} >
                                       <TextInput  
-                                      style={{fontSize:15,color:'#000000'}} 
-                                      placeholder='天数' 
-                                      placeholderTextColor='#BFBFBF'
-                                      textAlign='center'
+                                      ref='date'
+                                      style={{borderWidth:1,fontSize:15,alignSelf:'stretch',height:40,color:'#000000',textAlign:'center'}} 
+                                      underlineColorAndroid='black'
                                       defaultValue={this.props.isEveryday>1?(this.props.isEveryday+''):''}
                                       editable={isEdit}
                                       keyboardType='numeric'   
                                       onChangeText={(txt)=>this.changeTxt(txt)}/>
-                                </View>
-              <Text style={textStyle}>日一次</Text>
+                                </TouchableOpacity>
+              <Text style={[textStyle],{textAlign:'left'}}>日一次</Text>
           </TouchableOpacity>
         );
       } else {

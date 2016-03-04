@@ -4,75 +4,123 @@ import React, {
   Component,
   StyleSheet,
   Text,
-  TextInput,
   TouchableOpacity,
   View,
   Dimensions,
 } from 'react-native';
-import Modal from 'react-native-root-modal';
 
 var WINDOW_WIDTH = Dimensions.get('window').width;
-var worktime = [[1,0,0],[0,0,0],[0,0,0],[0,1,0],[0,0,0],[0,0,1],[1,0,0]];
-var showWktime = new Array(7);
-
-for (let i = 0; i<showWktime.length; i++)
-    showWktime[i]=new Array(3);
-for(let i = 0; i<7; i++){
-    for(let j=0; j<3; j++){
-        showWktime[i][j] = worktime[i][j] ? '#F08300' : '#fff';
-    }
-}
 
 class JobViewEdit extends Component {
+    constructor(props) {
+      super(props);
+      var tableArray = new Array();
+      for(var i = 0 ; i < 7 ;i ++) {
+        tableArray[i] = new Array();
+        for(var j = 0; j < 3 ; j++) {
+          var val = 0;
+          if (j == 0) {
+            val = 1;
+          }else if(j == 1) {
+            val = 2;
+          }else {
+            val = 4;
+          }
+          tableArray[i][j] = {check: false,value: val}
+        }
+      }
+      this.state={
+          switchInfo: false,
+          lastpage:false,
+          touchMan: false,
+          touchWoman: false,
+          errorMsg: false,
+          tableState:tableArray,
+      }
+    }
+
+    _onPressTable(row,column) {
+      var data = this.state.tableState;
+      data[column][row]['check'] = !data[column][row]['check'];
+      this.setState({
+        tableState: data,
+      })
+    }
+
+   _renderTable() {
+     return(
+       <View style={{marginTop: 10, marginBottom: 10,}}>
+         <View style={{marginLeft: 10, marginBottom: 10,}}>
+           <Text style={{color: 'black',}}>请选择出诊时间</Text>
+         </View>
+         <View style={styles.tabRow}>
+           <View style={styles.table}></View>
+           <View style={[styles.table,{borderLeftWidth: 0}]}><Text>周一</Text></View>
+           <View style={[styles.table,{borderLeftWidth: 0}]}><Text>周二</Text></View>
+           <View style={[styles.table,{borderLeftWidth: 0}]}><Text>周三</Text></View>
+           <View style={[styles.table,{borderLeftWidth: 0}]}><Text>周四</Text></View>
+           <View style={[styles.table,{borderLeftWidth: 0}]}><Text>周五</Text></View>
+           <View style={[styles.table,{borderLeftWidth: 0}]}><Text>周六</Text></View>
+           <View style={[styles.table,{borderLeftWidth: 0}]}><Text>周日</Text></View>
+         </View>
+         <View style={styles.tabRow}>
+           {this._renderTableRow(0)}
+         </View>
+         <View style={styles.tabRow}>
+           {this._renderTableRow(1)}
+         </View>
+         <View style={styles.tabRow}>
+           {this._renderTableRow(2)}
+         </View>
+       </View>
+     )
+    }
+
+    _renderTableRow(row) {
+      var time = '';
+      if(row == 0) {
+        time = '上午';
+      }else if (row == 1) {
+        time = '下午';
+      }else if(row == 2) {
+        time = '晚上';
+      }
+
+      var rowsData = [];
+      var tableArray = [0,1,2,3,4,5,6,7];
+      tableArray.map((value) => {
+        var data = null;
+        if(value == 0) {
+          data = (
+            <View
+              style={[styles.table,{borderTopWidth: 0}]}
+              key={'table'+row+value}
+            >
+              <Text>
+                {time}
+              </Text>
+            </View>
+          )
+        }else {
+          var num = value - 1;
+          data = (
+            <TouchableOpacity
+              key={'table'+row+value}
+              onPress={() => this._onPressTable(row,value-1)}
+              style={[styles.table,{borderTopWidth: 0,borderLeftWidth: 0,backgroundColor: this.state.tableState[num][row]['check']? 'orange' : 'transparent'}]}
+            >
+            </TouchableOpacity>
+          )
+        }
+        rowsData.push(data);
+      })
+      return rowsData;
+    }
+
   render() {
     return (
         <View style={{backgroundColor:'#fff'}}>
-            <View  style={styles.container}>
-                <View style={styles.table}></View>
-                <View style={styles.table}><Text>周一</Text></View>
-                <View style={styles.table}><Text>周二</Text></View>
-                <View style={styles.table}><Text>周三</Text></View>
-                <View style={styles.table}><Text>周四</Text></View>
-                <View style={styles.table}><Text>周五</Text></View>
-                <View style={styles.table}><Text>周六</Text></View>
-                <View style={[styles.table,{borderRightWidth:1}]}><Text>周日</Text></View>
-            </View>
-            <View  style={styles.container}>
-                <View style={styles.table}><Text>上午</Text></View>
-                <TouchableOpacity
-                    style={[styles.table,{backgroundColor:showWktime[0][0]}]}
-                >
-                </TouchableOpacity>
-                <TouchableOpacity style={[styles.table,{backgroundColor:showWktime[1][0]}]}></TouchableOpacity>
-                <TouchableOpacity style={[styles.table,{backgroundColor:showWktime[2][0]}]}></TouchableOpacity>
-                <TouchableOpacity style={[styles.table,{backgroundColor:showWktime[3][0]}]}></TouchableOpacity>
-                <TouchableOpacity style={[styles.table,{backgroundColor:showWktime[4][0]}]}></TouchableOpacity>
-                <TouchableOpacity style={[styles.table,{backgroundColor:showWktime[5][0]}]}></TouchableOpacity>
-                <TouchableOpacity style={[styles.table,{backgroundColor:showWktime[6][0],borderRightWidth:1}]}></TouchableOpacity>
-            </View>
-            <View  style={styles.container}>
-                <View style={styles.table}><Text>下午</Text></View>
-                <TouchableOpacity style={[styles.table,{backgroundColor:showWktime[0][1]}]}></TouchableOpacity>
-                <TouchableOpacity style={[styles.table,{backgroundColor:showWktime[1][1]}]}></TouchableOpacity>
-                <TouchableOpacity style={[styles.table,{backgroundColor:showWktime[2][1]}]}></TouchableOpacity>
-                <TouchableOpacity style={[styles.table,{backgroundColor:showWktime[3][1]}]}></TouchableOpacity>
-                <TouchableOpacity style={[styles.table,{backgroundColor:showWktime[4][1]}]}></TouchableOpacity>
-                <TouchableOpacity style={[styles.table,{backgroundColor:showWktime[5][1]}]}></TouchableOpacity>
-                <TouchableOpacity style={[styles.table,{backgroundColor:showWktime[6][1],borderRightWidth:1}]}></TouchableOpacity>
-            </View>
-            <View  style={styles.container}>
-                <View style={[styles.table,{borderBottomWidth:1}]}><Text>晚上</Text></View>
-                <TouchableOpacity style={[styles.table,{borderBottomWidth:1,backgroundColor:showWktime[0][2]}]}></TouchableOpacity>
-                <TouchableOpacity style={[styles.table,{borderBottomWidth:1,backgroundColor:showWktime[1][2]}]}></TouchableOpacity>
-                <TouchableOpacity style={[styles.table,{borderBottomWidth:1,backgroundColor:showWktime[2][2]}]}></TouchableOpacity>
-                <TouchableOpacity style={[styles.table,{borderBottomWidth:1,backgroundColor:showWktime[3][2]}]}></TouchableOpacity>
-                <TouchableOpacity style={[styles.table,{borderBottomWidth:1,backgroundColor:showWktime[4][2]}]}></TouchableOpacity>
-                <TouchableOpacity style={[styles.table,{borderBottomWidth:1,backgroundColor:showWktime[5][2]}]}></TouchableOpacity>
-                <TouchableOpacity style={[styles.table,{borderBottomWidth:1,backgroundColor:showWktime[6][2],borderRightWidth:1}]}></TouchableOpacity>
-            </View>
-
-
-
+        {this._renderTable()}
         </View>
       );
   }
@@ -80,17 +128,22 @@ class JobViewEdit extends Component {
 
 const styles = StyleSheet.create({
     container: {
-      flexDirection:'row',
-      alignItems: 'center',
+      flex: 1,
+      flexDirection: 'column',
+    },
+    tabRow: {
+      flex: 1,
+      flexDirection: 'row',
+      marginLeft: 5,
+      marginRight: 5,
     },
     table: {
-      borderColor:'#A7A7A7',
-      borderTopWidth:1,
-      borderLeftWidth:1,
+      flex: 1,
       alignItems: 'center',
       justifyContent: 'center',
-      height:25,
-      flex:0.1,
+      height: 45,
+      borderWidth: 1,
+      borderColor: '#E6E6E6'
     },
 });
 export default JobViewEdit;

@@ -66,7 +66,7 @@ class Schedule extends Component {
 const styles=StyleSheet.create({
 	backgroundImage: {
     width: Dimensions.get('window').width,
-    height: Dimensions.get('window').height,
+    height: Dimensions.get('window').height - 65,
     flex: 1,
 	},
   title: {

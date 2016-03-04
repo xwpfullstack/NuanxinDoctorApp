@@ -4,10 +4,13 @@ import React, {
   Alert,
   Component,
   StyleSheet,
+  ScrollView,
   Text,
   TextInput,
   TouchableHighlight,
+  TouchableOpacity,
   View,
+  Image,
   Dimensions,
 } from 'react-native';
 
@@ -71,7 +74,7 @@ changeMedia(datas){
     else{
       msg = msg.substring(0,msg.length-1);
     }
-   
+
     this.setState({txtMsg:msg});
 };
 
@@ -88,15 +91,15 @@ openModal(){
   }
 
   submit() {
-    let postData = {name: this.state.name,
-      productor: this.state.productor,
-      specification: this.state.specification,
-      unit: this.state.unit,
-      amount: this.state.amount,
-      meathod: this.state.meathod,
-      cheakMedia:subData
+    let postData = {'name': this.state.name,
+      'productor': this.state.productor,
+      'specification': this.state.specification,
+      'unit': this.state.unit,
+      'amount': this.state.amount,
+      'meathod': this.state.meathod,
+      'cheakMedia':subData
     }
-    console.log(postData);
+    console.log(JSON.stringify(postData));
   }
 
   update() {
@@ -105,163 +108,155 @@ openModal(){
   render() {
     return (
       <View>
-        <View style={styles.title}>
-          <View style={styles.titleReturn}>
-            <TouchableHighlight
-              underlayColor='rgba(34,26,38,0.1)'
-              onPress={()=>this.popOut()}>
-              <Text style={styles.titleReturnText}>《 返回</Text>
-            </TouchableHighlight>
-          </View>
-          <View style={styles.titleName}>
-            <Text style={styles.titleNameText}>添加药物</Text>
+        <View style={styles.tittle}>
+          <View style={styles.titleContent}>
+          <TouchableOpacity style={{width:50}} onPress={()=>this.popOut()}><Image source={require('../../images/icon/back.png')}></Image></TouchableOpacity>
+            <Text style={styles.name}>添加药物</Text>
+            <View style={{width:50}}></View>
           </View>
         </View>
 
-        <View style = {styles.inputLine}>
-          <Text style = {styles.label}>请选择医生诊断</Text>
-          <View style = {[styles.inputStyle, {flexDirection: 'row', justifyContent: 'space-between'}]}>
-            <View style = {{paddingLeft: 11, justifyContent: 'center'}}>
-              <Text style = {{alignSelf: 'center', fontSize: 12, color: '#0094ff',}}>{this.state.txtMsg}</Text>
+        <ScrollView style = {styles.container}>
+          <View style = {styles.inputLine}>
+            <Text style = {styles.label}>请选择医生诊断</Text>
+            <View style = {[styles.inputStyle, {flexDirection: 'row', justifyContent: 'space-between'}]}>
+              <View style = {{paddingLeft: 11, justifyContent: 'center'}}>
+                <Text style = {{alignSelf: 'center', fontSize: 12, color: '#0094ff',}}>{this.state.txtMsg}</Text>
+              </View>
+              <TouchableHighlight
+                style = {styles.chooseButton}
+                underlayColor='rgba(34,26,38,0.1)'
+                onPress={()=>this.openModal()}>
+                <Text style={styles.titleReturnText}>﹀</Text>
+              </TouchableHighlight>
             </View>
+          </View>
+          <View style = {styles.inputLine}>
+            <Text style = {styles.label}>名称</Text>
+            <View style = {styles.inputStyle}>
+              <TextInput
+              style = {styles.searchInput}
+                onChangeText = {(text) => this.setState({productor: text})}
+                selectTextOnFocus = {true}
+                underlineColorAndroid = {'transparent'}  />
+            </View>
+          </View>
+          <View style = {styles.inputLine}>
+            <Text style = {styles.label}>厂家</Text>
+            <View style = {styles.inputStyle}>
+              <TextInput
+              style = {styles.searchInput}
+                onChangeText = {(text) => this.setState({productor: text})}
+                selectTextOnFocus = {true}
+                underlineColorAndroid = {'transparent'}
+              />
+            </View>
+          </View>
+          <View style = {styles.inputLine}>
+            <Text style = {styles.label}>服用单位</Text>
+            <View style = {styles.inputStyle}>
+              <TextInput
+              style = {styles.searchInput}
+                onChangeText = {(text) => this.setState({unit: text})}
+                selectTextOnFocus = {true}
+                underlineColorAndroid = {'transparent'}
+              />
+            </View>
+          </View>
+          <View style = {styles.inputLine}>
+            <Text style = {styles.label}>服用剂量</Text>
+            <View style = {styles.inputStyle}>
+              <TextInput
+              style = {styles.searchInput}
+                onChangeText = {(text) => this.setState({amount: text})}
+                selectTextOnFocus = {true}
+                underlineColorAndroid = {'transparent'}
+              />
+            </View>
+          </View>
+          <View style = {styles.inputLine}>
+            <Text style = {styles.label}>服用方法</Text>
+            <View style = {styles.inputStyle}>
+              <TextInput
+              style = {styles.searchInput}
+                onChangeText = {(text) => this.setState({meathod: text})}
+                selectTextOnFocus = {true}
+                underlineColorAndroid = {'transparent'}
+              />
+            </View>
+          </View>
+          <View style = {styles.inputLine}>
+            <Text style = {styles.label}>说明书</Text>
+            <View style = {[styles.inputStyle, {height: 120}]}>
+              <TextInput
+              style = {styles.searchInput}
+                onChangeText = {(text) => this.setState({specification: text})}
+                selectTextOnFocus = {true}
+                multiline = {true}
+                numberOfLines = {6}
+                textAlignVertical = {'top'}
+                underlineColorAndroid = {'transparent'}
+              />
+            </View>
+          </View>
+          <View style = {[styles.inputLine, {justifyContent: 'flex-start'}]}>
             <TouchableHighlight
-              style = {styles.chooseButton}
               underlayColor='rgba(34,26,38,0.1)'
-              onPress={()=>this.openModal()}>
-              <Text style={styles.titleReturnText}>···</Text>
+              onPress={()=>this.chooseFile()}
+              style={styles.filebuttonStyle}
+            >
+              <Text style={styles.filebuttonText}>选择文件</Text>
             </TouchableHighlight>
+            <Text>未选择文件</Text>
           </View>
-        </View>
-        <View style = {styles.inputLine}>
-          <Text style = {styles.label}>名称</Text>
-          <View style = {styles.inputStyle}>
-            <TextInput
-            style = {styles.searchInput}
-              onChangeText = {(text) => this.setState({productor: text})}
-              selectTextOnFocus = {true}
-              underlineColorAndroid = {'transparent'}  />
-          </View>
-        </View>
-        <View style = {styles.inputLine}>
-          <Text style = {styles.label}>厂家</Text>
-          <View style = {styles.inputStyle}>
-            <TextInput
-            style = {styles.searchInput}
-              onChangeText = {(text) => this.setState({productor: text})}
-              selectTextOnFocus = {true}
-              underlineColorAndroid = {'transparent'}
-            />
-          </View>
-        </View>
-        <View style = {styles.inputLine}>
-          <Text style = {styles.label}>服用单位</Text>
-          <View style = {styles.inputStyle}>
-            <TextInput
-            style = {styles.searchInput}
-              onChangeText = {(text) => this.setState({unit: text})}
-              selectTextOnFocus = {true}
-              underlineColorAndroid = {'transparent'}
-            />
-          </View>
-        </View>
-        <View style = {styles.inputLine}>
-          <Text style = {styles.label}>服用剂量</Text>
-          <View style = {styles.inputStyle}>
-            <TextInput
-            style = {styles.searchInput}
-              onChangeText = {(text) => this.setState({amount: text})}
-              selectTextOnFocus = {true}
-              underlineColorAndroid = {'transparent'}
-            />
-          </View>
-        </View>
-        <View style = {styles.inputLine}>
-          <Text style = {styles.label}>服用方法</Text>
-          <View style = {styles.inputStyle}>
-            <TextInput
-            style = {styles.searchInput}
-              onChangeText = {(text) => this.setState({meathod: text})}
-              selectTextOnFocus = {true}
-              underlineColorAndroid = {'transparent'}
-            />
-          </View>
-        </View>
-        <View style = {styles.inputLine}>
-          <Text style = {styles.label}>说明书</Text>
-          <View style = {[styles.inputStyle, {height: 120}]}>
-            <TextInput
-            style = {styles.searchInput}
-              onChangeText = {(text) => this.setState({specification: text})}
-              selectTextOnFocus = {true}
-              multiline = {true}
-              numberOfLines = {6}
-              textAlignVertical = {'top'}
-              underlineColorAndroid = {'transparent'}
-            />
-          </View>
-        </View>
-        <View style = {[styles.inputLine, {justifyContent: 'flex-start'}]}>
           <TouchableHighlight
             underlayColor='rgba(34,26,38,0.1)'
-            onPress={()=>this.chooseFile()}
-            style={styles.filebuttonStyle}
+            onPress={()=>this.update()}
+            style={[styles.buttonStyle, {alignSelf: 'flex-start', marginLeft: 11,}]}
           >
-            <Text style={styles.filebuttonText}>选择文件</Text>
+            <Text style={styles.buttonText}>上传</Text>
           </TouchableHighlight>
-          <Text>未选择文件</Text>
-        </View>
-        <TouchableHighlight
-          underlayColor='rgba(34,26,38,0.1)'
-          onPress={()=>this.update()}
-          style={[styles.buttonStyle, {alignSelf: 'flex-start', marginLeft: 11,}]}
-        >
-          <Text style={styles.buttonText}>上传</Text>
-        </TouchableHighlight>
 
-        <TouchableHighlight
-          underlayColor='rgba(34,26,38,0.1)'
-          onPress={()=>this.submit()}
-          style={styles.buttonStyle}
-        >
-          <Text style={styles.buttonText}>提交</Text>
-        </TouchableHighlight>
+          <TouchableHighlight
+            underlayColor='rgba(34,26,38,0.1)'
+            onPress={()=>this.submit()}
+            style={styles.buttonStyle}
+          >
+            <Text style={styles.buttonText}>提交</Text>
+          </TouchableHighlight>
+        </ScrollView>
 
-
-         <Modal visible={this.state.Lvisible}  
-                      style={{height:Dimensions.get('window').height,
-                                  width:Dimensions.get('window').width,top:0,bottom:0,left:0,right:0,backgroundColor:'rgba(0,0,0,0.1)'}}>
-                                  <View style={styles.modalStyle}>
-                                        <MedcineModal changeMedia={(datas)=>this.changeMedia(datas)} closeModal={()=>this.closeModal()}  DataJson={useData}/>
-                                  </View>
-                </Modal>
+           <Modal visible={this.state.Lvisible}
+                        style={{height:Dimensions.get('window').height,
+                                    width:Dimensions.get('window').width,top:0,bottom:0,left:0,right:0,backgroundColor:'rgba(0,0,0,0.1)'}}>
+                                    <View style={styles.modalStyle}>
+                                          <MedcineModal changeMedia={(datas)=>this.changeMedia(datas)} closeModal={()=>this.closeModal()}  DataJson={useData}/>
+                                    </View>
+                  </Modal>
       </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  title: {
+  container: {
+    height: Dimensions.get('window').height - 65,
+  },
+  tittle:{
+    backgroundColor:'#878181',
+    flexDirection: 'column',
+    height:40,
+    justifyContent: 'center',
+  },
+  titleContent:{
     flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: '#868181',
-    height: 45,
-    padding: 11,
+    justifyContent: 'space-between',
+    marginLeft:10,
+    marginRight:10,
   },
-  titleReturn: {
-    flex: 3,
-  },
-  titleReturnText: {
-		fontFamily: 'PingFang-SC-Regular',
-		fontSize: 14,
-    color: '#FFFFFF',
-  },
-  titleName: {
-    flex: 4
-  },
-  titleNameText: {
-		fontFamily: 'PingFang-SC-Regular',
-		fontSize: 18,
-    color: '#FFFFFF',
+  name:{
+    color:'white',
+     fontSize:18,
   },
   inputLine: {
     flexDirection: 'row',
@@ -306,8 +301,7 @@ const styles = StyleSheet.create({
     borderColor: '#FEA501',
     borderRadius: 15,
     alignSelf: 'flex-end',
-    marginTop: 11,
-    marginRight: 11,
+    margin: 11,
   },
   buttonText: {
 		fontFamily: 'PingFang-SC-Regular',

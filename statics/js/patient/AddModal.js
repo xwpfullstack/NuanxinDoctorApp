@@ -23,6 +23,8 @@ class AddModal extends Component{
       this.props.close();
       this.props.mainNavigator.push({
         name:'addOrder',
+        diags:this.props.diags,
+        patientId:this.props.patientId,
       });
     }
     else if(name === 'date'){

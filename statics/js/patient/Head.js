@@ -13,11 +13,13 @@ import React, {
   ScrollView,
 } from 'react-native';
 
+var text='';
+
 class Head extends Component{
-  constructor(){
-    super();
+  constructor(props){
+    super(props);
     this.state={
-      num:0,
+      num:this.props.dataNums,
     }
     
 };
@@ -28,21 +30,29 @@ changeNum(nums){
 showModel(){
   this.props.showModel();
 };
+changeTxt(txt){
+    text=txt;
+};
+
+search(){
+    this.props.search(text);
+}
 
   render(){
     return  (
       <View style={styles.container}>
                   <View style={styles.titleSearch}>
                     <View style={styles.titleSNav}>
-                    <View style={{flexDirection: 'row',}}>
+                    <TouchableOpacity onPress={()=>this.search()} style={{flexDirection: 'row',}}>
                       <Image source={require('../../images/load/search.png')}  style={{height:18,width:18,margin:5,}}/>
                       <View style={{height:30,width:200, justifyContent:'center',}} >
                       <TextInput  
                           style={{fontSize:14,color:'#ffffff'}} 
+                          onChangeText={(txt)=>this.changeTxt(txt)}
                           placeholder='按姓名或电话号码搜索' 
                           placeholderTextColor='#ffffff'   />
                       </View>
-                    </View>
+                    </TouchableOpacity>
                     </View>
                   </View>
                 

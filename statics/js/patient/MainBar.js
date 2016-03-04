@@ -17,6 +17,9 @@ var {
 var deviceWidth = Dimensions.get('window').width;
 var deviceHeight = Dimensions.get('window').height;
 
+
+var currPosition=0;
+
 var ScrollableTabView = React.createClass({
 
   propTypes: {
@@ -49,6 +52,14 @@ var ScrollableTabView = React.createClass({
       }
     };
   },
+
+isDisableScroll(position){
+    if (position > currPosition) {
+      //console.log('fashengl');
+      this.props.handleSubmit(position);
+    }
+      currPosition=position;
+},
 
   componentWillReceiveProps(props) {
     if (props.page >= 0 && props.page !== this.state.currentPage) {
@@ -121,6 +132,8 @@ var ScrollableTabView = React.createClass({
          onPageSelected={this._updateSelectedPage}
          onPageScroll={(e) => {
            const {offset, position} = e.nativeEvent;
+           //console.log(position);
+           this.isDisableScroll(position);
            this._updateScrollValue(position + offset);
          }}
          ref={(scrollView) => { this.scrollView = scrollView }}>

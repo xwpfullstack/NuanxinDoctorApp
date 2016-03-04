@@ -19,10 +19,10 @@ import PatientMsgImage from './PatientMsgImage'
 import Modal from 'react-native-root-modal'
 import AddModal from './AddModal'
   class PatientSelf extends Component{
-  	 constructor(){
-	    super();
+  	 constructor(props){
+	    super(props);
 	    this.state={
-	    	 title:'科比',
+	    	 patientData:this.props.patientData,
               addVisible:false,
 	    };
 	   };
@@ -44,6 +44,30 @@ import AddModal from './AddModal'
           });
       };
 
+      componentDidMount(){
+        // this.BaseCreateData(this.props.data,'newfollowTime');
+         //Alert.alert(this.props.diags.length+'');
+      };
+
+
+      getDia(rowdata){
+        var rowDiaStr='';
+        if (rowdata.diagnoses.length==0) {
+            rowDiaStr='暂未填写疾病状况';
+            return rowDiaStr;
+        }
+         for (var i = 0; i < rowdata.diagnoses.length; i++) {
+               rowDiaStr+=(rowdata.diagnoses[i]+'、'); 
+             };
+          rowDiaStr = rowDiaStr.substring(0,rowDiaStr.length-1);
+          if (rowDiaStr.length>20) {
+            rowDiaStr = rowDiaStr.substring(0,20);
+            rowDiaStr=rowDiaStr[rowDiaStr.length-1]=='、' ?rowDiaStr.substring(0,rowDiaStr.length-1):rowDiaStr;
+            rowDiaStr+='……';
+          };
+          return rowDiaStr;
+      }
+
       closeAddModal(){
             this.setState({addVisible:false});
       };
@@ -53,7 +77,7 @@ import AddModal from './AddModal'
   				<View style={styles.tittle}>
   					<View style={styles.titleContent}>
 						<TouchableOpacity style={{width:50}} onPress={()=>this.handlerBack()}><Image source={require('../../images/icon/back.png')}></Image></TouchableOpacity>
-  						<Text style={styles.name}>{this.state.title}</Text>
+  						<Text style={styles.name}>{this.state.patientData.name}</Text>
   						<TouchableOpacity style={{width:50}} onPress={()=>this.selfModal()}><Image style={{alignSelf:'flex-end'}} source={require('../../images/icon/add.png')} /></TouchableOpacity>
   					</View>
   				</View>
@@ -67,9 +91,12 @@ import AddModal from './AddModal'
 
 					            <View style={styles.itemContent}>
 					            <View style={styles.wordMSg}>
-					             	<Text style={styles.itemHeader}>{'男'}  {'四川'}  {'36'}</Text>
-					             	<Text style={styles.itemTwoHeader}>1317474774</Text>
-					             	<Text style={styles.itemTwoHeader}>脑残 神经 二逼 豆脑</Text>
+					             	<Text 
+                                                          style={styles.itemHeader}>
+                                                            {this.state.patientData.sex=='m'?'男':'女'}  {this.state.patientData.area==''?'暂无地址':this.state.patientData.area}  {this.state.patientData.age}
+                                                    </Text>
+					             	<Text style={styles.itemTwoHeader}>{this.state.patientData.tel}</Text>
+					             	<Text style={styles.itemTwoHeader}>{this.getDia(this.state.patientData)}</Text>
 					        	</View>
 					             <Image 
 					                source={require('../../images/load/jump.png')} style={{borderWidth:1}}/>
@@ -114,7 +141,7 @@ import AddModal from './AddModal'
                                                 height:120,
                                                 width:150,
                                                 backgroundColor: 'rgba(0, 0, 0,0.8)',}}>
-                                                    <AddModal mainNavigator={this.props.mainNavigator} close={()=>this.closeAddModal()}/>
+                                                    <AddModal patientId={this.props.patientData.id} diags={this.props.diags} mainNavigator={this.props.mainNavigator} close={()=>this.closeAddModal()}/>
                                             </View>
                                       </TouchableOpacity>
                                 

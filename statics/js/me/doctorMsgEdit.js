@@ -23,7 +23,6 @@ class DoctorMsgEdit extends Component {
                 onPress= {() => {this.props.navigator.pop()}}>
                     <Image style={styles.headImg}
                     source = {require('../../images/me/back.png')} />
-                    <Text style={[styles.textBold,{fontSize:15}]}>返回</Text>
                 </TouchableOpacity>
                 <View style={styles.headMenu}><Text style={styles.textBold}>编辑资料</Text></View>
             </View>
@@ -98,7 +97,6 @@ class DoctorMsgEdit extends Component {
                 </View>
                 <View style={[styles.psnInfo,{marginBottom:20}]}>
                     <View>
-                        <View style={styles.psnInfoLineKey}><Text style={styles.textStyle}>出诊时间设置：</Text></View>
                         <View style={[styles.psnInfoLineValue,{paddingBottom:10,}]}><JobViewEdit /></View>{/*出诊安排*/}
                     </View>
                 </View>

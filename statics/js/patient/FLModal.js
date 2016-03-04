@@ -26,7 +26,7 @@ class FLModal extends Component{
     }
     else if(name === 'date'){
            this.props.close();
-           this.props.classify('time');
+           this.props.classify('newfollowTime');
     }
     else if(name === 'sc'){
          this.props.close();

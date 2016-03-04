@@ -12,49 +12,17 @@ import React, {
   Alert,
   TouchableOpacity,
   ScrollView,
-  ProgressBarAndroid,
   PullToRefreshViewAndroid,
 } from 'react-native';
 
 
 
-/*{}
-2013-02-01: {}
-'2013-02-01:1': Object
-2013-02-01:2: Object
-2013-02-01:3: Object
+//{"openid": "", "diagnoses": ["", "", "", "", "", "", "", "", "", ""],
+// "tel": "18611198863", "name": "", "area": "", "age": 28, 
+//"newfollowTime": "2016-01-11 20:50:50", "regTime": "2016\u5e7401\u670808\u65e5",
+// "sex": "m", "access": 1, "relstate": 1, "nickname": "\u5929\u5929\u5411\u4e0a", 
+//"id": 56, "followTime": "2015-12-17 21:34:08"}
 
-2013-02-02: {}
-2013-02-02:1 : Object
-2013-02-02:2: Object
-2013-02-02:3: Object
-
-2013-02-03: {}
-2013-02-03:1: Object
-2013-02-03:2: Object
-
-2013-02-04: {}
-2013-02-04:1: Object
-2013-02-04:2: Object
-
-
-sectionIDS=['2013-02-01','2013-02-02']
-
-rowIDs=[['1','2','3'],[]]
- */
-
-var tempData=[
-  {'id':2,'name':'张三','jb':'duoliang','time':'2013-02-01','isCollect':true},
-  {'id':3,'name':'李四','jb':'duoliang','time':'2013-02-01','isCollect':false},
-  {'id':4,'name':'王五','jb':'duoliang','time':'2013-02-01','isCollect':true},
-  {'id':5,'name':'王某某','jb':'duoliang','time':'2013-02-02','isCollect':true},
-  {'id':6,'name':'李某','jb':'duoliang','time':'2013-02-02','isCollect':true},
-  {'id':7,'name':'张某','jb':'duoliang','time':'2013-02-02','isCollect':false},
-  {'id':8,'name':'zhansan','jb':'duoliang','time':'2013-02-03','isCollect':false},
-  {'id':9,'name':'zhansan','jb':'duoliang','time':'2013-02-03','isCollect':false},
-  {'id':10,'name':'zhansan','jb':'duoliang','time':'2013-02-04','isCollect':true},
-  {'id':11,'name':'zhansan','jb':'duoliang','time':'2013-02-04','isCollect':false},
-];
 var json={};
 var sectionIDS=[];
 var rowIDs=[];
@@ -76,15 +44,25 @@ class MainList extends Component{
            getRowData: getRowData,
       });
     this.state={
-      dataSource:dataSource.cloneWithRowsAndSections(json,sectionIDS,rowIDs),
-      isLoad:true,
+      data:this.props.data,
+      dataSource:dataSource,
+      isLoad:false,
+      isSuccess:true,
   };
-
 };
 
+componentDidMount(){
+   this.BaseCreateData(this.props.data,'newfollowTime');
+   //Alert.alert(this.props.diags.length+'');
+};
 
-componentWillMount(){
-     this.createData('time');
+reload(){
+  this.setState({data:this.props.data});
+  this.BaseCreateData(this.props.data,'newfollowTime');
+}
+
+createByTimes(){
+
 };
 
 BaseCreateData(Datas,name){
@@ -108,38 +86,64 @@ BaseCreateData(Datas,name){
           rowIDs[index].push(row)
            json[data[name]+':'+row]=data;
       };
-      console.log(json);
+      //console.log(json);
+    //  Alert.alert(this.state.data.length+'');
       this.setState({dataSource:this.state.dataSource.cloneWithRowsAndSections(json,sectionIDS,rowIDs),});
 };
 
 createData(name){
-      this.BaseCreateData(tempData,name);
+      this.BaseCreateData(this.state.data,name);
 };
 
 isCollect(){
-      var collectValues=tempData.filter((value)=>{
-          value['isCollect'] = value['isCollect'] == true?'已收藏':value['isCollect'];
+      var collectValues=this.state.data.filter((value)=>{
+          value['isCollect'] = (value['relstate'] == 3||value['relstate']==7)?'已收藏':false;
           return value['isCollect'] != false;
       });
       this.BaseCreateData(collectValues,'isCollect');
 };
 
-
-
-componentDidMount(){
-    this.props.changeNums(tempData.length);
+classifyByDia(name){
+    let tempData=this.state.data.filter((value)=>{
+        let is_true=false;
+          value['diagnoses'].forEach((dValue)=>{
+              if (dValue == name) {
+                console.log(dValue);
+                value['dia']=name;
+                is_true=true;
+                return ;
+              }
+          });
+          return is_true;
+    });
+    console.log(tempData);
+     this.BaseCreateData(tempData,'dia');
 };
 
+
 handlePatient(rowdata){
-  this.props.closeModal();
+  //this.props.closeModal();
+  //Alert.alert(rowdata.name);
   this.props.navigator.push({
     name:'self',
-    id:rowdata['id'],
+    patientData:rowdata,
+    diags:this.props.diags,
   });
 };
   renderRow(rowdata,sectionID,rowID){
+   // console.log(rowdata.id);
+    var rowDiaStr='';
+   for (var i = 0; i < rowdata.diagnoses.length; i++) {
+         rowDiaStr+=(rowdata.diagnoses[i]+'、'); 
+       };
+    rowDiaStr = rowDiaStr.substring(0,rowDiaStr.length-1);
+    if (rowDiaStr.length>8) {
+      rowDiaStr = rowDiaStr.substring(0,8);
+      rowDiaStr=rowDiaStr[rowDiaStr.length-1]=='、' ?rowDiaStr.substring(0,rowDiaStr.length-1):rowDiaStr;
+      rowDiaStr+='……';
+    };
     return (
-    <TouchableOpacity onPress={(rowdata)=>this.handlePatient(rowdata)}>
+    <TouchableOpacity onPress={()=>this.handlePatient(rowdata)}>
         <View style={styles.item}>
             <View style={styles.itemImage}>
               <Image
@@ -148,10 +152,11 @@ handlePatient(rowdata){
             </View>
 
             <View style={styles.itemContent}>
-              <Text style={styles.itemHeader}>{rowdata.name}</Text>
+              <Text style={styles.itemHeader}>{rowdata.name==''?'未命名':rowdata.name}</Text>
+
               <View style={styles.jump}>
               <Text style={styles.redText}>
-                {rowdata.jb}
+                {rowDiaStr}
               </Text>
                  <Image
                 source={require('../../images/load/jump.png')} style={{borderWidth:1}}/>
@@ -163,59 +168,54 @@ handlePatient(rowdata){
 
   };
   renderSectionHeader(sectionData,sectionID){
+      var valueData=sectionID.toString();
+      var tempList=valueData.split('-');
+      if (tempList.length>1) {
+          valueData=tempList[0]+'年'+parseInt(tempList[1])+'月'+parseInt(tempList[2].split(' ')[0])+'号';
+      }
     return (
         <View style={{justifyContent:'center',padding:10}}>
-      <Text style={{color:'#F08300',fontSize:13}}>{sectionID.toString()}</Text>
+      <Text style={{color:'#F08300',fontSize:13}}>{valueData}</Text>
       </View>
       );
   };
 
   _renderFooter(){
-     // return <View style={{height:50}}></View>
+      //return <View style={{height:50}}><Text>到底了</Text></View>
   };
   _renderScrollComponent(){
       return <ScrollView></ScrollView>
   };
   onEndReached(){
-      return (
-          <View style={{height:400}}>
-            <Text>yijindangzuihoula</Text>
-          </View>
-      );
+   //tempData.push({'id':(tempData.length+1),'name':'zhansan','jb':'duoliang','time':'2013-02-04','isCollect':true});
+    //this.createData('time');
+    //this.setState({dataSource:this.state.dataSource.cloneWithRowsAndSections(json,sectionIDS,rowIDs),});
+    //this.props.changeNums(tempData.length);
   };
   render(){
-      if (this.state.isLoad === true) {
+    
            return (
-                    <PullToRefreshViewAndroid  
+                    <PullToRefreshViewAndroid
                         enabled={true}
                         style={{width:Dimensions.get('window').width}}>
                           <ScrollView style={{height:Dimensions.get('window').height-185,}}>
                                   <ListView
                                                   ref="listview"
                                                   style={styles.listview}
-                                                  initialListSize={9}
+                                                  pageSize={1}
+                                                  initialListSize={this.state.length}
+                                                  renderFooter={()=>this._renderFooter()}
                                                   dataSource={this.state.dataSource}
+                                                  scrollRenderAheadDistance={5}
+                                                  onEndReachedThreshold={20}
                                                   renderRow={(data)=>{return this.renderRow(data);}}
-                                                  onEndReached={this.onEndReached}
-                                                  onEndReachedThreshold={200}
-                                                  renderSectionHeader={this.renderSectionHeader}
-                                                  automaticallyAdjustContentInsets={false}
-                                                  keyboardDismissMode="on-drag"
-                                                  keyboardShouldPersistTaps={true}
-                                                  showsVerticalScrollIndicator={false}
-                                                  renderScrollComponent={()=>{return this._renderScrollComponent()}} />
+                                                  onEndReached={()=>this.onEndReached()}
+                                                  renderSectionHeader={this.renderSectionHeader} />
                           </ScrollView>
                     </PullToRefreshViewAndroid>
             );
-      }
-      else{
-          return (
-                  <View style={{height:Dimensions.get('window').height-185, width:Dimensions.get('window').width,flexDirection: 'column',alignItems: 'center',justifyContent: 'center',}}>
-                          <ProgressBarAndroid />
-                          <Text style={{color:'#F08300',fontSize:16,}}>加载中.....</Text>
-                  </View>
-            );
-      }
+      
+     
 
 
   };
@@ -224,7 +224,7 @@ handlePatient(rowdata){
 const styles = StyleSheet.create({
   jump:{
     flexDirection: 'row',
-    flex:2,
+    //flex:2,
     alignItems: 'center',
     justifyContent: 'space-around',
   },
@@ -280,11 +280,12 @@ const styles = StyleSheet.create({
   itemContent: {
     flex: 1,
     flexDirection: 'row',
-   // justifyContent: 'space-between',
+    justifyContent: 'space-between',
     alignItems: 'center',
     padding: 10,
     height: 74,
     borderBottomWidth: 1,
+    marginRight:10,
      //backgroundColor: 'RGB(118, 104, 103)',
     borderColor: 'rgba(118, 104, 103, 0.6)',
   },
@@ -301,6 +302,7 @@ const styles = StyleSheet.create({
    alignSelf:'center',
     fontWeight: '300',
     color: '#f5f5f5',
+    marginRight:20,
   },
   listview:{
 

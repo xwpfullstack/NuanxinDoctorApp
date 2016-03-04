@@ -12,6 +12,7 @@ import React, {
   Alert,
   TouchableOpacity,
   Navigator,
+  ProgressBarAndroid,
   TouchableHighlight,
 } from 'react-native';
 import MainList from './MainList';
@@ -20,26 +21,9 @@ import PatientSelf from './PatientSelf';
 import Modal from 'react-native-root-modal'
 import FLModal from './FLModal'
 import Picker from 'react-native-picker';
+import Loading from './Loading';
 const {_width,_height}=Dimensions.get('window');
 
-
-
-
-var DataJson=[
-      '睡眠行为障碍',
-    '抑郁状态',
-     '帕金森',
-     '颠簸',
-      '脑血管病',
-     '不安腿综合症',
-     '运动神经元病',
-    '失眠',
-      '神经衰弱',
-      '阿尔茨海默',
-     '焦虑状态',
-      '神经症',
-     '发作性睡病',
-  ];
 
 
 class HomePage extends Component{
@@ -49,6 +33,11 @@ class HomePage extends Component{
       Lvisible:false,
       modalStyle:{},
       modalContent:{},
+      isLoad:false,
+      isSuccess:true,
+      data:[],
+      mainListData:[],
+      diags:[],
     };
     };
 
@@ -56,6 +45,53 @@ changeNums(num){
   this.refs['head'].changeNum(num);
 };
 
+componentDidMount(){
+    this.postData();
+    //this.changeNums(this.state.data.length);
+};
+
+
+search(txt){
+    if (txt.length>0) {
+        let tempdata=this.state.data.filter((value)=>{
+            return value.name == txt || value.tel == txt;
+        });
+        if (tempdata.length <= 0) {
+            Alert.alert('没有您输入信息的相关病人');
+        }
+        else{
+          //Alert.alert('找到了');
+            this.setState({mainListData:tempdata});
+            this.refs['mainlist'].reload();
+        }
+    }
+};
+
+postData(){
+  this.setState({isLoad:false});
+    fetch(Apppatlist_URL,{
+            method: 'post',
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+               doctor_id:this.props.doctorId
+            })
+      })
+      .then((response) => {
+           return response.json();
+      })
+      .then((responseData)=>{
+        console.log(responseData);
+            this.setState({isLoad:true,mainListData:responseData.patients, data:responseData.patients,isSuccess:true,diags:responseData.diags,})
+      })
+      .catch((err)=>{
+          this.setState({isSuccess:false,isLoad:true});
+          console.log(err.toString());
+      })
+      .done(); 
+};
 
 
 closeModal(){
@@ -64,7 +100,9 @@ closeModal(){
   }
 };
 classify(name){
-  if (name == 'time') {
+  this.setState({mainListData:this.state.data});
+  this.refs['mainlist'].reload();
+  if (name == 'newfollowTime') {
         this.refs['mainlist'].createData(name);
   }
   else if(name == 'isCollect'){
@@ -94,47 +132,79 @@ showModel(){
   };
 };
 
+pickerDone(pickedValue){
+    //Alert.alert(pickedValue[0]);
+    this.refs['mainlist'].classifyByDia(pickedValue[0]);
+};
 
-    render(){
-       return (
-          //<Text>aaa</Text>
-              <Image
-              source={require('../../images/load/background.png')}
-              style={styles.background}
-              > 
-              <View style={styles.topTitle}>
-              <Text style={[styles.textColor,styles.topText]}> 病人</Text>
-              </View>
-              <Head ref='head' showModel={()=>this.showModel()} />
-              <View 
-                style={styles.container}
-              >
-              <MainList ref='mainlist' closeModal={()=>this.closeModal()}  changeNums={(num)=>this.changeNums(num)} navigator={this.props.navigator}/>
-              <Modal visible={this.state.Lvisible}  
-                      style={{height:Dimensions.get('window').height,width:Dimensions.get('window').width,top:0,bottom:0,left:0,right:0}}>
-                            <TouchableOpacity  onPress={()=>this.closeModal()} style={{height:Dimensions.get('window').height,width:Dimensions.get('window').width,}}>
-                                  <View style={this.state.modalStyle}>
-                                        {this.state.modalContent}
-                                  </View>
-                            </TouchableOpacity>
-              </Modal>
-                <Picker
-                      style={{
-                          height: 200,
-                      }}
-                      pickerBtnText={'提交'}
-                      pickerCancelBtnText={'取消'}
-                      ref={picker=>this.picker = picker}
-                      showDuration={330}
-                      showMask={true}
-                      pickerData={DataJson}
-                      selectedValue={'睡眠行为障碍'}/>
-
-              </View>
-              </Image>
-        );
-    }
-  };
+  render(){
+      if (this.state.isLoad) {
+          if (this.state.isSuccess) {
+              return (
+            //<Text>aaa</Text>
+                <Image
+                source={require('../../images/load/background.png')}
+                style={styles.background}
+                > 
+                <View style={styles.topTitle}>
+                <Text style={[styles.textColor,styles.topText]}> 病人</Text>
+                </View>
+                <Head search={(txt)=>this.search(txt)} dataNums={this.state.data.length} ref='head' showModel={()=>this.showModel()} />
+                <View 
+                  style={styles.container}
+                >
+                <MainList diags={this.state.diags}  data={this.state.mainListData} doctorId={this.props.doctorId} ref='mainlist' closeModal={()=>this.closeModal()}  changeNums={(num)=>this.changeNums(num)} navigator={this.props.navigator}/>
+                <Modal visible={this.state.Lvisible}  
+                        style={{height:Dimensions.get('window').height,width:Dimensions.get('window').width,top:0,bottom:0,left:0,right:0}}>
+                              <TouchableOpacity  onPress={()=>this.closeModal()} style={{height:Dimensions.get('window').height,width:Dimensions.get('window').width,}}>
+                                    <View style={this.state.modalStyle}>
+                                          {this.state.modalContent}
+                                    </View>
+                              </TouchableOpacity>
+                </Modal>
+                  <Picker
+                        style={{
+                            height: 200,
+                        }}
+                        pickerBtnText={'提交'}
+                        pickerCancelBtnText={'取消'}
+                        ref={picker=>this.picker = picker}
+                        showDuration={330}
+                        showMask={true}
+                        onPickerDone={(pickedValue) => this.pickerDone(pickedValue)}
+                        pickerData={this.state.diags}
+                        selectedValue={'睡眠行为障碍'}/>
+                </View>
+                </Image>
+                );
+          }
+          else{
+              return (
+                  <Image
+                      source={require('../../images/load/background.png')}
+                      style={styles.background}
+                      > 
+                         <View 
+                              style={{height:Dimensions.get('window').height, 
+                                          width:Dimensions.get('window').width,
+                                          flexDirection: 'column',alignItems: 'center',justifyContent: 'center',}}>
+                              <Text style={{color:'#F08300',fontSize:16,}}>加载失败</Text>
+                              <TouchableOpacity onPress={()=>this.postData()} 
+                                      style={{borderWidth:1,height:50,width:100,borderRadius:25,borderColor:'#0094ff',justifyContent:'center',alignItems:'center'}}>
+                                     <Text style={{color:'#F08300',fontSize:16,}}>重新加载</Text>
+                              </TouchableOpacity>
+                        </View>
+                 </Image>
+              );
+          };
+      }
+      else{
+          return (
+                    <Loading />
+            );
+      };
+  };       
+};
 
 const styles = StyleSheet.create({
 

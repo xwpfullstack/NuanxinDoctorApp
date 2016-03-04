@@ -21,9 +21,10 @@ import DoctorRegist from './statics/js/login/DoctorRegist';
 import DoctorMainScreen from './statics/js/public/DoctorMainScreen';
 import DoctorLogIn from './statics/js/login/DoctorLogIn';
 import ModifyPwd from './statics/js/login/DoctorModifyPwd';
-import WebMainPage from './statics/js/me/webView'
-import DoctorMsgEdit from './statics/js/me/doctorMsgEdit'
-import Prescription from './statics/js/me/prescription'
+import WebMainPage from './statics/js/me/webView';
+import DoctorMsgEdit from './statics/js/me/doctorMsgEdit';
+import Prescription from './statics/js/me/prescription';
+import DrugDetailed from './statics/js/me/drugDetailed';
 import OrderDetails from './statics/js/cal/OrderDetails';
 import NewsDetails from './statics/js/cal/NewsDatails';
 import AddOrder from './statics/js/patient/AddOrder';
@@ -34,6 +35,8 @@ import AddMedcine from './statics/js/patient/AddMedcine';
 import ModifyPrescription from './statics/js/patient/ModifyPrescription';
 import CompleteRecord from './statics/js/patient/CompleteRecord';
 import OrderList from './statics/js/patient/OrderListIso';
+import CaseHistory from './statics/js/me/caseHistory';
+
 var _navigator;
 //监听硬件返回功能
 BackAndroid.addEventListener('hardwareBackPress', ()=>{
@@ -43,6 +46,8 @@ BackAndroid.addEventListener('hardwareBackPress', ()=>{
   }
   return false;
 })
+
+var doctorId;
 
 class NuanXinDoctorApp extends Component {
   constructor(props) {
@@ -85,6 +90,7 @@ class NuanXinDoctorApp extends Component {
         return  <DoctorLogIn navigator={navigator}/>;
         break;
       case 'doctorHomePage':
+        doctorId=route.doctorId;
         return   <DoctorMainScreen navigator={navigator} doctorId={route.doctorId}/>;
         break;
       case 'modifyPwd':
@@ -94,7 +100,7 @@ class NuanXinDoctorApp extends Component {
         return <DoctorRegist navigator={navigator}/>;
         break;
       case 'addOrder':
-        return  <AddOrder navigator={navigator}/>;
+        return  <AddOrder patientId={route.patientId} doctorId={doctorId} diags={route.diags} navigator={navigator}/>;
         break;
       case 'DoctorRecord':
         return  <DoctorRecord navigator={navigator}/>;
@@ -132,6 +138,12 @@ class NuanXinDoctorApp extends Component {
       case 'orderList':
         return  <OrderList navigator={navigator} />;
         break;
+      case 'drugDetailed':
+        return <DrugDetailed navigator={navigator} />;
+        break;
+      case 'caseHistory':
+        return <CaseHistory navigator={navigator} />;  
+        break;
     };
   };
 
@@ -141,7 +153,7 @@ class NuanXinDoctorApp extends Component {
       autoSync: true,
       syncInBackground: true,
     }).then( ret => {
-      if(ret.state === 'error') {   //success
+      if(ret.state === 'success') {   //success
         this.setState({
           routeInfo:{
             name: 'doctorHomePage',

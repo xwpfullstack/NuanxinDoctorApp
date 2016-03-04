@@ -36,6 +36,7 @@ const styles = StyleSheet.create({
         backgroundColor:'#878181',
     },
     headImg: {
+        marginLeft:10,
         right:10,
         flexDirection:'row',
         justifyContent:'flex-end',
@@ -70,6 +71,18 @@ const styles = StyleSheet.create({
         height:WINDOW_HEIGHT * 0.15,
         borderColor:'#BFBFBF',
         borderRadius:WINDOW_HEIGHT * 0.075,//半径为正方形的边长的一半
+    },
+    infoModal: {
+        height:WINDOW_HEIGHT,
+        width:WINDOW_WIDTH,
+        top:0,
+        bottom:0,
+        left:0,
+        right:0
+    },
+    touchExit: {
+        height:WINDOW_HEIGHT,
+        width:WINDOW_WIDTH,
     },
     //
     imageText: {

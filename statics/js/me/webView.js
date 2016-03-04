@@ -21,7 +21,6 @@ class WebMainPage extends Component{
                     <TouchableOpacity  style={styles.back} onPress= {() => {this.props.navigator.pop()}}>
                         <Image style={styles.headImg}
                         source = {require('../../images/me/back.png')} />
-                        <Text style={[styles.textBold,{fontSize:15}]}>返回</Text>
                     </TouchableOpacity>
                     <View style={styles.headMenu}><Text style={styles.textBold}>我的主页</Text></View>
                 </View>

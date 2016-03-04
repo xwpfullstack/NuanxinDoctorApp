@@ -17,16 +17,14 @@ var WINDOW_WIDTH = Dimensions.get('window').width;
 var WINDOW_HEIGHT = Dimensions.get('window').height;
 
 var WORD=70;
-var COLOR=['#DC5947','#6C6CC6','#53AD55','#DC5947',];
-
-function GetRandomNum(Min,Max)
-{
-var Range = Max - Min;
-var Rand = Math.random();
-return(Min + Math.round(Rand * Range));
-}
-
-var num = GetRandomNum(1,3);
+var COLOR=[
+    '#DC5947',
+    '#6C6CC6',
+    '#53AD55',
+    '#DC5947',
+    '#26BC8F',
+    '#E9A737'
+];
 
 var tempData={
         A:['奥斯平','艾弗森','艾克'],
@@ -69,6 +67,12 @@ class DrugList extends Component {
 componentWillMount(){
      this.BaseCreateData();
 };
+_onPressDrugBtn(rowdata){
+    this.props.navigator.push({
+        name:'drugDetailed',
+        drugName:rowdata,
+    });
+};
 
 
 BaseCreateData(){
@@ -88,10 +92,13 @@ BaseCreateData(){
       this.setState({dataSource:this.state.dataSource.cloneWithRowsAndSections(json,sectionIDS,rowIDs),});
 };
 renderRow(rowdata,sectionID,rowID){
+    var num=Math.ceil(Math.random()*5)
   return (
-      <TouchableOpacity style={styles.drugTouch}>
+      <TouchableOpacity
+          onPress={(rowdata)=>this._onPressDrugBtn(rowdata)}
+          style={styles.drugTouch}>
         <View style={styles.drugLine}>
-            <View style={styles.drugLogo}>
+            <View style={[styles.drugLogo,{backgroundColor:COLOR[num]}]}>
                 <Text style={{fontSize:23,color:'#fff'}}>{rowdata[0]}</Text>
             </View>
             <View><Text style={{fontSize:18, color:'#000'}}>{rowdata}</Text></View>
