@@ -58,3 +58,5 @@ global.GetDeparts_URL = Basic_URL + 'getdepars/';
 global.ModifyPass_URL = Basic_URL + 'AppModifyPass/';
 //发送短信
 global.sendMsg_URL = Basic_URL + 'AppSendMsg/';
+//上传医生头像
+global.UploadDoctorphoto_URL = Basic_URL + 'uploadPhoto/';
