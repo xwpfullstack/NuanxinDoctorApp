@@ -163,7 +163,7 @@ const styles = StyleSheet.create({
     // jobView
         tablebody: {
             backgroundColor:'#fff',
-            marginTop:10,
+            top:WINDOW_HEIGHT*0.5,
             padding:10,
         },
         container: {

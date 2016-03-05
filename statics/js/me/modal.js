@@ -3,12 +3,9 @@ import React, {
   Component,
   StyleSheet,
   Text,
-  TextInput,
   View,
   TouchableOpacity,
-  ScrollView,
   Image,
-  Animated,
   Dimensions,
 } from 'react-native';
 import Modal from 'react-native-root-modal';
@@ -22,72 +19,78 @@ class MyModal extends Component {
             visible: false
         };
     }
-    showModal() {
-        this.setState({
-            visible: true
-        });
-    };
-    hideModal() {
-        this.setState({
-            visible: false
-        });
-    };
-    _onPressWebButton() {
+    _onPressBtn(conpnt) {
+        let name;
+        switch (conpnt) {
+            case 'webpage':
+                name='webMainPage';
+                break;
+            case 'prescription':
+                name='prescription';
+                break;
+            case 'caseHistory':
+                name='caseHistory';
+                break;
+        }
         this.props.navigator.push({
-            name:'webMainPage',
+            name:name,
         })
     };
-    _onPressPrescriptionBtn() {
-        this.props.navigator.push({
-            name:'prescription',
-        })
-    }
-
-    _onPressCaseBtn() {
-        this.props.navigator.push({
-            name:'caseHistory',
-        })
-    }
   render() {
     return (
         <View>
-            {/*button*/}
-
-            <TouchableOpacity style={styles.doctorMessage} onPress={()=>this.props.showModal('ShowCode')}>
-              <View style={styles.myqrcode}>
-                  <Image
-                      style={styles.avatarImg}
-                      source = {require('../../images/me/myqrcode.png')}>
-                  </Image>
-                <Text>我的二维码</Text>
-              </View>
-            </TouchableOpacity>
+        {/*button*/}
             <TouchableOpacity
-                style={[styles.doctorMessage,{marginTop:0}]}
-                onPress={()=>{return this._onPressWebButton()}}>
-              <View style={styles.myqrcode}>
-                  <Image
-                      style={styles.avatarImg}
-                      source = {require('../../images/me/homepage.png')}>
-                  </Image>
-                <Text>我的个人主页</Text>
-              </View>
+                style={[styles.doctorMessage,{marginTop:10}]}
+                onPress={()=>this.props.showModal('ShowCode')}>
+                <View style={styles.myqrcode}>
+                    <Image
+                        style={styles.avatarImg}
+                        source = {require('../../images/me/myqrcode.png')}>
+                    </Image>
+                    <Text>我的二维码</Text>
+                </View>
             </TouchableOpacity>
 
             <TouchableOpacity
-              style={[styles.doctorMessage,{marginTop:0}]}
-              onPress={()=>{return this._onPressPrescriptionBtn()}}>
-              <View style={styles.myqrcode}>
-                  <Image
-                      style={styles.avatarImg}
-                      source = {require('../../images/me/price.png')}>
-                  </Image>
-                <Text>我的处方</Text>
-              </View>
+                style={styles.doctorMessage}
+                onPress={()=>this.props.showModal('ShowJobview')}>
+                <View style={styles.myqrcode}>
+                    <Image
+                        style={styles.avatarImg}
+                        source = {require('../../images/me/myqrcode.png')}>
+                    </Image>
+                    <Text>出诊安排</Text>
+                </View>
             </TouchableOpacity>
+
             <TouchableOpacity
-              style={[styles.doctorMessage,{marginTop:0}]}
-              onPress={()=>{return this._onPressCaseBtn()}}>
+                style={styles.doctorMessage}
+                onPress={()=>{return this._onPressBtn('webpage')}}>
+                <View style={styles.myqrcode}>
+                    <Image
+                        style={styles.avatarImg}
+                        source = {require('../../images/me/homepage.png')}>
+                    </Image>
+                    <Text>我的个人主页</Text>
+                </View>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+                style={styles.doctorMessage}
+                onPress={()=>{return this._onPressBtn('prescription')}}>
+                <View style={styles.myqrcode}>
+                    <Image
+                        style={styles.avatarImg}
+                        source = {require('../../images/me/price.png')}>
+                    </Image>
+                    <Text>我的处方</Text>
+                </View>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={styles.doctorMessage}
+              onPress={()=>{return this._onPressBtn('caseHistory')}}>
               <View style={styles.myqrcode}>
                   <Image
                       style={styles.avatarImg}
@@ -129,7 +132,6 @@ const styles = StyleSheet.create({
         paddingTop:10,
         alignItems:'stretch',
         paddingLeft:10,
-        marginTop:10
     },
     messageImg: {
         alignItems:'stretch',
