@@ -88,7 +88,7 @@ const styles = StyleSheet.create({
     imageText: {
         marginTop:-11,
         backgroundColor:'#EF8200',
-        borderRadius:20,
+        borderRadius:8,
     },
     memo: {
         padding:20,

@@ -17,7 +17,7 @@ import React, {
 } from 'react-native';
 
 var Doctor_Message = [
-  {name: '李宁', age: '40', title:'主治医师', hospital:'齐鲁医院', department:'神经内科',
+  {name: '邓超', age: '40', title:'主治医师', hospital:'齐鲁医院', department:'神经内科',
   tel:'12312312311',memo:'周日休息，不接待患者,有任何问题可以转到下周安排，及时通告患者，谢谢合作。',
   price:49},
 ];
@@ -90,7 +90,7 @@ class DoctorInfo extends Component {
                 bottom:0,
                 backgroundColor:'rgba(0,0,0,0.3)',
             },
-            modalContent:<MenuModal
+            modalContent:<JobView
                 close={()=>this.closeModal()}
                 navigator={this.props.navigator}
                 dcrname={dctmsg.name} name='codeModal'/>,
