@@ -28,10 +28,10 @@ class DoctorInfo extends Component {
             modalStyle:{},
             modalContent:{},
 	        dctmsg: {},
-	        photo:'',
+	        photo:'../../images/me/default.png',
             worktime:{},
         }
-        this.postData();
+        this.postDoctorData();
 
     }
     _onPressEditButton(){
@@ -56,6 +56,7 @@ class DoctorInfo extends Component {
             },
             modalContent:<MenuModal
                 close={()=>this.closeModal()}
+                doctorId={this.props.doctorId}
                 navigator={this.props.navigator}
                 dctmsg={this.state.dctmsg}
                 name='menuModal'/>,
@@ -76,7 +77,7 @@ class DoctorInfo extends Component {
             modalContent:<MenuModal
                 close={()=>this.closeModal()}
                 navigator={this.props.navigator}
-                dcrname={dctmsg.name}
+                doctorId={this.props.doctorId}
                 name='codeModal'/>,
                 });
     };
@@ -100,7 +101,7 @@ class DoctorInfo extends Component {
                 });
     }
 
-    postData(){
+    postDoctorData(){
         fetch(DocInfo,{
                 method: 'post',
                 headers: {
@@ -236,15 +237,6 @@ class DoctorInfo extends Component {
                     </View>
                 </View>
                 {/*doctorMessage end*/}
-
-                {/*<View>
-                    <JobView />
-                    <View style={styles.memo}>
-                        <Text>备注：{dctmsg.memo}</Text>
-                    </View>
-                </View>*/}
-
-
 
                 <MyModal
                     navigator={this.props.navigator}
