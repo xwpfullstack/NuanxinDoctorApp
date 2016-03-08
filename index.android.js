@@ -92,7 +92,7 @@ class NuanXinDoctorApp extends Component {
         break;
       case 'doctorHomePage':
         doctorId=route.doctorId;
-        return   <DoctorMainScreen navigator={navigator} doctorId={route.doctorId}/>;
+        return  <DoctorMainScreen navigator={navigator} doctorId={route.doctorId}/>;
         break;
       case 'modifyPwd':
         return  <ModifyPwd navigator={navigator} />;
