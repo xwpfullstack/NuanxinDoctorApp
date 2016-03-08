@@ -57,6 +57,7 @@ class DoctorInfo extends Component {
             modalContent:<MenuModal
                 close={()=>this.closeModal()}
                 navigator={this.props.navigator}
+                dctmsg={this.state.dctmsg}
                 name='menuModal'/>,
         });
     };
@@ -243,7 +244,7 @@ class DoctorInfo extends Component {
                     </View>
                 </View>*/}
 
-               
+
 
                 <MyModal
                     navigator={this.props.navigator}

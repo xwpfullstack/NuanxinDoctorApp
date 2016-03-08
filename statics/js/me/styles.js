@@ -202,6 +202,15 @@ const styles = StyleSheet.create({
         borderBottomWidth:1,
         borderColor:'#EEEEEE',
     },
+    //caseHistory
+    nocase: {
+        marginTop:100,
+        flex:1,
+        flexDirection:'column',
+        alignItems:'center',
+        justifyContent:'center',
+
+    },
 });
 
 export default styles;
