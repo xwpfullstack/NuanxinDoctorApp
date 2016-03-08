@@ -3,7 +3,7 @@
 *************************/
 
 global.Basic_URL = 'http://www.xingwenpeng.com/doctor/';
-
+global.Wechat_URL = 'http://www.xingwenpeng.com/wechat/';
 //验证医生用户名密码
 global.CheckUserInfo_URL = Basic_URL + 'AppLogin/';
 //医生注册
@@ -70,3 +70,5 @@ global.ModifyPass_URL = Basic_URL + 'AppModifyPass/';
 global.sendMsg_URL = Basic_URL + 'AppSendMsg/';
 //上传医生头像
 global.UploadDoctorphoto_URL = Basic_URL + 'uploadPhoto/';
+//获取二维码
+global.DoctorQrcode_URL = Wechat_URL + 'AppGetQrcode/';

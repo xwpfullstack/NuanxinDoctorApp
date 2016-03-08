@@ -96,12 +96,18 @@ class DoctorLogIn extends Component {
       var data = responseData;
       this.setState({loading: false});
       if(data['msg'] === 'error') {
-        alert('密码或者用户名错误,请重新输入');
-      }else if(data['msg'] === 'success') {
+        Alert.alert(
+          '提示',
+          '密码或者用户名错误,请重新输入',
+        );
+      }else if(data['msg'] === 'error') {
         this.refs.username.blur();
         this.refs.passwd.blur();
         if(data['state'] === '0') {
-          alert('您的个人信息正在审核中，请您耐心等待，感谢您的理解与支持。');
+          Alert.alert(
+            '提示',
+            '您的个人信息正在审核中,请您耐心等待,感谢您的理解与支持。'
+          )
         }else if(data['state'] === '1') {
           storage.save({
             key: 'loginState',
@@ -116,7 +122,10 @@ class DoctorLogIn extends Component {
             doctorId: data['doctorId']
           });
         }else if(data['state'] === '2') {
-          alert('您的注册信息未通过，请联系管理员。');
+          Alert.alert(
+            '提示',
+            '您的注册信息为通过审核,请您重新注册或者联系管理员。'
+          )
         }
       }
     })

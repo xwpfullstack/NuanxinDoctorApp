@@ -38,6 +38,7 @@ class DoctorRegist extends Component {
         touchMan: false,
         touchWoman: false,
         errorMsg: false,
+        departlist: null,
         info: {
           name: '',
           tel: '',
@@ -50,9 +51,26 @@ class DoctorRegist extends Component {
           title: '',
           depart: '',
           price: '',
+          schedule: '',
         },
         tableState:tableArray,
     }
+  }
+  
+  /***************************
+   *获取医生坐诊时间
+   **************************/
+  _getDoctorSchedule() {
+    var data = this.state.tableState;
+    var schedule = '';
+    for(var i = 0; i < 7 ; i++) {
+      var temp = 0;
+      for(var j = 0; j < 3; j++) {
+        temp += (data[i][j].check ? data[i][j].value : 0);
+      }
+      schedule += temp;
+    }
+    return schedule;
   }
 
   /***************************
@@ -158,16 +176,14 @@ class DoctorRegist extends Component {
    ******************************/
   _onPressSubmitPersonInfo() {
     var data = this.state.info;
-    if(data['name'].length > 0 && data['age'].length > 0 && data['tel'].length > 0 && data['passwd'].length > 0 && data['cpasswd'].length > 0){
+    data['sex'] = this.state.touchMan ? 'f' : (this.state.touchWoman ? 'm' : '');
+    if(data['name'].length > 0 && data['age'].length > 0 && data['tel'].length > 0 && data['passwd'].length > 0 && data['cpasswd'].length > 0 && data['sex'].length > 0){
       if(data['passwd'] != data['cpasswd']) {
         this.setState({
           errorMsg: true,
         }) 
       }else {
-        this.setState({
-          switchInfo: true,
-          errorMsg: false,
-        })
+        this._getDepartlist();
       }
     }else{
       this.setState({
@@ -176,36 +192,84 @@ class DoctorRegist extends Component {
     }
   }
 
+  /*******************************
+   *获取科室信息，并切换页面
+   *****************************/
+  _getDepartlist() {
+    fetch(GetDeparts_URL,{
+      method: 'post',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        
+      })
+    })
+    .then((response) => {
+      return response.json();
+    })
+    .then((responseData) => {
+      var data = responseData;
+      if(data['status'] === 'success') {
+        this.setState({
+          switchInfo: true,
+          errorMsg: false,
+          departlist: data['departList'],
+        })
+      }
+    })
+    .done();
+  }
+
+  /******************************
+   *展示科室
+   *****************************/
+  _showDepartlist() {
+    var departlist = [];
+    var data = this.state.departlist;
+    data.map((value,index) => {
+      var temp = (
+        <Picker.Item key={index} label={value['name']} value={value['id']}/>    
+      )
+      departlist.push(temp);
+    })
+    return departlist;    
+  }
+
   /******************************
    *渲染错误信息
    *****************************/
-  _renderErrorMsg(msg) {
+  _renderErrorMsg() {
     var data = this.state.info;
-    if(this.state.errorMsg) {
-      return (
-        <View
+    var errorMsg = '';
+    if(!this.state.switchInfo) {
+      if(data['passwd'] != data['cpasswd']) {
+        errorMsg = '两次输入的密码不一致，请重新输入';
+      }else if(data['name'].length > 0 && data['sex'].length > 0 && data['age'].length > 0 && data['tel'].length > 0 && data['passwd'].length > 0 && data['cpasswd'].length > 0){
+        errorMsg = '';
+      }else{
+        errorMsg = '以上内容都为必填项，不能为空';
+      }
+    }else{
+      errorMsg = '以上内容都为必填项，不能为空';
+    }
+    return (
+      <View
+        style={{
+          marginTop: 5,
+          marginLeft: 5,
+        }}
+      >
+        <Text
           style={{
-            marginTop: 5,
-            marginLeft: 5,
+            color: 'red',
           }}
         >
-          <Text
-            style={{
-              color: 'red',
-            }}
-          >
-            {this.state.info.passwd != this.state.info.cpasswd ? '*两次输入的密码不一致，请重新输入' : (
-              data['name'].length > 0 && data['age'].length > 0 && data['tel'].length > 0 && data['passwd'].length > 0 && data['cpasswd'].length > 0 ? '' : msg
-              )}
-          </Text>
-        </View>
-      )
-    }else {
-      return (
-        <View>
-        </View>
-      )
-    }
+          *{errorMsg}
+        </Text>
+      </View>
+    )
   }
 
   /*******************************
@@ -297,6 +361,7 @@ class DoctorRegist extends Component {
                 placeholder='请输入您的年龄'
                 textAlign='start'
                 keyboardType='numeric'
+                maxLength={2}
                 underlineColorAndroid={'transparent'}
                 defaultValue={this.state.info.age}
                 onChangeText={(text) => {
@@ -378,7 +443,7 @@ class DoctorRegist extends Component {
             </View>
           </View>
           </View>
-          {this._renderErrorMsg('以上内容都为必填项，请您补充空项。')}
+          {this.state.errorMsg ? this._renderErrorMsg() : (<View></View>)}
           <TouchableOpacity
             onPress={() => {return this._onPressSubmitPersonInfo()}}
           >
@@ -469,8 +534,7 @@ class DoctorRegist extends Component {
                     data['depart'] = value;
                     this.setState({info:data})}}
                 >
-                  <Picker.Item label="神经内科" value="神经内科" />
-                  <Picker.Item label="内科" value="内科" />
+                  {this._showDepartlist()}
                 </Picker>
               </View>
             </View>
@@ -487,7 +551,7 @@ class DoctorRegist extends Component {
                   ref='price'
                   style={styles.input}
                   keyboardType='numeric'
-                  placeholder='请输入10分钟咨询价格'
+                  placeholder='请输入10分钟咨询价格/元'
                   underlineColorAndroid={'transparent'}
                   defaultValue={this.state.info.price}
                   onChangeText={(text) => {
@@ -499,6 +563,7 @@ class DoctorRegist extends Component {
             </View>
             {this._renderTable()}
           </View>
+          {this.state.errorMsg ? this._renderErrorMsg() : (<View></View>)}
           <TouchableOpacity
             onPress={() => {return this._onPressLastInfopage()}}
           >
@@ -514,15 +579,27 @@ class DoctorRegist extends Component {
       )
     }else if(this.state.switchInfo && this.state.lastpage) {
       return (
-        <DoctorPhoto />
+        <DoctorPhoto info={this.state.info} />
       )
     }
   }
 
+
   _onPressLastInfopage() {
-    this.setState({
-      lastpage: true,
-    })
+    var data = this.state.info;
+    var schedule = this._getDoctorSchedule();
+    data['schedule'] = schedule;
+    if(data['hospital'].length > 0 && data['price'].length > 0){
+      this.setState({
+        lastpage: true,
+        errorMsg: false,
+        data: data,
+      })
+    }else{
+      this.setState({
+        errorMsg: true,
+      })
+    }
   }
 
    _renderTable() {
