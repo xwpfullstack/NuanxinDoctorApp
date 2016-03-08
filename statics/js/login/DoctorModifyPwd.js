@@ -21,6 +21,7 @@ class ModifyPwd extends Component {
    *addNewPwd 用来渲染界面
    *tel 输入的电话号码
    *verify 验证码
+   *isgetVerify 获取
    **************************/
   constructor(props) {
     super(props);
@@ -32,6 +33,7 @@ class ModifyPwd extends Component {
       newPassWd: '',
       errorMsg: false,
       verifyError: '',
+      isgetVerify: false,
     }
   }
   
@@ -42,7 +44,10 @@ class ModifyPwd extends Component {
     if(!this.state.addNewPwd) {
       this.props.navigator.pop();
     }else {
-      this.setState({addNewPwd: false});
+      this.setState({
+        addNewPwd: false,
+        isgetVerify: false,}
+      );
     }
   }
   
@@ -57,7 +62,7 @@ class ModifyPwd extends Component {
             onPress={() => {return this._returnMainPage()}}
           >
             <Image 
-              source={require('../../images/icon/return.png')}
+              source={require('../../images/icon/back.png')}
               style={styles.arrow}
             />
           </TouchableOpacity>
@@ -85,7 +90,10 @@ class ModifyPwd extends Component {
    *否则返回null
    *******************************/
   _onPressGetVerify() {
-    if(this.state.tel.length === 11) {
+    if(this.state.tel.length === 11 && !this.state.isgetVerify) {
+      this.setState({
+        isgetVerify: true,
+      });
       fetch(sendMsg_URL,{
         method: 'post',
         headers: {
@@ -103,7 +111,10 @@ class ModifyPwd extends Component {
         var data = responseData;
         if(data['state'] === 'error') {
           if(data['msg'] === 'unregist') {
-            this.setState({errorMsg: true});            
+            this.setState({
+              errorMsg: true,
+              isgetVerify: false,
+            });            
             return null;
           }
         }else if(data['state'] === 'success') {

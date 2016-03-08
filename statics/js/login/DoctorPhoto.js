@@ -4,6 +4,7 @@ import React,{
   View,
   Text,
   Image,
+  Alert,
   Component,
   Dimensions,
   StyleSheet,
@@ -11,8 +12,10 @@ import React,{
 } from 'react-native';
 
 const _width = Dimensions.get('window').width;
+const _height = Dimensions.get('window').height;
 
 var ImagePickerManager = require('NativeModules').ImagePickerManager;
+var FileUpload = require('NativeModules').FileUpload;
 
 class DoctorPhoto extends Component {
   constructor(props) {
@@ -24,35 +27,36 @@ class DoctorPhoto extends Component {
   
   _onPressLoadCamera() {
     var options = {
-      title: '选择头像获取方式',
-      cancelButtonTitle: '结束',
-      takePhotoButtonTitle: '照相机',
-      chooseFromLibraryButtonTitle: '相册',
-      cameraType: 'back',
+      title: '选择图片',
+      cancelButtonTitle: '取消',
+      takePhotoButtonTitle: '拍照',
+      chooseFromLibraryButtonTitle: '从相册获取',
+      cameraType: 'front',
       mediaType: 'photo',
       videoQuality: 'high',
-      maxWidth: 200,
-      maxHeight: 200,
-      aspectX: 2,
-      aspectY: 1,
-      quality: 1,
-      angle: 0,
-      allowEditing: false,
+      maxWidth: 1000,
+      maxHeight: 1000,
+      aspectX: 1,
+      aspectY: 2,
+      quality: 0.2,
+      angle:270,
+      allowEditing: true,
       noData: false,
       storageOpations: {
-        skipBackup: true,
+        skipBackup: false,
         path: 'images'
       }
     };
     ImagePickerManager.showImagePicker(options,(response) => {
       if(response.error) {
         console.log('ImagePickerManager Error: ',response.error);
+      }else if(response.didCancel) {
+        console.log('User cancelled image picker');
+      }else if(response.customButton) {
+        console.log('User tapped custom button: ', response.customButton);
       }else {
-        //const source = {uri: 'data:image/jpeg;base64,' + response.data,isStatic: true};
-        // uri (on iOS)
-        //const source = {uri: response.uri.replace('file://', ''), isStatic: true};
-        //uri (on android)
-        const source = {uri: response.uri, isStatic: true};
+        /*const source = {uri: 'data:image/jpeg;base64,' + response.data,isStatic: true};*/
+        const source = {uri: response.uri,isStatic: true};
         this.setState({
           sourceUrl: source,
         });
@@ -63,6 +67,31 @@ class DoctorPhoto extends Component {
   _onPressSubmit() {
     if(!this.state.sourceUrl) {
       return null;
+    }else {
+      var pathArray = this.state.sourceUrl['uri'].split('/');
+      var imageName = pathArray[pathArray.length-1];
+      alert(imageName);
+      var obj = {
+        uploadUrl: UploadDoctorphoto_URL,
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+        },
+        fields: {
+          'hello': 'world',
+        },
+        files: [
+          {
+            name: '',
+            filename: imageName,
+            filepath: this.state.sourceUrl['uri'],
+            filetype: 'image/jpeg',
+          },
+        ]
+      };
+      FileUpload.upload(obj,(err,result)=>{
+        console.log('upload',err,result);
+      })
     }
   }
 
@@ -74,29 +103,21 @@ class DoctorPhoto extends Component {
           alignItems: 'center',
         }}
       >
-        <View
-          style={{
-            marginTop: 10,
-            borderWidth: 2,
-            borderColor: 'grey',
-            width: 250,
-            height: 250,
-          }}
-        >
          {this.state.sourceUrl ? 
             (
               <Image 
                 source={this.state.sourceUrl} 
-                style={{width: 250,height: 250,}}
+                style={{height: _height*0.15,width:_height*0.15,borderRadius:_height*0.1}}
               />) : 
             (
-              <Text 
-                style={{marginTop: 100,fontSize:18,textAlign:'center'}}
+              <View 
+                style={{width:120,height: 120,borderColor:'grey',borderWidth:1}}
               >
-                上传您的头像
-              </Text>)
+                <Text>
+                 上传您的头像
+                </Text>
+              </View>)
           }
-        </View>
         <TouchableOpacity
           onPress={()=>{this._onPressLoadCamera()}}
         >

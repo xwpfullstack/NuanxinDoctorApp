@@ -39,7 +39,7 @@ class nuanxin extends Component {
             <ComponentTest navigator={this.props.mainNavigator} />
           </View>
           <View tabLabel='five'>
-            <DoctorMainMessage navigator={this.props.mainNavigator}/>
+            <DoctorMainMessage navigator={this.props.mainNavigator} doctorId={this.props.doctorId}/>
           </View>
         </ViewPager>
 

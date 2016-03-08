@@ -1,6 +1,7 @@
 'use strict';
 
 import styles from './styles';
+import BackTitle from './back';
 
 import React, {
     Component,
@@ -17,13 +18,10 @@ class WebMainPage extends Component{
     render(){
         return(
             <View style={{flex:1}}>
-                <View style={styles.headNav}>
-                    <TouchableOpacity  style={styles.back} onPress= {() => {this.props.navigator.pop()}}>
-                        <Image style={styles.headImg}
-                        source = {require('../../images/me/back.png')} />
-                    </TouchableOpacity>
-                    <View style={styles.headMenu}><Text style={styles.textBold}>我的主页</Text></View>
-                </View>
+                <BackTitle
+                    navigator={this.props.navigator}
+                    title={'我的主页'}>
+                </BackTitle>
                 <WebView
                     source={{uri:DEFAULT_URL}}
                     startInLoadingState={true}

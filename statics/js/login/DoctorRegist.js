@@ -82,10 +82,12 @@ class DoctorRegist extends Component {
           <TouchableOpacity
             onPress={() => {return this._returnPage()}}
           >
-            <Image
-              source={require('../../images/icon/return.png')}
-              style={styles.arrow}
-            />
+            <View style={{flex: 1}}>
+              <Image
+                source={require('../../images/icon/back.png')}
+                style={styles.arrow}
+              />
+            </View>
           </TouchableOpacity>
         </View>
         <View style={{flex: 1}}>
@@ -111,13 +113,14 @@ class DoctorRegist extends Component {
     return(
       <View
         style={{
-          flex: 0.2,
+          flex: 0.4,
           marginLeft: 5,
         }}
       >
         <Text
           style={{
             color: 'red',
+            fontSize: 18,
           }}
         >
         *
@@ -155,14 +158,56 @@ class DoctorRegist extends Component {
    ******************************/
   _onPressSubmitPersonInfo() {
     var data = this.state.info;
-    if(data['name'].length > 0 || data['age'].length > 0 || data['tel'].length > 0 || data['passwd'].length > 0 || data['cpasswd'].length > 0){
-      this.setState({
-        switchInfo: true,
-      })
+    if(data['name'].length > 0 && data['age'].length > 0 && data['tel'].length > 0 && data['passwd'].length > 0 && data['cpasswd'].length > 0){
+      if(data['passwd'] != data['cpasswd']) {
+        this.setState({
+          errorMsg: true,
+        }) 
+      }else {
+        this.setState({
+          switchInfo: true,
+          errorMsg: false,
+        })
+      }
     }else{
-
+      this.setState({
+        errorMsg: true,
+      })
     }
   }
+
+  /******************************
+   *渲染错误信息
+   *****************************/
+  _renderErrorMsg(msg) {
+    var data = this.state.info;
+    if(this.state.errorMsg) {
+      return (
+        <View
+          style={{
+            marginTop: 5,
+            marginLeft: 5,
+          }}
+        >
+          <Text
+            style={{
+              color: 'red',
+            }}
+          >
+            {this.state.info.passwd != this.state.info.cpasswd ? '*两次输入的密码不一致，请重新输入' : (
+              data['name'].length > 0 && data['age'].length > 0 && data['tel'].length > 0 && data['passwd'].length > 0 && data['cpasswd'].length > 0 ? '' : msg
+              )}
+          </Text>
+        </View>
+      )
+    }else {
+      return (
+        <View>
+        </View>
+      )
+    }
+  }
+
   /*******************************
    *页面渲染
    ******************************/
@@ -184,11 +229,12 @@ class DoctorRegist extends Component {
             {this._renderTitle(' 姓        名')}
             <View
               style={{
-                flex: 0.8
+                flex: 0.8,
               }}
             >
               <TextInput
                 ref='name'
+                style={styles.input}
                 placeholder='请输入您的姓名'
                 textAlign='start'
                 underlineColorAndroid={'transparent'}
@@ -214,21 +260,25 @@ class DoctorRegist extends Component {
               <TouchableOpacity
                 onPress={()=>{return this._onPressManBar()}}
               >
-                <Text
-                  style={this.state.touchMan == true ? styles.redText : styles.normalText}
-                >
-                  ♂ 男
-                </Text>
+                <View>
+                  <Text
+                    style={this.state.touchMan == true ? styles.redText : styles.normalText}
+                  >
+                    ♂ 男
+                  </Text>
+                </View>
               </TouchableOpacity>
               <TouchableOpacity
                 onPress={()=>{return this._onPressWomanBar()}}
                 style={{marginLeft: 20}}
               >
-                <Text
-                  style={this.state.touchWoman == true ? styles.redText : styles.normalText}
-                >
-                  ♀ 女
-                </Text>
+                <View>
+                  <Text
+                    style={this.state.touchWoman == true ? styles.redText : styles.normalText}
+                  >
+                    ♀ 女
+                  </Text>
+                </View>
               </TouchableOpacity>
             </View>
           </View>
@@ -243,8 +293,10 @@ class DoctorRegist extends Component {
             >
               <TextInput
                 ref='age'
+                style={styles.input}
                 placeholder='请输入您的年龄'
                 textAlign='start'
+                keyboardType='numeric'
                 underlineColorAndroid={'transparent'}
                 defaultValue={this.state.info.age}
                 onChangeText={(text) => {
@@ -265,8 +317,11 @@ class DoctorRegist extends Component {
             >
               <TextInput
                 ref='tel'
-                placeholder='手机号码将作为您的登陆账号'
+                style={styles.input}
+                placeholder='将作为您的登陆账号'
                 textAlign='start'
+                keyboardType='numeric'
+                maxLength={11}
                 underlineColorAndroid={'transparent'}
                 defaultValue={this.state.info.tel}
                 onChangeText={(text) => {
@@ -287,6 +342,7 @@ class DoctorRegist extends Component {
             >
               <TextInput
                 ref='passwd'
+                style={styles.input}
                 placeholder='请输入密码'
                 textAlign='start'
                 underlineColorAndroid={'transparent'}
@@ -309,6 +365,7 @@ class DoctorRegist extends Component {
             >
               <TextInput
                 ref='cpasswd'
+                style={styles.input}
                 placeholder='请再次输入密码'
                 textAlign='start'
                 underlineColorAndroid={'transparent'}
@@ -321,6 +378,7 @@ class DoctorRegist extends Component {
             </View>
           </View>
           </View>
+          {this._renderErrorMsg('以上内容都为必填项，请您补充空项。')}
           <TouchableOpacity
             onPress={() => {return this._onPressSubmitPersonInfo()}}
           >
@@ -356,6 +414,7 @@ class DoctorRegist extends Component {
               >
                 <TextInput
                   ref='hospital'
+                  style={styles.input}
                   placeholder='请输入您所在医院'
                   underlineColorAndroid={'transparent'}
                   defaultValue={this.state.info.hospital}
@@ -426,6 +485,8 @@ class DoctorRegist extends Component {
               >
                 <TextInput
                   ref='price'
+                  style={styles.input}
+                  keyboardType='numeric'
                   placeholder='请输入10分钟咨询价格'
                   underlineColorAndroid={'transparent'}
                   defaultValue={this.state.info.price}
@@ -481,6 +542,7 @@ class DoctorRegist extends Component {
           <Text
             style={{
               color: 'black',
+              fontSize: 18,
             }}
           >
             请选择出诊时间
@@ -546,6 +608,9 @@ class DoctorRegist extends Component {
     })
   }
 
+  /********************************
+   *渲染出诊时间表格
+   *******************************/
   _renderTableRow(row) {
     var time = '';
     if(row == 0) {
@@ -650,9 +715,13 @@ var styles = StyleSheet.create({
   },
   redText: {
     color: 'red',
+    fontSize: 18,
+  },
+  input: {
+    fontSize: 18,
   },
   normalText: {
-
+    fontSize: 18,
   },
   submitBtn: {
     margin: 20,

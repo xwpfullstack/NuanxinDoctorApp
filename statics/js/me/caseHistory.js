@@ -13,8 +13,9 @@ import BackTitle from './back'
 class CaseHistory extends Component {
   render() {
     return (
-        <View style={styles.headNav}>
-            <BackTitle navigator={this.props.navigator} title={'haha'} />
+        <View>
+            <BackTitle navigator={this.props.navigator} title={'经典病例'} />
+            
         </View>
       );
   }

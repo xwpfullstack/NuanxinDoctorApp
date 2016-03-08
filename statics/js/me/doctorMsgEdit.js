@@ -13,19 +13,16 @@ import React, {
   TouchableOpacity,
 } from 'react-native';
 
+import BackTitle from './back';
+
 class DoctorMsgEdit extends Component {
     render() {
     return (
         <View>
-            <View style={styles.headNav}>
-                <TouchableOpacity
-                style={styles.back}
-                onPress= {() => {this.props.navigator.pop()}}>
-                    <Image style={styles.headImg}
-                    source = {require('../../images/me/back.png')} />
-                </TouchableOpacity>
-                <View style={styles.headMenu}><Text style={styles.textBold}>编辑资料</Text></View>
-            </View>
+            <BackTitle
+                navigator={this.props.navigator}
+                title={'编辑资料'}>
+            </BackTitle>
 
             <ScrollView style={styles.ScrollViewBody}>
                 <View style={styles.psnInfo}>
