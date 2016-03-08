@@ -100,7 +100,7 @@ class DoctorLogIn extends Component {
           '提示',
           '密码或者用户名错误,请重新输入',
         );
-      }else if(data['msg'] === 'error') {
+      }else if(data['msg'] === 'success') {
         this.refs.username.blur();
         this.refs.passwd.blur();
         if(data['state'] === '0') {
