@@ -181,6 +181,7 @@ handlePatient(rowdata){
   };
 
   _renderFooter(){
+    //return  <View style={{height:185}}></View>
       //return <View style={{height:50}}><Text>到底了</Text></View>
   };
   _renderScrollComponent(){
@@ -211,6 +212,7 @@ handlePatient(rowdata){
                                                   renderRow={(data)=>{return this.renderRow(data);}}
                                                   onEndReached={()=>this.onEndReached()}
                                                   renderSectionHeader={this.renderSectionHeader} />
+
                           </ScrollView>
                     </PullToRefreshViewAndroid>
             );

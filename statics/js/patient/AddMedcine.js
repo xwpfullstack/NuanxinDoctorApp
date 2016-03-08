@@ -16,21 +16,9 @@ import React, {
 
 import Modal from 'react-native-root-modal';
 import MedcineModal from './MedcineModal';
+import Loading from './Loading';
 
 var DataJson=[
-     {'id':1,'name':'睡眠行为障碍'},
-      {'id':2,'name':'抑郁状态'},
-      {'id':3,'name':'帕金森'},
-      {'id':4,'name':'颠簸'},
-      {'id':5,'name':'脑血管病'},
-      {'id':6,'name':'不安腿综合症'},
-      {'id':7,'name':'运动神经元病'},
-      {'id':8,'name':'失眠'},
-      {'id':9,'name':'神经衰弱'},
-      {'id':10,'name':'阿尔茨海默'},
-      {'id':11,'name':'焦虑状态'},
-      {'id':12,'name':'神经症'},
-      {'id':13,'name':'发作性睡病'},
   ];
 
 var useData=[];
@@ -47,10 +35,17 @@ class AddMedcine extends Component {
       meathod: '',
        Lvisible:false,
        txtMsg:'',
+       diags:this.props.diags,
+       content:'',
     }
   }
 
 componentWillMount(){
+    DataJson=this.props.diags.map((value,index)=>{
+        let temp={};
+        temp['name']=value;
+        return temp;
+    });
      useData=DataJson.map((value,index)=>{
         value['isCheak']=false;
         return value;
@@ -83,23 +78,61 @@ closeModal(){
 };
 
 openModal(){
-     this.setState({Lvisible:true});
+      let content=(
+            <MedcineModal changeMedia={(datas)=>this.changeMedia(datas)} closeModal={()=>this.closeModal()}  DataJson={useData}/>
+      );
+     this.setState({Lvisible:true,content:content});
 };
 
   popOut() {
          this.props.navigator.pop();
   }
 
+pushData(){
+    let tempData=subData.map((value,index)=>{
+        return value['name'];
+    });
+     fetch(AddDocMed_URL,{
+            method: 'post',
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+               doctorid:this.props.doctorId,
+               docMedimg:'/aaa/aa/a',
+               'docdiag-list':tempData,
+               medName:this.state.name,
+               medunit:this.state.unit,
+               merchant:this.state.productor,
+               meddes:this.state.specification,
+            })
+      })
+      .then((response) => {
+        //console.log(response);
+           return response.json();
+      })
+      .then((responseData)=>{
+        console.log(responseData);
+          this.setState({Lvisible:false});
+        this.popOut()
+        this.props.postSick();
+
+      })
+      .catch((err)=>{
+          console.log(err.toString());
+           this.setState({Lvisible:false});
+      })
+      .done(); 
+}
+
   submit() {
-    let postData = {'name': this.state.name,
-      'productor': this.state.productor,
-      'specification': this.state.specification,
-      'unit': this.state.unit,
-      'amount': this.state.amount,
-      'meathod': this.state.meathod,
-      'cheakMedia':subData
-    }
-    console.log(JSON.stringify(postData));
+    let content=(
+        <Loading />
+      );
+      this.setState({Lvisible:true,content:content});
+    //console.log(JSON.stringify(postData));
+    this.pushData();
   }
 
   update() {
@@ -136,7 +169,7 @@ openModal(){
             <View style = {styles.inputStyle}>
               <TextInput
               style = {styles.searchInput}
-                onChangeText = {(text) => this.setState({productor: text})}
+                onChangeText = {(text) => this.setState({name: text})}
                 selectTextOnFocus = {true}
                 underlineColorAndroid = {'transparent'}  />
             </View>
@@ -230,7 +263,7 @@ openModal(){
                         style={{height:Dimensions.get('window').height,
                                     width:Dimensions.get('window').width,top:0,bottom:0,left:0,right:0,backgroundColor:'rgba(0,0,0,0.1)'}}>
                                     <View style={styles.modalStyle}>
-                                          <MedcineModal changeMedia={(datas)=>this.changeMedia(datas)} closeModal={()=>this.closeModal()}  DataJson={useData}/>
+                                          {this.state.content}
                                     </View>
                   </Modal>
       </View>

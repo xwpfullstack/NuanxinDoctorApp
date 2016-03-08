@@ -243,6 +243,7 @@ class DoctorInfo extends Component {
                     </View>
                 </View>*/}
 
+               
 
                 <MyModal
                     navigator={this.props.navigator}
@@ -252,6 +253,7 @@ class DoctorInfo extends Component {
                 />
 
                 {/*my homepage*/}
+                 <View style={{height:120}}></View>
                 </ScrollView>
 
                 <Modal visible={this.state.ListMenu}

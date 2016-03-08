@@ -21,7 +21,6 @@ class Loading extends Component{
                               width:Dimensions.get('window').width,
                               flexDirection: 'column',alignItems: 'center',justifyContent: 'center',},this.props.style]}>
                           <ProgressBarAndroid />
-                          <Text style={{color:'#F08300',fontSize:16,}}>加载中.....</Text>
                   </View>
             );
     };

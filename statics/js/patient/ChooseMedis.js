@@ -77,6 +77,7 @@ handleCheack(index,Msg){
 addMedcine(){
       this.props.navigator.push({
           name:'addMedcine',
+          postSick:this.props.postSick,
        });
 };
 

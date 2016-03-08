@@ -27,9 +27,8 @@ class Diagnose extends Component{
   };
 };
 
-componentDidMount(){
-    //console.log(this.props.diags);
-      let dataJson=[]; 
+createFullData(){
+   let dataJson=[]; 
       let tempJson;
       //
      for (let i = 0; i <this.props.diags.length; i++) {
@@ -48,7 +47,19 @@ componentDidMount(){
       };
 
       this.setState({isCheack:ischeack,dataJson:dataJson});
+};
+
+componentDidMount(){
+    //console.log(this.props.diags);
+     this.createFullData();
 }
+
+pushLoad(data){
+      //Alert.alert(data+'');
+      this.state.diags.push(data);
+      this.setState({diags:this.state.diags});
+      this.createFullData();
+};
 
 handleCheack(index,Msg){    
     if (ischeack[index] === false) {
@@ -65,6 +76,7 @@ handleCheack(index,Msg){
 addDiannosis(){
     this.props.navigator.push({
           name:'addDianosis',
+          pushLoad:(data)=>this.pushLoad(data),
     });
 };
 
