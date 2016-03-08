@@ -48,7 +48,7 @@ BackAndroid.addEventListener('hardwareBackPress', ()=>{
 })
 
 var doctorId;
-
+var diags;
 class NuanXinDoctorApp extends Component {
   constructor(props) {
     super(props);
@@ -100,6 +100,7 @@ class NuanXinDoctorApp extends Component {
         return <DoctorRegist navigator={navigator}/>;
         break;
       case 'addOrder':
+        diags=route.diags;
         return  <AddOrder patientId={route.patientId} doctorId={doctorId} diags={route.diags} navigator={navigator}/>;
         break;
       case 'DoctorRecord':
@@ -118,10 +119,10 @@ class NuanXinDoctorApp extends Component {
         return  <WebMainPage navigator={navigator}/>;
         break;
       case 'addDianosis':
-        return  <AddDianosis navigator={navigator}/>;
+        return  <AddDianosis diags={diags}  pushLoad={(data)=>route.pushLoad(data)}  doctorId={doctorId} navigator={navigator}/>;
         break;
       case 'addMedcine':
-        return  <AddMedcine navigator={navigator}/>;
+        return  <AddMedcine postSick={route.postSick} diags={diags} doctorId={doctorId} navigator={navigator}/>;
         break;
       case 'orderDetails':
         return  <OrderDetails navigator={navigator} orderData={route.passProps}/>;

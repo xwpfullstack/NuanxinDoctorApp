@@ -11,11 +11,11 @@ var WINDOW_HEIGHT = Dimensions.get('window').height;
 const styles = StyleSheet.create({
     body: {
         backgroundColor:'#E6E6E6',
-        height:WINDOW_HEIGHT-75,
+        height:WINDOW_HEIGHT,
     },
     //下拉高度设置
     ScrollViewBody: {
-        height:WINDOW_HEIGHT-120,
+        height:WINDOW_HEIGHT,
     },
     //行居中
     lineCenter: {
@@ -88,7 +88,7 @@ const styles = StyleSheet.create({
     imageText: {
         marginTop:-11,
         backgroundColor:'#EF8200',
-        borderRadius:20,
+        borderRadius:8,
     },
     memo: {
         padding:20,
@@ -163,7 +163,7 @@ const styles = StyleSheet.create({
     // jobView
         tablebody: {
             backgroundColor:'#fff',
-            marginTop:10,
+            top:WINDOW_HEIGHT*0.5,
             padding:10,
         },
         container: {

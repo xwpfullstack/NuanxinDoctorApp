@@ -109,6 +109,7 @@ class Release extends Component {
           </View>
 
           <NewsList navigator={this.props.navigator} newsSet = {newsSet}/>
+          <View style={{height:85,}}></View>
         </ScrollView>
       </Image>
     );
@@ -118,7 +119,7 @@ class Release extends Component {
 const styles = StyleSheet.create({
 	backgroundImage: {
     width: Dimensions.get('window').width,
-    height: Dimensions.get('window').height -85,
+    height: Dimensions.get('window').height,
 	},
   title: {
     flexDirection: 'row',
@@ -140,7 +141,7 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-		backgroundColor: 'rgba(255,255,255,0.4)',
+    backgroundColor: 'rgba(255,255,255,0.4)',
     padding: 11,
   },
   contentBox: {

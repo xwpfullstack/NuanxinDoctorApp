@@ -66,19 +66,23 @@ postPatient(){
       })
       .done(); 
 };
-
+//检测是否填写完整数据格式
 cheakData(datas){
-    datas['med']['mediaNums'].forEach((value,index)=>{
-          if (value[4] == null || value[5] == null) {
-              return false;
-          }
-    });
+//console.log(datas['med']);
+  for (let data of datas['med']){
+      for (let value of data['mediaNums']){
+             if (value[4] == null || value[5] == null) {
+                 return false;
+              }
+      }
+  }
+    //Alert.alert('成功提交代码');
     return true;
 }
 
 submit(){
      var json= JSON.stringify(this.state.PatientMsg);
-     console.log(json);
+     //console.log(json);
      if (!this.cheakData(this.state.PatientMsg)) {
           ToastAndroid.show('请填写完整数据', ToastAndroid.SHORT)
      }
@@ -95,7 +99,10 @@ mediaControl(){
 };
   render(){
     var Content;
-    if (this.state.PatientMsg['med'].length>0){
+     
+    if (this.state.isLoad) {
+
+          if (this.state.PatientMsg['med'].length>0){
             Content=  <ScrollView>
                   {this.mediaControl()}
                   <View style={styles.Submit}>
@@ -104,15 +111,10 @@ mediaControl(){
                   </View>
                   <View style={{height:150}}></View>
             </ScrollView>
-    }
-    else
-    {
-
-             Content= <NoSelect txt='还没有选择任何药物...'  style={{height:Dimensions.get('window').height-200,}}/>  ;
-          
-    }
-  
-    if (this.state.isLoad) {
+        }
+        else{
+            return <NoSelect txt='还没有选择任何药物...'  style={{height:Dimensions.get('window').height-200,}}/> ;
+        }
       return  (
         <View style={{flex:1,flexDirection:'column',height:Dimensions.get('window').height}}>
           <View style={styles.container}>

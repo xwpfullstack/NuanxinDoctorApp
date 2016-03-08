@@ -1,6 +1,7 @@
 /*************************
  *实现与后台数据交互
 *************************/
+
 global.Basic_URL = 'http://www.xingwenpeng.com/doctor/';
 global.Wechat_URL = 'http://www.xingwenpeng.com/wechat/';
 //验证医生用户名密码

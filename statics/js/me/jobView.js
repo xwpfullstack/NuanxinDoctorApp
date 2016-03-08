@@ -6,24 +6,22 @@ import React, {
   View,
 } from 'react-native';
 import Modal from 'react-native-root-modal';
-var Doctor_Message = [
-    {name: '李宁', age: '40', title:'主治医师', hospital:'齐鲁医院', department:'神经内科',tel:'12312312311',
-    memo:'周日休息，不接待患者,有任何问题可以转到下周安排，及时通告患者，谢谢合作。',price:49,},
-];
 //
-var worktime = [[1,0,0],[0,0,0],[0,0,0],[0,1,0],[0,0,0],[0,0,1],[1,0,0]];
-var showWktime = new Array(7);
-for (let i = 0; i<showWktime.length; i++)
-    showWktime[i]=new Array(3);
-for(let i = 0; i<7; i++){
-    for(let j=0; j<3; j++){
-        showWktime[i][j] = worktime[i][j] ? '#F08300' : '#fff';
-    }
-}
 
 class JobView extends Component {
+    constructor(props){
+        super(props);
+    }
   render() {
-      var dctmsg = Doctor_Message[0];
+    var worktime = this.props.worktime;
+    var showWktime = new Array(7);
+    for (let i = 0; i<showWktime.length; i++)
+        showWktime[i]=new Array(3);
+    for(let i = 0; i<7; i++){
+        for(let j=0; j<3; j++){
+            showWktime[i][j] = worktime[i][j] ? '#F08300' : '#fff';
+        }
+    }
     return (
         <View style={styles.tablebody}>
             <View  style={styles.container}>
