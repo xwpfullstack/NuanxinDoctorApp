@@ -10,7 +10,10 @@ import React, {
   TouchableOpacity,
   Image,
   View,
+  ToastAndroid,
 } from 'react-native';
+
+import LoadingModal from './LoadingModal';
 
 class AddDiagnosis extends Component {
   constructor(props) {
@@ -20,12 +23,48 @@ class AddDiagnosis extends Component {
     }
   }
 
+postData(data){
+  this.refs['loading'].tiggleModel(true);
+    fetch(AddDocDiag_URL,{
+            method: 'post',
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+               doctor_id:this.props.doctorId,
+               docdiag:data,
+            })
+      })
+      .then((response) => {
+           return response.json();
+      })
+      .then((responseData)=>{
+        //Alert.alert('ok');
+        console.log(responseData);
+        //this.props.diags.push(data);
+        this.refs['loading'].tiggleModel(false);
+        this.popOut();
+        this.props.pushLoad(data);
+      })
+      .catch((err)=>{
+        this.refs['loading'].tiggleModel(false);
+          console.log(err.toString());
+      })
+      .done(); 
+}
+
   popOut() {
       this.props.navigator.pop();
   }
 
   submit() {
-    Alert.alert('prompt', this.state.diagnosis);
+    //Alert.alert('prompt', this.state.diagnosis);
+    if (this.state.diagnosis == '') {
+        ToastAndroid.show('请填写完整数据', ToastAndroid.SHORT);
+    }
+    this.postData(this.state.diagnosis);
+   
   }
 
   render() {
@@ -54,6 +93,7 @@ class AddDiagnosis extends Component {
         >
           <Text style={styles.buttonText}>提交</Text>
         </TouchableHighlight>
+        <LoadingModal ref='loading'/>
       </View>
     );
   }

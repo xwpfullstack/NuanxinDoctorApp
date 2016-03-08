@@ -11,11 +11,11 @@ var WINDOW_HEIGHT = Dimensions.get('window').height;
 const styles = StyleSheet.create({
     body: {
         backgroundColor:'#E6E6E6',
-        height:WINDOW_HEIGHT-75,
+        height:WINDOW_HEIGHT,
     },
     //下拉高度设置
     ScrollViewBody: {
-        height:WINDOW_HEIGHT-120,
+        height:WINDOW_HEIGHT,
     },
     //行居中
     lineCenter: {

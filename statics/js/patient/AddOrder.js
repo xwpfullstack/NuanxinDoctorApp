@@ -136,6 +136,7 @@ render(){
                         <ChooseMedis  
                               ref='Media'
                               navigator={this.props.navigator}
+                              postSick={()=>{this.postSick()}}
                               doctorId={this.props.doctorId}
                               changeMedia={(media,isdel)=>this.changeMedia(media,isdel,'med')}  
                               gotoPage={(num)=>this.gotoPage(num)}/>
