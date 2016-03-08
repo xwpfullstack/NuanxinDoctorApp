@@ -20,7 +20,11 @@ class DoctorMainMessage extends Component {
   render() {
           return(
              <View style={styles.body}>
-                <DoctorInfo navigator={this.props.navigator} changeEditShow = {() => {this.changeEditShow()}}/>
+                 <DoctorInfo
+                     navigator={this.props.navigator}
+                     changeEditShow = {() => {this.changeEditShow()}}
+                     doctorId={this.props.doctorId}
+                 />
             </View>
           );
   }

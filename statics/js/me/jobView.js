@@ -7,18 +7,21 @@ import React, {
 } from 'react-native';
 import Modal from 'react-native-root-modal';
 //
-var worktime = [[1,0,0],[0,0,0],[0,0,0],[0,1,0],[0,0,0],[0,0,1],[1,0,0]];
-var showWktime = new Array(7);
-for (let i = 0; i<showWktime.length; i++)
-    showWktime[i]=new Array(3);
-for(let i = 0; i<7; i++){
-    for(let j=0; j<3; j++){
-        showWktime[i][j] = worktime[i][j] ? '#F08300' : '#fff';
-    }
-}
 
 class JobView extends Component {
+    constructor(props){
+        super(props);
+    }
   render() {
+    var worktime = this.props.worktime;
+    var showWktime = new Array(7);
+    for (let i = 0; i<showWktime.length; i++)
+        showWktime[i]=new Array(3);
+    for(let i = 0; i<7; i++){
+        for(let j=0; j<3; j++){
+            showWktime[i][j] = worktime[i][j] ? '#F08300' : '#fff';
+        }
+    }
     return (
         <View style={styles.tablebody}>
             <View  style={styles.container}>

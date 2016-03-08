@@ -58,7 +58,7 @@ class MyModal extends Component {
                 <View style={styles.myqrcode}>
                     <Image
                         style={styles.avatarImg}
-                        source = {require('../../images/me/myqrcode.png')}>
+                        source = {require('../../images/me/worktime.png')}>
                     </Image>
                     <Text>出诊安排</Text>
                 </View>
@@ -82,7 +82,7 @@ class MyModal extends Component {
                 <View style={styles.myqrcode}>
                     <Image
                         style={styles.avatarImg}
-                        source = {require('../../images/me/price.png')}>
+                        source = {require('../../images/me/prescription.png')}>
                     </Image>
                     <Text>我的处方</Text>
                 </View>
@@ -94,7 +94,7 @@ class MyModal extends Component {
               <View style={styles.myqrcode}>
                   <Image
                       style={styles.avatarImg}
-                      source = {require('../../images/me/price.png')}>
+                      source = {require('../../images/me/case.png')}>
                   </Image>
                 <Text>经典病例</Text>
               </View>

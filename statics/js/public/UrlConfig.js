@@ -1,7 +1,9 @@
 /*************************
  *实现与后台数据交互
 *************************/
+
 global.Basic_URL = 'http://www.xingwenpeng.com/doctor/';
+
 //验证医生用户名密码
 global.CheckUserInfo_URL = Basic_URL + 'AppLogin/';
 //医生注册
