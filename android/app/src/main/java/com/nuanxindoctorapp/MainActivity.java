@@ -42,7 +42,8 @@ public class MainActivity extends ReactActivity {
 
       return Arrays.<ReactPackage>asList(
         new MainReactPackage(),
-        mImagePicker
+        mImagePicker,
+        new FileUploadPackage(),
       );
     }
 
@@ -51,22 +52,4 @@ public class MainActivity extends ReactActivity {
       super.onActivityResult(requestCode, resultCode, data);
       mImagePicker.handleActivityResult(requestCode, resultCode, data);
     }
-
-    /*@Override
-    protected void onCreate(Bundle savedInstanceState) {
-      super.onCreate(savedInstanceState);
-      mReactRootView = new ReactRootView(this);
-
-      mReactInstanceManager = ReactInstanceManager.builder()
-        .setApplication(getApplication())
-        .setBundleAssetName("index.android.bundle")
-        .setJSMainModuleName("index.android")
-        .addPackage(new MainReactPackage())
-        .addPackage(new FileUploadPackage())
-        .setUseDeveloperSupport(BuildConfig.DEBUG)
-        .setInitialLifecycleState(LifecycleState.RESUMED)
-        .build();
-      mReactRootView.startReactApplication(mReactInstanceManager, "MyApp", null);
-      setContentView(mReactRootView);
-    }*/
 }
