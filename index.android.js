@@ -36,6 +36,7 @@ import ModifyPrescription from './statics/js/patient/ModifyPrescription';
 import CompleteRecord from './statics/js/patient/CompleteRecord';
 import OrderList from './statics/js/patient/OrderListIso';
 import CaseHistory from './statics/js/me/caseHistory';
+import AddCase from './statics/js/me/addCase';
 
 var _navigator;
 //监听硬件返回功能
@@ -144,6 +145,9 @@ class NuanXinDoctorApp extends Component {
         break;
       case 'caseHistory':
         return <CaseHistory navigator={navigator} />;  
+        break;
+      case 'addCase':
+        return <AddCase navigator={navigator} />; 
         break;
     };
   };

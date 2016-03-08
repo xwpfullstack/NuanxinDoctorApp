@@ -32,6 +32,7 @@ class MenuModal extends Component{
         this.props.close();
         this.props.navigator.push({
             name:menuname,
+            dctmsg:this.props.dctmsg,
         });
     };
   render(){
