@@ -4,6 +4,9 @@
 
 global.Basic_URL = 'http://www.xingwenpeng.com/doctor/';
 global.Wechat_URL = 'http://www.xingwenpeng.com/wechat/';
+
+var patient_openid = 'oKuU6wCL1pB-5pSv2hNS06P-xR9c';
+global.Homepage_URL = 'http://www.xingwenpeng.com/patient/mydoctor/mydoctor_homepage/?patient_openid='+patient_openid+'&new_doctor_id=&doctor_id=';
 //验证医生用户名密码
 global.CheckUserInfo_URL = Basic_URL + 'AppLogin/';
 //医生注册
