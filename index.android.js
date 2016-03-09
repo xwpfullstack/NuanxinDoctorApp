@@ -117,7 +117,7 @@ class NuanXinDoctorApp extends Component {
         return  <DoctorMsgEdit navigator={navigator}/>;
         break;
       case 'webMainPage':
-        return  <WebMainPage navigator={navigator}/>;
+        return  <WebMainPage navigator={navigator} doctorId={doctorId}/>;
         break;
       case 'addDianosis':
         return  <AddDianosis diags={diags}  pushLoad={(data)=>route.pushLoad(data)}  doctorId={doctorId} navigator={navigator}/>;

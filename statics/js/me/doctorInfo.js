@@ -241,7 +241,7 @@ class DoctorInfo extends Component {
                 <MyModal
                     navigator={this.props.navigator}
                     showModal = {(name)=> this.showModal(name)}
-                    doctor_id={this.props.doctor_id}
+                    doctorId={this.props.doctorId}
                     closeModal={()=>this.closeModal()}
                 />
 

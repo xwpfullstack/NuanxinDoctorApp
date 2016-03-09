@@ -13,10 +13,10 @@ import Modal from 'react-native-root-modal';
 var {WINDOW_HEIGHT,WINDOW_WIDTH} = Dimensions.get('window');
 
 class MyModal extends Component {
-    constructor() {
+    constructor(props) {
         super(...arguments);
         this.state = {
-            visible: false
+            visible: false,
         };
     }
     _onPressBtn(conpnt) {
@@ -51,7 +51,6 @@ class MyModal extends Component {
                     <Text>我的二维码</Text>
                 </View>
             </TouchableOpacity>
-
             <TouchableOpacity
                 style={styles.doctorMessage}
                 onPress={()=>this.props.showModal('ShowJobview')}>
