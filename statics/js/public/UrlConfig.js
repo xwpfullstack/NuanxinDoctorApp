@@ -76,4 +76,4 @@ global.UploadDoctorphoto_URL = Basic_URL + 'uploadPhoto/';
 //获取二维码
 global.DoctorQrcode_URL = Wechat_URL + 'AppGetQrcode/';
 //发送医嘱信息
-global.SendDoctorMsg_URL = wechat_URL + 'sendDoctorMsg/';
+global.SendDoctorMsg_URL = Wechat_URL + 'sendDoctorMsg/';
