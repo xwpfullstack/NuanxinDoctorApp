@@ -102,12 +102,13 @@ postData(){
         console.log(responseData);
         let dlength= this.getlength(responseData.patients);
             this.setState({todaylength:dlength,isLoad:true,mainListData:responseData.patients, data:responseData.patients,isSuccess:true,diags:responseData.diags,})
+
       })
       .catch((err)=>{
           this.setState({isSuccess:false,isLoad:true});
           console.log(err.toString());
       })
-      .done(); 
+      .done();
 };
 
 
@@ -125,7 +126,7 @@ classify(name){
   else if(name == 'isCollect'){
           this.refs['mainlist'].isCollect();
   }
-      
+
 };
 openCenterModal(){
   this.closeModal();
@@ -162,16 +163,17 @@ pickerDone(pickedValue){
                 <Image
                 source={require('../../images/load/background.png')}
                 style={styles.background}
-                > 
+                >
                 <View style={styles.topTitle}>
                 <Text style={[styles.textColor,styles.topText]}> 病人</Text>
                 </View>
+
                 <Head search={(txt)=>this.search(txt)} dataNums={this.state.todaylength} ref='head' showModel={()=>this.showModel()} />
-                <View 
+                <View
                   style={styles.container}
                 >
                 <MainList diags={this.state.diags}  data={this.state.mainListData} doctorId={this.props.doctorId} ref='mainlist' closeModal={()=>this.closeModal()}  changeNums={(num)=>this.changeNums(num)} navigator={this.props.navigator}/>
-                <Modal visible={this.state.Lvisible}  
+                <Modal visible={this.state.Lvisible}
                         style={{height:Dimensions.get('window').height,width:Dimensions.get('window').width,top:0,bottom:0,left:0,right:0}}>
                               <TouchableOpacity  onPress={()=>this.closeModal()} style={{height:Dimensions.get('window').height,width:Dimensions.get('window').width,}}>
                                     <View style={this.state.modalStyle}>
@@ -203,11 +205,11 @@ pickerDone(pickedValue){
                       > 
                          <TouchableOpacity 
                               onPress={()=>this.postData()}
-                              style={{height:Dimensions.get('window').height, 
+                              style={{height:Dimensions.get('window').height,
                                           width:Dimensions.get('window').width,
                                           flexDirection: 'column',alignItems: 'center',justifyContent: 'center',}}>
                               <Text style={{color:'#F08300',fontSize:16,}}>加载失败</Text>
-                              <TouchableOpacity onPress={()=>this.postData()} 
+                              <TouchableOpacity onPress={()=>this.postData()}
                                       style={{borderWidth:1,height:50,width:100,borderRadius:25,borderColor:'#0094ff',justifyContent:'center',alignItems:'center'}}>
                                      <Text style={{color:'#F08300',fontSize:16,}}>重新加载</Text>
                               </TouchableOpacity>
@@ -221,7 +223,7 @@ pickerDone(pickedValue){
                     <Loading />
             );
       };
-  };       
+  };
 };
 
 const styles = StyleSheet.create({

@@ -8,22 +8,17 @@ import React, {
   View,
 } from 'react-native';
 
-import styles from './styles';
+import styles from './styles'
 
 class BackTitle extends Component {
     constructor(props){
         super(props);
     }
-    _onPressAddCase(){
-        this.props.navigator.push({
-            name:'addCase'
-        })
-    }
     addBtn(){
         if(this.props.addBtn){
             return(
                 <TouchableOpacity
-                onPress= {() => {this._onPressAddCase()}}>
+                onPress= {() => {this.props.navigator.pop()}}>
                     <Image style={styles.headImg}
                     source = {require('../../images/icon/add.png')} />
                 </TouchableOpacity>
@@ -43,7 +38,6 @@ class BackTitle extends Component {
             <View style={styles.headMenu}>
                 <Text style={styles.textBold}>{this.props.title}</Text>
             </View>
-            {this.addBtn()}
         </View>
       );
   }

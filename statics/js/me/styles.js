@@ -13,9 +13,15 @@ const styles = StyleSheet.create({
         backgroundColor:'#E6E6E6',
         height:WINDOW_HEIGHT,
     },
+    allPage:{
+        height:WINDOW_HEIGHT,
+        width:WINDOW_WIDTH,
+        paddingLeft:7,
+        paddingRight:7,
+    },
     //下拉高度设置
     ScrollViewBody: {
-        height:WINDOW_HEIGHT,
+        height:WINDOW_HEIGHT - 45,
     },
     //行居中
     lineCenter: {
@@ -149,7 +155,6 @@ const styles = StyleSheet.create({
         height:40,
     },
     psnInfoLineKey: {
-        justifyContent:'center',
         flex:0.2,
     },
     psnInfoLineValue: {
@@ -158,7 +163,6 @@ const styles = StyleSheet.create({
     textStyle: {
         color:'rgba(124,124,124,0.7)',
         fontSize:17,
-        marginRight:20,
     },
     // jobView
         tablebody: {
@@ -202,6 +206,54 @@ const styles = StyleSheet.create({
         borderBottomWidth:1,
         borderColor:'#EEEEEE',
     },
+    //caseHistory
+    nocase: {
+        marginTop:100,
+        flex:1,
+        flexDirection:'column',
+        alignItems:'center',
+        justifyContent:'center',
+
+    },
+    //caseView
+    addCaseInput: {
+        backgroundColor:'rgba(255,255,255,0.8)',
+        height:34,
+        borderRadius:10,
+        flex:4,
+        justifyContent:'center',
+    },
+    nessDescription: {
+        height:140,
+        marginTop:10,
+        backgroundColor:'rgba(255,255,255,0.4)',
+        paddingLeft:10,
+        paddingRight:10,
+        borderRadius:10,
+    },
+    caseText:{
+        color:'#FFF',
+        fontSize:16,
+    },
+    caseViewLine: {
+        height:35,
+        flexDirection:'row',
+        justifyContent:'center',
+        alignItems:'center',
+        marginTop:10,
+    },
+    writeText: {
+        color:'rgba(255,255,255,0.8)',
+        fontSize:13,
+    },
+    caseBtn: {
+        backgroundColor:'#f08300',
+        marginTop:10,
+        height:40,
+        borderRadius:10,
+        width:WINDOW_WIDTH-50,
+        alignSelf:'center',
+    }
 });
 
 export default styles;

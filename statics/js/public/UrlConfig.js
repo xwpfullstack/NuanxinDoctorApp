@@ -1,11 +1,16 @@
 /*************************
  *实现与后台数据交互
 *************************/
+
 global.Basic_URL = 'http://www.xingwenpeng.com/doctor/';
+global.Wechat_URL = 'http://www.xingwenpeng.com/wechat/';
+
+var patient_openid = 'oKuU6wCL1pB-5pSv2hNS06P-xR9c';
+global.Homepage_URL = 'http://www.xingwenpeng.com/patient/mydoctor/mydoctor_homepage/?patient_openid='+patient_openid+'&new_doctor_id=&doctor_id=';
 //验证医生用户名密码
 global.CheckUserInfo_URL = Basic_URL + 'AppLogin/';
 //医生注册
-global.DoctorRegist_URL = Basic_URL + 'register/';
+global.DoctorRegist_URL = Basic_URL + 'AppDoctorRegist/';
 //获取医生信息
 global.DocInfo = Basic_URL + 'info/';
 //编辑后保存医生信息
@@ -68,3 +73,5 @@ global.ModifyPass_URL = Basic_URL + 'AppModifyPass/';
 global.sendMsg_URL = Basic_URL + 'AppSendMsg/';
 //上传医生头像
 global.UploadDoctorphoto_URL = Basic_URL + 'uploadPhoto/';
+//获取二维码
+global.DoctorQrcode_URL = Wechat_URL + 'AppGetQrcode/';
