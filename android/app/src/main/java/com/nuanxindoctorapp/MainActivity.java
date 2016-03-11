@@ -43,7 +43,7 @@ public class MainActivity extends ReactActivity {
       return Arrays.<ReactPackage>asList(
         new MainReactPackage(),
         mImagePicker,
-        new FileUploadPackage(),
+        new FileUploadPackage()
       );
     }
 

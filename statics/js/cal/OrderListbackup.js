@@ -36,71 +36,29 @@ let orderData=[
     {date:'2015年9月25日', name: '王安琴', state: '已完成'},
     {date:'2015年9月24日', name: '王琴', state: '患者候诊中'},
 ];
-var json={};
-var sectionIDS=[];
-var rowIDs=[];
 
 class OrderList extends Component {
   constructor(props) {
     super(props);
-    var getSectionData = (dataBlob, sectionID) => {
-          return dataBlob[sectionID];
-     }
-    var getRowData = (dataBlob, sectionID, rowID) => {
-          return dataBlob[sectionID + ':' + rowID];
-    }
-    var dataSource=new ListView.DataSource({
-      rowHasChanged: (row1, row2) => row1 !== row2,
-      sectionHeaderHasChanged: (s1, s2) => s1 !== s2,
-      getSectionData: getSectionData,
-           getRowData: getRowData,
-      });
-    this.state={
-      data:orderData,
-      dataSource:dataSource,
-      isLoad:false,
-      isSuccess:true,
-  };
+    this.dataSource = new ListView.DataSource({
+      rowHasChanged:(row1, row2)=>row1 !== row2,
+    });
   }
 
   showOrderDetails(orderData) {
     this.props.navigator.push({name: 'orderDetails', passProps: orderData});
   }
-  componentDidMount(){
-     this.BaseCreateData(orderData,'date');
-    //  Alert.alert(this.state.data+'');
-  }
-  BaseCreateData(Datas,name){
-        json={};
-        sectionIDS=[];
-        rowIDs=[];
-        for (let data of Datas){
-             if (!json[data[name]]) {
-                   json[data[name]]={};
-                   sectionIDS.push(data[name]);
-                   rowIDs.push([]);
-              }
-              let index;
-              for (var i = 0; i < sectionIDS.length; i++) {
-                  if (sectionIDS[i] == data[name]) {
-                      index=i;
-                      break;
-                  }
-              };
-            let  row= (rowIDs[index].length+1)+'';
-            rowIDs[index].push(row)
-             json[data[name]+':'+row]=data;
-        };
-        // Alert.alert('', JSON.stringify(json)+'' );
-      //  Alert.alert(this.state.data.length+'');
-        this.setState({dataSource:this.state.dataSource.cloneWithRowsAndSections(json,sectionIDS,rowIDs),});
-  }
-  renderRow(rowdata,sectionID,rowID) {
+  renderRow(
+    orderData: Object,
+    sectionID: number | string,
+    rowID: number | string,
+    highlightRowFunc: (sectionID: ?number | string, rowID: ?number | string) => void,
+  ) {
     let imageSource;
-    if (rowdata.state=='预约中') {
+    if (orderData.state=='预约中') {
       imageSource=require('../../images/schedule/appointing.png');
     }
-    else if(rowdata.state=='患者候诊中') {
+    else if(orderData.state=='患者候诊中') {
       imageSource=require('../../images/schedule/waiting.png');
     }
     else {
@@ -119,32 +77,17 @@ class OrderList extends Component {
       </TouchableHighlight>
     );
   }
-  renderSectionHeader(sectionData,sectionID){
-      var valueData=sectionID.toString();
-      var tempList=valueData.split('-');
-      if (tempList.length>1) {
-          valueData=tempList[0]+'年'+parseInt(tempList[1])+'月'+parseInt(tempList[2].split(' ')[0])+'号';
-      }
-    return (
-        <View style={{justifyContent:'center',padding:10}}>
-      <Text style={{color:'#F08300',fontSize:13}}>{valueData}</Text>
-      </View>
-      );
-  };
+
   render() {
     return (
-      <ScrollView>
       <ListView
-        style={{backgroundColor:'#AAAAAA'}}
-        dataSource={this.state.dataSource}
+        dataSource={this.dataSource.cloneWithRows(orderData)}
         renderRow={this.renderRow.bind(this)}
         automaticallyAdjustContentInsets={false}
         keyboardDismissMode='on-drag'
         keyboardShouldPersistTaps={true}
         showsVerticalScrollIndicator={true}
-        renderSectionHeader={this.renderSectionHeader}
       />
-    </ScrollView>
     );
   }
 }

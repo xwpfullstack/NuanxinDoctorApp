@@ -110,8 +110,9 @@ class RecordTable extends Component {
 const styles = StyleSheet.create({
 
   header: {
-    backgroundColor: '#FFFFFF',
-    marginBottom: 1,
+    backgroundColor: 'rgba(255,255,255,0.3)',
+    borderBottomWidth: 1,
+    borderBottomColor: '#AAAAAA',
     height: 50,
     alignItems: 'center',
     justifyContent: 'center',
@@ -120,36 +121,47 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontFamily: 'PingFang-SC-Regular',
     fontWeight: '100',
-    color: '#333333',
+    color: '#FFFFFF',
   },
   tableRow: {
     flexDirection: 'row',
-    backgroundColor: '#FFFFFF',
+    backgroundColor: 'rgba(255,255,255,0.3)',
     height: 40,
-    marginBottom: 1,
+    borderBottomWidth: 1,
+    borderBottomColor: '#AAAAAA',
   },
   rowHeader: {
     flex:1,
     alignItems: 'center',
     justifyContent: 'center',
   },
+  rowHeaderText: {
+    fontFamily: 'PingFang-SC-Regular',
+    fontSize: 16,
+    fontWeight: '100',
+    color: '#FFFFFF',
+  },
   rowContent: {
     flex: 3,
     alignItems: 'center',
     justifyContent: 'center',
     borderLeftWidth: 1,
-    borderLeftColor: '#F0F0F0',
+    borderLeftColor: '#AAAAAA',
+  },
+  rowContentText: {
+    fontFamily: 'PingFang-SC-Regular',
+    fontSize: 16,
+    fontWeight: '100',
+    color: '#FFFFFF',
   },
   prescriptionRow: {
     flexDirection: 'row',
-    marginBottom: 1,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: 'rgba(255,255,255,0.3)',
   },
   prescriptionRowContent: {
       flex: 3,
-      backgroundColor: '#FFFFFF',
       borderLeftWidth: 1,
-      borderLeftColor: '#F0F0F0',
+      borderLeftColor: '#AAAAAA',
   },
   buttonStyle: {
     justifyContent: 'center',

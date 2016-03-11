@@ -88,6 +88,12 @@ class Release extends Component {
         </View>
         <ScrollView style = {styles.container}>
           <TextInput
+            placeholder = {'主题...'}
+            onChangeText = {(text) => this.setState({subject: text})}
+            style = {styles.subjectBox}
+            value = {this.state.subject}
+          />
+          <TextInput
             ref = 'contentBox'
             placeholder = {'你想说的...'}
             onChangeText = {(text) => this.setState({content: text})}
@@ -96,12 +102,6 @@ class Release extends Component {
             numberOfLines = {6}
             style = {styles.contentBox}
             value = {this.state.content}
-          />
-          <TextInput
-            placeholder = {'主题...'}
-            onChangeText = {(text) => this.setState({subject: text})}
-            style = {styles.subjectBox}
-            value = {this.state.subject}
           />
 
           <View style={styles.releaseTo}>

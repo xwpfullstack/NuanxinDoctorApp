@@ -138,16 +138,16 @@ class NuanXinDoctorApp extends Component {
         return  <CompleteRecord navigator={navigator} />;
         break;
       case 'orderList':
-        return  <OrderList navigator={navigator} />;
+        return  <OrderList navigator={navigator} doctorId={doctorId}/>;
         break;
       case 'drugDetailed':
         return <DrugDetailed navigator={navigator} />;
         break;
       case 'caseHistory':
-        return <CaseHistory navigator={navigator} />;  
+        return <CaseHistory navigator={navigator} />;
         break;
       case 'addCase':
-        return <AddCase navigator={navigator} />; 
+        return <AddCase navigator={navigator} />;
         break;
     };
   };

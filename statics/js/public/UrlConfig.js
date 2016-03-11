@@ -25,6 +25,13 @@ global.Meds_URL = Basic_URL + 'meds/';
 //添加病人服用药品
 global.SavePrescript_URL = Basic_URL + 'savePrescript/';
 
+
+//医生订单列表
+global.GetDocOrder_URL = Basic_URL + 'docOrders/';
+//根据订单号获取订单详情
+global.OrderDetail_URL = Basic_URL + 'order/';
+
+
 //获取医生诊断列表
 global.DocDiags_URL = Basic_URL + 'docDiags/';
 //添加医生诊断

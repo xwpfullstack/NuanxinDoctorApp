@@ -41,7 +41,10 @@ submit(){
 
 render(){
     return  (
-        <View style={styles.container}>
+      <Image
+        source={require('../../images/load/background.png')}
+        style={styles.backgroundImage}
+      >
           <View style={styles.tittle}>
               <View style={styles.titleContent}>
                   <TouchableOpacity onPress={()=>this.handleBack()} style={{ flexDirection: 'row',}}>
@@ -54,23 +57,23 @@ render(){
               </View>
           </View>
           <View style={styles.inputGroup}>
-                    <TextInput  
-                              style={styles.TextInput} 
-                              placeholder='标题' 
+                    <TextInput
+                              style={styles.TextInput}
+                              placeholder='标题'
                               value={this.state.DocMsg['title']}
                               placeholderTextColor='#BFBFBF'
                               onChangeText={(txt)=>this.changeTxt('title',txt)}
                               underlineColorAndroid='black'/>
-                      <TextInput  
-                              style={styles.TextInput} 
-                              placeholder='患者姓名' 
+                      <TextInput
+                              style={styles.TextInput}
+                              placeholder='患者姓名'
                                value={this.state.DocMsg['name']}
                               placeholderTextColor='#BFBFBF'
                               onChangeText={(txt)=>this.changeTxt('name',txt)}/>
-                          <View style={{marginTop:15,borderWidth:1}}>
-                               <TextInput  
-                                       style={[styles.TextInput,{marginTop:0}]}  
-                                      placeholder='内容' 
+                          <View style={{marginTop:15,borderWidth:1,borderColor: '#AAAAAA'}}>
+                               <TextInput
+                                       style={[styles.TextInput,{marginTop:0}]}
+                                      placeholder='内容'
                                        value={this.state.DocMsg['content']}
                                       placeholderTextColor='#BFBFBF'
                                       onChangeText={(txt)=>this.changeTxt('content',txt)}
@@ -79,18 +82,23 @@ render(){
                                       numberOfLines={5} />
                           </View>
               </View>
-             
-        </View>
+
+        </Image>
       );
 };
 };
 
 
 const styles = StyleSheet.create({
-    container:{
-    flex:1,
-    flexDirection: 'column',    
-    backgroundColor:'#cccccc',
+    backgroundImage: {
+      width: Dimensions.get('window').width,
+      height: Dimensions.get('window').height,
+  	},
+    normalText: {
+      fontFamily: 'PingFang-SC-Regular',
+      fontSize: 16,
+      fontWeight: '100',
+      color: '#FFFFFF',
     },
     txtColor:{
         color:'rgb(255,255,255)',
@@ -112,8 +120,7 @@ const styles = StyleSheet.create({
     backgroundColor:'#FE9300',
   },
   inputGroup:{
-      flexDirection: 'column',   
-      borderWidth:1,
+      flexDirection: 'column',
       margin:10,
       marginTop:20,
       marginBottom:20,
@@ -121,8 +128,7 @@ const styles = StyleSheet.create({
        justifyContent: 'center',
        alignItems:'center',
        borderRadius:20,
-       borderColor:'#cccccc',
-       backgroundColor:'white',
+       backgroundColor:'rgba(255,255,255,0.3)',
   },
   TextInput:{
       fontSize:15,
@@ -131,7 +137,7 @@ const styles = StyleSheet.create({
   },
   mainView:{
     flex:1,
-    flexDirection: 'column',    
+    flexDirection: 'column',
     backgroundColor:'#F4F1F5',
     alignItems:'center',
   },
