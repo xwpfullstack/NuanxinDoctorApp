@@ -32,7 +32,7 @@ class MenuModal extends Component{
             menuname='doctorMsgEdit';
             break;
            case 'exit':
-            menuname='logout';
+            menuname='logIn';
             break;
       }
         this.props.close();
