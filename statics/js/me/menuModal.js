@@ -16,10 +16,15 @@ var WINDOW_WIDTH = Dimensions.get('window').width;
 var WINDOW_HEIGHT = Dimensions.get('window').height;
 
 class MenuModal extends Component{
-  constructor(){
-    super();
+  constructor(props){
+    super(props);
+    this.state={
+        codeImg:'',
+    }
+    this.postCodeData();
   };
-  handleClickModal(name){
+
+    handleClickModal(name){
       let menuname;
       switch (name) {
           case 'editMsg':
@@ -35,6 +40,52 @@ class MenuModal extends Component{
             dctmsg:this.props.dctmsg,
         });
     };
+
+    _loadCodeImg() {
+        if(this.state.codeImg === ''){
+            return(
+                <View>
+                    <Text>loading</Text>
+                </View>
+            )
+        }
+        else {
+            return(
+                <Image
+                    source={{uri:this.state.codeImg}}
+                    style={styles.codeImg} />
+            )
+        }
+    }
+
+    postCodeData(){
+        fetch(DoctorQrcode_URL,{
+                method: 'post',
+                headers: {
+                  'Accept': 'application/json',
+                  'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                   id:this.props.doctorId,
+                })
+          })
+          .then((response) => {
+               return response.json();
+          })
+          .then((responseData)=>{
+            console.log(this.props.doctor_id);
+            console.log(responseData);
+        this.setState({
+            codeImg:responseData.qrcodeUrl
+        })
+          })
+          .catch((err)=>{
+              this.setState({isSuccess:false,isLoad:true});
+              console.log(err.toString());
+          })
+          .done();
+    };
+
   render(){
       if(this.props.name === 'menuModal'){
           return  (
@@ -62,9 +113,7 @@ class MenuModal extends Component{
                   onPress={()=>this.props.close()}
                   style={styles.container}>
                   <View>
-                      <Image
-                          source={require('../../images/me/erweima.png')}
-                          style={styles.codeImg} />
+                    {this._loadCodeImg()}
                   </View>
               </TouchableOpacity>
           );

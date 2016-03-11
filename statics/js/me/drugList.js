@@ -26,13 +26,6 @@ var COLOR=[
     '#E9A737'
 ];
 
-var tempData={
-        A:['奥斯平','艾弗森','艾克'],
-        B:['巴基斯坦','巴拿马','巴勒斯坦'],
-        C:['朝鲜','查尔斯','查案'],
-        S:['森海塞尔','舒尔'],
-        Z:['中国','众泰','中兴']
-    };
 var json={
 
 };  //列表对象
@@ -42,6 +35,7 @@ var rowIDs=[];
 class DrugList extends Component {
   constructor(props){
       super(props);
+      this.postDrugData();
 
       var getSectionData = (dataBlob, sectionID) => {
             return dataBlob[sectionID];
@@ -59,13 +53,14 @@ class DrugList extends Component {
         });
       this.state={
         dataSource:dataSource.cloneWithRowsAndSections(json,sectionIDS,rowIDs),
+        tempData:{},
         isLoad:true,
     };
 
 };
 
 componentWillMount(){
-     this.BaseCreateData();
+    // this.BaseCreateData();
 };
 _onPressDrugBtn(rowdata){
     this.props.navigator.push({
@@ -74,21 +69,48 @@ _onPressDrugBtn(rowdata){
     });
 };
 
+postDrugData(){
+    fetch(MedicineList_URL,{
+            method: 'post',
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+               doctor_id:this.props.doctorId
+            })
+      })
+      .then((response) => {
+           return response.json();
+      })
+      .then((responseData)=>{
+        console.log(responseData);
+        this.setState({
+            tempData:responseData,
+        })
+        //console.log(this.state.tempData);
+        this.BaseCreateData();
+      })
+      .catch((err)=>{
+          console.log(err.toString());
+      })
+      .done();
+};
+
 
 BaseCreateData(){
       json={};
       sectionIDS=[];
       rowIDs=[];
-      for (let key in tempData){
+      for (let key in this.state.tempData){
           sectionIDS.push(key);
           json[key]='';
-          let tempSecItem=tempData[key].map((value,index) => {
+          let tempSecItem=this.state.tempData[key].map((value,index) => {
               json[key+':'+(index+'')]=value;
               return index+'';
           });
           rowIDs.push(tempSecItem);
       }
-
       this.setState({dataSource:this.state.dataSource.cloneWithRowsAndSections(json,sectionIDS,rowIDs),});
 };
 renderRow(rowdata,sectionID,rowID){
@@ -99,9 +121,9 @@ renderRow(rowdata,sectionID,rowID){
           style={styles.drugTouch}>
         <View style={styles.drugLine}>
             <View style={[styles.drugLogo,{backgroundColor:COLOR[num]}]}>
-                <Text style={{fontSize:23,color:'#fff'}}>{rowdata[0]}</Text>
+                <Text style={{fontSize:23,color:'#fff'}}>{rowdata[0][0]}</Text>
             </View>
-            <View><Text style={{fontSize:18, color:'#000'}}>{rowdata}</Text></View>
+            <View><Text style={{fontSize:18, color:'#000'}}>{rowdata[0]}</Text></View>
         </View>
       </TouchableOpacity>
     );
