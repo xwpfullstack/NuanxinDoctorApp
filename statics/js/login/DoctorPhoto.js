@@ -106,13 +106,19 @@ class DoctorPhoto extends Component {
       }else if(data['status'] == 'success'){
         if(this.state.sourceUrl){
           this._uploadphoto(data['doctorId']);
-        }else{
-          ToastAndroid.show('注册成功,请您耐心等待管理员审核', ToastAndroid.SHORT)
         }
+        ToastAndroid.show('注册成功,请您耐心等待管理员审核', ToastAndroid.SHORT)
+        this.props.navigator.pop();
       }
     })
     .catch((err)=>{
-    
+      Alert.alert(
+        '提示',
+        '网络异常',
+        [
+          {text: '确定',onPress:()=>{ return null}}
+        ]
+      )
     })
     .done()
   };
