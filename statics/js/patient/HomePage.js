@@ -36,6 +36,7 @@ class HomePage extends Component{
       isLoad:false,
       isSuccess:true,
       data:[],
+      todaylength:0,
       mainListData:[],
       diags:[],
     };
@@ -67,8 +68,23 @@ search(txt){
     }
 };
 
+getlength(datas){
+    let date=new Date();
+    let tempdata=datas.filter((value)=>{
+        let timeList = value['newfollowTime'].split('-');
+        if (timeList[0] == date.getFullYear() && timeList[1] == date.getMonth()+1 && timeList[2] == date.getDate()) {
+            return true;
+        }
+        else{
+          return false;
+        }
+    });
+    return tempdata.length;
+}
+
 postData(){
   this.setState({isLoad:false});
+  //Alert.alert(this.props.doctorId+'');
     fetch(Apppatlist_URL,{
             method: 'post',
             headers: {
@@ -83,7 +99,10 @@ postData(){
            return response.json();
       })
       .then((responseData)=>{
-            this.setState({isLoad:true,mainListData:responseData.patients, data:responseData.patients,isSuccess:true,diags:responseData.diags,})
+        console.log(responseData);
+        let dlength= this.getlength(responseData.patients);
+            this.setState({todaylength:dlength,isLoad:true,mainListData:responseData.patients, data:responseData.patients,isSuccess:true,diags:responseData.diags,})
+
       })
       .catch((err)=>{
           this.setState({isSuccess:false,isLoad:true});
@@ -148,7 +167,8 @@ pickerDone(pickedValue){
                 <View style={styles.topTitle}>
                 <Text style={[styles.textColor,styles.topText]}> 病人</Text>
                 </View>
-                <Head search={(txt)=>this.search(txt)} dataNums={this.state.data.length} ref='head' showModel={()=>this.showModel()} />
+
+                <Head search={(txt)=>this.search(txt)} dataNums={this.state.todaylength} ref='head' showModel={()=>this.showModel()} />
                 <View
                   style={styles.container}
                 >
@@ -171,7 +191,7 @@ pickerDone(pickedValue){
                         showDuration={330}
                         showMask={true}
                         onPickerDone={(pickedValue) => this.pickerDone(pickedValue)}
-                        pickerData={this.state.diags}
+                        pickerData={this.state.diags.map((value)=>value['name'])}
                         selectedValue={'睡眠行为障碍'}/>
                 </View>
                 </Image>
@@ -182,8 +202,9 @@ pickerDone(pickedValue){
                   <Image
                       source={require('../../images/load/background.png')}
                       style={styles.background}
-                      >
-                         <View
+                      > 
+                         <TouchableOpacity 
+                              onPress={()=>this.postData()}
                               style={{height:Dimensions.get('window').height,
                                           width:Dimensions.get('window').width,
                                           flexDirection: 'column',alignItems: 'center',justifyContent: 'center',}}>
@@ -192,7 +213,7 @@ pickerDone(pickedValue){
                                       style={{borderWidth:1,height:50,width:100,borderRadius:25,borderColor:'#0094ff',justifyContent:'center',alignItems:'center'}}>
                                      <Text style={{color:'#F08300',fontSize:16,}}>重新加载</Text>
                               </TouchableOpacity>
-                        </View>
+                        </TouchableOpacity>
                  </Image>
               );
           };

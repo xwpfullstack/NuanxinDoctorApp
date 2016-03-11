@@ -60,12 +60,13 @@ selectAll(){
      this.setState({dataSource:tempList});
 };
 renderRow(index,data){
+ // console.log(data);
     return <TouchableOpacity 
                      onPress={()=>this.cheak(data,index)} 
                      key={index} 
                      activeOpacity={1}
                      style={[styles.baseCheack,{backgroundColor:(!data['isCheak'])?'white':'#0094ff'}]}>
-      <Text style={{color:data['isCheak']?'white':'#0094ff'}}>{data.name}</Text>
+      <Text style={{color:data['isCheak']?'white':'#0094ff'}}>{data.name.name}</Text>
     </TouchableOpacity>
 };
 

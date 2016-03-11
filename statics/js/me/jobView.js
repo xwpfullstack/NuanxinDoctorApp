@@ -64,9 +64,6 @@ class JobView extends Component {
                 <View style={[styles.table,{borderBottomWidth:1,backgroundColor:showWktime[5][2]}]}></View>
                 <View style={[styles.table,{borderBottomWidth:1,backgroundColor:showWktime[6][2],borderRightWidth:1}]}></View>
             </View>
-
-
-
         </View>
       );
   }
