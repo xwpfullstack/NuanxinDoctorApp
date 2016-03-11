@@ -116,7 +116,6 @@ class DoctorInfo extends Component {
                return response.json();
           })
           .then((responseData)=>{
-            console.log(responseData);
 		this.setState({
 		    dctmsg:responseData,
 		    photo:PHOTO_URL+responseData.photo,

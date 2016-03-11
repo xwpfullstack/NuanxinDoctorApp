@@ -22,7 +22,7 @@ class Prescription extends Component {
         <View>
             <BackTitle title={'我的处方'} navigator = {this.props.navigator} />
             <ScrollView style={{height:WINDOW_HEIGHT-70}}>
-                <DrugList navigator={this.props.navigator}/>
+                <DrugList doctorId={this.props.doctorId} navigator={this.props.navigator}/>
             </ScrollView>
         </View>
 

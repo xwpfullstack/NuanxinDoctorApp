@@ -21,10 +21,6 @@ import DoctorRegist from './statics/js/login/DoctorRegist';
 import DoctorMainScreen from './statics/js/public/DoctorMainScreen';
 import DoctorLogIn from './statics/js/login/DoctorLogIn';
 import ModifyPwd from './statics/js/login/DoctorModifyPwd';
-import WebMainPage from './statics/js/me/webView';
-import DoctorMsgEdit from './statics/js/me/doctorMsgEdit';
-import Prescription from './statics/js/me/prescription';
-import DrugDetailed from './statics/js/me/drugDetailed';
 import OrderDetails from './statics/js/cal/OrderDetails';
 import NewsDetails from './statics/js/cal/NewsDatails';
 import AddOrder from './statics/js/patient/AddOrder';
@@ -37,6 +33,10 @@ import CompleteRecord from './statics/js/patient/CompleteRecord';
 import OrderList from './statics/js/patient/OrderListIso';
 import CaseHistory from './statics/js/me/caseHistory';
 import AddCase from './statics/js/me/addCase';
+import WebMainPage from './statics/js/me/webView';
+import DoctorMsgEdit from './statics/js/me/doctorMsgEdit';
+import Prescription from './statics/js/me/prescription';
+import DrugDetailed from './statics/js/me/drugDetailed';
 
 var _navigator;
 //监听硬件返回功能
@@ -111,10 +111,10 @@ class NuanXinDoctorApp extends Component {
         return  <WriteTable navigator={navigator}/>;
         break;
       case 'prescription':
-        return  <Prescription navigator={navigator}/>;
+        return  <Prescription navigator={navigator} doctorId={doctorId}/>;
         break;
       case 'doctorMsgEdit':
-        return  <DoctorMsgEdit navigator={navigator}/>;
+        return  <DoctorMsgEdit navigator={navigator} doctorId={doctorId}/>;
         break;
       case 'webMainPage':
         return  <WebMainPage navigator={navigator} doctorId={doctorId}/>;
@@ -144,7 +144,7 @@ class NuanXinDoctorApp extends Component {
         return <DrugDetailed navigator={navigator} />;
         break;
       case 'caseHistory':
-        return <CaseHistory navigator={navigator} />;  
+        return <CaseHistory navigator={navigator} doctorId={doctorId}/>;  
         break;
       case 'addCase':
         return <AddCase navigator={navigator} />; 

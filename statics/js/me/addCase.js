@@ -3,13 +3,14 @@
 import React, {
   Component,
   Text,
-  TouchableOpacity,
+  ScrollView,
   Image,
   View,
 } from 'react-native';
 
 import BackTitle from './back';
 import styles from './styles';
+import CaseView from './caseView';
 
 class AddCase extends Component {
     constructor(props){
@@ -20,6 +21,9 @@ class AddCase extends Component {
         <View>
             <BackTitle title={'添加病例'}
                 navigator = {this.props.navigator} />
+            <ScrollView style={styles.ScrollViewBody}>
+                <CaseView />
+            </ScrollView>
         </View>
         );
   }
