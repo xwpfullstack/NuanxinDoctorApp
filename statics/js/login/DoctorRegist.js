@@ -581,7 +581,7 @@ class DoctorRegist extends Component {
       )
     }else if(this.state.switchInfo && this.state.lastpage) {
       return (
-        <DoctorPhoto info={this.state.info} />
+        <DoctorPhoto navigator={this.props.navigator} info={this.state.info} />
       )
     }
   }

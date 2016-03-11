@@ -97,7 +97,7 @@ dSubmit(){
                 onPress={()=>this.handleCheack(two,data[1])} 
                 style={[styles.rowData,{marginRight:20,backgroundColor:this.state.isCheack[two]?'#FE9300':'rgb(244,241,245)'}]}>
                 <Text style={[styles.rowDataText,{color:this.state.isCheack[two]?'white':'black'}]}>
-                  {data[1]}
+                  {data[1]['name']}
                 </Text>
               </TouchableOpacity>;
         }
@@ -115,7 +115,7 @@ dSubmit(){
               activeOpacity={1}
               onPress={()=>this.handleCheack((index*2),data[0])} 
               style={[styles.rowData,{backgroundColor:this.state.isCheack[(index*2)]?'#FE9300':'rgb(244,241,245)'}]}>
-                  <Text style={[styles.rowDataText,{color:this.state.isCheack[(index*2)]?'white':'black'}]}>{data[0]}</Text>
+                  <Text style={[styles.rowDataText,{color:this.state.isCheack[(index*2)]?'white':'black'}]}>{data[0]['name']}</Text>
               </TouchableOpacity>
               {temp}
           </View>

@@ -12,6 +12,7 @@ import React, {
   View,
   Image,
   Dimensions,
+  ToastAndroid,
 } from 'react-native';
 
 import Modal from 'react-native-root-modal';
@@ -57,7 +58,7 @@ changeMedia(datas){
     var msg='';
     subData=useData.filter((value)=>{
         if (value['isCheak']) {
-            msg+=(value['name']+'、');
+            msg+=(value['name']['name']+'、');
             return value;
         }
     });
@@ -74,12 +75,14 @@ changeMedia(datas){
 };
 
 closeModal(){
-    this.setState({Lvisible:false});
+    this.setState({Lvisible:false,content:''});
 };
 
 openModal(){
       let content=(
-            <MedcineModal changeMedia={(datas)=>this.changeMedia(datas)} closeModal={()=>this.closeModal()}  DataJson={useData}/>
+          <View style={styles.modalStyle}>
+             <MedcineModal changeMedia={(datas)=>this.changeMedia(datas)} closeModal={()=>this.closeModal()}  DataJson={useData}/>
+             </View>
       );
      this.setState({Lvisible:true,content:content});
 };
@@ -90,8 +93,17 @@ openModal(){
 
 pushData(){
     let tempData=subData.map((value,index)=>{
-        return value['name'];
+        return value['name']['name'];
     });
+    console.log(JSON.stringify({
+               doctorid:this.props.doctorId,
+               docMedimg:'/aaa/aa/a',
+               'docdiag-list':tempData,
+               medName:this.state.name,
+               medunit:this.state.unit,
+               merchant:this.state.productor,
+               meddes:this.state.specification,
+            }));
      fetch(AddDocMed_URL,{
             method: 'post',
             headers: {
@@ -114,25 +126,59 @@ pushData(){
       })
       .then((responseData)=>{
         console.log(responseData);
-          this.setState({Lvisible:false});
-        this.popOut()
-        this.props.postSick();
+        this.setState({Lvisible:false});
+        if (responseData.status !='error') {
+          ToastAndroid.show(responseData.message, ToastAndroid.SHORT);
+           this.popOut()
+            this.props.postSick();
+        }
+        else{
+             ToastAndroid.show(responseData.message, ToastAndroid.SHORT);
+        }
+       
 
       })
       .catch((err)=>{
           console.log(err.toString());
            this.setState({Lvisible:false});
+           ToastAndroid.show('提交数据失败'+err.toString(), ToastAndroid.SHORT);
       })
       .done(); 
 }
 
+isPass(){
+    let tempData=subData.map((value,index)=>{
+        return value['name']['name'];
+    });
+    var values= { doctorid:this.props.doctorId,
+               docMedimg:'/aaa/aa/a',
+               'docdiag-list':tempData,
+               medName:this.state.name,
+               medunit:this.state.unit,
+               merchant:this.state.productor,
+               meddes:this.state.specification,};
+        let result=true;
+      for (let key in values){
+        //console.log(values[key]);
+          if (values[key] == '' || !values[key]) {
+                result=false;
+                break;
+          }
+      }
+      return result;
+}
+
   submit() {
-    let content=(
-        <Loading />
-      );
-      this.setState({Lvisible:true,content:content});
-    //console.log(JSON.stringify(postData));
-    this.pushData();
+   
+    if(this.isPass()){
+       var content=( <Loading  style={{ height: Dimensions.get('window').height - 65}}/> );
+       this.setState({Lvisible:true,content:content});
+       this.pushData();
+    }
+    else{
+        ToastAndroid.show('请填写完整数据', ToastAndroid.SHORT)
+    }
+   
   }
 
   update() {
@@ -196,11 +242,13 @@ pushData(){
               />
             </View>
           </View>
+{/*
           <View style = {styles.inputLine}>
             <Text style = {styles.label}>服用剂量</Text>
             <View style = {styles.inputStyle}>
               <TextInput
-              style = {styles.searchInput}
+                style = {styles.searchInput}
+                keyboardType='numeric'
                 onChangeText = {(text) => this.setState({amount: text})}
                 selectTextOnFocus = {true}
                 underlineColorAndroid = {'transparent'}
@@ -218,6 +266,7 @@ pushData(){
               />
             </View>
           </View>
+        */}
           <View style = {styles.inputLine}>
             <Text style = {styles.label}>说明书</Text>
             <View style = {[styles.inputStyle, {height: 120}]}>
@@ -262,10 +311,10 @@ pushData(){
            <Modal visible={this.state.Lvisible}
                         style={{height:Dimensions.get('window').height,
                                     width:Dimensions.get('window').width,top:0,bottom:0,left:0,right:0,backgroundColor:'rgba(0,0,0,0.1)'}}>
-                                    <View style={styles.modalStyle}>
+                                  
                                           {this.state.content}
-                                    </View>
-                  </Modal>
+                             
+              </Modal>
       </View>
     );
   }
