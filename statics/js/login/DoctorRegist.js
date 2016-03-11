@@ -410,6 +410,7 @@ class DoctorRegist extends Component {
                 style={styles.input}
                 placeholder='请输入密码'
                 textAlign='start'
+                secureTextEntry={true}
                 underlineColorAndroid={'transparent'}
                 defaultValue={this.state.info.passwd}
                 onChangeText={(text) => {
@@ -434,6 +435,7 @@ class DoctorRegist extends Component {
                 placeholder='请再次输入密码'
                 textAlign='start'
                 underlineColorAndroid={'transparent'}
+                secureTextEntry={true}
                 defaultValue={this.state.info.cpasswd}
                 onChangeText={(text) => {
                   var data = this.state.info;

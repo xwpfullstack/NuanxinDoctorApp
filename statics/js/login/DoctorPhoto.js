@@ -9,6 +9,7 @@ import React,{
   Dimensions,
   StyleSheet,
   TouchableOpacity,
+  ToastAndroid,
 } from 'react-native';
 
 const _width = Dimensions.get('window').width;
@@ -38,7 +39,7 @@ class DoctorPhoto extends Component {
       maxHeight: 1000,
       aspectX: 1,
       aspectY: 2,
-      quality: 0.2,
+      quality: 1,
       angle:270,
       allowEditing: true,
       noData: false,
@@ -64,34 +65,96 @@ class DoctorPhoto extends Component {
     })
   }
 
+  /*******************************
+   *未设置头像提交
+   ******************************/
+  _submitPersonInfo() {
+    var doctorinfo = this.props.info;
+    fetch(DoctorRegist_URL,{
+      method: 'post',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        name:doctorinfo['name'],
+        age: doctorinfo['age'],
+        sex: doctorinfo['sex'],
+        tel: doctorinfo['tel'],
+        passwd: doctorinfo['passwd'],
+        cpasswd: doctorinfo['cpasswd'],
+        hospital: doctorinfo['hospital'],
+        price: doctorinfo['price'],
+        title: doctorinfo['title'],
+        depart: ''+doctorinfo['depart'],
+        schedule: doctorinfo['schedule'],
+      })
+    })
+    .then((response) => {
+      return response.json();
+    })
+    .then((responseData) => {
+      var data = responseData;
+      if(data['status'] == 'error'){
+        Alert.alert(
+          '提示',
+          data['msg'],
+          [
+            {text: '确定',onPress:()=>{return null}}
+          ]
+        )
+      }else if(data['status'] == 'success'){
+        if(this.state.sourceUrl){
+          this._uploadphoto(data['doctorId']);
+        }else{
+          ToastAndroid.show('注册成功,请您耐心等待管理员审核', ToastAndroid.SHORT)
+        }
+      }
+    })
+    .catch((err)=>{
+    
+    })
+    .done()
+  };
+    
+  _uploadphoto(num) {
+    var pathArray = this.state.sourceUrl['uri'].split('/');
+    var imageName = pathArray[pathArray.length-1];
+    var obj = {
+      uploadUrl: UploadDoctorphoto_URL,
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+      },
+      fields: {
+        'num':''+num,
+      },
+      files: [
+        {
+          name: '',
+          filename: imageName,
+          filepath: this.state.sourceUrl['uri'],
+          filetype: null,
+        },
+      ]
+    };
+    FileUpload.upload(obj,(err,result)=>{
+      console.log('upload',err,result);
+    })
+  }
+
   _onPressSubmit() {
     if(!this.state.sourceUrl) {
-      return null;
-    }else {
-      var pathArray = this.state.sourceUrl['uri'].split('/');
-      var imageName = pathArray[pathArray.length-1];
-      alert(imageName);
-      var obj = {
-        uploadUrl: UploadDoctorphoto_URL,
-        method: 'POST',
-        headers: {
-          'Accept': 'application/json',
-        },
-        fields: {
-          'hello': 'world',
-        },
-        files: [
-          {
-            name: '',
-            filename: imageName,
-            filepath: this.state.sourceUrl['uri'],
-            filetype: 'image/jpeg',
-          },
+      Alert.alert(
+        '提示',
+        '您的头像未设置,要跳过这一项吗？',
+        [
+          {text:'确定',onPress:()=>{this._submitPersonInfo()}},
+          {text:'取消',onPress:()=>{return null}}
         ]
-      };
-      FileUpload.upload(obj,(err,result)=>{
-        console.log('upload',err,result);
-      })
+      )
+    }else {
+      this._submitPersonInfo();
     }
   }
 
