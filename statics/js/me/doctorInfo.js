@@ -101,6 +101,26 @@ class DoctorInfo extends Component {
                 });
     }
 
+    _ChangePhoto() {
+        this.setState({
+            ListMenu:true,
+            modalStyle:{
+                position: 'absolute',
+                left:0,
+                right:0,
+                bottom:0,
+                top:0,
+                backgroundColor:'rgba(0,0,0,0.3)',
+            },
+            modalContent:<MenuModal
+                close={()=>this.closeModal()}
+                doctorId={this.props.doctorId}
+                navigator={this.props.navigator}
+                dctmsg={this.state.dctmsg}
+                name='changePhoto'/>,
+        });
+    }
+
     postDoctorData(){
         fetch(DocInfo,{
                 method: 'post',
@@ -116,7 +136,6 @@ class DoctorInfo extends Component {
                return response.json();
           })
           .then((responseData)=>{
-            console.log(responseData);
 		this.setState({
 		    dctmsg:responseData,
 		    photo:PHOTO_URL+responseData.photo,
@@ -138,10 +157,15 @@ class DoctorInfo extends Component {
                     this._MenuModal();
                     break;
                 case 'ShowCode':
+                    console.log('hajha');
                     this._CodeModal();
                     break;
                 case 'ShowJobview':
                     this._JobModal();
+                    break;
+                case 'ChangePhoto':
+                    console.log('hajha');
+                    this._ChangePhoto();
                     break;
             }
         }
@@ -171,7 +195,9 @@ class DoctorInfo extends Component {
                     style = {styles.picture}
                     resizeMode='stretch'>
                     <View style={styles.avatarMSG}>
-                        <View style = {styles.avatarImage}>
+                        <TouchableOpacity
+                        onPress = {()=>this.showModal('ChangePhoto')}
+                        style = {styles.avatarImage}>
                             <Image
                                 style={styles.avatarImg}
                                 source = {{uri:this.state.photo}}>
@@ -179,7 +205,7 @@ class DoctorInfo extends Component {
                             <View style={styles.imageText}>
                                 <Text style={{color:'#fff', fontSize:11}}>已认证</Text>
                             </View>
-                        </View>
+                        </TouchableOpacity>
                         <View><Text style={styles.textBold}>{this.state.dctmsg.name}</Text></View>
                         <View><Text style={{color:'#fff'}}>{this.state.dctmsg.title}</Text></View>
                     </View>
@@ -241,7 +267,7 @@ class DoctorInfo extends Component {
                 <MyModal
                     navigator={this.props.navigator}
                     showModal = {(name)=> this.showModal(name)}
-                    doctor_id={this.props.doctor_id}
+                    doctorId={this.props.doctorId}
                     closeModal={()=>this.closeModal()}
                 />
 

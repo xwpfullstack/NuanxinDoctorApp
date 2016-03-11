@@ -10,7 +10,7 @@ global.Homepage_URL = 'http://www.xingwenpeng.com/patient/mydoctor/mydoctor_home
 //验证医生用户名密码
 global.CheckUserInfo_URL = Basic_URL + 'AppLogin/';
 //医生注册
-global.DoctorRegist_URL = Basic_URL + 'register/';
+global.DoctorRegist_URL = Basic_URL + 'AppDoctorRegist/';
 //获取医生信息
 global.DocInfo = Basic_URL + 'info/';
 //编辑后保存医生信息
@@ -82,3 +82,5 @@ global.sendMsg_URL = Basic_URL + 'AppSendMsg/';
 global.UploadDoctorphoto_URL = Basic_URL + 'uploadPhoto/';
 //获取二维码
 global.DoctorQrcode_URL = Wechat_URL + 'AppGetQrcode/';
+//发送医嘱信息
+global.SendDoctorMsg_URL = wechat_URL + 'sendDoctorMsg/';

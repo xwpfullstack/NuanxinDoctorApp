@@ -29,7 +29,7 @@ class OrderDetails extends Component{
     //  Alert.alert(this.state.data+'');
   }
   postData(){
-    Alert.alert('',this.props.orderData+'');
+    // Alert.alert('',this.props.orderData+'');
     this.setState({isLoad:false});
       // Alert.alert('fetch');
       fetch(OrderDetail_URL,{
@@ -55,7 +55,7 @@ class OrderDetails extends Component{
                     // Alert.alert('',this.state.data[0].date);
         })
         .catch((err)=>{
-            // Alert.alert('catch ',err.toString())
+            Alert.alert('catch ',err.toString())
             this.setState({isSuccess:false,isLoad:true});
             // console.log(err.toString());
         })

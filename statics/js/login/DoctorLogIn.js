@@ -99,6 +99,9 @@ class DoctorLogIn extends Component {
         Alert.alert(
           '提示',
           '密码或者用户名错误,请重新输入',
+          [
+            {text: '确定',onPress:() => {this.refs.username.focus()}},
+          ]
         );
       }else if(data['msg'] === 'success') {
         this.refs.username.blur();
@@ -106,7 +109,10 @@ class DoctorLogIn extends Component {
         if(data['state'] === '0') {
           Alert.alert(
             '提示',
-            '您的个人信息正在审核中,请您耐心等待,感谢您的理解与支持。'
+            '您的个人信息正在审核中,请您耐心等待,感谢您的理解与支持。',
+            [
+              {text: '确定',onPress:() => {return null}},
+            ]
           )
         }else if(data['state'] === '1') {
           storage.save({
