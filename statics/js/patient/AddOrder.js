@@ -44,6 +44,10 @@ gotoPage(num){
 };
 
 postSick(){
+  var tempDiag=PatientMsg['diag'].map((value)=>{
+        return value['name'];
+  });
+  //console.log(tempDiag);
   this.refs['Media'].tigglePar('isLoad',false);
   fetch(Meds_URL,{
             method: 'post',
@@ -53,7 +57,7 @@ postSick(){
             },
             body: JSON.stringify({
                doctor_id:this.props.doctorId,
-               'diags':PatientMsg['diag'],
+               'diags':tempDiag,
             })
       })
       .then((response) => {
@@ -61,7 +65,7 @@ postSick(){
            return response.json();
       })
       .then((responseData)=>{
-        console.log(responseData);
+        //console.log(responseData);
         this.refs['Media'].postData(responseData);
       })
       .catch((err)=>{
