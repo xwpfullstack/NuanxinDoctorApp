@@ -73,11 +73,9 @@ class MenuModal extends Component{
                return response.json();
           })
           .then((responseData)=>{
-            console.log(this.props.doctor_id);
-            console.log(responseData);
-        this.setState({
-            codeImg:responseData.qrcodeUrl
-        })
+            this.setState({
+                codeImg:responseData.qrcodeUrl
+            })
           })
           .catch((err)=>{
               this.setState({isSuccess:false,isLoad:true});
@@ -86,39 +84,75 @@ class MenuModal extends Component{
           .done();
     };
 
-  render(){
-      if(this.props.name === 'menuModal'){
-          return  (
-                <View style={styles.container}>
-                    <TouchableOpacity
-                        onPress={()=>this.handleClickModal('editMsg')}
-                        style={{flex:1}}>
-                        <View  style={styles.cheack}>
-                            <Text style={{color:'#fff'}}>编辑资料</Text>
-                        </View>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                        onPress={()=>this.handleClickModal('exit')}
-                        style={{flex:1}}>
-                        <View  style={styles.cheack}>
-                            <Text style={{color:'#fff'}}>退出登录</Text>
-                        </View>
-                    </TouchableOpacity>
-                </View>
-            );
-      }
-      else if(this.props.name === 'codeModal'){
-          return (
-              <TouchableOpacity
-                  onPress={()=>this.props.close()}
-                  style={styles.container}>
-                  <View>
-                    {this._loadCodeImg()}
-                  </View>
-              </TouchableOpacity>
-          );
-      }
+    //选择弹出哪个对话框
+    ChooseModal() {
+        switch (this.props.name) {
+            case 'menuModal':
+                return this.MenuModal();
+                break;
+            case 'codeModal':
+                return this.CodeModal();
+                break;
+            case 'changePhoto':
+                return this.PhotoModal();
+                break;
+        }
+    }
 
+    //编辑资料modal
+    MenuModal(){
+        return  (
+              <View style={styles.container}>
+                  <TouchableOpacity
+                      onPress={()=>this.handleClickModal('editMsg')}
+                      style={{flex:1}}>
+                      <View  style={styles.cheack}>
+                          <Text style={{color:'#fff'}}>编辑资料</Text>
+                      </View>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                      onPress={()=>this.handleClickModal('exit')}
+                      style={{flex:1}}>
+                      <View  style={styles.cheack}>
+                          <Text style={{color:'#fff'}}>退出登录</Text>
+                      </View>
+                  </TouchableOpacity>
+              </View>
+          );
+    }
+
+    //二维码Modal
+    CodeModal() {
+        return (
+            <TouchableOpacity
+                onPress={()=>this.props.close()}
+                style={styles.container}>
+                <View>
+                  {this._loadCodeImg()}
+                </View>
+            </TouchableOpacity>
+        );
+    }
+
+    //修改头像Modal
+    PhotoModal() {
+        return (
+            <TouchableOpacity style={styles.container}>
+                <View style={{top:WINDOW_HEIGHT*0.5 - 150,left:WINDOW_WIDTH*0.5 -100,width:200,height:100, backgroundColor:'#fff', borderRadius:20,}}>
+                    <View style={{borderBottomWidth:1}}><Text>haha</Text></View>
+                    <View>
+                        <View style={{flex:0.5, borderRightWidth:1}}></View>
+                        <View style={{flex:0.5}}></View>
+                    </View>
+                </View>
+            </TouchableOpacity>
+        );
+    }
+
+  render(){
+      return(
+          this.ChooseModal()
+      )
 };
 };
 
