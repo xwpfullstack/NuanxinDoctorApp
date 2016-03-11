@@ -11,6 +11,7 @@ import React, {
   Dimensions,
 } from 'react-native';
 import Modal from 'react-native-root-modal';
+import DoctorPhoto from '../../js/login/DoctorPhoto';
 
 var WINDOW_WIDTH = Dimensions.get('window').width;
 var WINDOW_HEIGHT = Dimensions.get('window').height;
@@ -137,15 +138,9 @@ class MenuModal extends Component{
     //修改头像Modal
     PhotoModal() {
         return (
-            <TouchableOpacity style={styles.container}>
-                <View style={{top:WINDOW_HEIGHT*0.5 - 150,left:WINDOW_WIDTH*0.5 -100,width:200,height:100, backgroundColor:'#fff', borderRadius:20,}}>
-                    <View style={{borderBottomWidth:1}}><Text>haha</Text></View>
-                    <View>
-                        <View style={{flex:0.5, borderRightWidth:1}}></View>
-                        <View style={{flex:0.5}}></View>
-                    </View>
-                </View>
-            </TouchableOpacity>
+            <View style={{height:300,width:300,top:WINDOW_HEIGHT*0.5-100,backgroundColor:'#FFF'}}>
+                <DoctorPhoto />
+            </View>
         );
     }
 

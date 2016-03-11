@@ -188,7 +188,7 @@ class DoctorInfo extends Component {
                 </View>
             </View>
 
-            <ScrollView style={styles.ScrollViewBody}>
+            <ScrollView style={styles.body}>
             {/*headerImage start*/}
                 <Image
                     source = {require('../../images/me/bg-11.png')}
