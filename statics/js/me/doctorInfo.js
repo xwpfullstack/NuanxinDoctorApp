@@ -136,11 +136,11 @@ class DoctorInfo extends Component {
                return response.json();
           })
           .then((responseData)=>{
-		this.setState({
-		    dctmsg:responseData,
-		    photo:PHOTO_URL+responseData.photo,
-            worktime:responseData.worktime
-		})
+    		this.setState({
+    		    dctmsg:responseData,
+    		    photo:PHOTO_URL+responseData.photo,
+                worktime:responseData.worktime
+    		})
           })
           .catch((err)=>{
               this.setState({isSuccess:false,isLoad:true});
@@ -188,7 +188,7 @@ class DoctorInfo extends Component {
                 </View>
             </View>
 
-            <ScrollView style={styles.ScrollViewBody}>
+            <ScrollView style={styles.body}>
             {/*headerImage start*/}
                 <Image
                     source = {require('../../images/me/bg-11.png')}

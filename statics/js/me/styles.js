@@ -215,6 +215,17 @@ const styles = StyleSheet.create({
         justifyContent:'center',
 
     },
+    caseHistoryTitle: {
+        color:'#F08300',
+        fontSize:16
+    },
+    caseLine: {
+        paddingTop:3,
+    },
+    caseLineTitle: {
+        color:'#F08300',
+        fontSize:14
+    },
     //caseView
     addCaseInput: {
         backgroundColor:'rgba(255,255,255,0.8)',
@@ -226,7 +237,7 @@ const styles = StyleSheet.create({
     nessDescription: {
         height:140,
         marginTop:10,
-        backgroundColor:'rgba(255,255,255,0.4)',
+        backgroundColor:'rgba(255,255,255,0.2)',
         paddingLeft:10,
         paddingRight:10,
         borderRadius:10,
@@ -251,8 +262,9 @@ const styles = StyleSheet.create({
         marginTop:10,
         height:40,
         borderRadius:10,
-        width:WINDOW_WIDTH-50,
         alignSelf:'center',
+        flex:0.5,
+        marginRight:10
     }
 });
 
