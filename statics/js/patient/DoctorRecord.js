@@ -15,6 +15,8 @@ import React, {
  TouchableHighlight,
  TouchableOpacity,
 } from 'react-native';
+import Modal from 'react-native-root-modal'
+
 var DocMsg={
   'title':'',
   'content':'',
@@ -94,8 +96,7 @@ render(){
   // Alert.alert('',this.props.doctorId+'');
   // Alert.alert('',this.props.openid+'');
   // Alert.alert('',this.props.patientName);
-  if (this.state.isLoad) {
-    if (this.state.isSuccess) {
+  if (this.state.isSuccess) {
       return  (
         <Image
           source={require('../../images/load/background.png')}
@@ -135,6 +136,14 @@ render(){
                                         numberOfLines={5} />
                             </View>
                 </View>
+                <Modal
+                    style={{top: 0,right: 0,bottom: 0,left: 0,backgroundColor: 'transparent',}}
+                    visible={!this.state.isLoad}
+                >
+                    <View style={styles.waiting}>
+                      <ProgressBarAndroid />
+                    </View>
+                </Modal>
           </Image>
         );
       } else{
@@ -157,12 +166,7 @@ render(){
           );
         };
     }
-    else{
-        return (
-                  <Loading />
-          );
-    };
-};
+
 };
 
 
@@ -218,7 +222,7 @@ const styles = StyleSheet.create({
     backgroundColor:'#F4F1F5',
     alignItems:'center',
   },
-  container: {
+  waiting: {
     width: Dimensions.get('window').width,
     height: Dimensions.get('window').height,
     justifyContent: 'center',
