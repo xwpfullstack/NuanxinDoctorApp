@@ -75,6 +75,41 @@ class CompleteRecord extends Component {
       data: recordData,
     }
   }
+  componentDidMount(){
+    this.postData();
+    //  Alert.alert(this.state.data+'');
+  }
+  postData(){
+    Alert.alert('',this.props.orderData.sn+'');
+    this.setState({isLoad:false});
+      // Alert.alert('fetch');
+      fetch(PatientCaseBook_URL,{
+              method: 'post',
+              headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+                 patient_id:this.props.patientId
+              })
+        })
+        .then((response) => {
+            // Alert.alert('', 'response');
+             return response.json();
+        })
+        .then((responseData)=>{
+          // console.log(responseData);
+          this.setState({data:responseData})
+            Alert.alert('',JSON.stringify(data));
+
+        })
+        .catch((err)=>{
+            Alert.alert('catch error',err.toString())
+            this.setState({isSuccess:false,isLoad:true});
+            // console.log(err.toString());
+        })
+        .done();
+  };
   addRecord() {
 
   }

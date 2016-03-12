@@ -66,8 +66,8 @@ class OrderList extends Component {
   };
   }
 
-  showOrderDetails(sn) {
-    this.props.navigator.push({name: 'orderDetails', passProps: sn});
+  showOrderDetails(orderData) {
+    this.props.navigator.push({name: 'orderDetails', passProps: orderData});
   }
   componentDidMount(){
     this.postData();
@@ -93,13 +93,13 @@ class OrderList extends Component {
         .then((responseData)=>{
           // console.log(responseData);
 
-            Alert.alert('',JSON.stringify(responseData));
+            // Alert.alert('',JSON.stringify(responseData));
           this.setState({isLoad:true, data:responseData.patients,isSuccess:true,})
           this.BaseCreateData(this.state.data,'date');
                     // Alert.alert('',this.state.data[0].date);
         })
         .catch((err)=>{
-            Alert.alert('catch err',err.toString())
+            // Alert.alert('catch err',err.toString())
             this.setState({isSuccess:false,isLoad:true});
             // console.log(err.toString());
         })
@@ -142,11 +142,11 @@ class OrderList extends Component {
       imageSource=require('../../images/schedule/done.png');
     }
     return (
-      <TouchableHighlight underlayColor='rgba(34,26,38,0.1)' onPress={()=>this.showOrderDetails(rowdata.sn)}>
+      <TouchableHighlight underlayColor='rgba(34,26,38,0.1)' onPress={()=>this.showOrderDetails(rowdata)}>
         <View style={styles.listItem}>
           <View style={styles.listItemContent}>
             <View style={styles.listItemName}>
-              <Text style={styles.itemNameText}>{rowdata.name}</Text>
+              <Text style={styles.itemNameText}>{rowdata.name?rowdata.name:'未命名'}</Text>
             </View>
             <Image source={imageSource} style={styles.stateImage}/>
           </View>

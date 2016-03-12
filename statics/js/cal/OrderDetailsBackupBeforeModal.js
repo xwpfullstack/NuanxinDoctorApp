@@ -15,7 +15,7 @@ import React, {
 } from 'react-native';
 
 import Loading from '../patient/Loading';
-
+import Modal from 'react-native-root-modal'
 
 class OrderDetails extends Component{
   constructor(props) {
@@ -184,6 +184,10 @@ class OrderDetails extends Component{
               <View style={{height:26}}>
               </View>
             </ScrollView>
+            <Modal visible={this.state.ListMenu}
+                style={styles.infoModal}>
+                <ProgressBarAndroid />
+            </Modal>
           </Image>
         );
       } else{
@@ -193,7 +197,7 @@ class OrderDetails extends Component{
                   style={styles.background}
                   >
                      <View
-                          style={{flex:1,
+                          style={{height:Dimensions.get('window').height,
                                       width:Dimensions.get('window').width,
                                       flexDirection: 'column',alignItems: 'center',justifyContent: 'center',}}>
                           <Text style={{color:'#F08300',fontSize:16,}}>加载失败</Text>

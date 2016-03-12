@@ -105,7 +105,7 @@ class NuanXinDoctorApp extends Component {
         return  <AddOrder patientId={route.patientId} doctorId={doctorId} diags={route.diags} navigator={navigator}/>;
         break;
       case 'DoctorRecord':
-        return  <DoctorRecord navigator={navigator}/>;
+        return  <DoctorRecord navigator={navigator} doctorId={doctorId} patientName={route.patientName} openid={route.openid}/>;
         break;
       case 'WriteTable':
         return  <WriteTable navigator={navigator}/>;
@@ -135,7 +135,7 @@ class NuanXinDoctorApp extends Component {
         return  <ModifyPrescription navigator={navigator} passProps={route.passProps}/>;
         break;
       case 'completeRecord':
-        return  <CompleteRecord navigator={navigator} />;
+        return  <CompleteRecord navigator={navigator} patientId={route.patientId}/>;
         break;
       case 'orderList':
         return  <OrderList navigator={navigator} doctorId={doctorId}/>;
@@ -158,7 +158,7 @@ class NuanXinDoctorApp extends Component {
       autoSync: true,
       syncInBackground: true,
     }).then( ret => {
-      if(ret.state === 'error') {   //success
+      if(ret.state === 'success') {   //success
         this.setState({
           routeInfo:{
             name: 'doctorHomePage',
