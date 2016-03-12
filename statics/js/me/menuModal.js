@@ -140,42 +140,92 @@ class MenuModal extends Component{
 
     //修改头像Modal
     PhotoModal() {
-        var options = {
-          title: '选择图片',
-          cancelButtonTitle: '取消',
-          takePhotoButtonTitle: '拍照',
-          chooseFromLibraryButtonTitle: '从相册获取',
-          cameraType: 'front',
-          mediaType: 'photo',
-          videoQuality: 'high',
-          maxWidth: 1000,
-          maxHeight: 1000,
-          aspectX: 1,
-          aspectY: 2,
-          quality: 0.2,
-          angle:270,
-          allowEditing: true,
-          noData: false,
-          storageOpations: {
-            skipBackup: false,
-            path: 'images'
-          }
-        };
-        ImagePickerManager.showImagePicker(options,(response) => {
-          if(response.error) {
-            console.log('ImagePickerManager Error: ',response.error);
-          }else if(response.didCancel) {
-            console.log('User cancelled image picker');
-          }else if(response.customButton) {
-            console.log('User tapped custom button: ', response.customButton);
-          }else {
-            /*const source = {uri: 'data:image/jpeg;base64,' + response.data,isStatic: true};*/
-            const source = {uri: response.uri,isStatic: true};
-            this.setState({
-              sourceUrl: source,
-            });
-          }
-        })
+        return(
+            <View style={{
+                width:200,
+                height:100,
+                borderRadius:10,
+                backgroundColor:'#fff',
+                left:WINDOW_WIDTH*0.5 - 100,
+                top:WINDOW_HEIGHT*0.5 - 75,
+            }}>
+                <View style={{
+                    borderBottomWidth:1,
+                    height:60,
+                    justifyContent:'center',
+                    alignSelf:'center',
+                }}>
+                <Text>更换头像</Text>
+                </View>
+                <View>
+                    <TouchableOpacity
+                    style={{
+                        backgroundColor:'#fff',
+                        justifyContent:'center',
+                    }}
+                    onPress={()=> {this._onPressLoadCamera()}}
+                    >
+                        <Text>确定</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                    style={{backgroundColor:'#fff'}}
+                    onPress={()=> {this.props.close()}}
+                    >
+                        <Text>取消</Text>
+                    </TouchableOpacity>
+                </View>
+
+            </View>
+
+        )
+        // return (
+        //     Alert.alert(
+        //      '提示',
+        //      '是否更换头像',
+        //      [
+        //          {text: '确定',onPress:()=>{this.props.navigator.pop()}}
+        //      ]
+        //    )
+        // )
+      }
+
+      _onPressLoadCamera(){
+          var options = {
+            title: '选择图片',
+            cancelButtonTitle: '取消',
+            takePhotoButtonTitle: '拍照',
+            chooseFromLibraryButtonTitle: '从相册获取',
+            cameraType: 'front',
+            mediaType: 'photo',
+            videoQuality: 'high',
+            maxWidth: 1000,
+            maxHeight: 1000,
+            aspectX: 1,
+            aspectY: 2,
+            quality: 1,
+            angle:270,
+            allowEditing: true,
+            noData: false,
+            storageOpations: {
+              skipBackup: false,
+              path: 'images'
+            }
+          };
+          ImagePickerManager.showImagePicker(options,(response) => {
+            if(response.error) {
+              console.log('ImagePickerManager Error: ',response.error);
+            }else if(response.didCancel) {
+              console.log('User cancelled image picker');
+            }else if(response.customButton) {
+              console.log('User tapped custom button: ', response.customButton);
+            }else {
+              /*const source = {uri: 'data:image/jpeg;base64,' + response.data,isStatic: true};*/
+              const source = {uri: response.uri,isStatic: true};
+              this.setState({
+                sourceUrl: source,
+              });
+            }
+          })
       }
 
   render(){

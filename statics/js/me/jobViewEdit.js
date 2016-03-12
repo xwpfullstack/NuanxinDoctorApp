@@ -14,8 +14,9 @@ var WINDOW_WIDTH = Dimensions.get('window').width;
 class JobViewEdit extends Component {
     constructor(props) {
       super(props);
+      //定义一个时间数组
       var tableArray = new Array();
-      for(var i = 0 ; i < 7 ;i ++) {
+      for(var i = 0 ; i < 7 ;i++) {
         tableArray[i] = new Array();
         for(var j = 0; j < 3 ; j++) {
           var val = 0;
@@ -30,21 +31,19 @@ class JobViewEdit extends Component {
         }
       }
       this.state={
-          switchInfo: false,
-          lastpage:false,
-          touchMan: false,
-          touchWoman: false,
-          errorMsg: false,
           tableState:tableArray,
       }
     }
 
+    //点击事件
     _onPressTable(row,column) {
       var data = this.state.tableState;
       data[column][row]['check'] = !data[column][row]['check'];
       this.setState({
         tableState: data,
       })
+      console.log();
+      this.props.setworktime(this._getDoctorSchedule())
     }
 
    _renderTable() {
@@ -74,6 +73,19 @@ class JobViewEdit extends Component {
          </View>
        </View>
      )
+    }
+
+    _getDoctorSchedule() {
+      var data = this.state.tableState;
+      var schedule = '';
+      for(var i = 0; i < 7 ; i++) {
+        var temp = 0;
+        for(var j = 0; j < 3; j++) {
+          temp += (data[i][j].check ? data[i][j].value : 0);
+        }
+        schedule += temp;
+      }
+      return schedule;
     }
 
     _renderTableRow(row) {
@@ -107,7 +119,10 @@ class JobViewEdit extends Component {
             <TouchableOpacity
               key={'table'+row+value}
               onPress={() => this._onPressTable(row,value-1)}
-              style={[styles.table,{borderTopWidth: 0,borderLeftWidth: 0,backgroundColor: this.state.tableState[num][row]['check']? 'orange' : 'transparent'}]}
+              style={[styles.table,{
+                  borderTopWidth: 0,
+                  borderLeftWidth: 0,
+                  backgroundColor: this.state.tableState[num][row]['check']? 'orange' : 'transparent'}]}
             >
             </TouchableOpacity>
           )

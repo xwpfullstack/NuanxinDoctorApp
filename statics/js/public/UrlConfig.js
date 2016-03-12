@@ -14,7 +14,7 @@ global.DoctorRegist_URL = Basic_URL + 'AppDoctorRegist/';
 //获取医生信息
 global.DocInfo = Basic_URL + 'info/';
 //编辑后保存医生信息
-global.SaveDovInfo = Basic_URL + 'editorInfo/';
+global.SaveDocInfo = Basic_URL + 'editorInfo/';
 //获取患者列表
 global.PatientList_URL = Basic_URL + 'patlist/';
 

@@ -62,7 +62,6 @@ class CaseView extends Component{
         this.setState({
             status:data
         })
-        console.log(data);
         if(this.state.status === 'success'){
             Alert.alert(
               '提示',
@@ -85,6 +84,7 @@ class CaseView extends Component{
       .done()
     };
 
+    //提交按钮事件
     _onPressSubmit() {
         if(this.state.status === 'success'){
             Alert.alert(
@@ -250,7 +250,6 @@ class CaseView extends Component{
                             </View>
                         </View>
                     </View>
-                    {console.log(this.state.case)}
                     <View style={{flexDirection:'row',}}>
                         <TouchableOpacity
                         onPress={() => {this._onPressSubmit()}}
