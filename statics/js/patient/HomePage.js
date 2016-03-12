@@ -202,8 +202,8 @@ pickerDone(pickedValue){
                   <Image
                       source={require('../../images/load/background.png')}
                       style={styles.background}
-                      > 
-                         <TouchableOpacity 
+                      >
+                         <TouchableOpacity
                               onPress={()=>this.postData()}
                               style={{height:Dimensions.get('window').height,
                                           width:Dimensions.get('window').width,

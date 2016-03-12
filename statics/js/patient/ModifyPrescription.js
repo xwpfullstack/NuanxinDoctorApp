@@ -6,6 +6,9 @@ import React, {
   StyleSheet,
   Text,
   TextInput,
+  TouchableOpacity,
+  Image,
+  Dimensions,
   TouchableHighlight,
   View,
 } from 'react-native';
@@ -27,47 +30,47 @@ class ModifyPrescription extends Component {
   }
   render() {
     return (
-      <View>
-        <View style={styles.title}>
-          <View style={styles.titleReturn}>
-            <TouchableHighlight
-              underlayColor='rgba(34,26,38,0.1)'
-              onPress={()=>this.popOut()}>
-              <Text style={styles.titleReturnText}>《 返回</Text>
-            </TouchableHighlight>
-          </View>
-          <View style={styles.titleName}>
-            <Text style={styles.titleNameText}>修改处方</Text>
+      <Image
+        source={require('../../images/load/background.png')}
+        style={styles.backgroundImage}
+      >
+        <View style={styles.tittle}>
+          <View style={styles.titleContent}>
+          <TouchableOpacity style={{width:50}} onPress={()=>this.popOut()}><Image source={require('../../images/icon/back.png')}></Image></TouchableOpacity>
+            <Text style={styles.name}>修改处方</Text>
+            <View style={{width:50}}></View>
           </View>
         </View>
-        <View style = {styles.inputLine}>
-          <Text style = {styles.label}>药名</Text>
-          <View style = {[styles.inputStyle, {borderColor: 'transparent'}]}>
-            <Text>{this.state.data.medcine}</Text>
+        <View style={styles.mainBody}>
+          <View style = {styles.inputLine}>
+            <Text style = {styles.label}>药名：</Text>
+            <View style = {[styles.inputStyle, {marginTop:10,borderBottomColor: 'transparent'}]}>
+              <Text style={styles.label}>{this.state.data.medcine}</Text>
+            </View>
           </View>
-        </View>
-        <View style = {styles.inputLine}>
-          <Text style = {styles.label}>服用周期</Text>
-          <View style = {styles.inputStyle}>
-            <TextInput
-            style = {styles.searchInput}
-              onChangeText = {(text) => {this.state.data.period = text; this.setState({data: this.state.data})}}
-              selectTextOnFocus = {true}
-              underlineColorAndroid = {'transparent'}
-              defaultValue = {this.state.data.period}
-            />
+          <View style = {styles.inputLine}>
+            <Text style = {styles.label}>服用周期：</Text>
+            <View style = {styles.inputStyle}>
+              <TextInput
+              style = {styles.searchInput}
+                onChangeText = {(text) => {this.state.data.period = text; this.setState({data: this.state.data})}}
+                selectTextOnFocus = {true}
+                underlineColorAndroid = {'transparent'}
+                defaultValue = {this.state.data.period}
+              />
+            </View>
           </View>
-        </View>
-        <View style = {styles.inputLine}>
-          <Text style = {styles.label}>服用剂量</Text>
-          <View style = {styles.inputStyle}>
-            <TextInput
-            style = {styles.searchInput}
-              onChangeText = {(text) => {this.state.data.amount = text; this.setState({data: this.state.data})}}
-              selectTextOnFocus = {true}
-              underlineColorAndroid = {'transparent'}
-              defaultValue = {this.state.data.amount}
-            />
+          <View style = {styles.inputLine}>
+            <Text style = {styles.label}>服用剂量：</Text>
+            <View style = {styles.inputStyle}>
+              <TextInput
+              style = {styles.searchInput}
+                onChangeText = {(text) => {this.state.data.amount = text; this.setState({data: this.state.data})}}
+                selectTextOnFocus = {true}
+                underlineColorAndroid = {'transparent'}
+                defaultValue = {this.state.data.amount}
+              />
+            </View>
           </View>
         </View>
         <TouchableHighlight
@@ -77,34 +80,39 @@ class ModifyPrescription extends Component {
         >
           <Text style={styles.buttonText}>提交</Text>
         </TouchableHighlight>
-      </View>
+      </Image>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  title: {
+  backgroundImage: {
+    width: Dimensions.get('window').width,
+    height: Dimensions.get('window').height,
+	},
+  tittle:{
+    backgroundColor:'#878181',
+    flexDirection: 'column',
+    height:40,
+    justifyContent: 'center',
+  },
+  titleContent:{
     flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: '#868181',
-    height: 45,
-    padding: 11,
+    justifyContent: 'space-between',
+    marginLeft:10,
+    marginRight:10,
   },
-  titleReturn: {
-    flex: 3,
+  name:{
+    color:'white',
+     fontSize:18,
   },
-  titleReturnText: {
-		fontFamily: 'PingFang-SC-Regular',
-		fontSize: 14,
-    color: '#FFFFFF',
-  },
-  titleName: {
-    flex: 4
-  },
-  titleNameText: {
-		fontFamily: 'PingFang-SC-Regular',
-		fontSize: 18,
-    color: '#FFFFFF',
+  mainBody:{
+    height: 148,
+    borderRadius: 6,
+    backgroundColor: 'rgba(255,255,255,0.3)',
+    margin: 11,
+    marginTop: 30,
+    paddingVertical:11
   },
   inputLine: {
     flexDirection: 'row',
@@ -117,29 +125,28 @@ const styles = StyleSheet.create({
     flex: 1,
 		fontFamily: 'PingFang-SC-Regular',
 		fontSize: 12,
-    color: '#666666',
+    color: '#FFFFFF',
 
   },
   inputStyle: {
     flex: 3,
     height: 30,
     justifyContent: 'center',
-    borderColor: '#333333',
-    borderRadius: 4,
-    borderWidth: 1,
+    alignSelf: 'center',
+    borderBottomColor: '#AAAAAA',
+    borderBottomWidth: 1,
   },
 	searchInput: {
+    color: '#FFFFFF',
 		fontSize: 12,
 	},
   buttonStyle: {
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#F0F0F0',
-    height: 30,
-    width: 80,
-    borderWidth: 0.4,
-    borderColor: '#FEA501',
-    borderRadius: 15,
+    borderRadius: 6,
+    backgroundColor: '#DDDDDD',
+    width: 100,
+    height: 36,
     alignSelf: 'flex-end',
     marginTop: 11,
     marginRight: 11,
@@ -147,7 +154,7 @@ const styles = StyleSheet.create({
   buttonText: {
 		fontFamily: 'PingFang-SC-Regular',
 		fontSize: 18,
-    color: '#FEA501',
+    color: '#666666',
   },
 });
 

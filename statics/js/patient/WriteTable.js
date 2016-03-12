@@ -23,7 +23,7 @@ var TableMsg={
 const options=[
   '抑郁自测量表',
   '焦虑自测量表',
-  '睡眠信念量表', 
+  '睡眠信念量表',
   '匹兹堡测试量表' ,
   '阿森斯测试量表'
 ];
@@ -52,7 +52,7 @@ renderOption(option, selected, onSelect, index) {
     const textBaseStyle = {
         marginTop: 10,
         marginBottom: 10,
-        color: '#3845FF',
+        color: '#FFFFFF',
         flex: 1,
         fontSize: 14,
         textAlign:'center',
@@ -61,16 +61,16 @@ renderOption(option, selected, onSelect, index) {
         flex:1,
         flexDirection: 'column',
         justifyContent: 'center',
-       alignItems:'center', 
+       alignItems:'center',
        alignSelf:'stretch',
-      
-     
+
+
       };
       var style;
       var textStyle=textBaseStyle;
       if (index > 0) {
         style = [baseStyle, {
-          borderTopColor: '#eeeeee',
+          borderTopColor: '#F08300',
           borderTopWidth: 1,
         }];
       } else {
@@ -78,8 +78,8 @@ renderOption(option, selected, onSelect, index) {
       }
 
       if (selected) {
-        style=[baseStyle,{backgroundColor:'#3845FF'}];
-        textStyle=[textBaseStyle,{color:'white'}];
+        style=[baseStyle,{backgroundColor:'rgba(255,255,255,0.8)'}];
+        textStyle=[textBaseStyle,{color:'#F08300',fontWeight:'900'}];
       }
 
       return (
@@ -94,7 +94,10 @@ select(option){
 };
 render(){
     return  (
-        <View style={styles.container}>
+      <Image
+        source={require('../../images/load/background.png')}
+        style={styles.backgroundImage}
+      >
           <View style={styles.tittle}>
               <View style={styles.titleContent}>
                   <TouchableOpacity onPress={()=>this.handleBack()} style={{ flexDirection: 'row',}}>
@@ -107,38 +110,37 @@ render(){
               </View>
           </View>
           <View style={styles.inputGroup}>
-                    <TextInput  
-                              style={styles.TextInput} 
-                              placeholder='患者姓名' 
-                              placeholderTextColor='#BFBFBF'
-                              onChangeText={(txt)=>this.changeTxt('name',txt)}
-                              underlineColorAndroid='black'/>
-                    <View style={{flex:1,justifyContent:'center',height:40,borderWidth:1,
-                        borderColor:'white',backgroundColor:'#EDEDED',alignSelf:'stretch',alignItems:'center'}}>
+                    <Text style={[styles.normalText,{margin:11, alignSelf:'flex-start'}]}>患者姓名</Text>
+                    <View style={{flex:1,justifyContent:'center',height:40,backgroundColor:'#F08300',alignSelf:'stretch',alignItems:'center'}}>
                       <Text style={{fontSize:16,fontWeight:'bold'}}>选择量表类型</Text>
                     </View>
-                   <RadioButtons 
+                   <RadioButtons
                         style={{flex:1}}
                         options={options}
                         onSelection={(option)=>this.select(option)}
                         renderContainer={(optionNodes)=>this.renderContainer(optionNodes) }
                         renderOption={(option, selected, onSelect, index)=>this.renderOption(option, selected, onSelect, index)}/>
               </View>
-               
-        </View>
+
+        </Image>
       );
 };
 };
 
 
 const styles = StyleSheet.create({
-    container:{
-    flex:1,
-    flexDirection: 'column',    
-    backgroundColor:'#cccccc',
-    },
+    backgroundImage: {
+      width: Dimensions.get('window').width,
+      height: Dimensions.get('window').height,
+  	},
     txtColor:{
-        color:'rgb(255,255,255)',
+        color:'#FFFFFF',
+    },
+    normalText: {
+      fontFamily: 'PingFang-SC-Regular',
+      fontSize: 16,
+      fontWeight: '100',
+      color: '#FFFFFF',
     },
     tittle:{
     backgroundColor:'#757575',
@@ -153,8 +155,7 @@ const styles = StyleSheet.create({
     marginRight:10,
   },
   inputGroup:{
-      flexDirection: 'column',   
-      borderWidth:1,
+      flexDirection: 'column',
       margin:10,
       marginTop:20,
       marginBottom:20,
@@ -162,8 +163,7 @@ const styles = StyleSheet.create({
        justifyContent: 'center',
        alignItems:'center',
        borderRadius:20,
-       borderColor:'#cccccc',
-       backgroundColor:'white',
+       backgroundColor:'rgba(255,255,255,0.3)',
   },
   TextInput:{
       fontSize:15,
@@ -171,14 +171,14 @@ const styles = StyleSheet.create({
       marginTop:15,
   },
   radioContainer:{
-    flex:1, 
-    flexDirection: 'column',   
+    flex:1,
+    flexDirection: 'column',
     justifyContent: 'center',
     alignItems:'center',
     alignSelf:'stretch',
     borderWidth:5,
     borderTopWidth:0,
-    borderColor:'#EDEDED',
+    borderColor:'#F08300',
     marginRight:1,
     marginLeft:1,
     top:-1,

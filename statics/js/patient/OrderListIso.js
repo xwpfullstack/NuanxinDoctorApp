@@ -37,7 +37,7 @@ class OrderListIso extends Component {
         <View style={styles.listHeader}>
          <Text style={styles.listHeaderText}>订单列表</Text>
         </View>
-        <OrderList navigator={this.props.navigator} />
+        <OrderList navigator={this.props.navigator} doctorId={this.props.doctorId}/>
       </Image>
     );
   }

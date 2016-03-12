@@ -106,7 +106,7 @@ class NuanXinDoctorApp extends Component {
         return  <AddOrder patientId={route.patientId} doctorId={doctorId} diags={route.diags} navigator={navigator}/>;
         break;
       case 'DoctorRecord':
-        return  <DoctorRecord navigator={navigator}/>;
+        return  <DoctorRecord navigator={navigator} doctorId={doctorId} patientName={route.patientName} openid={route.openid}/>;
         break;
       case 'WriteTable':
         return  <WriteTable navigator={navigator}/>;
@@ -136,10 +136,10 @@ class NuanXinDoctorApp extends Component {
         return  <ModifyPrescription navigator={navigator} passProps={route.passProps}/>;
         break;
       case 'completeRecord':
-        return  <CompleteRecord navigator={navigator} />;
+        return  <CompleteRecord navigator={navigator} patientId={route.patientId}/>;
         break;
       case 'orderList':
-        return  <OrderList navigator={navigator} />;
+        return  <OrderList navigator={navigator} doctorId={doctorId}/>;
         break;
       case 'drugDetailed':
         return <DrugDetailed 
@@ -151,10 +151,10 @@ class NuanXinDoctorApp extends Component {
         return <ChangePhoto navigator={navigator} doctorId={doctorId} />
         break;
       case 'caseHistory':
-        return <CaseHistory navigator={navigator} doctorId={doctorId}/>;  
+        return <CaseHistory navigator={navigator} doctorId={doctorId}/>;
         break;
       case 'addCase':
-        return <AddCase doctorId={doctorId} navigator={navigator} />; 
+        return <AddCase doctorId={doctorId} navigator={navigator} />;
         break;
     };
   };
