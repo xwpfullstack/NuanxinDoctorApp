@@ -136,11 +136,11 @@ class DoctorInfo extends Component {
                return response.json();
           })
           .then((responseData)=>{
-		this.setState({
-		    dctmsg:responseData,
-		    photo:PHOTO_URL+responseData.photo,
-            worktime:responseData.worktime
-		})
+    		this.setState({
+    		    dctmsg:responseData,
+    		    photo:PHOTO_URL+responseData.photo,
+                worktime:responseData.worktime
+    		})
           })
           .catch((err)=>{
               this.setState({isSuccess:false,isLoad:true});

@@ -147,7 +147,7 @@ class NuanXinDoctorApp extends Component {
         return <CaseHistory navigator={navigator} doctorId={doctorId}/>;  
         break;
       case 'addCase':
-        return <AddCase navigator={navigator} />; 
+        return <AddCase doctorId={doctorId} navigator={navigator} />; 
         break;
     };
   };

@@ -10,11 +10,95 @@ import React, {
     Text,
     TextInput,
     View,
-
+    Alert,
 } from 'react-native';
 
 
 class CaseView extends Component{
+    constructor(props){
+        super(props);
+        this.state = {
+            case:{
+                check:'',
+                description:'',
+                details:'',
+                diagnose:'',
+                doctorId:this.props.doctorId,
+                medicine:'',
+                prescription:'',
+                progress:'',
+                summary:'',
+            },
+            status:null,
+        }
+    }
+
+    _submitCaseInfo() {
+      var caseinfo = this.state.case;
+      fetch(AddTypicalCase_URL,{
+        method: 'post',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          doctor_id:caseinfo['doctorId'],
+          check: caseinfo['check'],
+          tag:'',
+          description: caseinfo['description'],
+          details: caseinfo['details'],
+          diagnose: caseinfo['diagnose'],
+          medicine: caseinfo['medicine'],
+          prescription: caseinfo['prescription'],
+          progress: caseinfo['progress'],
+          summary: caseinfo['summary'],
+        })
+      })
+      .then((response) => {
+        return response.json();
+      })
+      .then((responseData) => {
+        var data = responseData.status;
+        this.setState({
+            status:data
+        })
+        console.log(data);
+        if(this.state.status === 'success'){
+            Alert.alert(
+              '提示',
+              '添加成功',
+              [
+                {text: '确定',onPress:()=>{this.props.navigator.pop()}}
+              ]
+            )
+        }
+      })
+      .catch((err)=>{
+        Alert.alert(
+          '提示',
+          '网络异常',
+          [
+            {text: '确定',onPress:()=>{ return null}}
+          ]
+        )
+      })
+      .done()
+    };
+
+    _onPressSubmit() {
+        if(this.state.status === 'success'){
+            Alert.alert(
+              '提示',
+              '已成功添加',
+              [
+                {text: '确定',onPress:()=>{this.props.navigator.pop()}}
+              ]
+            )
+        }
+        else{
+            this._submitCaseInfo();
+        }
+    }
     render(){
         return(
             <View>
@@ -28,8 +112,13 @@ class CaseView extends Component{
                         </View>
                         <View style={styles.addCaseInput}>
                             <TextInput
+                                ref='check'
                                 textAlignVertical={'center'}
                                 underlineColorAndroid={'transparent'}
+                                onChangeText={(text) => {
+                                    var data = this.state.case;
+                                    data['check']= text;
+                                    this.setState({case: data})}}
                             >
                             </TextInput>
                         </View>
@@ -40,10 +129,14 @@ class CaseView extends Component{
                             height:36,
                             justifyContent:'center',
                             }}>
-                            <Text style={styles.caseText}>病情描述:</Text>
+                            <Text style={styles.caseText}>病情详述:</Text>
                         </View>
                         <View>
                             <TextInput
+                                onChangeText={(text) => {
+                                    var data = this.state.case;
+                                    data['details']= text;
+                                    this.setState({case: data})}}
                                 textAlignVertical={'center'}
                                 underlineColorAndroid={'transparent'}
                                 multiline={true}
@@ -53,6 +146,7 @@ class CaseView extends Component{
                                 backgroundColor:'rgba(255,255,255,0.5)',
                                 borderRadius:10
                                 }]}
+
                             >
                             </TextInput>
                         </View>
@@ -68,10 +162,15 @@ class CaseView extends Component{
                         }]}>
                         <View style={styles.caseViewLine}>
                             <View style={{flex:1,justifyContent:'center'}}>
-                                <Text style={styles.writeText}>检 查:</Text>
+                                <Text style={styles.writeText}>病情概要:</Text>
                             </View>
                             <View style={styles.addCaseInput}>
-                                <TextInput>
+                                <TextInput
+                                onChangeText={(text) => {
+                                    var data = this.state.case;
+                                    data['description']= text;
+                                    this.setState({case: data})}}
+                                >
 
                                 </TextInput>
                             </View>
@@ -81,7 +180,12 @@ class CaseView extends Component{
                                 <Text style={styles.writeText}>曾服药物:</Text>
                             </View>
                             <View style={styles.addCaseInput}>
-                                <TextInput>
+                                <TextInput
+                                onChangeText={(text) => {
+                                    var data = this.state.case;
+                                    data['medicine']= text;
+                                    this.setState({case: data})}}
+                                >
 
                                 </TextInput>
                             </View>
@@ -91,7 +195,12 @@ class CaseView extends Component{
                                 <Text style={styles.writeText}>诊 断:</Text>
                             </View>
                             <View style={styles.addCaseInput}>
-                                <TextInput>
+                                <TextInput
+                                onChangeText={(text) => {
+                                    var data = this.state.case;
+                                    data['diagnose']= text;
+                                    this.setState({case: data})}}
+                                >
 
                                 </TextInput>
                             </View>
@@ -101,7 +210,12 @@ class CaseView extends Component{
                                 <Text style={styles.writeText}>处 方:</Text>
                             </View>
                             <View style={styles.addCaseInput}>
-                                <TextInput>
+                                <TextInput
+                                onChangeText={(text) => {
+                                    var data = this.state.case;
+                                    data['prescription']= text;
+                                    this.setState({case: data})}}
+                                >
 
                                 </TextInput>
                             </View>
@@ -111,7 +225,12 @@ class CaseView extends Component{
                                 <Text style={styles.writeText}>治疗进展:</Text>
                             </View>
                             <View style={styles.addCaseInput}>
-                                <TextInput>
+                                <TextInput
+                                onChangeText={(text) => {
+                                    var data = this.state.case;
+                                    data['progress']= text;
+                                    this.setState({case: data})}}
+                                >
 
                                 </TextInput>
                             </View>
@@ -121,14 +240,21 @@ class CaseView extends Component{
                                 <Text style={styles.writeText}>治疗心得:</Text>
                             </View>
                             <View style={styles.addCaseInput}>
-                                <TextInput>
-
+                                <TextInput
+                                onChangeText={(text) => {
+                                    var data = this.state.case;
+                                    data['summary']= text;
+                                    this.setState({case: data})}}
+                                >
                                 </TextInput>
                             </View>
                         </View>
                     </View>
+                    {console.log(this.state.case)}
                     <View style={{flexDirection:'row',}}>
-                        <TouchableOpacity style={styles.caseBtn}>
+                        <TouchableOpacity
+                        onPress={() => {this._onPressSubmit()}}
+                        style={styles.caseBtn}>
                             <View style={{flex:1,alignItems:'center',justifyContent:'center'}}>
                                 <Text style={styles.caseText}>提交</Text>
                             </View>
