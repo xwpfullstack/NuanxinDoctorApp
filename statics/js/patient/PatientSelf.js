@@ -44,6 +44,7 @@ import AddModal from './AddModal'
       jump(value){
           this.props.mainNavigator.push({
             name:value,
+            patientId:this.props.patientData.id,
           });
       };
 
@@ -60,7 +61,7 @@ import AddModal from './AddModal'
             return rowDiaStr;
         }
          for (var i = 0; i < rowdata.diagnoses.length; i++) {
-               rowDiaStr+=(rowdata.diagnoses[i]+'、'); 
+               rowDiaStr+=(rowdata.diagnoses[i]+'、');
              };
           rowDiaStr = rowDiaStr.substring(0,rowDiaStr.length-1);
           if (rowDiaStr.length>20) {
@@ -90,16 +91,16 @@ import AddModal from './AddModal'
   					</View>
   				</View>
   				<View style={styles.selfMsg}>
-  				
+
 					            <View style={styles.itemImage}>
-					              <Image 
+					              <Image
 					                source={require('../../images/load/kobe.jpg')}
 					                style={styles.image} />
 					            </View>
 
 					            <View style={styles.itemContent}>
 					            <View style={styles.wordMSg}>
-					             	<Text 
+					             	<Text
                                                           style={styles.itemHeader}>
                                                             {this.state.patientData.sex=='m'?'男':'女'}  {this.state.patientData.area==''?'暂无地址':this.state.patientData.area}  {this.state.patientData.age}
                                                     </Text>
@@ -111,7 +112,7 @@ import AddModal from './AddModal'
               					                source={this.state.ischeacked?require('../../images/icon/collected.png'):require('../../images/icon/collectt.png')} style={{}}/>
 					             </TouchableOpacity>
 					            </View>
-					
+
   				</View>
   				<PatientMsgImageMonth  patientData={this.props.patientData}/>
 
@@ -138,22 +139,22 @@ import AddModal from './AddModal'
   					</View>
   				</View>
   				</TouchableOpacity>
-          
-  				<Modal 
-                                visible={this.state.addVisible} 
+
+  				<Modal
+                                visible={this.state.addVisible}
                                  style={{height:Dimensions.get('window').height,width:Dimensions.get('window').width,top:0,bottom:0,left:0,right:0}}>
                                       <TouchableOpacity  onPress={()=>this.closeAddModal()} style={{height:Dimensions.get('window').height,width:Dimensions.get('window').width,}}>
-                                            <View style={{ 
+                                            <View style={{
                                                 position: 'absolute',
                                                 right: 1,
                                                 top: 41,
                                                 height:120,
                                                 width:150,
                                                 backgroundColor: 'rgba(0, 0, 0,0.8)',}}>
-                                                    <AddModal patientId={this.props.patientData.id} diags={this.props.diags} mainNavigator={this.props.mainNavigator} close={()=>this.closeAddModal()}/>
+                                                    <AddModal patientId={this.props.patientData.id} openid={this.props.patientData.openid} patientName={this.props.patientData.name} diags={this.props.diags} mainNavigator={this.props.mainNavigator} close={()=>this.closeAddModal()}/>
                                             </View>
                                       </TouchableOpacity>
-                                
+
                           </Modal>
   			</View>
   		);
@@ -208,13 +209,13 @@ const styles = StyleSheet.create({
 		alignItems: 'center',
 		padding: 10,
 		height: 80,
-		
+
 	},
   	itemHeader: {
-   		
+
     		fontSize: 13,
     		fontWeight: '300',
-    		
+
   	},
   	wordMSg:{
   		flexDirection: 'column',
@@ -227,7 +228,7 @@ const styles = StyleSheet.create({
   	},
   	tRow:{
   		flexDirection: 'column',
-    		
+
 		height:40,
 		backgroundColor:'#FFFFFF',
 		justifyContent: 'center',

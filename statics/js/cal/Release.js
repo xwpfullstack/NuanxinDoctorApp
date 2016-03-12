@@ -2,6 +2,8 @@
 
 import React, {
   Alert,
+  ProgressBarAndroid,
+  ToastAndroid,
   Component,
   Dimensions,
   StyleSheet,
@@ -10,10 +12,12 @@ import React, {
   Text,
   TextInput,
   TouchableHighlight,
+  TouchableOpacity,
   View,
 } from 'react-native';
 
 import NewsList from './NewsList';
+import Loading from '../patient/Loading';
 
 const newsSet = [
   {date: '2016年02月10日',subject: '门诊停诊通知', content: '本周因到外地参加学术讨论会，停止门诊一周，请谅解。'},
@@ -51,6 +55,8 @@ class Release extends Component {
     this.state={
       subject: '',
       content: '',
+      isSuccess: true,
+      isLoad:true,
     }
   }
 
@@ -68,51 +74,111 @@ class Release extends Component {
       Alert.alert('提醒', '请输入内容。');
       return;
     }
-    Alert.alert(this.state.subject,this.state.content);
+    this.setState({isLoad: false});
+    this.postData();
   }
-
+  postData(){
+      fetch(SendDoctorMsg_URL,{
+              method: 'post',
+              headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+                 doctorId:this.props.doctorId,
+                 title:this.state.subject,
+                 info:this.state.content
+              })
+        })
+        .then((response) => {
+            // Alert.alert('', 'response');
+             return response.json();
+        })
+        .then((responseData)=>{
+          // console.log(responseData);
+            this.setState({isLoad:true, data:responseData,isSuccess:true,})
+            ToastAndroid.show('发送成功', ToastAndroid.LONG);
+            // Alert.alert('',JSON.stringify(responseData));
+          // this.setState({isLoad:true, data:responseData.patients,isSuccess:true,})
+          // this.BaseCreateData(this.state.data,'date');
+                    // Alert.alert('',this.state.data[0].date);
+        })
+        .catch((err)=>{
+            Alert.alert('catch err',err.toString())
+            this.setState({isSuccess:false,isLoad:true});
+            // console.log(err.toString());
+        })
+        .done();
+  };
   render() {
-    return (
-      <Image
-        source={require('../../images/load/background.png')}
-        style={styles.backgroundImage}
-      >
-        <View style={styles.title}>
-          <TouchableHighlight underlayColor='rgba(34,26,38,0.1)' onPress={()=>this.cancelRelease()}>
-            <Text style={styles.cmdText}>取消</Text>
-          </TouchableHighlight>
-          <Text style={styles.titleText}>发布消息</Text>
-          <TouchableHighlight underlayColor='rgba(34,26,38,0.1)' onPress={()=>this.releaseNews()}>
-            <Text style={styles.cmdText}>发布</Text>
-          </TouchableHighlight>
-        </View>
-        <ScrollView style = {styles.container}>
-          <TextInput
-            ref = 'contentBox'
-            placeholder = {'你想说的...'}
-            onChangeText = {(text) => this.setState({content: text})}
-            textAlignVertical = {'top'}
-            multiline = {true}
-            numberOfLines = {6}
-            style = {styles.contentBox}
-            value = {this.state.content}
-          />
-          <TextInput
-            placeholder = {'主题...'}
-            onChangeText = {(text) => this.setState({subject: text})}
-            style = {styles.subjectBox}
-            value = {this.state.subject}
-          />
+    if (this.state.isLoad) {
+      if (this.state.isSuccess) {
+        return (
+          <Image
+            source={require('../../images/load/background.png')}
+            style={styles.backgroundImage}
+          >
+            <View style={styles.title}>
+              <TouchableHighlight underlayColor='rgba(34,26,38,0.1)' onPress={()=>this.cancelRelease()}>
+                <Text style={styles.cmdText}>取消</Text>
+              </TouchableHighlight>
+              <Text style={styles.titleText}>发布消息</Text>
+              <TouchableHighlight underlayColor='rgba(34,26,38,0.1)' onPress={()=>this.releaseNews()}>
+                <Text style={styles.cmdText}>发布</Text>
+              </TouchableHighlight>
+            </View>
+            <ScrollView style = {styles.container}>
+              <TextInput
+                placeholder = {'主题...'}
+                onChangeText = {(text) => this.setState({subject: text})}
+                style = {styles.subjectBox}
+                value = {this.state.subject}
+              />
+              <TextInput
+                ref = 'contentBox'
+                placeholder = {'你想说的...'}
+                onChangeText = {(text) => this.setState({content: text})}
+                textAlignVertical = {'top'}
+                multiline = {true}
+                numberOfLines = {6}
+                style = {styles.contentBox}
+                value = {this.state.content}
+              />
 
-          <View style={styles.releaseTo}>
-           <Text style={styles.releaseToText}>所有患者 》</Text>
-          </View>
+              {/*<View style={styles.releaseTo}>
+               <Text style={styles.releaseToText}>所有患者</Text>
+              </View>*/}
 
-          <NewsList navigator={this.props.navigator} newsSet = {newsSet}/>
-          <View style={{height:85,}}></View>
-        </ScrollView>
-      </Image>
-    );
+              {/*<NewsList navigator={this.props.navigator} newsSet = {newsSet}/>*/}
+              <View style={{height:85,}}></View>
+            </ScrollView>
+          </Image>
+        );
+      } else{
+          return (
+              <Image
+                  source={require('../../images/load/background.png')}
+                  style={styles.background}
+                  >
+                     <View
+                          style={{height:Dimensions.get('window').height,
+                                      width:Dimensions.get('window').width,
+                                      flexDirection: 'column',alignItems: 'center',justifyContent: 'center',}}>
+                          <Text style={{color:'#F08300',fontSize:16,}}>加载失败</Text>
+                          <TouchableOpacity onPress={()=>this.postData()}
+                                  style={{borderWidth:1,height:50,width:100,borderRadius:25,borderColor:'#0094ff',justifyContent:'center',alignItems:'center'}}>
+                                 <Text style={{color:'#F08300',fontSize:16,}}>重新加载</Text>
+                          </TouchableOpacity>
+                    </View>
+             </Image>
+          );
+        };
+    }
+    else{
+        return (
+                  <ProgressBarAndroid />
+          );
+    };
   }
 }
 

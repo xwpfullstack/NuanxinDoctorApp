@@ -3,12 +3,17 @@ package com.nuanxindoctorapp;
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
-import me.nucleartux.date.ReactDatePackage;
 import java.util.Arrays;
 import java.util.List;
 
-public class MainActivity extends ReactActivity {
+import com.yoloci.fileupload.FileUploadPackage;
 
+import android.content.Intent; 
+import com.imagepicker.ImagePickerPackage; 
+
+public class MainActivity extends ReactActivity {
+    
+    private ImagePickerPackage mImagePicker;
     /**
      * Returns the name of the main component registered from JavaScript.
      * This is used to schedule rendering of the component.
@@ -33,8 +38,18 @@ public class MainActivity extends ReactActivity {
    */
     @Override
     protected List<ReactPackage> getPackages() {
-      return Arrays.<ReactPackage>asList(
-        new MainReactPackage()
+      mImagePicker = new ImagePickerPackage(this);
+
+      return Arrays<ReactPackage>.asList(
+        new MainReactPackage(),
+        mImagePicker,
+        new FileUploadPackage()
       );
+    }
+
+    @Override
+    public void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
+      super.onActivityResult(requestCode, resultCode, data);
+      mImagePicker.handleActivityResult(requestCode, resultCode, data);
     }
 }

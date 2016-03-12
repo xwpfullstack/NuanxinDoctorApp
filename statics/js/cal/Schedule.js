@@ -25,6 +25,7 @@ class Schedule extends Component {
       monthShowed: new Date(),
     };
   }
+
   changeType(type) {
     if (type=='weekly'){
       this.setState({calendarType: 'monthly'});
@@ -38,31 +39,32 @@ class Schedule extends Component {
     this.setState({monthShowed: month});
   }
   render() {
-    return (
+    return(
         <Image
           source={require('../../images/load/background.png')}
           style={styles.backgroundImage}
         >
-            <View style={styles.title}>
-              <Text style={styles.titleText}>日程</Text>
-            </View>
+          <View style={styles.title}>
+            <Text style={styles.titleText}>日程</Text>
+          </View>
 
-            <View style={styles.calendar}>
-              <Calendar type={this.state.calendarType }
-                monthShowed={this.state.monthShowed}
-                changeType={(type)=>{this.changeType(type)}}
-                changeMonth={(month)=>{this.changeMonth(month)}}
-              />
-            </View>
-            <View style={styles.listHeader}>
-             <Text style={styles.listHeaderText}>订单列表</Text>
-            </View>
-            <OrderList navigator={this.props.navigator} />
+          <View style={styles.calendar}>
+            <Calendar type={this.state.calendarType }
+              monthShowed={this.state.monthShowed}
+              changeType={(type)=>{this.changeType(type)}}
+              changeMonth={(month)=>{this.changeMonth(month)}}
+            />
+          </View>
+          <View style={styles.listHeader}>
+           <Text style={styles.listHeaderText}>订单列表</Text>
+          </View>
+          <OrderList navigator={this.props.navigator} doctorId={this.props.doctorId}/>
+          <View style={{height: 4}}>
+          </View>
         </Image>
     );
   }
 }
-
 const styles=StyleSheet.create({
 	backgroundImage: {
     width: Dimensions.get('window').width,

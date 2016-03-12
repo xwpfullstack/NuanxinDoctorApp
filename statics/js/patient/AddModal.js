@@ -19,7 +19,7 @@ class AddModal extends Component{
 };
 
   handleClickModal(name){
-    if (name ==='zd') { 
+    if (name ==='zd') {
       this.props.close();
       this.props.mainNavigator.push({
         name:'addOrder',
@@ -31,6 +31,8 @@ class AddModal extends Component{
            this.props.close();
            this.props.mainNavigator.push({
             name: 'DoctorRecord',
+            openid: this.props.openid,
+            patientName: this.props.patientName,
           });
     }
     else if(name === 'sc'){
@@ -39,7 +41,7 @@ class AddModal extends Component{
             name: 'WriteTable',
           });
     }
-   
+
   };
 
   render(){
@@ -57,7 +59,7 @@ class AddModal extends Component{
 const styles = StyleSheet.create({
     container:{
     flex:1,
-    flexDirection: 'column',    
+    flexDirection: 'column',
     },
     txtColor:{
         color:'rgb(255,255,255)',

@@ -7,6 +7,7 @@ import React, {
   TouchableHighlight,
   TouchableOpacity,
   Image,
+  Dimensions,
   Component,
   StyleSheet,
 
@@ -21,25 +22,28 @@ class OrderDetails extends Component{
   }
   render() {
     return (
-      <View style={styles.container}>
-      <View style={styles.tittle}>
-        <View style={styles.titleContent}>
-        <TouchableOpacity style={{width:50}} onPress={()=>this.popOut()}><Image source={require('../../images/icon/back.png')}></Image></TouchableOpacity>
-          <Text style={styles.name}>订单详情</Text>
-          <View style={{width:50}}></View>
+      <Image
+        source={require('../../images/load/background.png')}
+        style={styles.backgroundImage}
+      >
+        <View style={styles.tittle}>
+          <View style={styles.titleContent}>
+          <TouchableOpacity style={{width:50}} onPress={()=>this.popOut()}><Image source={require('../../images/icon/back.png')}></Image></TouchableOpacity>
+            <Text style={styles.name}>订单详情</Text>
+            <View style={{width:50}}></View>
+          </View>
         </View>
-      </View>
 
+        <TextInput
+          style = {styles.subjectBox}
+          value = {this.props.newsData.subject}
+        />
         <TextInput
           multiline = {true}
           numberOfLines = {6}
           textAlignVertical = 'top'
           style = {styles.contentBox}
           value = {this.props.newsData.content}
-        />
-        <TextInput
-          style = {styles.subjectBox}
-          value = {this.props.newsData.subject}
         />
         <View style={styles.releaseTo}>
          <Text style={styles.releaseToText}>所有患者 》</Text>
@@ -51,26 +55,26 @@ class OrderDetails extends Component{
             onPress={()=>this.popOut()}
             style={styles.buttonStyle}
           >
-            <Text style={styles.buttonText}>再发一条</Text>
+            <Text style={[styles.normalText,{color: '#666666'}]}>再发一条</Text>
           </TouchableHighlight>
           <TouchableHighlight
             underlayColor='rgba(34,26,38,0.1)'
             onPress={()=>this.popOut()}
             style={styles.buttonStyle}
           >
-            <Text style={styles.buttonText}>删除此条</Text>
+            <Text style={[styles.normalText,{color: '#666666'}]}>删除此条</Text>
           </TouchableHighlight>
         </View>
-      </View>
+      </Image>
     );
   }
 }
 
 const styles=StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#CCCCCC',
-  },
+  backgroundImage: {
+    width: Dimensions.get('window').width,
+    height: Dimensions.get('window').height,
+	},
   tittle:{
     backgroundColor:'#878181',
     flexDirection: 'column',
@@ -127,12 +131,11 @@ const styles=StyleSheet.create({
   buttonStyle: {
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#F0F0F0',
-    height: 30,
+    margin: 11,
+    height: 34,
     width: 100,
-    borderWidth: 0.4,
-
-    borderRadius: 2,
+    borderRadius: 6,
+    backgroundColor: '#DDDDDD',
   },
   buttonText: {
 		fontFamily: 'PingFang-SC-Regular',

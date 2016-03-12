@@ -74,88 +74,99 @@ class DrugDetailed extends Component {
         var newList=this.state.MediaNums.map((value,index)=>{
           return (
             <View key={index}>
+            {console.log(this.props.drugId)}
+            {console.log(this.props.drugName)}
+
                  <View style={styles.startTime}>
-                                <View style={styles.startTimeCheack}>
-                                    <TouchableOpacity
-                                        onPress={()=>this.cheackMedia(index,0)}
-                                        style={[styles.startTimeCheackItem,{marginLeft:0, backgroundColor:value[0]?'#FE9300':'rgb(244,241,245)',}]}>
-                                        <Text style={{color:value[0]?'white':'black',}}>早上</Text>
-                                      </TouchableOpacity>
-                                    <TouchableOpacity
-                                      onPress={()=>this.cheackMedia(index,1)}
-                                       style={[styles.startTimeCheackItem,{backgroundColor:value[1]?'#FE9300':'rgb(244,241,245)',}]}>
-                                       <Text style={{color:value[1]?'white':'black',}}>中午</Text>
-                                     </TouchableOpacity>
-                                      <TouchableOpacity
-                                        onPress={()=>this.cheackMedia(index,2)}
-                                        style={[styles.startTimeCheackItem,{backgroundColor:value[2]?'#FE9300':'rgb(244,241,245)',}]}>
-                                        <Text style={{color:value[2]?'white':'black',}}>晚上</Text>
-                                      </TouchableOpacity>
-                                    <TouchableOpacity
-                                      onPress={()=>this.cheackMedia(index,3)}
-                                      style={[styles.startTimeCheackItem,{backgroundColor:value[3]?'#FE9300':'rgb(244,241,245)',}]}>
-                                      <Text style={{color:value[3]?'white':'black',}}>睡前</Text>
-                                    </TouchableOpacity>
-                                </View>
-                          </View>
-                           <View style={styles.FYNums}>
-                              <Text style={{flex:1,}}>服用剂量</Text>
-                              <View style={styles.addJ}>
-                                    <TouchableOpacity
-                                        onPress={()=>this.minu(index,4)}
-                                        style={styles.quart}>
-                                        <Text style={styles.quartTxt}>—</Text>
-                                    </TouchableOpacity>
-                                    <View style={{height:30,width:100, justifyContent:'center',alignItems:'center',borderWidth:0,}} >
-                                          <TextInput
-                                          style={{fontSize:15,color:'#000000',textAlign:'center'}}
-                                          placeholder='请输入剂量'
-                                          placeholderTextColor='#BFBFBF'
-                                          keyboardType='numeric'
-                                          value ={value[4]+''}
-                                          onChangeText={(txt)=>this.changeTxt(index,4,txt)}/>
-                                    </View>
-                                    <TouchableOpacity
-                                        style={styles.quart}
-                                        onPress={()=>this.add(index,4)} >
-                                        <Text  style={styles.quartTxt}>+</Text>
-                                     </TouchableOpacity>
-                              </View>
-                              <Text style={{flex:1,}}> 片/次</Text>
-                          </View>
-                          <View style={styles.FYNums}>
-                              <Text style={{flex:1,}}>服用周期</Text>
-                             <View style={styles.addJ}>
-                                    <TouchableOpacity
-                                        style={styles.quart}
-                                        onPress={()=>this.minu(index,5)}>
-                                        <Text style={styles.quartTxt}>—</Text>
-                                    </TouchableOpacity>
-                                    <View style={{height:30,width:100, justifyContent:'center',alignItems:'center',borderWidth:0,}} >
-                                          <TextInput
-                                          style={{fontSize:15,color:'#000000',textAlign:'center',}}
-                                          placeholder='请输入剂量'
-                                          placeholderTextColor='#BFBFBF'
-                                          keyboardType='numeric'
-                                          value ={value[5]+''}
-                                          onChangeText={(txt)=>this.changeTxt(index,5,txt)}/>
-                                    </View>
-                                    <TouchableOpacity
-                                        style={styles.quart}
-                                        onPress={()=>this.add(index,5)}>
-                                        <Text  style={styles.quartTxt}>+</Text>
-                                    </TouchableOpacity>
-                              </View>
-                              <Text style={{flex:1,}}>天</Text>
-                          </View>
-                          <View style={styles.mDel}>
-                                <View style={{flex:1}}></View>
-                                <View style={{flex:1,alignItems:'center',justifyContent:'center', flexDirection: 'row',}}>
-                                        <TouchableOpacity onPress={()=>this.delPage(index)} style={styles.btnMDel}><Text style={{color:'#FE9300'}}>删除</Text></TouchableOpacity>
-                                        <TouchableOpacity onPress={()=>this.addPage()} style={styles.btnMDel}><Text style={{color:'#FE9300'}}>调量</Text></TouchableOpacity>
-                                </View>
-                          </View>
+                    <View style={styles.startTimeCheack}>
+                        <TouchableOpacity
+                            onPress={()=>this.cheackMedia(index,0)}
+                            style={[styles.startTimeCheackItem,{marginLeft:0, backgroundColor:value[0]?'#FE9300':'rgb(244,241,245)',}]}>
+                            <Text style={{color:value[0]?'white':'black',}}>早上</Text>
+                          </TouchableOpacity>
+                        <TouchableOpacity
+                          onPress={()=>this.cheackMedia(index,1)}
+                           style={[styles.startTimeCheackItem,{backgroundColor:value[1]?'#FE9300':'rgb(244,241,245)',}]}>
+                           <Text style={{color:value[1]?'white':'black',}}>中午</Text>
+                         </TouchableOpacity>
+                          <TouchableOpacity
+                            onPress={()=>this.cheackMedia(index,2)}
+                            style={[styles.startTimeCheackItem,{backgroundColor:value[2]?'#FE9300':'rgb(244,241,245)',}]}>
+                            <Text style={{color:value[2]?'white':'black',}}>晚上</Text>
+                          </TouchableOpacity>
+                        <TouchableOpacity
+                          onPress={()=>this.cheackMedia(index,3)}
+                          style={[styles.startTimeCheackItem,{backgroundColor:value[3]?'#FE9300':'rgb(244,241,245)',}]}>
+                          <Text style={{color:value[3]?'white':'black',}}>睡前</Text>
+                        </TouchableOpacity>
+                    </View>
                   </View>
+                   <View style={styles.FYNums}>
+                      <Text style={{flex:1,}}>服用剂量</Text>
+                      <View style={styles.addJ}>
+                            <TouchableOpacity
+                                onPress={()=>this.minu(index,4)}
+                                style={styles.quart}>
+                                <Text style={styles.quartTxt}>—</Text>
+                            </TouchableOpacity>
+                            <View style={{height:30,width:100, justifyContent:'center',alignItems:'center',borderWidth:0,}} >
+                                  <TextInput
+                                  style={{fontSize:15,color:'#000000',textAlign:'center'}}
+                                  placeholder='请输入剂量'
+                                  placeholderTextColor='#BFBFBF'
+                                  keyboardType='numeric'
+                                  value ={value[4]+''}
+                                  onChangeText={(txt)=>this.changeTxt(index,4,txt)}/>
+                            </View>
+                            <TouchableOpacity
+                                style={styles.quart}
+                                onPress={()=>this.add(index,4)} >
+                                <Text  style={styles.quartTxt}>+</Text>
+                             </TouchableOpacity>
+                      </View>
+                      <Text style={{flex:1,}}> 片/次</Text>
+                  </View>
+                  <View style={styles.FYNums}>
+                      <Text style={{flex:1,}}>服用周期</Text>
+                     <View style={styles.addJ}>
+                            <TouchableOpacity
+                                style={styles.quart}
+                                onPress={()=>this.minu(index,5)}>
+                                <Text style={styles.quartTxt}>—</Text>
+                            </TouchableOpacity>
+                            <View style={{height:30,width:100, justifyContent:'center',alignItems:'center',borderWidth:0,}} >
+                                  <TextInput
+                                  style={{fontSize:15,color:'#000000',textAlign:'center',}}
+                                  placeholder='请输入剂量'
+                                  placeholderTextColor='#BFBFBF'
+                                  keyboardType='numeric'
+                                  value ={value[5]+''}
+                                  onChangeText={(txt)=>this.changeTxt(index,5,txt)}/>
+                            </View>
+                            <TouchableOpacity
+                                style={styles.quart}
+                                onPress={()=>this.add(index,5)}>
+                                <Text  style={styles.quartTxt}>+</Text>
+                            </TouchableOpacity>
+                      </View>
+                      <Text style={{flex:1,}}>天</Text>
+                  </View>
+                  <View style={styles.mDel}>
+                        <View style={{flex:1}}></View>
+                        <View style={{flex:1,alignItems:'center',justifyContent:'center', flexDirection: 'row',}}>
+                                <TouchableOpacity
+                                    onPress={()=>this.delPage(index)}
+                                    style={styles.btnMDel}>
+                                    <Text style={{color:'#FE9300'}}>删除</Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity
+                                    onPress={()=>this.addPage()}
+                                    style={styles.btnMDel}>
+                                    <Text style={{color:'#FE9300'}}>调量</Text>
+                                </TouchableOpacity>
+                        </View>
+                  </View>
+          </View>
               );
         });
   return newList;

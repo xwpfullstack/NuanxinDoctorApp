@@ -14,7 +14,7 @@ global.DoctorRegist_URL = Basic_URL + 'AppDoctorRegist/';
 //获取医生信息
 global.DocInfo = Basic_URL + 'info/';
 //编辑后保存医生信息
-global.SaveDovInfo = Basic_URL + 'editorInfo/';
+global.SaveDocInfo = Basic_URL + 'editorInfo/';
 //获取患者列表
 global.PatientList_URL = Basic_URL + 'patlist/';
 
@@ -28,6 +28,13 @@ global.SavePrescript_URL = Basic_URL + 'savePrescript/';
 global.PatRecords_URL = Basic_URL + 'pat_records/';
 //获取都太的测量等数据
 global.PatRecordsDetails_URL = Basic_URL + 'pat_records_details/';
+
+
+//医生订单列表
+global.GetDocOrder_URL = Basic_URL + 'docOrders/';
+//根据订单号获取订单详情
+global.OrderDetail_URL = Basic_URL + 'order/';
+
 
 //获取医生诊断列表
 global.DocDiags_URL = Basic_URL + 'docDiags/';
@@ -79,3 +86,5 @@ global.sendMsg_URL = Basic_URL + 'AppSendMsg/';
 global.UploadDoctorphoto_URL = Basic_URL + 'uploadPhoto/';
 //获取二维码
 global.DoctorQrcode_URL = Wechat_URL + 'AppGetQrcode/';
+//发送医嘱信息
+global.SendDoctorMsg_URL = Wechat_URL + 'sendDoctorMsg/';

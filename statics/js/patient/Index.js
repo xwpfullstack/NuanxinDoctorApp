@@ -19,7 +19,7 @@ import ViewPager from 'react-native-scrollable-tab-view'
 import BottomTabBar from '../BottomTabBar'
 import Schedule from '../cal/Schedule';
 import Release from '../cal/Release';
-import ComponentTest from '../cal/ComponentTest';
+import WriteTable from '../cal/ComponentTest';
 
 class nuanxin extends Component {
 
@@ -30,13 +30,13 @@ class nuanxin extends Component {
             <Home mainNavigator={this.props.mainNavigator} doctorId={this.props.doctorId}/>
           </View>
           <View tabLabel='two'>
-            <Schedule navigator={this.props.mainNavigator} />
+            <Schedule navigator={this.props.mainNavigator} doctorId={this.props.doctorId}/>
           </View>
           <View tabLabel='three'>
-            <Release navigator={this.props.mainNavigator} />
+            <Release navigator={this.props.mainNavigator} doctorId={this.props.doctorId}/>
           </View>
           <View tabLabel='four'>
-            <ComponentTest navigator={this.props.mainNavigator} />
+            <WriteTable navigator={this.props.mainNavigator} />
           </View>
           <View tabLabel='five'>
             <DoctorMainMessage navigator={this.props.mainNavigator} doctorId={this.props.doctorId}/>

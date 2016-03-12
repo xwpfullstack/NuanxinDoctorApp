@@ -37,6 +37,7 @@ import WebMainPage from './statics/js/me/webView';
 import DoctorMsgEdit from './statics/js/me/doctorMsgEdit';
 import Prescription from './statics/js/me/prescription';
 import DrugDetailed from './statics/js/me/drugDetailed';
+import ChangePhoto from './statics/js/me/changePhoto';
 
 var _navigator;
 //监听硬件返回功能
@@ -105,7 +106,7 @@ class NuanXinDoctorApp extends Component {
         return  <AddOrder patientId={route.patientId} doctorId={doctorId} diags={route.diags} navigator={navigator}/>;
         break;
       case 'DoctorRecord':
-        return  <DoctorRecord navigator={navigator}/>;
+        return  <DoctorRecord navigator={navigator} doctorId={doctorId} patientName={route.patientName} openid={route.openid}/>;
         break;
       case 'WriteTable':
         return  <WriteTable navigator={navigator}/>;
@@ -135,19 +136,25 @@ class NuanXinDoctorApp extends Component {
         return  <ModifyPrescription navigator={navigator} passProps={route.passProps}/>;
         break;
       case 'completeRecord':
-        return  <CompleteRecord navigator={navigator} />;
+        return  <CompleteRecord navigator={navigator} patientId={route.patientId}/>;
         break;
       case 'orderList':
-        return  <OrderList navigator={navigator} />;
+        return  <OrderList navigator={navigator} doctorId={doctorId}/>;
         break;
       case 'drugDetailed':
-        return <DrugDetailed navigator={navigator} />;
+        return <DrugDetailed 
+            navigator={navigator} 
+            drugName={route.drugName} 
+            drugId={route.drugId} />;
+        break;
+      case 'changePhoto':
+        return <ChangePhoto navigator={navigator} doctorId={doctorId} />
         break;
       case 'caseHistory':
-        return <CaseHistory navigator={navigator} doctorId={doctorId}/>;  
+        return <CaseHistory navigator={navigator} doctorId={doctorId}/>;
         break;
       case 'addCase':
-        return <AddCase navigator={navigator} />; 
+        return <AddCase doctorId={doctorId} navigator={navigator} />;
         break;
     };
   };
@@ -158,7 +165,7 @@ class NuanXinDoctorApp extends Component {
       autoSync: true,
       syncInBackground: true,
     }).then( ret => {
-      if(ret.state === 'success') {   //
+      if(ret.state === 'success') {   //success
         this.setState({
           routeInfo:{
             name: 'doctorHomePage',

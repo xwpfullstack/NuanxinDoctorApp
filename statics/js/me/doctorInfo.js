@@ -8,6 +8,7 @@ import Modal from 'react-native-root-modal'
 
 import React, {
   Component,
+  Alert,
   Text,
   View,
   ScrollView,
@@ -32,13 +33,19 @@ class DoctorInfo extends Component {
             worktime:{},
         }
         this.postDoctorData();
-
     }
     _onPressEditButton(){
         this.props.navigator.push({
             name:'doctorMsgEdit',
         })
     };
+
+    _ChangePhoto() {
+        this.props.navigator.push({
+            name:'changePhoto',
+        })
+    }
+
     closeModal(){
          this.setState({ListMenu:false});
     };
@@ -101,6 +108,19 @@ class DoctorInfo extends Component {
                 });
     }
 
+
+
+    _AlertMsg() {
+        Alert.alert(
+            '提示',
+            '是否要修改头像?',
+            [
+                {text: '确定',onPress:() => {this._ChangePhoto()}},
+                {text: '取消',onPress:() => {}},
+            ]
+        )
+    }
+
     postDoctorData(){
         fetch(DocInfo,{
                 method: 'post',
@@ -116,11 +136,12 @@ class DoctorInfo extends Component {
                return response.json();
           })
           .then((responseData)=>{
-		this.setState({
-		    dctmsg:responseData,
-		    photo:PHOTO_URL+responseData.photo,
-            worktime:responseData.worktime
-		})
+    		this.setState({
+    		    dctmsg:responseData,
+    		    photo:PHOTO_URL+responseData.photo,
+                worktime:responseData.worktime
+    		})
+            console.log(dctmsg);
           })
           .catch((err)=>{
               this.setState({isSuccess:false,isLoad:true});
@@ -129,7 +150,6 @@ class DoctorInfo extends Component {
           .done();
     };
 
-
     showModal(name) {
         if(!this.state.ListMenu) {
             switch (name) {
@@ -137,6 +157,7 @@ class DoctorInfo extends Component {
                     this._MenuModal();
                     break;
                 case 'ShowCode':
+                    console.log('hajha');
                     this._CodeModal();
                     break;
                 case 'ShowJobview':
@@ -147,6 +168,7 @@ class DoctorInfo extends Component {
         else
             this.setState({ListMenu:false});
     }
+
     render() {
     return (
         <View>
@@ -163,14 +185,16 @@ class DoctorInfo extends Component {
                 </View>
             </View>
 
-            <ScrollView style={styles.ScrollViewBody}>
+            <ScrollView style={styles.body}>
             {/*headerImage start*/}
                 <Image
                     source = {require('../../images/me/bg-11.png')}
                     style = {styles.picture}
                     resizeMode='stretch'>
                     <View style={styles.avatarMSG}>
-                        <View style = {styles.avatarImage}>
+                        <TouchableOpacity
+                        onPress = {()=>{this._AlertMsg()}}
+                        style = {styles.avatarImage}>
                             <Image
                                 style={styles.avatarImg}
                                 source = {{uri:this.state.photo}}>
@@ -178,7 +202,7 @@ class DoctorInfo extends Component {
                             <View style={styles.imageText}>
                                 <Text style={{color:'#fff', fontSize:11}}>已认证</Text>
                             </View>
-                        </View>
+                        </TouchableOpacity>
                         <View><Text style={styles.textBold}>{this.state.dctmsg.name}</Text></View>
                         <View><Text style={{color:'#fff'}}>{this.state.dctmsg.title}</Text></View>
                     </View>
