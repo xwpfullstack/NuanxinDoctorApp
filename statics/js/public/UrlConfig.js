@@ -24,6 +24,10 @@ global.Apppatlist_URL = Basic_URL + 'Apppatlist/';
 global.Meds_URL = Basic_URL + 'meds/';
 //添加病人服用药品
 global.SavePrescript_URL = Basic_URL + 'savePrescript/';
+//获取都太的测量等数据
+global.PatRecords_URL = Basic_URL + 'pat_records/';
+//获取都太的测量等数据
+global.PatRecordsDetails_URL = Basic_URL + 'pat_records_details/';
 
 //获取医生诊断列表
 global.DocDiags_URL = Basic_URL + 'docDiags/';

@@ -14,20 +14,20 @@ import React, {
 
 const DAYDIFF=86400000;
 import Loading  from './Loading';
+import LoadingModal from './LoadingModal';
+import Modal from 'react-native-root-modal';
 
- let proDate=new Date();
-class PatientMsgImage extends Component{
+class PatientMsgImageMonth extends Component{
 	constructor(props){
 	    super(props);  
-
-
 	    var table=this.createTables();
 	    this.state={
 	    	isLoad:false,
 	    	datas:{},
+	    	Lvisible:false,
 	    	tables:table,
 	    	patientData:this.props.patientData,
-	    	dates:[new Date(proDate.getTime()-7*DAYDIFF),new Date(proDate.getTime())],
+	    	dates:new Date(),
 	    }
 	};
 	postData(){
@@ -48,8 +48,6 @@ class PatientMsgImage extends Component{
 		      .then((responseData)=>{
 		        this.setState({datas:responseData,isLoad:true});
 		        this.changeSetTables();
-		        //console.log(responseData);
-		       
 		      })
 		      .catch((err)=>{
 		          console.log(err.toString());
@@ -61,16 +59,16 @@ class PatientMsgImage extends Component{
 	}
 	filterDatas(){
 		let result={};
-		//console.log(this.state.dates);
 		for (let key in this.state.datas){
 			if (key != 'status') {
 				let tempList=this.state.datas[key].filter((value)=>{
 					let date=new Date(value['ctime']);
-					return this.state.dates[0].getTime()<=date.getTime() && this.state.dates[1].getTime()>=date.getTime()
+					return this.state.dates.getMonth() == date.getMonth() && this.state.dates.getFullYear() == date.getFullYear();
 				});
 				result[key]=tempList;
 			}
 		}
+		//console.log(result);
 		return result;
 	}
 	changeSetTables(){
@@ -91,32 +89,34 @@ class PatientMsgImage extends Component{
 			}
 			for (let data of filData[key]){
 				let date=new Date(data['ctime']);
-				let nums=parseInt((date.getTime()-this.state.dates[0].getTime())/DAYDIFF);
-				this.state.tables[index][nums] = data;
+				let nums=date.getDate()-1;
+				let indexnum=parseInt(nums/2);
+				this.state.tables[index][indexnum][nums%2] = data;
 			}
 		};
+		
 		this.setState({tables:this.state.tables});
 	}
 	createTables(){
 		let table=[];
 		for (let i = 0; i < 4; i++) {
 			table.push([]);
-			for (let j = 0; j < 7; j++) {
-				table[i].push('');
+			for (let j = 0; j < 16; j++) {
+				table[i].push(['','']);
 			};
 		};
 		return table;
 	};
 	ClearTables(){
 		for (let i = 0; i < 4; i++) {
-			for (let j = 0; j < 7; j++) {
-				this.state.tables[i][j]='';
+			for (let j = 0; j < 16; j++) {
+				this.state.tables[i][j]=['',''];
 			};
 		};
 
 	};
 	getMsg(data,type){
-		console.log(data);
+		 this.refs['loadModal'].tiggleModel(true);
 		let id;
 		switch(type){
 			case 0:
@@ -129,11 +129,6 @@ class PatientMsgImage extends Component{
 			id=data.record_id;
 			break;
 		};
-		console.log(JSON.stringify({
-		              patient_id:this.props.patientData.id,
-		              id:id,
-		              record_type:type,
-		            }));
 		fetch(PatRecordsDetails_URL,{
 		            method: 'post',
 		            headers: {
@@ -151,12 +146,19 @@ class PatientMsgImage extends Component{
 		      })
 		      .then((responseData)=>{
 		        console.log(responseData);
+		        this.refs['loadModal'].tiggleModel(false);
+		        this.setState({Lvisible:true});
 		      })
 		      .catch((err)=>{
 		          console.log(err.toString());
+		          this.refs['loadModal'].tiggleModel(false);
 		      })
 		      .done();
 
+	};
+	closeModal(){
+		  this.setState({Lvisible:false});
+		  Alert.alert(this.state.Lvisible+'');
 	}
 	createViewByTb(){
 		let columnView=[];
@@ -166,6 +168,7 @@ class PatientMsgImage extends Component{
 			columnView=(<Loading />);
 		}
 		else{
+			
 			for (let i = 0; i < this.state.tables.length; i++) {
 				rowView.push([]);
 				columnView.push(
@@ -174,18 +177,25 @@ class PatientMsgImage extends Component{
 					</View>
 				);
 				for (let j = 0; j < this.state.tables[i].length; j++) {
-					let content;
-					if (this.state.tables[i][j] == '') {
-						content=(<View style={[styles.tdView]}>
-							</View>);
-					}
-					else{
-						//console.log(this.state.tables[i][j]);
-						content=(
-						<TouchableOpacity onPress={()=>this.getMsg(this.state.tables[i][j],i)} style={[styles.tdView,{backgroundColor:viewColors[i]}]}>
-							<Text style={styles.trTxt}>{this.state.tables[i][j]['ctime'].split('/')[2]}</Text>
-						</TouchableOpacity>);
-					}
+					let contentSon=['',''];
+					let content=(
+						<View style={styles.contentSon}>
+							{contentSon}
+						</View>
+					);
+					for (let z = 0; z < 2; z++) {
+						if(this.state.tables[i][j][z] == ''){
+							contentSon[z]=(<View style={[styles.tdView]}>
+									</View>);
+						}
+						else{
+							//console.log(this.state.tables[i][j][z]);
+							contentSon[z]=(<TouchableOpacity onPress={()=>this.getMsg(this.state.tables[i][j][z],i)} style={[styles.tdView,{backgroundColor:viewColors[i]}]}>
+									<Text style={styles.trTxt}>{this.state.tables[i][j][z]['ctime'].split('/')[2]}</Text>
+								</TouchableOpacity>);
+						}
+					};
+					
 					rowView[i].push(
 						content
 					);
@@ -195,19 +205,27 @@ class PatientMsgImage extends Component{
 		return columnView;
 	};
 	proWeek(){
-		let tempDate=this.state.dates.map((value)=>{
-			value=new Date(value.getTime()-7*DAYDIFF);
-			return value;
-		});
-		this.setState({dates:tempDate});
+		let value=this.state.dates;
+		if (value.getMonth() == 1) {
+			value.setMonth(12);
+			value.setFullYear(value.getFullYear()-1);
+		}
+		else{
+			value.setMonth(value.getMonth()-1);
+		}
+		this.setState({dates:value});
 		this.changeSetTables();
 	};
 	nextWeek(){
-		let tempDate=this.state.dates.map((value)=>{
-			value=new Date(value.getTime()+7*DAYDIFF);
-			return value;
-		});
-		this.setState({dates:tempDate});
+		let value=this.state.dates;
+		if (value.getMonth() == 12) {
+			value.setMonth(1);
+			value.setFullYear(value.getFullYear()+1);
+		}
+		else{
+			value.setMonth(value.getMonth()+1);
+		}
+		this.setState({dates:value});
 		this.changeSetTables();
 	};
 	render(){
@@ -237,10 +255,19 @@ class PatientMsgImage extends Component{
 				<View  style={styles.DfImageCG}>
 				<View style={styles.DfImageCGContent}>
 					<TouchableOpacity onPress={()=>this.proWeek()} style={styles.btnImage}><Image source={require('../../images/icon/prepM.png')}></Image></TouchableOpacity>
-					<Text style={{alignSelf:'center',fontSize:18}}> {`${this.state.dates[0].getMonth()+1}月${this.state.dates[0].getDate()}号`}- {`${this.state.dates[1].getMonth()+1}月${this.state.dates[1].getDate()}号`} </Text>
+					<Text style={{alignSelf:'center',fontSize:18}}> {`${this.state.dates.getMonth()+1}月`}</Text>
 					<TouchableOpacity onPress={()=>this.nextWeek()} style={styles.btnImage}><Image source={require('../../images/icon/nextM.png')}></Image></TouchableOpacity>
 					</View>
 				</View>
+				 <Modal visible={this.state.Lvisible}
+			                        style={{height:Dimensions.get('window').height,
+			                                    width:Dimensions.get('window').width,top:0,bottom:0,left:0,right:0,backgroundColor:'rgba(0,0,0,0.1)'}}>
+			                               <TouchableOpacity onPress={()=>this.closeModal()} style={styles.modalStyle}>
+
+			                               </TouchableOpacity>
+			                             
+			              </Modal>
+				<LoadingModal ref='loadModal'/>
 			</View>
 		);
 	};
@@ -295,7 +322,7 @@ const styles = StyleSheet.create({
 	},
 	trTxt:{
 		color:'white',
-		fontSize:15,
+		fontSize:12,
 	},
 	trView:{
 		flexDirection:'row',
@@ -305,8 +332,34 @@ const styles = StyleSheet.create({
 		flex:1,
 		justifyContent:'center',
 		alignItems:'center',
-		borderRadius:Dimensions.get('window').width*0.75/7,
+		borderRadius:Dimensions.get('window').width*0.75/16,
+		height:Dimensions.get('window').width*0.75/16,
+		width:Dimensions.get('window').width*0.75/16,
+	},
+	contentSon:{
+		flexDirection:'column',
+		justifyContent:'center',
+		alignItems:'center',
+		flex:1,
+	},
+	tdViewTwo:{
+		flex:2,
+		justifyContent:'center',
+		alignItems:'center',
+		marginLeft:1,
+		borderRadius:Dimensions.get('window').width*0.75/16,
+
+	},
+	modalStyle:{
+	      top:(Dimensions.get('window').height-300)/2,
+	      left:(Dimensions.get('window').width-250)/2,
+	      height:300,
+	      width:250,
+	      borderWidth:1,
+	      borderColor:'#ffffff',
+	      borderRadius:20,
+	      backgroundColor: '#ffffff',
 	},
 });
 
-  export default PatientMsgImage;
+  export default PatientMsgImageMonth;
