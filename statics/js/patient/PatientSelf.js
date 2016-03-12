@@ -16,14 +16,17 @@ import React, {
   } from 'react-native';
 
 import PatientMsgImage from './PatientMsgImage'
+import PatientMsgImageMonth from './PatientMsgImageMonth'
 import Modal from 'react-native-root-modal'
 import AddModal from './AddModal'
   class PatientSelf extends Component{
   	 constructor(props){
 	    super(props);
+           let ischeack=this.props.patientData.relstate == 3 ||this.props.patientData.relstate == 7;
 	    this.state={
 	    	 patientData:this.props.patientData,
               addVisible:false,
+              ischeacked:ischeack,
 	    };
 	   };
 	handlerBack(){
@@ -68,6 +71,9 @@ import AddModal from './AddModal'
           };
           return rowDiaStr;
       }
+      toggleCheack(){
+          this.setState({ischeacked:!this.state.ischeacked});
+      };
 
       closeAddModal(){
             this.setState({addVisible:false});
@@ -78,7 +84,9 @@ import AddModal from './AddModal'
   				<View style={styles.tittle}>
   					<View style={styles.titleContent}>
 						<TouchableOpacity style={{width:50}} onPress={()=>this.handlerBack()}><Image source={require('../../images/icon/back.png')}></Image></TouchableOpacity>
-  						<Text style={styles.name}>{this.state.patientData.name}</Text>
+  						<Text style={styles.name}>
+                                            {this.state.patientData.name?this.state.patientData.name:(this.state.patientData.nickname?this.state.patientData.nickname:this.state.patientData.openid.substring(0,9))}
+                                       </Text>
   						<TouchableOpacity style={{width:50}} onPress={()=>this.selfModal()}><Image style={{alignSelf:'flex-end'}} source={require('../../images/icon/add.png')} /></TouchableOpacity>
   					</View>
   				</View>
@@ -99,13 +107,14 @@ import AddModal from './AddModal'
 					             	<Text style={styles.itemTwoHeader}>{this.state.patientData.tel}</Text>
 					             	<Text style={styles.itemTwoHeader}>{this.getDia(this.state.patientData)}</Text>
 					        	</View>
-					             <Image
-					                source={require('../../images/load/jump.png')} style={{borderWidth:1}}/>
-
+                                              <TouchableOpacity  onPress={()=>this.toggleCheack()}>
+              					             <Image 
+              					                source={this.state.ischeacked?require('../../images/icon/collected.png'):require('../../images/icon/collectt.png')} style={{}}/>
+					             </TouchableOpacity>
 					            </View>
 
   				</View>
-  				<PatientMsgImage />
+  				<PatientMsgImageMonth  patientData={this.props.patientData}/>
 
   				<TouchableOpacity onPress={()=>this.jump('completeRecord')}>
   				<View style={[styles.tRow,{marginBottom:1,}]}>

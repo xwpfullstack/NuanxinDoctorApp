@@ -14,7 +14,7 @@ global.DoctorRegist_URL = Basic_URL + 'AppDoctorRegist/';
 //获取医生信息
 global.DocInfo = Basic_URL + 'info/';
 //编辑后保存医生信息
-global.SaveDovInfo = Basic_URL + 'editorInfo/';
+global.SaveDocInfo = Basic_URL + 'editorInfo/';
 //获取患者列表
 global.PatientList_URL = Basic_URL + 'patlist/';
 
@@ -24,6 +24,10 @@ global.Apppatlist_URL = Basic_URL + 'Apppatlist/';
 global.Meds_URL = Basic_URL + 'meds/';
 //添加病人服用药品
 global.SavePrescript_URL = Basic_URL + 'savePrescript/';
+//获取都太的测量等数据
+global.PatRecords_URL = Basic_URL + 'pat_records/';
+//获取都太的测量等数据
+global.PatRecordsDetails_URL = Basic_URL + 'pat_records_details/';
 
 
 //医生订单列表

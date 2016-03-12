@@ -74,6 +74,9 @@ class DrugDetailed extends Component {
         var newList=this.state.MediaNums.map((value,index)=>{
           return (
             <View key={index}>
+            {console.log(this.props.drugId)}
+            {console.log(this.props.drugName)}
+
                  <View style={styles.startTime}>
                     <View style={styles.startTimeCheack}>
                         <TouchableOpacity

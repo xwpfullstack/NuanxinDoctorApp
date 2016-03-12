@@ -96,7 +96,6 @@ class CaseHistory extends Component {
     }
 
     _isDataLoad() {
-        console.log(this.state.caseData);
         if(this.state.caseData){
             return  this._classicCaseList()
         }
@@ -139,7 +138,6 @@ class CaseHistory extends Component {
                return response.json();
           })
           .then((responseData)=>{
-            console.log(responseData);
             this.setState({
                 caseData:responseData,
                 dataSource:this.state.dataSource.cloneWithRows(responseData),
