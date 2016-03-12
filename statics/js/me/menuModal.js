@@ -12,6 +12,8 @@ import React, {
 } from 'react-native';
 import Modal from 'react-native-root-modal';
 import DoctorPhoto from '../../js/login/DoctorPhoto';
+var ImagePickerManager = require('NativeModules').ImagePickerManager;
+var FileUpload = require('NativeModules').FileUpload;
 
 var WINDOW_WIDTH = Dimensions.get('window').width;
 var WINDOW_HEIGHT = Dimensions.get('window').height;
@@ -20,6 +22,7 @@ class MenuModal extends Component{
   constructor(props){
     super(props);
     this.state={
+        sourceUrl:null,
         codeImg:'',
     }
     this.postCodeData();
@@ -32,7 +35,7 @@ class MenuModal extends Component{
             menuname='doctorMsgEdit';
             break;
            case 'exit':
-            menuname='logIn';
+            menuname='logout';
             break;
       }
         this.props.close();
@@ -137,12 +140,43 @@ class MenuModal extends Component{
 
     //修改头像Modal
     PhotoModal() {
-        return (
-            <View style={{height:300,width:300,top:WINDOW_HEIGHT*0.5-100,backgroundColor:'#FFF'}}>
-                <DoctorPhoto />
-            </View>
-        );
-    }
+        var options = {
+          title: '选择图片',
+          cancelButtonTitle: '取消',
+          takePhotoButtonTitle: '拍照',
+          chooseFromLibraryButtonTitle: '从相册获取',
+          cameraType: 'front',
+          mediaType: 'photo',
+          videoQuality: 'high',
+          maxWidth: 1000,
+          maxHeight: 1000,
+          aspectX: 1,
+          aspectY: 2,
+          quality: 0.2,
+          angle:270,
+          allowEditing: true,
+          noData: false,
+          storageOpations: {
+            skipBackup: false,
+            path: 'images'
+          }
+        };
+        ImagePickerManager.showImagePicker(options,(response) => {
+          if(response.error) {
+            console.log('ImagePickerManager Error: ',response.error);
+          }else if(response.didCancel) {
+            console.log('User cancelled image picker');
+          }else if(response.customButton) {
+            console.log('User tapped custom button: ', response.customButton);
+          }else {
+            /*const source = {uri: 'data:image/jpeg;base64,' + response.data,isStatic: true};*/
+            const source = {uri: response.uri,isStatic: true};
+            this.setState({
+              sourceUrl: source,
+            });
+          }
+        })
+      }
 
   render(){
       return(

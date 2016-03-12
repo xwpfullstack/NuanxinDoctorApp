@@ -127,11 +127,23 @@ class CaseView extends Component{
                             </View>
                         </View>
                     </View>
-                    <TouchableOpacity style={styles.caseBtn}>
-                        <View style={{flex:1,alignItems:'center',justifyContent:'center'}}>
-                            <Text style={styles.caseText}>确认</Text>
-                        </View>
-                    </TouchableOpacity>
+                    <View style={{flexDirection:'row',}}>
+                        <TouchableOpacity style={styles.caseBtn}>
+                            <View style={{flex:1,alignItems:'center',justifyContent:'center'}}>
+                                <Text style={styles.caseText}>提交</Text>
+                            </View>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                        onPress= {() => {this.props.navigator.pop()}}
+                        style={[styles.caseBtn,{
+                            marginRight:0,
+                            backgroundColor:'#DDDDDD',
+                        }]}>
+                            <View style={{flex:1,alignItems:'center',justifyContent:'center'}}>
+                                <Text style={[styles.caseText,{color:'#666666'}]}>取消</Text>
+                            </View>
+                        </TouchableOpacity>
+                    </View>
                 </Image>
             </View>
         );

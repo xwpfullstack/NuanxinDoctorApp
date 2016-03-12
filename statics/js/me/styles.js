@@ -262,8 +262,9 @@ const styles = StyleSheet.create({
         marginTop:10,
         height:40,
         borderRadius:10,
-        width:WINDOW_WIDTH-50,
         alignSelf:'center',
+        flex:0.5,
+        marginRight:10
     }
 });
 

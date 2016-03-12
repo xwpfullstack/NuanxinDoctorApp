@@ -114,10 +114,10 @@ class CaseHistory extends Component {
                     style={{width:100,height:100}}
                 />
                 <View style={{paddingBottom:5}}>
-                    <Text>您暂时没有经典病例,</Text>
+                    <Text style={styles.writeText}>您暂时没有经典病例,</Text>
                 </View>
                 <View>
-                    <Text>请点击右上方添加按钮添加。</Text>
+                    <Text style={styles.writeText}>请点击右上方添加按钮添加。</Text>
                 </View>
             </View>
         )
