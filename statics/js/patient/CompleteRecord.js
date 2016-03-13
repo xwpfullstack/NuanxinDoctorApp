@@ -73,6 +73,8 @@ class CompleteRecord extends Component {
     super(props);
     this.state = {
       data: recordData,
+      isLoad:false,
+      isSuccess:true,
     }
   }
   componentDidMount(){
@@ -80,7 +82,6 @@ class CompleteRecord extends Component {
     //  Alert.alert(this.state.data+'');
   }
   postData(){
-    Alert.alert('',this.props.orderData.sn+'');
     this.setState({isLoad:false});
       // Alert.alert('fetch');
       fetch(PatientCaseBook_URL,{
@@ -99,8 +100,8 @@ class CompleteRecord extends Component {
         })
         .then((responseData)=>{
           // console.log(responseData);
-          this.setState({data:responseData})
-            Alert.alert('',JSON.stringify(data));
+          // this.setState({data:responseData})
+            // Alert.alert('',JSON.stringify(responseData));
 
         })
         .catch((err)=>{
@@ -176,13 +177,15 @@ class CompleteRecord extends Component {
           </View>
         </View>
         <ScrollView style = {styles.container}>
-          <TouchableHighlight
+          {/*<TouchableHighlight
             underlayColor='rgba(34,26,38,0.1)'
             onPress={()=>this.addRecord()}
             style={styles.buttonNewStyle}
           >
             <Text style={styles.buttonNewText}>+添加病例</Text>
-          </TouchableHighlight>
+          </TouchableHighlight>*/}
+          <View style={{height:11}}>
+          </View>
           {
             this.state.data.map((data)=>(
             <RecordTable

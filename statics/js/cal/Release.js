@@ -17,7 +17,7 @@ import React, {
 } from 'react-native';
 
 import NewsList from './NewsList';
-import Loading from '../patient/Loading';
+import Modal from 'react-native-root-modal';
 
 const newsSet = [
   {date: '2016年02月10日',subject: '门诊停诊通知', content: '本周因到外地参加学术讨论会，停止门诊一周，请谅解。'},
@@ -111,7 +111,6 @@ class Release extends Component {
         .done();
   };
   render() {
-    if (this.state.isLoad) {
       if (this.state.isSuccess) {
         return (
           <Image
@@ -152,6 +151,14 @@ class Release extends Component {
               {/*<NewsList navigator={this.props.navigator} newsSet = {newsSet}/>*/}
               <View style={{height:85,}}></View>
             </ScrollView>
+            <Modal
+                style={{top: 0,right: 0,bottom: 0,left: 0,backgroundColor: 'transparent',}}
+                visible={!this.state.isLoad}
+            >
+                <View style={styles.waiting}>
+                  <ProgressBarAndroid />
+                </View>
+            </Modal>
           </Image>
         );
       } else{
@@ -174,12 +181,6 @@ class Release extends Component {
           );
         };
     }
-    else{
-        return (
-                  <ProgressBarAndroid />
-          );
-    };
-  }
 }
 
 const styles = StyleSheet.create({
@@ -231,7 +232,12 @@ const styles = StyleSheet.create({
 		fontFamily: 'PingFang-SC-Regular',
 		fontSize: 14,
     color: '#FFFFFF',
-
+  },
+  waiting: {
+    width: Dimensions.get('window').width,
+    height: Dimensions.get('window').height,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
 

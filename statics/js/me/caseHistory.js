@@ -5,8 +5,12 @@ import React, {
   Text,
   View,
   ListView,
+  ScrollView,
+  Dimensions,
   Image,
 } from 'react-native';
+
+var WINDOW_HEIGHT = Dimensions.get('window').height;
 
 import styles from './styles'
 import Modal from 'react-native-root-modal';
@@ -34,21 +38,56 @@ class CaseHistory extends Component {
 
         );
     }
+
+    //病例显示数据
     _renderRow(rowdata) {
         return (
-            <View>
-                <View>
-                    <Text>{rowdata.description}</Text>
+            <View style={{paddingTop:20}}>
+                <View style={{paddingBottom:10}}>
+                    <Text style={styles.caseHistoryTitle}>
+                        {rowdata.description}
+                    </Text>
                 </View>
-                <View>
-                    <View>
-                    <Text>{rowdata.details}</Text>
+                <View style={{backgroundColor:'rgba(255,255,255,0.2)',borderRadius:5,padding:5}}>
+                    <View style={styles.caseLine}>
+                        <Text style={styles.caseLineTitle}>病情描述：</Text>
+                        <Text style={[styles.caseText,{fontSize:14}]}>
+                            　　{rowdata.details}
+                        </Text>
                     </View>
-                    <View>
-                    <Text>{rowdata.check}</Text>
+                    <View style={styles.caseLine}>
+                        <Text style={styles.caseLineTitle}>主诉：</Text>
+                        <Text style={styles.caseText}>
+                            　　{rowdata.check}
+                        </Text>
                     </View>
-                    <View>
-                    <Text>{rowdata.medicine}</Text>
+                    <View style={styles.caseLine}>
+                        <Text style={styles.caseLineTitle}>曾服药物：</Text>
+                        <Text style={[styles.caseText,{fontSize:14}]}>
+                            　　{rowdata.medicine}
+                        </Text>
+                    </View>
+                    <View style={styles.caseLine}>
+                        <Text style={styles.caseLineTitle}>诊断：</Text>
+                        <Text style={[styles.caseText,{fontSize:14}]}>
+                            　　{rowdata.diagnose}
+                        </Text>
+                    </View>
+                    <View style={styles.caseLine}>
+                        <Text style={styles.caseLineTitle}>药方：</Text>
+                        <Text style={[styles.caseText,{fontSize:14}]}>
+                            　　{rowdata.prescription}
+                        </Text>
+                    </View>
+                    <View style={styles.caseLine}>
+                        <Text style={styles.caseLineTitle}>治疗进展：</Text>
+                        <Text style={[styles.caseText,{fontSize:14}]}>
+                            　　{rowdata.progress}
+                        </Text>
+                    </View>
+                    <View style={styles.caseLine}>
+                        <Text style={styles.caseLineTitle}>总结：</Text>
+                        <Text style={[styles.caseText,{fontSize:14}]}>　　{rowdata.summary}</Text>
                     </View>
                 </View>
             </View>
@@ -57,7 +96,6 @@ class CaseHistory extends Component {
     }
 
     _isDataLoad() {
-        console.log(this.state.caseData);
         if(this.state.caseData){
             return  this._classicCaseList()
         }
@@ -66,6 +104,7 @@ class CaseHistory extends Component {
         }
     }
 
+    //当没有数据返回时的页面
     _NoclassicCase(){
         return(
             <View style={styles.nocase}>
@@ -74,15 +113,16 @@ class CaseHistory extends Component {
                     style={{width:100,height:100}}
                 />
                 <View style={{paddingBottom:5}}>
-                    <Text>您暂时没有经典病例,</Text>
+                    <Text style={styles.writeText}>您暂时没有经典病例,</Text>
                 </View>
                 <View>
-                    <Text>请点击右上方添加按钮添加。</Text>
+                    <Text style={styles.writeText}>请点击右上方添加按钮添加。</Text>
                 </View>
             </View>
         )
     }
 
+    //返回病例数据
     postCaseData(){
         fetch(TypicalList_URL,{
                 method: 'post',
@@ -98,7 +138,6 @@ class CaseHistory extends Component {
                return response.json();
           })
           .then((responseData)=>{
-            console.log(responseData);
             this.setState({
                 caseData:responseData,
                 dataSource:this.state.dataSource.cloneWithRows(responseData),
@@ -118,7 +157,14 @@ class CaseHistory extends Component {
                 navigator={this.props.navigator}
                 addBtn={true}
                 title={'经典病例'} />
-                {this._isDataLoad()}
+                <Image
+                    source={require('../../images/load/background.png')}
+                    style={styles.allPage}>
+                    <ScrollView style={{height:300}}>
+                    {this._isDataLoad()}
+                    <View style={{height:80}}></View>
+                    </ScrollView>
+                </Image>
         </View>
       );
   }

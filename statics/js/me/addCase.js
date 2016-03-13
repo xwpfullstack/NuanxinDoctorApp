@@ -22,7 +22,9 @@ class AddCase extends Component {
             <BackTitle title={'添加病例'}
                 navigator = {this.props.navigator} />
             <ScrollView style={styles.ScrollViewBody}>
-                <CaseView />
+                <CaseView
+                doctorId={this.props.doctorId}
+                navigator={this.props.navigator}/>
             </ScrollView>
         </View>
         );
