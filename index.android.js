@@ -37,6 +37,7 @@ import WebMainPage from './statics/js/me/webView';
 import DoctorMsgEdit from './statics/js/me/doctorMsgEdit';
 import Prescription from './statics/js/me/prescription';
 import DrugDetailed from './statics/js/me/drugDetailed';
+import ChangePhoto from './statics/js/me/changePhoto';
 
 var _navigator;
 //监听硬件返回功能
@@ -147,11 +148,14 @@ class NuanXinDoctorApp extends Component {
             medname={route.drugName}
             navigator={navigator} />;
             break;
+      case 'changePhoto':
+        return <ChangePhoto navigator={navigator} doctorId={doctorId} />
+        break;
       case 'caseHistory':
         return <CaseHistory navigator={navigator} doctorId={doctorId}/>;
         break;
       case 'addCase':
-        return <AddCase navigator={navigator} />;
+        return <AddCase doctorId={doctorId} navigator={navigator} />;
         break;
     };
   };
