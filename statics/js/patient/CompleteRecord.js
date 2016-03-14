@@ -73,8 +73,44 @@ class CompleteRecord extends Component {
     super(props);
     this.state = {
       data: recordData,
+      isLoad:false,
+      isSuccess:true,
     }
   }
+  componentDidMount(){
+    this.postData();
+    //  Alert.alert(this.state.data+'');
+  }
+  postData(){
+    this.setState({isLoad:false});
+      // Alert.alert('fetch');
+      fetch(PatientCaseBook_URL,{
+              method: 'post',
+              headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+                 patient_id:this.props.patientId
+              })
+        })
+        .then((response) => {
+            // Alert.alert('', 'response');
+             return response.json();
+        })
+        .then((responseData)=>{
+          // console.log(responseData);
+          // this.setState({data:responseData})
+            // Alert.alert('',JSON.stringify(responseData));
+
+        })
+        .catch((err)=>{
+            Alert.alert('catch error',err.toString())
+            this.setState({isSuccess:false,isLoad:true});
+            // console.log(err.toString());
+        })
+        .done();
+  };
   addRecord() {
 
   }
@@ -129,7 +165,10 @@ class CompleteRecord extends Component {
 
 	render(){
 		return (
-      <ScrollView style = {styles.container}>
+      <Image
+        source={require('../../images/load/background.png')}
+        style={styles.backgroundImage}
+      >
         <View style={styles.tittle}>
           <View style={styles.titleContent}>
           <TouchableOpacity style={{width:50}} onPress={()=>this.popOut()}><Image source={require('../../images/icon/back.png')}></Image></TouchableOpacity>
@@ -137,33 +176,39 @@ class CompleteRecord extends Component {
             <View style={{width:50}}></View>
           </View>
         </View>
-        <TouchableHighlight
-          underlayColor='rgba(34,26,38,0.1)'
-          onPress={()=>this.addRecord()}
-          style={styles.buttonNewStyle}
-        >
-          <Text style={styles.buttonNewText}>+添加病例</Text>
-        </TouchableHighlight>
-        {
-          this.state.data.map((data)=>(
-          <RecordTable
-            key = {data.date}
-            style = {styles.recordTable}
-            navigator = {this.props.navigator}
-            recordData = {data}
-            deleteData = {(date, medcine)=>{this.deleteData(date, medcine)}}
-            modifyData = {(date, medcine, data)=>{this.modifyData(date, medcine, data)}}
-          />
-        ))}
-      </ScrollView>
+        <ScrollView style = {styles.container}>
+          {/*<TouchableHighlight
+            underlayColor='rgba(34,26,38,0.1)'
+            onPress={()=>this.addRecord()}
+            style={styles.buttonNewStyle}
+          >
+            <Text style={styles.buttonNewText}>+添加病例</Text>
+          </TouchableHighlight>*/}
+          <View style={{height:11}}>
+          </View>
+          {
+            this.state.data.map((data)=>(
+            <RecordTable
+              key = {data.date}
+              style = {styles.recordTable}
+              navigator = {this.props.navigator}
+              recordData = {data}
+              deleteData = {(date, medcine)=>{this.deleteData(date, medcine)}}
+              modifyData = {(date, medcine, data)=>{this.modifyData(date, medcine, data)}}
+            />
+          ))}
+          <View style={{height:30}}>
+          </View>
+        </ScrollView>
+      </Image>
 		);
 	}
 };
 
 const styles = StyleSheet.create({
-  container: {
-    height: Dimensions.get('window').height - 80,
-    backgroundColor: '#F0F0F0',
+  backgroundImage: {
+    width: Dimensions.get('window').width,
+    height: Dimensions.get('window').height,
   },
   buttonNewText: {
     fontFamily: 'PingFang-SC-Regular',

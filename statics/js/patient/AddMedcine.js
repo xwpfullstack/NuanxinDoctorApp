@@ -181,6 +181,11 @@ isPass(){
    
   }
 
+
+chooseFile(){
+  
+}
+
   update() {
 
   }
@@ -195,6 +200,10 @@ isPass(){
           </View>
         </View>
 
+         <Image
+              source={require('../../images/load/background.png')}
+              style={{height:Dimensions.get('window').height,width:Dimensions.get('window').width}}
+              > 
         <ScrollView style = {styles.container}>
           <View style = {styles.inputLine}>
             <Text style = {styles.label}>请选择医生诊断</Text>
@@ -315,6 +324,7 @@ isPass(){
                                           {this.state.content}
                              
               </Modal>
+              </Image>
       </View>
     );
   }
@@ -323,6 +333,7 @@ isPass(){
 const styles = StyleSheet.create({
   container: {
     height: Dimensions.get('window').height - 65,
+    backgroundColor:'rgba(255,255,255,0.3)',
   },
   tittle:{
     backgroundColor:'#878181',
@@ -359,7 +370,7 @@ const styles = StyleSheet.create({
     flex: 2,
 		fontFamily: 'PingFang-SC-Regular',
 		fontSize: 12,
-    color: '#666666',
+    color: 'white',
 
   },
   inputStyle: {
@@ -372,6 +383,7 @@ const styles = StyleSheet.create({
   },
 	searchInput: {
 		fontSize: 12,
+             color:'white',
 	},
   buttonStyle: {
     justifyContent: 'center',

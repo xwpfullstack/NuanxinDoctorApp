@@ -17,11 +17,6 @@ import React, {
 
 
 
-//{"openid": "", "diagnoses": ["", "", "", "", "", "", "", "", "", ""],
-// "tel": "18611198863", "name": "", "area": "", "age": 28, 
-//"newfollowTime": "2016-01-11 20:50:50", "regTime": "2016\u5e7401\u670808\u65e5",
-// "sex": "m", "access": 1, "relstate": 1, "nickname": "\u5929\u5929\u5411\u4e0a", 
-//"id": 56, "followTime": "2015-12-17 21:34:08"}
 
 var json={};
 var sectionIDS=[];
@@ -48,6 +43,7 @@ class MainList extends Component{
       dataSource:dataSource,
       isLoad:false,
       isSuccess:true,
+      refreshing:false,
   };
 };
 
@@ -152,8 +148,9 @@ handlePatient(rowdata){
             </View>
 
             <View style={styles.itemContent}>
-              <Text style={styles.itemHeader}>{rowdata.name==''?'未命名':rowdata.name}</Text>
-
+              <Text style={styles.itemHeader}>
+                    {rowdata.name==''?(rowdata.nickname==''?rowdata.openid.substring(0,9):rowdata.nickname):rowdata.name}
+              </Text>
               <View style={styles.jump}>
               <Text style={styles.redText}>
                 {rowDiaStr}
@@ -193,11 +190,25 @@ handlePatient(rowdata){
     //this.setState({dataSource:this.state.dataSource.cloneWithRowsAndSections(json,sectionIDS,rowIDs),});
     //this.props.changeNums(tempData.length);
   };
+
+changeRefresh(is_ok){
+     this.setState({refreshing:is_ok});
+}
+
+onRefresh(){
+    this.props.postData();
+    //Alert.alert('');
+
+  
+};
+
   render(){
     
            return (
                     <PullToRefreshViewAndroid
                         enabled={true}
+                        refreshing={this.state.refreshing}
+                        onRefresh={()=>this.onRefresh()}
                         style={{width:Dimensions.get('window').width}}>
                           <ScrollView style={{height:Dimensions.get('window').height-185,}}>
                                   <ListView

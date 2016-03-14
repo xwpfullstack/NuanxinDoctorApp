@@ -6,22 +6,36 @@ import React, {
   StyleSheet,
   Text,
   View,
+  Dimensions,
+  ProgressBarAndroid,
 } from 'react-native';
-
+import Modal from 'react-native-root-modal';
 class NAME extends Component {
-  constructor(props) {
-    super(props);
-  }
+  constructor(){
+    super();
+    this.state={
+        isLoad:true,
+    };
+};
 
   render() {
     return (
-      <View></View>
+      <View >
+
+
+      </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
   container: {
+    width: Dimensions.get('window').width,
+    height: Dimensions.get('window').height,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  infoModal: {
 
   },
 });

@@ -9,15 +9,16 @@ import React, {
   Dimensions,
   ListView,
   TextInput,
+  ToastAndroid,
   Alert,
+  ProgressBarAndroid,
  TouchableHighlight,
  TouchableOpacity,
 } from 'react-native';
-
+import Modal from 'react-native-root-modal'
 
 var DocMsg={
   'title':'',
-  'name':'',
   'content':'',
 };
 
@@ -26,6 +27,8 @@ class DoctorRecord extends Component{
     super();
     this.state={
         DocMsg:DocMsg,
+        isLoad:true,
+        isSuccess:true,
     };
 };
 handleBack(){
@@ -36,61 +39,147 @@ changeTxt(type,txt){
     this.setState({DocMsg:this.state.DocMsg});
 };
 submit(){
-    console.log(this.state.DocMsg);
-};
+  if (this.state.DocMsg.title === '') {
+    Alert.alert('提醒', '请输入主题。');
+    return;
+  }
+  if (this.state.DocMsg.content === '') {
+    Alert.alert('提醒', '请输入内容。');
+    return;
+  }
+  this.setState({isLoad: false});
+  // Alert.alert('', 'docid:'+this.props.doctorId+' openid: '+this.props.openid+' title:'+this.state.DocMsg.title+ ' content:'+this.state.DocMsg.content);
 
-render(){
-    return  (
-        <View style={styles.container}>
-          <View style={styles.tittle}>
-              <View style={styles.titleContent}>
-                  <TouchableOpacity onPress={()=>this.handleBack()} style={{ flexDirection: 'row',}}>
-                      <Image  source={require('../../images/icon/back.png')} style={{marginRight:5,}}/>
-                  </TouchableOpacity>
-                  <Text style={[styles.txtColor,{fontSize:15}]}>医嘱</Text>
-                  <TouchableOpacity onPress={()=>this.submit()}>
-                  <Text style={[styles.txtColor,{fontSize:15}]}>提交</Text>
-                  </TouchableOpacity>
-              </View>
-          </View>
-          <View style={styles.inputGroup}>
-                    <TextInput  
-                              style={styles.TextInput} 
-                              placeholder='标题' 
-                              value={this.state.DocMsg['title']}
-                              placeholderTextColor='#BFBFBF'
-                              onChangeText={(txt)=>this.changeTxt('title',txt)}
-                              underlineColorAndroid='black'/>
-                      <TextInput  
-                              style={styles.TextInput} 
-                              placeholder='患者姓名' 
-                               value={this.state.DocMsg['name']}
-                              placeholderTextColor='#BFBFBF'
-                              onChangeText={(txt)=>this.changeTxt('name',txt)}/>
-                          <View style={{marginTop:15,borderWidth:1}}>
-                               <TextInput  
-                                       style={[styles.TextInput,{marginTop:0}]}  
-                                      placeholder='内容' 
-                                       value={this.state.DocMsg['content']}
-                                      placeholderTextColor='#BFBFBF'
-                                      onChangeText={(txt)=>this.changeTxt('content',txt)}
-                                      underlineColorAndroid='transparent'
-                                      multiline={true}
-                                      numberOfLines={5} />
-                          </View>
-              </View>
-             
-        </View>
-      );
+  this.postData();
+
 };
+postData(){
+    fetch(SendDoctorMsg_URL,{
+            method: 'post',
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+               doctorId:this.props.doctorId,
+               openid:this.props.openid,
+               title:this.state.DocMsg.title,
+               info:this.state.DocMsg.content
+            })
+      })
+      .then((response) => {
+          // Alert.alert('', 'response');
+           return response.json();
+      })
+      .then((responseData)=>{
+        // console.log(responseData);
+
+        this.setState({isLoad:true, data:responseData,isSuccess:true,})
+        if (responseData.status==='success')
+          ToastAndroid.show('发送成功', ToastAndroid.LONG);
+        else {
+          ToastAndroid.show(responseData.msg, ToastAndroid.LONG);
+        }
+          // Alert.alert('',JSON.stringify(responseData));
+        // this.setState({isLoad:true, data:responseData.patients,isSuccess:true,})
+        // this.BaseCreateData(this.state.data,'date');
+                  // Alert.alert('',this.state.data[0].date);
+      })
+      .catch((err)=>{
+          Alert.alert('catch err',err.toString())
+          this.setState({isSuccess:false,isLoad:true});
+          // console.log(err.toString());
+      })
+      .done();
+};
+render(){
+  // Alert.alert('',this.props.doctorId+'');
+  // Alert.alert('',this.props.openid+'');
+  // Alert.alert('',this.props.patientName);
+  if (this.state.isSuccess) {
+      return  (
+        <Image
+          source={require('../../images/load/background.png')}
+          style={styles.backgroundImage}
+        >
+            <View style={styles.tittle}>
+                <View style={styles.titleContent}>
+                    <TouchableOpacity onPress={()=>this.handleBack()} style={{ flexDirection: 'row',}}>
+                        <Image  source={require('../../images/icon/back.png')} style={{marginRight:5,}}/>
+                    </TouchableOpacity>
+                    <Text style={[styles.txtColor,{fontSize:15}]}>医嘱</Text>
+                    <TouchableOpacity onPress={()=>this.submit()}>
+                    <Text style={[styles.txtColor,{fontSize:15}]}>提交</Text>
+                    </TouchableOpacity>
+                </View>
+            </View>
+            <View style={styles.inputGroup}>
+                      <TextInput
+                                style={styles.TextInput}
+                                placeholder='标题'
+                                value={this.state.DocMsg['title']}
+                                placeholderTextColor='#BFBFBF'
+                                onChangeText={(txt)=>this.changeTxt('title',txt)}
+                                underlineColorAndroid='black'/>
+                                <View style={{alignSelf: 'flex-start', marginVertical:11}}>
+                                  <Text style={styles.normalText}>To: {this.props.patientName}</Text>
+                                </View>
+                            <View style={{marginTop:15,borderWidth:1,borderColor: '#AAAAAA'}}>
+                                 <TextInput
+                                         style={[styles.TextInput,{marginTop:0}]}
+                                        placeholder='内容'
+                                         value={this.state.DocMsg['content']}
+                                        placeholderTextColor='#BFBFBF'
+                                        onChangeText={(txt)=>this.changeTxt('content',txt)}
+                                        underlineColorAndroid='transparent'
+                                        multiline={true}
+                                        numberOfLines={5} />
+                            </View>
+                </View>
+                <Modal
+                    style={{top: 0,right: 0,bottom: 0,left: 0,backgroundColor: 'transparent',}}
+                    visible={!this.state.isLoad}
+                >
+                    <View style={styles.waiting}>
+                      <ProgressBarAndroid />
+                    </View>
+                </Modal>
+          </Image>
+        );
+      } else{
+          return (
+              <Image
+                  source={require('../../images/load/background.png')}
+                  style={styles.background}
+                  >
+                     <View
+                          style={{height:Dimensions.get('window').height,
+                                      width:Dimensions.get('window').width,
+                                      flexDirection: 'column',alignItems: 'center',justifyContent: 'center',}}>
+                          <Text style={{color:'#F08300',fontSize:16,}}>加载失败</Text>
+                          <TouchableOpacity onPress={()=>this.postData()}
+                                  style={{borderWidth:1,height:50,width:100,borderRadius:25,borderColor:'#0094ff',justifyContent:'center',alignItems:'center'}}>
+                                 <Text style={{color:'#F08300',fontSize:16,}}>重新加载</Text>
+                          </TouchableOpacity>
+                    </View>
+             </Image>
+          );
+        };
+    }
+
 };
 
 
 const styles = StyleSheet.create({
-    container:{
-    flex:1,
-    flexDirection: 'column',    
-    backgroundColor:'#cccccc',
+    backgroundImage: {
+      width: Dimensions.get('window').width,
+      height: Dimensions.get('window').height,
+  	},
+    normalText: {
+      fontFamily: 'PingFang-SC-Regular',
+      fontSize: 16,
+      fontWeight: '100',
+      color: '#FFFFFF',
     },
     txtColor:{
         color:'rgb(255,255,255)',
@@ -112,8 +201,7 @@ const styles = StyleSheet.create({
     backgroundColor:'#FE9300',
   },
   inputGroup:{
-      flexDirection: 'column',   
-      borderWidth:1,
+      flexDirection: 'column',
       margin:10,
       marginTop:20,
       marginBottom:20,
@@ -121,8 +209,7 @@ const styles = StyleSheet.create({
        justifyContent: 'center',
        alignItems:'center',
        borderRadius:20,
-       borderColor:'#cccccc',
-       backgroundColor:'white',
+       backgroundColor:'rgba(255,255,255,0.3)',
   },
   TextInput:{
       fontSize:15,
@@ -131,12 +218,16 @@ const styles = StyleSheet.create({
   },
   mainView:{
     flex:1,
-    flexDirection: 'column',    
+    flexDirection: 'column',
     backgroundColor:'#F4F1F5',
     alignItems:'center',
   },
-
-
+  waiting: {
+    width: Dimensions.get('window').width,
+    height: Dimensions.get('window').height,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
 
 });
 

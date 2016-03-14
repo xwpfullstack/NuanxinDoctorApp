@@ -62,10 +62,11 @@ class DrugList extends Component {
 componentWillMount(){
     // this.BaseCreateData();
 };
-_onPressDrugBtn(rowdata){
+_onPressDrugBtn(rowdata,drugid){
     this.props.navigator.push({
         name:'drugDetailed',
         drugName:rowdata,
+        drugId:drugid,
     });
 };
 
@@ -84,11 +85,9 @@ postDrugData(){
            return response.json();
       })
       .then((responseData)=>{
-        console.log(responseData);
         this.setState({
             tempData:responseData,
         })
-        //console.log(this.state.tempData);
         this.BaseCreateData();
       })
       .catch((err)=>{
@@ -113,17 +112,21 @@ BaseCreateData(){
       }
       this.setState({dataSource:this.state.dataSource.cloneWithRowsAndSections(json,sectionIDS,rowIDs),});
 };
+
+
 renderRow(rowdata,sectionID,rowID){
     var num=Math.ceil(Math.random()*5)
+    var drugname=rowdata[0];
+    var drugid=rowdata[2];
   return (
       <TouchableOpacity
-          onPress={(rowdata)=>this._onPressDrugBtn(rowdata)}
+          onPress={()=>this._onPressDrugBtn(drugname,drugid)}
           style={styles.drugTouch}>
         <View style={styles.drugLine}>
             <View style={[styles.drugLogo,{backgroundColor:COLOR[num]}]}>
-                <Text style={{fontSize:23,color:'#fff'}}>{rowdata[0][0]}</Text>
+                <Text style={{fontSize:23,color:'#fff'}}>{drugname[0]}</Text>
             </View>
-            <View><Text style={{fontSize:18, color:'#000'}}>{rowdata[0]}</Text></View>
+            <View><Text style={{fontSize:18, color:'#000'}}>{drugname}</Text></View>
         </View>
       </TouchableOpacity>
     );

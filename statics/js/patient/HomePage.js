@@ -82,6 +82,37 @@ getlength(datas){
     return tempdata.length;
 }
 
+pullRrece(){
+this.refs['mainlist'].changeRefresh(true);
+fetch(Apppatlist_URL,{
+            method: 'post',
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+               doctor_id:this.props.doctorId
+            })
+      })
+      .then((response) => {
+           return response.json();
+      })
+      .then((responseData)=>{
+        //Alert.alert('asd');
+        console.log(responseData);
+        let dlength= this.getlength(responseData.patients);
+        this.setState({todaylength:dlength,mainListData:responseData.patients, data:responseData.patients,isSuccess:true,diags:responseData.diags,})
+        this.refs['mainlist'].changeRefresh(false);
+      })
+      .catch((err)=>{
+        this.refs['mainlist'].changeRefresh(false);
+          this.setState({isSuccess:false});
+          console.log(err.toString());
+      })
+      .done();
+
+}
+
 postData(){
   this.setState({isLoad:false});
   //Alert.alert(this.props.doctorId+'');
@@ -99,9 +130,10 @@ postData(){
            return response.json();
       })
       .then((responseData)=>{
+        //Alert.alert('asd');
         console.log(responseData);
         let dlength= this.getlength(responseData.patients);
-            this.setState({todaylength:dlength,isLoad:true,mainListData:responseData.patients, data:responseData.patients,isSuccess:true,diags:responseData.diags,})
+        this.setState({todaylength:dlength,isLoad:true,mainListData:responseData.patients, data:responseData.patients,isSuccess:true,diags:responseData.diags,})
 
       })
       .catch((err)=>{
@@ -172,7 +204,7 @@ pickerDone(pickedValue){
                 <View
                   style={styles.container}
                 >
-                <MainList diags={this.state.diags}  data={this.state.mainListData} doctorId={this.props.doctorId} ref='mainlist' closeModal={()=>this.closeModal()}  changeNums={(num)=>this.changeNums(num)} navigator={this.props.navigator}/>
+                <MainList  postData={()=>this.pullRrece()}  diags={this.state.diags}  data={this.state.mainListData} doctorId={this.props.doctorId} ref='mainlist' closeModal={()=>this.closeModal()}  changeNums={(num)=>this.changeNums(num)} navigator={this.props.navigator}/>
                 <Modal visible={this.state.Lvisible}
                         style={{height:Dimensions.get('window').height,width:Dimensions.get('window').width,top:0,bottom:0,left:0,right:0}}>
                               <TouchableOpacity  onPress={()=>this.closeModal()} style={{height:Dimensions.get('window').height,width:Dimensions.get('window').width,}}>
@@ -202,8 +234,8 @@ pickerDone(pickedValue){
                   <Image
                       source={require('../../images/load/background.png')}
                       style={styles.background}
-                      > 
-                         <TouchableOpacity 
+                      >
+                         <TouchableOpacity
                               onPress={()=>this.postData()}
                               style={{height:Dimensions.get('window').height,
                                           width:Dimensions.get('window').width,

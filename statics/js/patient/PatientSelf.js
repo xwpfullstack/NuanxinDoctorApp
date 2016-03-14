@@ -16,14 +16,17 @@ import React, {
   } from 'react-native';
 
 import PatientMsgImage from './PatientMsgImage'
+import PatientMsgImageMonth from './PatientMsgImageMonth'
 import Modal from 'react-native-root-modal'
 import AddModal from './AddModal'
   class PatientSelf extends Component{
   	 constructor(props){
 	    super(props);
+           let ischeack=this.props.patientData.relstate == 3 ||this.props.patientData.relstate == 7;
 	    this.state={
 	    	 patientData:this.props.patientData,
               addVisible:false,
+              ischeacked:ischeack,
 	    };
 	   };
 	handlerBack(){
@@ -41,6 +44,7 @@ import AddModal from './AddModal'
       jump(value){
           this.props.mainNavigator.push({
             name:value,
+            patientId:this.props.patientData.id,
           });
       };
 
@@ -57,7 +61,7 @@ import AddModal from './AddModal'
             return rowDiaStr;
         }
          for (var i = 0; i < rowdata.diagnoses.length; i++) {
-               rowDiaStr+=(rowdata.diagnoses[i]+'、'); 
+               rowDiaStr+=(rowdata.diagnoses[i]+'、');
              };
           rowDiaStr = rowDiaStr.substring(0,rowDiaStr.length-1);
           if (rowDiaStr.length>20) {
@@ -67,6 +71,9 @@ import AddModal from './AddModal'
           };
           return rowDiaStr;
       }
+      toggleCheack(){
+          this.setState({ischeacked:!this.state.ischeacked});
+      };
 
       closeAddModal(){
             this.setState({addVisible:false});
@@ -77,34 +84,37 @@ import AddModal from './AddModal'
   				<View style={styles.tittle}>
   					<View style={styles.titleContent}>
 						<TouchableOpacity style={{width:50}} onPress={()=>this.handlerBack()}><Image source={require('../../images/icon/back.png')}></Image></TouchableOpacity>
-  						<Text style={styles.name}>{this.state.patientData.name}</Text>
+  						<Text style={styles.name}>
+                                            {this.state.patientData.name?this.state.patientData.name:(this.state.patientData.nickname?this.state.patientData.nickname:this.state.patientData.openid.substring(0,9))}
+                                       </Text>
   						<TouchableOpacity style={{width:50}} onPress={()=>this.selfModal()}><Image style={{alignSelf:'flex-end'}} source={require('../../images/icon/add.png')} /></TouchableOpacity>
   					</View>
   				</View>
   				<View style={styles.selfMsg}>
-  				
+
 					            <View style={styles.itemImage}>
-					              <Image 
+					              <Image
 					                source={require('../../images/load/kobe.jpg')}
 					                style={styles.image} />
 					            </View>
 
 					            <View style={styles.itemContent}>
 					            <View style={styles.wordMSg}>
-					             	<Text 
+					             	<Text
                                                           style={styles.itemHeader}>
                                                             {this.state.patientData.sex=='m'?'男':'女'}  {this.state.patientData.area==''?'暂无地址':this.state.patientData.area}  {this.state.patientData.age}
                                                     </Text>
 					             	<Text style={styles.itemTwoHeader}>{this.state.patientData.tel}</Text>
 					             	<Text style={styles.itemTwoHeader}>{this.getDia(this.state.patientData)}</Text>
 					        	</View>
-					             <Image 
-					                source={require('../../images/load/jump.png')} style={{borderWidth:1}}/>
-					             
+                                              <TouchableOpacity  onPress={()=>this.toggleCheack()}>
+              					             <Image 
+              					                source={this.state.ischeacked?require('../../images/icon/collected.png'):require('../../images/icon/collectt.png')} style={{}}/>
+					             </TouchableOpacity>
 					            </View>
-					
+
   				</View>
-  				<PatientMsgImage />
+  				<PatientMsgImageMonth  patientData={this.props.patientData}/>
 
   				<TouchableOpacity onPress={()=>this.jump('completeRecord')}>
   				<View style={[styles.tRow,{marginBottom:1,}]}>
@@ -129,22 +139,22 @@ import AddModal from './AddModal'
   					</View>
   				</View>
   				</TouchableOpacity>
-          
-  				<Modal 
-                                visible={this.state.addVisible} 
+
+  				<Modal
+                                visible={this.state.addVisible}
                                  style={{height:Dimensions.get('window').height,width:Dimensions.get('window').width,top:0,bottom:0,left:0,right:0}}>
                                       <TouchableOpacity  onPress={()=>this.closeAddModal()} style={{height:Dimensions.get('window').height,width:Dimensions.get('window').width,}}>
-                                            <View style={{ 
+                                            <View style={{
                                                 position: 'absolute',
                                                 right: 1,
                                                 top: 41,
                                                 height:120,
                                                 width:150,
                                                 backgroundColor: 'rgba(0, 0, 0,0.8)',}}>
-                                                    <AddModal patientId={this.props.patientData.id} diags={this.props.diags} mainNavigator={this.props.mainNavigator} close={()=>this.closeAddModal()}/>
+                                                    <AddModal patientId={this.props.patientData.id} openid={this.props.patientData.openid} patientName={this.props.patientData.name} diags={this.props.diags} mainNavigator={this.props.mainNavigator} close={()=>this.closeAddModal()}/>
                                             </View>
                                       </TouchableOpacity>
-                                
+
                           </Modal>
   			</View>
   		);
@@ -199,13 +209,13 @@ const styles = StyleSheet.create({
 		alignItems: 'center',
 		padding: 10,
 		height: 80,
-		
+
 	},
   	itemHeader: {
-   		
+
     		fontSize: 13,
     		fontWeight: '300',
-    		
+
   	},
   	wordMSg:{
   		flexDirection: 'column',
@@ -218,7 +228,7 @@ const styles = StyleSheet.create({
   	},
   	tRow:{
   		flexDirection: 'column',
-    		
+
 		height:40,
 		backgroundColor:'#FFFFFF',
 		justifyContent: 'center',

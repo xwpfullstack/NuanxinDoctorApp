@@ -11,6 +11,7 @@ import React, {
   Image,
   View,
   ToastAndroid,
+  Dimensions,
 } from 'react-native';
 
 import LoadingModal from './LoadingModal';
@@ -77,10 +78,15 @@ postData(data){
             <View style={{width:50}}></View>
           </View>
         </View>
+         <Image
+              source={require('../../images/load/background.png')}
+              style={{height:Dimensions.get('window').height,width:Dimensions.get('window').width}}
+              > 
         <View style = {styles.inputStyle}>
           <TextInput
           style = {styles.searchInput}
             placeholder = {'请输入医生诊断.....'}
+            placeholderTextColor='white'
             onChangeText = {(text) => this.setState({diagnosis: text})}
             underlineColorAndroid = {'transparent'}
             selectTextOnFocus = {true}
@@ -94,6 +100,7 @@ postData(data){
           <Text style={styles.buttonText}>提交</Text>
         </TouchableHighlight>
         <LoadingModal ref='loading'/>
+        </Image>
       </View>
     );
   }
@@ -123,6 +130,7 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     borderWidth: 1,
     margin: 30,
+    backgroundColor:'rgba(255,255,255,0.3)',
   },
   subjectBox: {
     borderWidth: 1,
@@ -131,6 +139,7 @@ const styles = StyleSheet.create({
   },
 	searchInput: {
 		fontSize: 18,
+             color:'white',
 	},
   buttonStyle: {
     justifyContent: 'center',
