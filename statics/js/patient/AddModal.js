@@ -39,6 +39,7 @@ class AddModal extends Component{
          this.props.close();
           this.props.mainNavigator.push({
             name: 'WriteTable',
+            openid: this.props.openid,
           });
     }
 
