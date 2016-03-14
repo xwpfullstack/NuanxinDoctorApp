@@ -135,7 +135,7 @@ pushData(){
         else{
              ToastAndroid.show(responseData.message, ToastAndroid.SHORT);
         }
-       
+
 
       })
       .catch((err)=>{
@@ -143,7 +143,7 @@ pushData(){
            this.setState({Lvisible:false});
            ToastAndroid.show('提交数据失败'+err.toString(), ToastAndroid.SHORT);
       })
-      .done(); 
+      .done();
 }
 
 isPass(){
@@ -169,7 +169,7 @@ isPass(){
 }
 
   submit() {
-   
+
     if(this.isPass()){
        var content=( <Loading  style={{ height: Dimensions.get('window').height - 65}}/> );
        this.setState({Lvisible:true,content:content});
@@ -178,7 +178,7 @@ isPass(){
     else{
         ToastAndroid.show('请填写完整数据', ToastAndroid.SHORT)
     }
-   
+
   }
 
 
@@ -199,6 +199,7 @@ chooseFile(){
       angle:270,
       allowEditing: true,
       noData: false,
+      isUploaded: false,
       storageOpations: {
         skipBackup: false,
         path: 'images'
@@ -246,6 +247,7 @@ chooseFile(){
       var data = result['data'];
       var obj = eval("("+data+")");
       this.setState({
+        isUploaded: true,
         medicine:{
           id:obj['medId'],
           medImg:obj['name'],
@@ -255,6 +257,16 @@ chooseFile(){
 
   }
   render() {
+    let prompttext=this.state.isUploaded?<Text></Text>:<Text>未上传文件</Text>
+    let uploadButton=this.state.isUploaded?<View></View>:
+      <TouchableHighlight
+        underlayColor='rgba(34,26,38,0.1)'
+        onPress={()=>this.update()}
+        style={[styles.buttonStyle, {alignSelf: 'flex-start', marginLeft: 11,}]}
+      >
+        <Text style={styles.buttonText}>上传</Text>
+      </TouchableHighlight>
+
     return (
       <View>
         <View style={styles.tittle}>
@@ -268,7 +280,7 @@ chooseFile(){
          <Image
               source={require('../../images/load/background.png')}
               style={{height:Dimensions.get('window').height,width:Dimensions.get('window').width}}
-              > 
+              >
         <ScrollView style = {styles.container}>
           <View style = {styles.inputLine}>
             <Text style = {styles.label}>请选择医生诊断</Text>
@@ -363,15 +375,9 @@ chooseFile(){
             >
               <Text style={styles.filebuttonText}>选择文件</Text>
             </TouchableHighlight>
-            <Text>未选择文件</Text>
+            {prompttext}
           </View>
-          <TouchableHighlight
-            underlayColor='rgba(34,26,38,0.1)'
-            onPress={()=>this.update()}
-            style={[styles.buttonStyle, {alignSelf: 'flex-start', marginLeft: 11,}]}
-          >
-            <Text style={styles.buttonText}>上传</Text>
-          </TouchableHighlight>
+          {uploadButton}
 
           <TouchableHighlight
             underlayColor='rgba(34,26,38,0.1)'
@@ -385,9 +391,9 @@ chooseFile(){
            <Modal visible={this.state.Lvisible}
                         style={{height:Dimensions.get('window').height,
                                     width:Dimensions.get('window').width,top:0,bottom:0,left:0,right:0,backgroundColor:'rgba(0,0,0,0.1)'}}>
-                                  
+
                                           {this.state.content}
-                             
+
               </Modal>
               </Image>
       </View>
