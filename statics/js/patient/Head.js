@@ -57,14 +57,15 @@ search(){
                   </View>
                 
                     <View style={styles.title}>
-                      <View style={{padding:10,flexDirection: 'row',}}>
-                        <Text style={[styles.textColor,{fontSize:14,flex:6,}]}>今日有{this.state.num}名患者关注</Text>
+                      <View style={{padding:10,}}>
+                        <Text style={[styles.textColor,{fontSize:14,}]}>今日有{this.state.num}名患者关注</Text>
+                        </View>
                           <TouchableOpacity style={styles.titleBtn} onPress={()=>this.showModel()}>
-                            <Text style={[styles.textColor,{fontSize:14,flex:2}]}>分类</Text> 
+                            <Text style={[styles.textColor,{fontSize:14,marginRight:10}]}>分类</Text> 
                             <Image source={require('../../images/load/sort.png')}  style={{height:18,width:13}}/>    
                           </TouchableOpacity>      
                        
-                      </View>
+                      
                     </View>
           </View>
       );
@@ -90,17 +91,17 @@ const styles = StyleSheet.create({
        justifyContent:'center',
   },
     title:{
-      
+      flexDirection: 'row',
       backgroundColor:'#F08300',
       height:30,
-       justifyContent:'center',
+       justifyContent:'space-between',
+       alignItems:'center',
+
       
   },
   titleBtn:{
-      flex:1,
       flexDirection: 'row',
-      marginRight: 16,
-      justifyContent:'flex-start'
+      marginRight: 30,
   },
    textColor:{
      color:'#ffffff',
