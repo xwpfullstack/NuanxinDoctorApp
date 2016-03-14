@@ -93,3 +93,5 @@ global.SendDoctorMsg_URL = Wechat_URL + 'sendDoctorMsg/';
 global.SendTest_URL = Wechat_URL + 'patientTestTable/';
 //获取量表列表
 global.GetTablelist_URL = Test_URL + 'getTablelist/';
+//获取发布列表
+global.GetNewsList_URL = Basic_URL + 'AppNewsList/';
