@@ -25,6 +25,15 @@ global.Apppatlist_URL = Basic_URL + 'Apppatlist/';
 global.Meds_URL = Basic_URL + 'meds/';
 //添加病人服用药品
 global.SavePrescript_URL = Basic_URL + 'savePrescript/';
+//获取都太的测量等数据
+global.PatRecords_URL = Basic_URL + 'pat_records/';
+//获取都太的测量等数据
+global.PatRecordsDetails_URL = Basic_URL + 'pat_records_details/';
+
+//医生订单列表
+global.GetDocOrder_URL = Basic_URL + 'docOrders/';
+//根据订单号获取订单详情
+global.OrderDetail_URL = Basic_URL + 'order/';
 
 //获取医生诊断列表
 global.DocDiags_URL = Basic_URL + 'docDiags/';
@@ -52,6 +61,8 @@ global.delMedModel_URL = Basic_URL + 'delModel/';
 global.PatientOrderList_URL = Basic_URL + 'patOrders/';
 //患者的病例列表
 global.PatientCaseBook_URL = Basic_URL + 'patCaseBook/';
+//删除病例
+global.DeleteCase_URL = Basic_URL + 'delCase/';
 //医生收藏患者
 global.Collection_URL = Basic_URL + 'collection/';
 //取消收藏
