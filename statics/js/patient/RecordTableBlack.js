@@ -47,15 +47,7 @@ class RecordTableBlack extends Component {
     return '  '+strs.join(',');
   }
   render() {
-    let deleteButton = (this.props.doctorId == this.props.recordData.doctor_id) ?
-      <TouchableHighlight
-        underlayColor='rgba(34,26,38,0.1)'
-        onPress={()=>this.props.deleteRecord(this.props.recordData.case_id)}
-        style={[styles.buttonStyle,{marginTop: 11}]}
-      >
-        <Text style={styles.buttonText}>删除病例</Text>
-      </TouchableHighlight>
-    : <View></View>
+  
     return (
       <View style = {this.props.style}>
         <View style = {styles.header}>
@@ -102,7 +94,6 @@ class RecordTableBlack extends Component {
         <View style = {styles.prescriptionRow}>
           <View style = {[styles.rowHeader, {alignSelf: 'center'}]}>
             <Text style = {[styles.rowHeaderText]}>药物处方</Text>
-            {deleteButton}
           </View>
           <View style = {styles.prescriptionRowContent}>
             <View>
