@@ -62,7 +62,7 @@ class RecordTable extends Component {
         </View>
         <View style = {styles.tableRow}>
           <View style = {styles.rowHeader}>
-            <Text style = {styles.rowHeaderText}>医生</Text>
+            <Text style = {[styles.rowHeaderText]}>医生</Text>
           </View>
           <View style = {styles.rowContent}>
             <Text style = {styles.rowContentText}>{this.props.recordData.doctor_name}</Text>
@@ -70,7 +70,7 @@ class RecordTable extends Component {
         </View>
         <View style = {styles.tableRow}>
           <View style = {styles.rowHeader}>
-            <Text style = {styles.rowHeaderText}>科室</Text>
+            <Text style = {[styles.rowHeaderText]}>科室</Text>
           </View>
           <View style = {styles.rowContent}>
             <Text style = {styles.rowContentText}>{this.props.recordData.department}</Text>
@@ -78,7 +78,7 @@ class RecordTable extends Component {
         </View>
         <View style = {[styles.tableRow,{height:60}]}>
           <View style = {styles.rowHeader}>
-            <Text style = {styles.rowHeaderText}>诊断</Text>
+            <Text style = {[styles.rowHeaderText]}>诊断</Text>
           </View>
           <View style = {styles.rowContent}>
             <Text style = {styles.rowContentText}>{this.props.recordData.diagnose.join('、')}</Text>
@@ -100,7 +100,7 @@ class RecordTable extends Component {
         </View>*/}
         <View style = {styles.prescriptionRow}>
           <View style = {[styles.rowHeader, {alignSelf: 'center'}]}>
-            <Text style = {styles.rowHeaderText}>药物处方</Text>
+            <Text style = {[styles.rowHeaderText]}>药物处方</Text>
             {deleteButton}
           </View>
           <View style = {styles.prescriptionRowContent}>

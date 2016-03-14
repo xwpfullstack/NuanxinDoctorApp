@@ -135,6 +135,15 @@ class DoctorLogIn extends Component {
         }
       }
     })
+    .catch((err)=>{
+      Alert.alert(
+        '提示',
+        '网络连接错误，登陆失败',
+        [
+          {text: '确定',onPress:() => {return null}}  
+        ]
+      )
+    })
     .done();
   }
 

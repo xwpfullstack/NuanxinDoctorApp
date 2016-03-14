@@ -110,10 +110,10 @@ fetch(Apppatlist_URL,{
           console.log(err.toString());
       })
       .done();
-
 }
 
 postData(){
+  //Alert.alert('aaaa');
   this.setState({isLoad:false});
   //Alert.alert(this.props.doctorId+'');
     fetch(Apppatlist_URL,{
@@ -130,11 +130,9 @@ postData(){
            return response.json();
       })
       .then((responseData)=>{
-        //Alert.alert('asd');
         console.log(responseData);
         let dlength= this.getlength(responseData.patients);
         this.setState({todaylength:dlength,isLoad:true,mainListData:responseData.patients, data:responseData.patients,isSuccess:true,diags:responseData.diags,})
-
       })
       .catch((err)=>{
           this.setState({isSuccess:false,isLoad:true});

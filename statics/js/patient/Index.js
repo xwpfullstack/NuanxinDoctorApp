@@ -19,7 +19,7 @@ import ViewPager from 'react-native-scrollable-tab-view'
 import BottomTabBar from '../BottomTabBar'
 import Schedule from '../cal/Schedule';
 import Release from '../cal/Release';
-import WriteTable from '../addLessons';
+import PIndex from '../PatientEducation/PIndex';
 
 class nuanxin extends Component {
 
@@ -36,7 +36,7 @@ class nuanxin extends Component {
             <Release navigator={this.props.mainNavigator} doctorId={this.props.doctorId}/>
           </View>
           <View tabLabel='four'>
-            <WriteTable navigator={this.props.mainNavigator} />
+            <PIndex doctorId={this.props.doctorId} navigator={this.props.mainNavigator} />
           </View>
           <View tabLabel='five'>
             <DoctorMainMessage navigator={this.props.mainNavigator} doctorId={this.props.doctorId}/>

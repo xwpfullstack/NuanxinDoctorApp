@@ -67,7 +67,7 @@ changeTxt(key,value){
   render() {
     return (
       <Image
-        source={require('../images/load/background.png')}
+        source={require('../../images/load/background.png')}
         style={styles.backgroundImage}
       >
         <View style={styles.tittle}>

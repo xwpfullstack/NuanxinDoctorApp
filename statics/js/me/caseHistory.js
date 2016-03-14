@@ -142,6 +142,7 @@ class CaseHistory extends Component {
                 caseData:responseData,
                 dataSource:this.state.dataSource.cloneWithRows(responseData),
             })
+            console.log(this.state.dataSource);
           })
           .catch((err)=>{
               console.log(err.toString());
@@ -155,6 +156,7 @@ class CaseHistory extends Component {
         <View>
             <BackTitle
                 navigator={this.props.navigator}
+                addName={'addCase'}
                 addBtn={true}
                 title={'经典病例'} />
                 <Image

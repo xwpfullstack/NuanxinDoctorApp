@@ -16,7 +16,8 @@ class BackTitle extends Component {
     }
     _onPressAddCase(){
         this.props.navigator.push({
-            name:'addCase'
+            name:this.props.addName,
+            carryData:this.props.carryData,
         })
     }
     addBtn(){
