@@ -14,6 +14,7 @@ import React, {
   TouchableOpacity,
   TouchableHighlight,
   ToastAndroid,
+  ScrollView,
   } from 'react-native';
 
 import PatientMsgImage from './PatientMsgImage'
@@ -145,7 +146,7 @@ import AddModal from './AddModal'
       };
   	render(){
   		return(
-  			<View style={styles.container}>
+  			<ScrollView style={styles.container}>
   				<View style={styles.tittle}>
   					<View style={styles.titleContent}>
 						<TouchableOpacity style={{width:50}} onPress={()=>this.handlerBack()}><Image source={require('../../images/icon/back.png')}></Image></TouchableOpacity>
@@ -205,12 +206,14 @@ import AddModal from './AddModal'
   				</View>
   				</TouchableOpacity>
 
+
   				<Modal
                                 visible={this.state.addVisible}
                                  style={{height:Dimensions.get('window').height,width:Dimensions.get('window').width,top:0,bottom:0,left:0,right:0}}>
                                       {this.state.ModalContent}
                           </Modal>
-  			</View>
+                          <View style={{height:50}}></View>
+  			</ScrollView>
   		);
   	};
   };
@@ -226,7 +229,6 @@ const styles = StyleSheet.create({
 		flexDirection: 'column',
 		height:40,
 		justifyContent: 'center',
-		marginTop:1,
 	},
 	titleContent:{
 		flexDirection: 'row',
