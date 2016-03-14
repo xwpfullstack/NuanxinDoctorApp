@@ -19,6 +19,9 @@ import Modal from 'react-native-root-modal';
 import MedcineModal from './MedcineModal';
 import Loading from './Loading';
 
+var ImagePickerManager = require('NativeModules').ImagePickerManager;
+var FileUpload = require('NativeModules').FileUpload;
+
 var DataJson=[
   ];
 
@@ -38,6 +41,11 @@ class AddMedcine extends Component {
       txtMsg:'',
       diags:this.props.diags,
       content:'',
+      photoUrl:'',
+      medicine:{
+        id:'',
+        medImg:'',
+      }
     }
   }
 
@@ -112,9 +120,10 @@ pushData(){
             },
             body: JSON.stringify({
                doctorid:this.props.doctorId,
-               docMedimg:'/aaa/aa/a',
+               docMedimg:this.state.medicine['medImg'],
                'docdiag-list':tempData,
                medName:this.state.name,
+               medId:this.state.medicine['id'],
                medunit:this.state.unit,
                merchant:this.state.productor,
                meddes:this.state.specification,
@@ -231,7 +240,6 @@ chooseFile(){
         'Accept': 'application/json',
       },
       fields: {
-        'medicineName':this.state.name,
         'class':'medicine',
       },
       files: [
@@ -244,7 +252,14 @@ chooseFile(){
       ]
     };
     FileUpload.upload(obj,(err,result)=>{
-      console.log('upload',err,result);
+      var data = result['data'];
+      var obj = eval("("+data+")");
+      this.setState({
+        medicine:{
+          id:obj['medId'],
+          medImg:obj['name'],
+        }
+      })
     })
 
   }
