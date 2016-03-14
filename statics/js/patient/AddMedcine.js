@@ -34,10 +34,10 @@ class AddMedcine extends Component {
       unit: '',
       amount: '',
       meathod: '',
-       Lvisible:false,
-       txtMsg:'',
-       diags:this.props.diags,
-       content:'',
+      Lvisible:false,
+      txtMsg:'',
+      diags:this.props.diags,
+      content:'',
     }
   }
 
@@ -183,10 +183,69 @@ isPass(){
 
 
 chooseFile(){
-  
+    var options = {
+      title: '选择图片',
+      cancelButtonTitle: '取消',
+      takePhotoButtonTitle: '拍照',
+      chooseFromLibraryButtonTitle: '从相册获取',
+      cameraType: 'front',
+      mediaType: 'photo',
+      videoQuality: 'high',
+      maxWidth: 1000,
+      maxHeight: 1000,
+      aspectX: 1,
+      aspectY: 2,
+      quality: 1,
+      angle:270,
+      allowEditing: true,
+      noData: false,
+      storageOpations: {
+        skipBackup: false,
+        path: 'images'
+      }
+    };
+    ImagePickerManager.showImagePicker(options,(response) => {
+      if(response.error) {
+        console.log('ImagePickerManager Error: ',response.error);
+      }else if(response.didCancel) {
+        console.log('User cancelled image picker');
+      }else if(response.customButton) {
+        console.log('User tapped custom button: ', response.customButton);
+      }else {
+        /*const source = {uri: 'data:image/jpeg;base64,' + response.data,isStatic: true};*/
+        const source = {uri: response.uri,isStatic: true};
+        this.setState({
+          photoUrl: source,
+        });
+      }
+    })
 }
 
   update() {
+    var pathArray = this.state.photoUrl['uri'].split('/');
+    var imageName = pathArray[pathArray.length-1];
+    var obj = {
+      uploadUrl: Uploadphoto_URL,
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+      },
+      fields: {
+        'medicineName':this.state.name,
+        'class':'medicine',
+      },
+      files: [
+        {
+          name: '',
+          filename: imageName,
+          filepath: this.state.photoUrl['uri'],
+          filetype: null,
+        },
+      ]
+    };
+    FileUpload.upload(obj,(err,result)=>{
+      console.log('upload',err,result);
+    })
 
   }
   render() {

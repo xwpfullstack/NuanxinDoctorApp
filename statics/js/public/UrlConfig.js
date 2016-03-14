@@ -79,6 +79,6 @@ global.DoctorQrcode_URL = Wechat_URL + 'AppGetQrcode/';
 //发送医嘱信息
 global.SendDoctorMsg_URL = Wechat_URL + 'sendDoctorMsg/';
 //liangbiao
-global.SendTest_URL = Test_URL + 'patientTestTable/';
+global.SendTest_URL = Wechat_URL + 'patientTestTable/';
 //获取量表列表
 global.GetTablelist_URL = Test_URL + 'getTablelist/';
