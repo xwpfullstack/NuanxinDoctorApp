@@ -136,15 +136,15 @@ class NuanXinDoctorApp extends Component {
         return  <ModifyPrescription navigator={navigator} passProps={route.passProps}/>;
         break;
       case 'completeRecord':
-        return  <CompleteRecord navigator={navigator} patientId={route.patientId}/>;
+        return  <CompleteRecord navigator={navigator} doctorId={doctorId} patientId={route.patientId}/>;
         break;
       case 'orderList':
         return  <OrderList navigator={navigator} doctorId={doctorId}/>;
         break;
       case 'drugDetailed':
-        return <DrugDetailed 
-            navigator={navigator} 
-            drugName={route.drugName} 
+        return <DrugDetailed
+            navigator={navigator}
+            drugName={route.drugName}
             drugId={route.drugId} />;
         break;
       case 'changePhoto':

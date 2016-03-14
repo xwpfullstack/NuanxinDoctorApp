@@ -20,20 +20,57 @@ var TableMsg={
   'name':'',
   'option':'',
 };
-const options=[
-  '抑郁自测量表',
-  '焦虑自测量表',
-  '睡眠信念量表',
-  '匹兹堡测试量表' ,
-  '阿森斯测试量表'
-];
+// const options=[
+//   '抑郁自测量表',
+//   '焦虑自测量表',
+//   '睡眠信念量表',
+//   '匹兹堡测试量表' ,
+//   '阿森斯测试量表'
+// ];
 class WriteTable extends Component{
   constructor(){
     super();
     this.state={
         TableMsg:TableMsg,
+        options: [],
+        isLoad:false,
+        isSuccess:true,
     };
 };
+componentDidMount(){
+  this.postData();
+  //  Alert.alert(this.state.data+'');
+}
+postData(){
+  this.setState({isLoad:false});
+    // Alert.alert('fetch');
+    fetch(PatientCaseBook_URL,{
+            method: 'post',
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+               patient_id:this.props.patientId
+            })
+      })
+      .then((response) => {
+          // Alert.alert('', 'response');
+           return response.json();
+      })
+      .then((responseData)=>{
+        // console.log(responseData);
+        this.setState({isLoad:true, data:responseData.records,isSuccess:true})
+        // Alert.alert('',JSON.stringify(responseData));
+
+      })
+      .catch((err)=>{
+          Alert.alert('catch error',err.toString())
+          this.setState({isSuccess:false,isLoad:true});
+          // console.log(err.toString());
+      })
+      .done();
+}
 handleBack(){
   this.props.navigator.pop();
 };

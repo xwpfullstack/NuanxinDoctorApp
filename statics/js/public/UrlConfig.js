@@ -36,6 +36,7 @@ global.GetDocOrder_URL = Basic_URL + 'docOrders/';
 global.OrderDetail_URL = Basic_URL + 'order/';
 
 
+
 //获取医生诊断列表
 global.DocDiags_URL = Basic_URL + 'docDiags/';
 //添加医生诊断
@@ -62,6 +63,8 @@ global.delMedModel_URL = Basic_URL + 'delModel/';
 global.PatientOrderList_URL = Basic_URL + 'patOrders/';
 //患者的病例列表
 global.PatientCaseBook_URL = Basic_URL + 'patCaseBook/';
+//删除病例
+global.DeleteCase_URL = Basic_URL + 'delCase/';
 //医生收藏患者
 global.Collection_URL = Basic_URL + 'collection/';
 //取消收藏
