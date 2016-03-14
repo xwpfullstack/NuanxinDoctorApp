@@ -132,7 +132,7 @@ class DoctorMsgEdit extends Component {
 
     render() {
     return (
-        <View>
+        <View style={{flex:1}}>
             <BackTitle
                 navigator={this.props.navigator}
                 title={'编辑资料'}>
@@ -278,7 +278,7 @@ class DoctorMsgEdit extends Component {
                         />
                     </View>{/*出诊安排*/}
                 </View>
-                <View style={{flexDirection:'row',height:300, paddingRight:10,paddingLeft:10}}>
+                <View style={styles.caaseBtnLine}>
                     <TouchableOpacity
                     onPress={() => {this._onPressSubmit()}}
                     style={styles.caseBtn}>

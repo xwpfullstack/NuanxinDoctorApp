@@ -38,6 +38,8 @@ import DoctorMsgEdit from './statics/js/me/doctorMsgEdit';
 import Prescription from './statics/js/me/prescription';
 import DrugDetailed from './statics/js/me/drugDetailed';
 import ChangePhoto from './statics/js/me/changePhoto';
+import AddLessons from './statics/js/PatientEducation/addLessons'; 
+import MedineOrder from './statics/js/patient/MedineOrder';
 
 var _navigator;
 //监听硬件返回功能
@@ -109,7 +111,7 @@ class NuanXinDoctorApp extends Component {
         return  <DoctorRecord navigator={navigator} doctorId={doctorId} patientName={route.patientName} openid={route.openid}/>;
         break;
       case 'WriteTable':
-        return  <WriteTable navigator={navigator}/>;
+        return  <WriteTable navigator={navigator} openid={route.openid} doctorId={doctorId}/>;
         break;
       case 'prescription':
         return  <Prescription navigator={navigator} doctorId={doctorId}/>;
@@ -136,17 +138,19 @@ class NuanXinDoctorApp extends Component {
         return  <ModifyPrescription navigator={navigator} passProps={route.passProps}/>;
         break;
       case 'completeRecord':
-        return  <CompleteRecord navigator={navigator} patientId={route.patientId}/>;
+        return  <CompleteRecord navigator={navigator} doctorId={doctorId} patientId={route.patientId}/>;
         break;
       case 'orderList':
         return  <OrderList navigator={navigator} doctorId={doctorId}/>;
         break;
       case 'drugDetailed':
-        return <DrugDetailed 
-            navigator={navigator} 
-            drugName={route.drugName} 
-            drugId={route.drugId} />;
-        break;
+        return <DrugDetailed
+            dpctorId={doctorId}
+            drugId={route.drugId}
+            medname={route.drugName}
+            navigator={navigator} />;
+            break;
+
       case 'changePhoto':
         return <ChangePhoto navigator={navigator} doctorId={doctorId} />
         break;
@@ -156,6 +160,12 @@ class NuanXinDoctorApp extends Component {
       case 'addCase':
         return <AddCase doctorId={doctorId} navigator={navigator} />;
         break;
+        case 'AddLessons':
+            return <AddLessons  navigator={navigator}/>
+        break;
+        case 'MedineOrder':
+            return <MedineOrder backMain={route.back} navigator={navigator} datas={route.datas} />
+          break;
     };
   };
 

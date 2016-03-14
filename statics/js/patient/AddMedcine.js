@@ -95,15 +95,6 @@ pushData(){
     let tempData=subData.map((value,index)=>{
         return value['name']['name'];
     });
-    console.log(JSON.stringify({
-               doctorid:this.props.doctorId,
-               docMedimg:'/aaa/aa/a',
-               'docdiag-list':tempData,
-               medName:this.state.name,
-               medunit:this.state.unit,
-               merchant:this.state.productor,
-               meddes:this.state.specification,
-            }));
      fetch(AddDocMed_URL,{
             method: 'post',
             headers: {
@@ -209,7 +200,7 @@ chooseFile(){
             <Text style = {styles.label}>请选择医生诊断</Text>
             <View style = {[styles.inputStyle, {flexDirection: 'row', justifyContent: 'space-between'}]}>
               <View style = {{paddingLeft: 11, justifyContent: 'center'}}>
-                <Text style = {{alignSelf: 'center', fontSize: 12, color: '#0094ff',}}>{this.state.txtMsg}</Text>
+                <Text style = {{alignSelf: 'center', fontSize: 12, color: 'white',}}>{this.state.txtMsg}</Text>
               </View>
               <TouchableHighlight
                 style = {styles.chooseButton}

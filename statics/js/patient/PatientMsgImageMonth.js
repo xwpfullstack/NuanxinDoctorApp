@@ -366,8 +366,6 @@ const styles = StyleSheet.create({
 	      left:(Dimensions.get('window').width-250)/2,
 	      height:300,
 	      width:250,
-	      borderWidth:1,
-	      borderColor:'#ffffff',
 	      borderRadius:20,
 	      backgroundColor: '#ffffff',
 	},

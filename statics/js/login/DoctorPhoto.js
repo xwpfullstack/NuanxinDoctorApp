@@ -127,13 +127,14 @@ class DoctorPhoto extends Component {
     var pathArray = this.state.sourceUrl['uri'].split('/');
     var imageName = pathArray[pathArray.length-1];
     var obj = {
-      uploadUrl: UploadDoctorphoto_URL,
+      uploadUrl: Uploadphoto_URL,
       method: 'POST',
       headers: {
         'Accept': 'application/json',
       },
       fields: {
         'num':''+num,
+        'class':'doctor',
       },
       files: [
         {

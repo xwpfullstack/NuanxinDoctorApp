@@ -19,7 +19,6 @@ import ViewPager from 'react-native-scrollable-tab-view'
 import BottomTabBar from '../BottomTabBar'
 import Schedule from '../cal/Schedule';
 import Release from '../cal/Release';
-import WriteTable from '../cal/ComponentTest';
 import PIndex from '../PatientEducation/PIndex';
 
 class nuanxin extends Component {

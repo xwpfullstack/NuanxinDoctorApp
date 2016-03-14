@@ -19,6 +19,7 @@ import React, {
 
 import Picker from 'react-native-picker';
 
+
 var images=[
 require('../../images/icon/SAS.jpg'),
 require('../../images/icon/test1.jpg'),
@@ -194,7 +195,14 @@ CreatPulListView(){
         );
     });
     return content;
-}
+};
+
+addPatient(){
+  //AddLessons
+  this.props.navigator.push({
+      name:'AddLessons',
+  })
+};
 
 
   render() {
@@ -206,7 +214,7 @@ CreatPulListView(){
        <View style={styles.container}>
             <View style={styles.radioContainer}>{this.optionNodes()}</View>
             <View style={{ flexDirection:'row',justifyContent:'flex-end'}}>
-                    <TouchableOpacity  style={styles.add}>
+                    <TouchableOpacity  onPress={()=>this.addPatient()}  style={styles.add}>
                           <Image style={{height:32,width:32}} resizeMode='contain' source={require('../../images/icon/addPatient.png')} /> 
                     </TouchableOpacity>
             </View>

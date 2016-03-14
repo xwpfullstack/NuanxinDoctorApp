@@ -14,7 +14,7 @@ import React, {
    ScrollView,
 } from 'react-native';
 
-
+import RecordTable from './RecordTableBlack';
 
 
 class MsgCase extends Component{
@@ -25,6 +25,8 @@ class MsgCase extends Component{
     };
  
 };
+
+
 
 contentView(){
     let times=this.props.data.ctime.split('-');
@@ -47,13 +49,12 @@ contentView(){
   render(){
     let txtContent='';
     return  (
+    
           <View style={styles.container}>
               <ScrollView style={styles.Main}>
-              <View style={{flex:1,justifyContent:'center',height:30,borderWidth:1,
-                        borderColor:'white',backgroundColor:'#EDEDED',alignSelf:'stretch',alignItems:'center'}}>
-                      <Text style={{fontSize:14,fontWeight:'bold'}}>处方</Text>
-               </View>
-              {txtContent}
+                    
+                          <RecordTable  msgStyle={{color:'#000000'}} recordData={this.props.data}/>
+                       
                 </ScrollView>
                 <View  style={styles.BtnGroup}>
                     <TouchableHighlight
@@ -62,6 +63,7 @@ contentView(){
                     </TouchableHighlight>
                 </View>
         </View>
+      
       );
 };
 };

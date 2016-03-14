@@ -257,6 +257,12 @@ const styles = StyleSheet.create({
         color:'rgba(255,255,255,0.8)',
         fontSize:13,
     },
+    caaseBtnLine: {
+        flexDirection:'row',
+        padding:10,
+        paddingTop:0,
+        
+    },
     caseBtn: {
         backgroundColor:'#f08300',
         marginTop:10,
