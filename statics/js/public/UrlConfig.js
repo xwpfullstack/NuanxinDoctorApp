@@ -4,6 +4,7 @@
 
 global.Basic_URL = 'http://www.xingwenpeng.com/doctor/';
 global.Wechat_URL = 'http://www.xingwenpeng.com/wechat/';
+global.Test_URL = 'http://www.xingwenpeng.com/test_online/';
 
 var patient_openid = 'oKuU6wCL1pB-5pSv2hNS06P-xR9c';
 global.Homepage_URL = 'http://www.xingwenpeng.com/patient/mydoctor/mydoctor_homepage/?patient_openid='+patient_openid+'&new_doctor_id=&doctor_id=';
@@ -78,6 +79,6 @@ global.DoctorQrcode_URL = Wechat_URL + 'AppGetQrcode/';
 //发送医嘱信息
 global.SendDoctorMsg_URL = Wechat_URL + 'sendDoctorMsg/';
 //liangbiao
-global.SendTest_URL = Wechat_URL + 'patientTestTable/';
+global.SendTest_URL = Test_URL + 'patientTestTable/';
 //获取量表列表
-global.GetTablelist_URL = Wechat_URL + 'getTablelist/';
+global.GetTablelist_URL = Test_URL + 'getTablelist/';
