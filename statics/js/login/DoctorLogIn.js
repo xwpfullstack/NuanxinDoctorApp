@@ -120,6 +120,7 @@ class DoctorLogIn extends Component {
             rawData: {
               userId: data['doctorId'],
               state: 'success',
+              num: data['num'],
             },
             expires: null,
           })
