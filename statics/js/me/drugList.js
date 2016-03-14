@@ -85,11 +85,9 @@ postDrugData(){
            return response.json();
       })
       .then((responseData)=>{
-        console.log(responseData);
         this.setState({
             tempData:responseData,
         })
-        console.log(this.state.tempData);
         this.BaseCreateData();
       })
       .catch((err)=>{
@@ -120,7 +118,6 @@ renderRow(rowdata,sectionID,rowID){
     var num=Math.ceil(Math.random()*5)
     var drugname=rowdata[0];
     var drugid=rowdata[2];
-    console.log(drugid);
   return (
       <TouchableOpacity
           onPress={()=>this._onPressDrugBtn(drugname,drugid)}

@@ -75,7 +75,7 @@ class DrugDetailed extends Component {
           return (
             <View key={index}>
             {console.log(this.props.drugId)}
-            {console.log(this.props.drugName)}
+            {console.log(this.props.medname)}
 
                  <View style={styles.startTime}>
                     <View style={styles.startTimeCheack}>

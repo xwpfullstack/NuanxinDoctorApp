@@ -20,13 +20,13 @@ var TableMsg={
   'name':'',
   'option':'',
 };
-// const options=[
-//   '抑郁自测量表',
-//   '焦虑自测量表',
-//   '睡眠信念量表',
-//   '匹兹堡测试量表' ,
-//   '阿森斯测试量表'
-// ];
+const options=[
+  '抑郁自测量表',
+  '焦虑自测量表',
+  '睡眠信念量表',
+  '匹兹堡测试量表' ,
+  '阿森斯测试量表'
+];
 class WriteTable extends Component{
   constructor(){
     super();
@@ -44,14 +44,13 @@ componentDidMount(){
 postData(){
   this.setState({isLoad:false});
     // Alert.alert('fetch');
-    fetch(PatientCaseBook_URL,{
+    fetch(GetTablelist_URL,{
             method: 'post',
             headers: {
               'Accept': 'application/json',
               'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-               patient_id:this.props.patientId
             })
       })
       .then((response) => {
