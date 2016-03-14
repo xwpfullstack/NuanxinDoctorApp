@@ -200,6 +200,7 @@ chooseFile(){
       allowEditing: true,
       noData: false,
       isUploaded: false,
+      isSelected: false,
       storageOpations: {
         skipBackup: false,
         path: 'images'
@@ -216,6 +217,7 @@ chooseFile(){
         /*const source = {uri: 'data:image/jpeg;base64,' + response.data,isStatic: true};*/
         const source = {uri: response.uri,isStatic: true};
         this.setState({
+          isSelected: true,
           photoUrl: source,
         });
       }
@@ -257,7 +259,8 @@ chooseFile(){
 
   }
   render() {
-    let prompttext=this.state.isUploaded?<Text></Text>:<Text>未上传文件</Text>
+    let prompttext=this.state.isUploaded?<Text>上传成功</Text>:
+        this.state.isSelected?<Text>已选择</Text>:<Text>请选择文件</Text>
     let uploadButton=this.state.isUploaded?<View></View>:
       <TouchableHighlight
         underlayColor='rgba(34,26,38,0.1)'
