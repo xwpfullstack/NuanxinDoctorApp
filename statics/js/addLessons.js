@@ -57,6 +57,9 @@ cancel() {
 commit() {
   Alert.alert('', this.state.title+' '+ this.state.content+' '+this.state.link+' '+this.state.delayDays);
 }
+popOut() {
+  this.props.navigator.pop();
+}
 changeTxt(key,value){
   this.state[key]=value;
     this.setState({DocMsg:this.state.DocMsg});
@@ -67,13 +70,14 @@ changeTxt(key,value){
         source={require('../images/load/background.png')}
         style={styles.backgroundImage}
       >
-        <ScrollView style={styles.container}>
-          <View style={{height:40,flexDirection:'row'}}>
-            <View style={{flex:1,alignItems:'center',justifyContent:'center'}}><Text>表头</Text></View>
-            <View style={{flex:3,alignItems:'center',justifyContent:'center'}}>
-              <Text>啊啊啊啊啊啊啊啊是是是是是是是是是顶顶顶顶顶顶顶顶顶顶的古古怪怪嘎嘎嘎嘎嘎嘎嘎给</Text>
-            </View>
+        <View style={styles.tittle}>
+          <View style={styles.titleContent}>
+          <TouchableOpacity style={{width:50}} onPress={()=>this.popOut()}><Image source={require('../../images/icon/back.png')}></Image></TouchableOpacity>
+            <Text style={styles.name}>新增患教</Text>
+            <View style={{width:50}}></View>
           </View>
+        </View>
+        <ScrollView style={styles.container}>
           <View style={{marginLeft:11,marginTop:11}}>
             <Text style={[styles.normalText,{color: '#F08300'}]}>疾病</Text>
           </View>
@@ -163,6 +167,22 @@ const styles = StyleSheet.create({
     width: Dimensions.get('window').width,
     height: Dimensions.get('window').height,
 	},
+  tittle:{
+    backgroundColor:'#878181',
+    flexDirection: 'column',
+    height:40,
+    justifyContent: 'center',
+  },
+  titleContent:{
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginLeft:10,
+    marginRight:10,
+  },
+  name:{
+    color:'white',
+     fontSize:18,
+  },
   container: {
     height: Dimensions.get('window').height-10,
   },

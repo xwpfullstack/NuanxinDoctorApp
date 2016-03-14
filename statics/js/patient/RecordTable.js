@@ -36,14 +36,14 @@ class RecordTable extends Component {
   getAmount(dosage, unit) {
     // Alert.alert('', ''+dosage);
     let tmp=dosage.split('d');
-    let time=['上午:','中午:','下午:','晚上:'];
+    let time=['上午: ','中午: ','晚上: ','睡前: '];
     let strs=[];
     for (var i=0;i<4;++i) {
       if (tmp[i]) {
         strs.push(time[i]+tmp[i]+' '+unit);
       }
     }
-    return '  '+strs.join(',');
+    return '  '+strs.join(', ');
   }
   render() {
     let deleteButton = (this.props.doctorId == this.props.recordData.doctor_id) ?
@@ -109,8 +109,8 @@ class RecordTable extends Component {
                 this.props.recordData.methods.map((pres, index)=>(
                   <View key = {index}>
                     <Text style = {styles.rowContentText}>{pres.name}</Text>
-                    <Text style = {[styles.rowContentText,{color:'#DDDDDD'}]}>{this.getPeriod(this.props.recordData.ctime,pres.begin,pres.days)}</Text>
-                    <Text style = {[styles.rowContentText,{color:'#DDDDDD'}]}>{this.getAmount(pres.dosage,pres.unit)}</Text>
+                    <Text style = {[styles.rowContentText,{color:'rgba(255,255,255,0.6)'}]}>{this.getPeriod(this.props.recordData.ctime,pres.begin,pres.days)}</Text>
+                    <Text style = {[styles.rowContentText,{color:'rgba(255,255,255,0.6)'}]}>{this.getAmount(pres.dosage,pres.unit)}</Text>
                     {/*<View style = {styles.buttonRow}>
                         <TouchableHighlight
                           underlayColor='rgba(34,26,38,0.1)'
