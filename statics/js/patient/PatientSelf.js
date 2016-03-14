@@ -13,6 +13,7 @@ import React, {
   Alert,
   TouchableOpacity,
   TouchableHighlight,
+  ToastAndroid,
   } from 'react-native';
 
 import PatientMsgImage from './PatientMsgImage'
@@ -27,12 +28,36 @@ import AddModal from './AddModal'
 	    	 patientData:this.props.patientData,
               addVisible:false,
               ischeacked:ischeack,
+              ModalContent:'',
 	    };
 	   };
 	handlerBack(){
 		this.props.navigator.pop();
 	};
+
+
+  changeModal(content){
+      this.setState({ModalContent:content,addVisible:true});
+  }
+  closeModal(){
+      this.setState({ModalContent:'',addVisible:false});
+  }
+
       selfModal(){
+        this.setState({ModalContent:(
+            <TouchableOpacity  onPress={()=>this.closeAddModal()} style={{height:Dimensions.get('window').height,width:Dimensions.get('window').width,}}>
+                                            <View style={{
+                                                position: 'absolute',
+                                                right: 1,
+                                                top: 41,
+                                                height:120,
+                                                width:150,
+                                                backgroundColor: 'rgba(0, 0, 0,0.8)',}}>
+                                                    <AddModal patientId={this.props.patientData.id} openid={this.props.patientData.openid} patientName={this.props.patientData.name} diags={this.props.diags} mainNavigator={this.props.mainNavigator} close={()=>this.closeAddModal()}/>
+                                            </View>
+                                      </TouchableOpacity>
+
+          )});
              if (this.state.addVisible === false) {
                 //Alert.alert('aaa');
                  this.setState({addVisible:true,});
@@ -72,7 +97,47 @@ import AddModal from './AddModal'
           return rowDiaStr;
       }
       toggleCheack(){
-          this.setState({ischeacked:!this.state.ischeacked});
+       console.log(JSON.stringify({
+                   doctor_id:this.props.doctorId,
+                   patient_id:this.props.patientData.id,
+                   status:this.props.patientData.relstate,
+                }));
+            fetch(Collection_URL,{
+                method: 'post',
+                headers: {
+                  'Accept': 'application/json',
+                  'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                   doctor_id:this.props.doctorId,
+                   patient_id:this.props.patientData.id,
+                   status:this.props.patientData.relstate,
+                })
+          })
+          .then((response) => {
+               return response.json();
+          })
+          .then((responseData)=>{
+             console.log(responseData);
+             if (responseData.status != 'success') {
+                  ToastAndroid.show('数据传输失败，请重试', ToastAndroid.SHORT);
+             }
+             else{
+                  this.state.patientData['relstate']=responseData.rel;
+                  this.setState({ischeacked:!this.state.ischeacked,patientData:this.state.patientData});
+                  if ( this.state.patientData['relstate'] == 3 ||  this.state.patientData['relstate'] == 7) {
+                      ToastAndroid.show('收藏成功', ToastAndroid.SHORT);
+                  }
+                  else{
+                       ToastAndroid.show('取消收藏', ToastAndroid.SHORT);
+                  }
+             }
+          })
+          .catch((err)=>{
+              console.log(err.toString());
+          })
+          .done();
+        
       };
 
       closeAddModal(){
@@ -114,7 +179,7 @@ import AddModal from './AddModal'
 					            </View>
 
   				</View>
-  				<PatientMsgImageMonth  patientData={this.props.patientData}/>
+  				<PatientMsgImageMonth changeModal={(content)=>this.changeModal(content)}  closeModal={()=>this.closeModal()} patientData={this.props.patientData}/>
 
   				<TouchableOpacity onPress={()=>this.jump('completeRecord')}>
   				<View style={[styles.tRow,{marginBottom:1,}]}>
@@ -143,18 +208,7 @@ import AddModal from './AddModal'
   				<Modal
                                 visible={this.state.addVisible}
                                  style={{height:Dimensions.get('window').height,width:Dimensions.get('window').width,top:0,bottom:0,left:0,right:0}}>
-                                      <TouchableOpacity  onPress={()=>this.closeAddModal()} style={{height:Dimensions.get('window').height,width:Dimensions.get('window').width,}}>
-                                            <View style={{
-                                                position: 'absolute',
-                                                right: 1,
-                                                top: 41,
-                                                height:120,
-                                                width:150,
-                                                backgroundColor: 'rgba(0, 0, 0,0.8)',}}>
-                                                    <AddModal patientId={this.props.patientData.id} openid={this.props.patientData.openid} patientName={this.props.patientData.name} diags={this.props.diags} mainNavigator={this.props.mainNavigator} close={()=>this.closeAddModal()}/>
-                                            </View>
-                                      </TouchableOpacity>
-
+                                      {this.state.ModalContent}
                           </Modal>
   			</View>
   		);

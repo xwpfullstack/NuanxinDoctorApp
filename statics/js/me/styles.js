@@ -261,7 +261,7 @@ const styles = StyleSheet.create({
         flexDirection:'row',
         padding:10,
         paddingTop:0,
-        
+
     },
     caseBtn: {
         backgroundColor:'#f08300',
@@ -271,7 +271,86 @@ const styles = StyleSheet.create({
         alignSelf:'center',
         flex:0.5,
         marginRight:10
-    }
+    },
+    //drugDetailed
+    startTime:{
+      flexDirection: 'column',
+      borderBottomWidth:1,
+      marginTop:15,
+    },
+    startTimeCheack:{
+      flexDirection: 'row',
+      alignItems:'center',
+      justifyContent:'center',
+      marginBottom:15,
+      marginTop:25,
+    },
+    FYNums:{
+      flex:1,
+      flexDirection: 'row',
+      alignItems:'center',
+      justifyContent:'center',
+      paddingBottom:20,
+      paddingTop:20,
+       borderBottomWidth:1,
+
+    },
+    addJ:{
+      flex:4,
+        flexDirection: 'row',
+      alignItems:'center',
+       justifyContent:'space-around',
+    },
+    quart:{
+        borderWidth:1,
+        borderColor:'#FE9300',
+        height:20,
+        width:20,
+        borderRadius:10,
+        alignItems:'center',
+       justifyContent:'center',
+    },
+    quartTxt:{
+        color:'#FE9300',
+        fontSize:18,
+    },
+    startTimeCheackItem:{
+        flex:1,
+        height:25,
+        borderRadius:13,
+        borderWidth:1,
+        borderColor:'#cccccc',
+        marginLeft:20,
+        alignItems:'center',
+        justifyContent:'center',
+    },
+    mDel:{
+      flex:1,
+      flexDirection: 'row',
+      alignItems:'center',
+      justifyContent:'center',
+      marginTop:15,
+    },
+      btnMDel:{
+      flex:1,
+      borderWidth:1,
+      borderColor:'#FE9300',
+      borderRadius:10,
+      height:25,
+      alignItems:'center',
+      justifyContent:'center',
+      marginLeft:20,
+  },
+  modalStyle:{
+      top:(Dimensions.get('window').height-200)/2,
+      left:(Dimensions.get('window').width-200)/2,
+      height:200,
+      width:200,
+      borderWidth:1,
+      borderColor:'#ffffff',
+      borderRadius:20,
+      backgroundColor: '#ffffff',
+  },
 });
 
 export default styles;

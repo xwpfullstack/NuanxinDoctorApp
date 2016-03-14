@@ -145,7 +145,7 @@ render(){
                               changeMedia={(media,isdel)=>this.changeMedia(media,isdel,'med')}  
                               gotoPage={(num)=>this.gotoPage(num)}/>
                   </View>
-                  <View tabLabel='服用方法'><EatMedine  ref='EM' PatientMsg={PatientMsg} /></View>
+                  <View tabLabel='服用方法'><EatMedine navigator={this.props.navigator}  ref='EM' PatientMsg={PatientMsg} /></View>
               </ViewPager>
              
         </View>

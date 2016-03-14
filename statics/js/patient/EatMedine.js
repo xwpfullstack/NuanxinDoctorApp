@@ -87,7 +87,18 @@ submit(){
           ToastAndroid.show('请填写完整数据', ToastAndroid.SHORT)
      }
      else{
-        this.postPatient();
+        //this.postPatient();
+        this.props.navigator.push({
+            name:'MedineOrder',
+            datas:{
+               doctor_id:this.state.PatientMsg['doctor_id'],
+               patient_id:this.state.PatientMsg['patient_id'],
+               diag:this.state.PatientMsg['diag'],
+               med:this.state.PatientMsg['med'],
+            },
+            back:()=>this.props.navigator.pop(),
+
+        });
      }
 };
 mediaControl(){

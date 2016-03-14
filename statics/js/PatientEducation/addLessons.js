@@ -64,16 +64,10 @@ changeTxt(key,value){
   render() {
     return (
       <Image
-        source={require('../images/load/background.png')}
+        source={require('../../images/load/background.png')}
         style={styles.backgroundImage}
       >
         <ScrollView style={styles.container}>
-          <View style={{height:40,flexDirection:'row'}}>
-            <View style={{flex:1,alignItems:'center',justifyContent:'center'}}><Text>表头</Text></View>
-            <View style={{flex:3,alignItems:'center',justifyContent:'center'}}>
-              <Text>啊啊啊啊啊啊啊啊是是是是是是是是是顶顶顶顶顶顶顶顶顶顶的古古怪怪嘎嘎嘎嘎嘎嘎嘎给</Text>
-            </View>
-          </View>
           <View style={{marginLeft:11,marginTop:11}}>
             <Text style={[styles.normalText,{color: '#F08300'}]}>疾病</Text>
           </View>

@@ -61,8 +61,8 @@ class DoctorMsgEdit extends Component {
           .then((responseData)=>{
             console.log(responseData);
 		this.setState({
-		    dctmsg:responseData,
-            worktime:responseData.worktime
+            dctmsg:responseData,
+            worktime:responseData.worktime,
 		})
           })
           .catch((err)=>{

@@ -20,7 +20,10 @@ class Prescription extends Component {
   render() {
     return (
         <View>
-            <BackTitle title={'我的处方'} navigator = {this.props.navigator} />
+            <BackTitle
+                title={'我的药单'}
+                navigator = {this.props.navigator}
+            ></BackTitle>
             <ScrollView style={{height:WINDOW_HEIGHT-70}}>
                 <DrugList doctorId={this.props.doctorId} navigator={this.props.navigator}/>
             </ScrollView>
