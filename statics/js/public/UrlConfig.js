@@ -15,7 +15,7 @@ global.DoctorRegist_URL = Basic_URL + 'AppDoctorRegist/';
 //获取医生信息
 global.DocInfo = Basic_URL + 'info/';
 //编辑后保存医生信息
-global.SaveDovInfo = Basic_URL + 'editorInfo/';
+global.SaveDocInfo = Basic_URL + 'editorInfo/';
 //获取患者列表
 global.PatientList_URL = Basic_URL + 'patlist/';
 
@@ -94,6 +94,8 @@ global.DoctorQrcode_URL = Wechat_URL + 'AppGetQrcode/';
 //发送医嘱信息
 global.SendDoctorMsg_URL = Wechat_URL + 'sendDoctorMsg/';
 //liangbiao
-global.SendTest_URL = Wechat_URL + 'patientTestTable/';
+global.SendTest_URL = Test_URL + 'patientTestTable/';
 //获取量表列表
 global.GetTablelist_URL = Test_URL + 'getTablelist/';
+//获取发布列表
+global.GetNewsList_URL = Basic_URL + 'AppNewsList/';

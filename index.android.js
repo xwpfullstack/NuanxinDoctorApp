@@ -40,6 +40,7 @@ import DrugDetailed from './statics/js/me/drugDetailed';
 import ChangePhoto from './statics/js/me/changePhoto';
 import AddLessons from './statics/js/PatientEducation/addLessons'; 
 import MedineOrder from './statics/js/patient/MedineOrder';
+import AddMedModel from './statics/js/me/addMedModel';
 
 var _navigator;
 //监听硬件返回功能
@@ -145,15 +146,22 @@ class NuanXinDoctorApp extends Component {
         break;
       case 'drugDetailed':
         return <DrugDetailed
-            dpctorId={doctorId}
+            doctorId={doctorId}
             drugId={route.drugId}
             medname={route.drugName}
             navigator={navigator} />;
             break;
 
       case 'changePhoto':
-        return <ChangePhoto navigator={navigator} doctorId={doctorId} />
+        return <ChangePhoto
+            navigator={navigator} /> 
         break;
+      case 'addMedModel':
+        return <AddMedModel 
+            carryData={route.carryData}
+            doctorId={doctorId}
+            navigator={navigator} />
+            break;
       case 'caseHistory':
         return <CaseHistory navigator={navigator} doctorId={doctorId}/>;
         break;
