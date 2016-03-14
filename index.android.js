@@ -130,7 +130,7 @@ class NuanXinDoctorApp extends Component {
         return  <OrderDetails navigator={navigator} orderData={route.passProps}/>;
         break;
       case 'newsDetails':
-        return  <NewsDetails navigator={navigator} newsData={route.passProps}/>;
+        return  <NewsDetails navigator={navigator} newsData={route.passProps} deleteNews={route.deleteNews}/>;
         break;
       case 'modifyPrescriptionPage':
         return  <ModifyPrescription navigator={navigator} passProps={route.passProps}/>;

@@ -95,3 +95,5 @@ global.SendTest_URL = Wechat_URL + 'patientTestTable/';
 global.GetTablelist_URL = Test_URL + 'getTablelist/';
 //获取发布列表
 global.GetNewsList_URL = Basic_URL + 'AppNewsList/';
+//删除发布消息
+global.DelNews_URL = Basic_URL + 'delNews/';

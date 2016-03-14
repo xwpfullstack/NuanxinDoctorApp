@@ -1,6 +1,7 @@
 'use strict'
 
 import React, {
+  Alert,
   TextInput,
   Text,
   View,
@@ -20,6 +21,7 @@ class OrderDetails extends Component{
   popOut() {
     this.props.navigator.pop();
   }
+
   render() {
     return (
       <Image
@@ -29,24 +31,24 @@ class OrderDetails extends Component{
         <View style={styles.tittle}>
           <View style={styles.titleContent}>
           <TouchableOpacity style={{width:50}} onPress={()=>this.popOut()}><Image source={require('../../images/icon/back.png')}></Image></TouchableOpacity>
-            <Text style={styles.name}>订单详情</Text>
+            <Text style={styles.name}>消息详情</Text>
             <View style={{width:50}}></View>
           </View>
         </View>
 
         <TextInput
           style = {styles.subjectBox}
-          value = {this.props.newsData.subject}
+          value = {this.props.newsData.fields.title}
         />
         <TextInput
           multiline = {true}
           numberOfLines = {6}
           textAlignVertical = 'top'
           style = {styles.contentBox}
-          value = {this.props.newsData.content}
+          value = {this.props.newsData.fields.content}
         />
         <View style={styles.releaseTo}>
-         <Text style={styles.releaseToText}>所有患者 》</Text>
+         <Text style={styles.releaseToText}>所有患者</Text>
         </View>
 
         <View style={styles.buttonRow}>
@@ -59,7 +61,7 @@ class OrderDetails extends Component{
           </TouchableHighlight>
           <TouchableHighlight
             underlayColor='rgba(34,26,38,0.1)'
-            onPress={()=>this.popOut()}
+            onPress={()=>this.props.deleteNews(this.props.newsData.pk)}
             style={styles.buttonStyle}
           >
             <Text style={[styles.normalText,{color: '#666666'}]}>删除此条</Text>

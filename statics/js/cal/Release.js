@@ -148,7 +148,7 @@ class Release extends Component {
                <Text style={styles.releaseToText}>所有患者</Text>
               </View>*/}
 
-              {/*<NewsList navigator={this.props.navigator} newsSet = {newsSet}/>*/}
+              <NewsList navigator={this.props.navigator} doctorId={this.props.doctorId}/>
               <View style={{height:85,}}></View>
             </ScrollView>
             <Modal
