@@ -38,6 +38,7 @@ import DoctorMsgEdit from './statics/js/me/doctorMsgEdit';
 import Prescription from './statics/js/me/prescription';
 import DrugDetailed from './statics/js/me/drugDetailed';
 import ChangePhoto from './statics/js/me/changePhoto';
+import AddMedModel from './statics/js/me/addMedModel';
 
 var _navigator;
 //监听硬件返回功能
@@ -136,21 +137,28 @@ class NuanXinDoctorApp extends Component {
         return  <ModifyPrescription navigator={navigator} passProps={route.passProps}/>;
         break;
       case 'completeRecord':
-        return  <CompleteRecord navigator={navigator} patientId={route.patientId}/>;
+        return  <CompleteRecord navigator={navigator} doctorId={doctorId} patientId={route.patientId}/>;
         break;
       case 'orderList':
         return  <OrderList navigator={navigator} doctorId={doctorId}/>;
         break;
       case 'drugDetailed':
         return <DrugDetailed
-            dpctorId={doctorId}
+            doctorId={doctorId}
             drugId={route.drugId}
             medname={route.drugName}
             navigator={navigator} />;
             break;
       case 'changePhoto':
-        return <ChangePhoto navigator={navigator} doctorId={doctorId} />
+        return <ChangePhoto
+            navigator={navigator} /> 
         break;
+      case 'addMedModel':
+        return <AddMedModel 
+            carryData={route.carryData}
+            doctorId={doctorId}
+            navigator={navigator} />
+            break;
       case 'caseHistory':
         return <CaseHistory navigator={navigator} doctorId={doctorId}/>;
         break;
@@ -166,7 +174,7 @@ class NuanXinDoctorApp extends Component {
       autoSync: true,
       syncInBackground: true,
     }).then( ret => {
-      if(ret.state === 'error') {   //success
+      if(ret.state === 'success') {   //success
         this.setState({
           routeInfo:{
             name: 'doctorHomePage',

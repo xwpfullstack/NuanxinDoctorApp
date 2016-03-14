@@ -16,17 +16,18 @@ class RecordTable extends Component {
   takePhoto() {
 
   }
-  modifyPrescription(pres) {
-    this.props.navigator.push({name: 'modifyPrescriptionPage', passProps: {
-      date:this.props.recordData.date, modifyData: this.props.modifyData, prescriptionData: pres}})
-  }
-  deletePrescription(medcine) {
-    this.props.deleteData(this.props.recordData.date, medcine);
-  }
+  // modifyPrescription(pres) {
+  //   this.props.navigator.push({name: 'modifyPrescriptionPage', passProps: {
+  //     date:this.props.recordData.date, modifyData: this.props.modifyData, prescriptionData: pres}})
+  // }
+  // deletePrescription(medcine) {
+  //   this.props.deleteData(this.props.recordData.date, medcine);
+  // }
   render() {
+    Alert.alert('',JSON.stringify(this.props.recordData));
     return (
       <View style = {this.props.style}>
-        <View style = {styles.header}>
+        {/*<View style = {styles.header}>
           <Text style = {styles.headerText}>{this.props.recordData.date} {this.props.recordData.hospital}</Text>
         </View>
         <View style = {styles.tableRow}>
@@ -100,7 +101,7 @@ class RecordTable extends Component {
               }
             </View>
           </View>
-        </View>
+        </View>*/}
 
       </View>
     );

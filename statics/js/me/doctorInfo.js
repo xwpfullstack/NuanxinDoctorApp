@@ -178,7 +178,7 @@ class DoctorInfo extends Component {
                 </View>
                 <View style={{flex:9}}>
                     <TouchableOpacity
-                        style={styles.headImg}
+                        style={[styles.headImg,{height:45,alignItems:'center'}]}
                         onPress= {()=>this.showModal('ShowMenu')}>
                         <Image source = {require('../../images/me/edit.png')} />
                     </TouchableOpacity>

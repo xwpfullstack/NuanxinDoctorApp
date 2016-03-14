@@ -4,6 +4,7 @@
 
 global.Basic_URL = 'http://www.xingwenpeng.com/doctor/';
 global.Wechat_URL = 'http://www.xingwenpeng.com/wechat/';
+global.Test_URL = 'http://www.xingwenpeng.com/test_online/';
 
 var patient_openid = 'oKuU6wCL1pB-5pSv2hNS06P-xR9c';
 global.Homepage_URL = 'http://www.xingwenpeng.com/patient/mydoctor/mydoctor_homepage/?patient_openid='+patient_openid+'&new_doctor_id=&doctor_id=';
@@ -14,7 +15,7 @@ global.DoctorRegist_URL = Basic_URL + 'AppDoctorRegist/';
 //获取医生信息
 global.DocInfo = Basic_URL + 'info/';
 //编辑后保存医生信息
-global.SaveDovInfo = Basic_URL + 'editorInfo/';
+global.SaveDocInfo = Basic_URL + 'editorInfo/';
 //获取患者列表
 global.PatientList_URL = Basic_URL + 'patlist/';
 
@@ -24,6 +25,15 @@ global.Apppatlist_URL = Basic_URL + 'Apppatlist/';
 global.Meds_URL = Basic_URL + 'meds/';
 //添加病人服用药品
 global.SavePrescript_URL = Basic_URL + 'savePrescript/';
+//获取都太的测量等数据
+global.PatRecords_URL = Basic_URL + 'pat_records/';
+//获取都太的测量等数据
+global.PatRecordsDetails_URL = Basic_URL + 'pat_records_details/';
+
+//医生订单列表
+global.GetDocOrder_URL = Basic_URL + 'docOrders/';
+//根据订单号获取订单详情
+global.OrderDetail_URL = Basic_URL + 'order/';
 
 //获取医生诊断列表
 global.DocDiags_URL = Basic_URL + 'docDiags/';
@@ -51,6 +61,8 @@ global.delMedModel_URL = Basic_URL + 'delModel/';
 global.PatientOrderList_URL = Basic_URL + 'patOrders/';
 //患者的病例列表
 global.PatientCaseBook_URL = Basic_URL + 'patCaseBook/';
+//删除病例
+global.DeleteCase_URL = Basic_URL + 'delCase/';
 //医生收藏患者
 global.Collection_URL = Basic_URL + 'collection/';
 //取消收藏
@@ -78,6 +90,6 @@ global.DoctorQrcode_URL = Wechat_URL + 'AppGetQrcode/';
 //发送医嘱信息
 global.SendDoctorMsg_URL = Wechat_URL + 'sendDoctorMsg/';
 //liangbiao
-global.SendTest_URL = Wechat_URL + 'patientTestTable/';
+global.SendTest_URL = Test_URL + 'patientTestTable/';
 //获取量表列表
-global.GetTablelist_URL = Wechat_URL + 'getTablelist/';
+global.GetTablelist_URL = Test_URL + 'getTablelist/';
