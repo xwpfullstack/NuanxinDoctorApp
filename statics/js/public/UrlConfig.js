@@ -72,8 +72,10 @@ global.ModifyPass_URL = Basic_URL + 'AppModifyPass/';
 //发送短信
 global.sendMsg_URL = Basic_URL + 'AppSendMsg/';
 //上传医生头像
-global.UploadDoctorphoto_URL = Basic_URL + 'uploadPhoto/';
+global.Uploadphoto_URL = Basic_URL + 'uploadPhoto/';
 //获取二维码
 global.DoctorQrcode_URL = Wechat_URL + 'AppGetQrcode/';
 //发送医嘱信息
 global.SendDoctorMsg_URL = Wechat_URL + 'sendDoctorMsg/';
+//liangbiao
+global.SendTest_URL = Wechat_URL + 'patientTestTable/';
