@@ -28,7 +28,10 @@ global.SavePrescript_URL = Basic_URL + 'savePrescript/';
 global.PatRecords_URL = Basic_URL + 'pat_records/';
 //获取都太的测量等数据
 global.PatRecordsDetails_URL = Basic_URL + 'pat_records_details/';
-
+//点击收藏或者取消收藏病人
+global.Collection_URL = Basic_URL + 'collection/';
+//获取疾病列表
+global.GetdocDiags_URL = Basic_URL + 'docDiags/';
 
 //医生订单列表
 global.GetDocOrder_URL = Basic_URL + 'docOrders/';

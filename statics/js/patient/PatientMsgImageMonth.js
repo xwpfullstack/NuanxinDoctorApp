@@ -10,12 +10,15 @@ import React, {
   TouchableOpacity,
   Navigator,
   Dimensions,
+  ToastAndroid,
 } from 'react-native';
 
 const DAYDIFF=86400000;
 import Loading  from './Loading';
 import LoadingModal from './LoadingModal';
-import Modal from 'react-native-root-modal';
+import MsgFollow from './MsgFollow';
+import MsgRecord from './MsgRecord';
+import MsgCase from './MsgCase';
 
 class PatientMsgImageMonth extends Component{
 	constructor(props){
@@ -24,7 +27,6 @@ class PatientMsgImageMonth extends Component{
 	    this.state={
 	    	isLoad:false,
 	    	datas:{},
-	    	Lvisible:false,
 	    	tables:table,
 	    	patientData:this.props.patientData,
 	    	dates:new Date(),
@@ -116,7 +118,7 @@ class PatientMsgImageMonth extends Component{
 
 	};
 	getMsg(data,type){
-		 this.refs['loadModal'].tiggleModel(true);
+		// this.refs['loadModal'].tiggleModel(true);
 		let id;
 		switch(type){
 			case 0:
@@ -146,19 +148,44 @@ class PatientMsgImageMonth extends Component{
 		      })
 		      .then((responseData)=>{
 		        console.log(responseData);
-		        this.refs['loadModal'].tiggleModel(false);
-		        this.setState({Lvisible:true});
-		      })
+		       if (responseData.status != 'success') {
+		       	ToastAndroid.show('访问失败，请重试', ToastAndroid.SHORT);
+		       }
+		       else{
+		       	 this.changeModal(responseData.record,type);
+		       }
+		     
+		  })
 		      .catch((err)=>{
 		          console.log(err.toString());
-		          this.refs['loadModal'].tiggleModel(false);
+		          
 		      })
 		      .done();
 
 	};
+	changeModal(data,type){
+		let content;
+		switch (type){
+			case 0:
+			content=<MsgCase data={data} closeModal={()=>this.closeModal()} />
+			break;
+			case 1:
+			content=<MsgFollow data={data} closeModal={()=>this.closeModal()} />
+			break;
+			case 2:
+			content=<MsgRecord data={data} closeModal={()=>this.closeModal()} />
+			break;
+		};
+
+		  this.props.changeModal( <View style={{height:Dimensions.get('window').height,width:Dimensions.get('window').height,backgroundColor:'rgba(0,0,0,0.3)'}}>
+		  	<View  style={styles.modalStyle}>
+		  		{content}
+			</View></View>);
+		  
+		
+	};
 	closeModal(){
-		  this.setState({Lvisible:false});
-		  Alert.alert(this.state.Lvisible+'');
+		 this.props.closeModal();
 	}
 	createViewByTb(){
 		let columnView=[];
@@ -259,14 +286,6 @@ class PatientMsgImageMonth extends Component{
 					<TouchableOpacity onPress={()=>this.nextWeek()} style={styles.btnImage}><Image source={require('../../images/icon/nextM.png')}></Image></TouchableOpacity>
 					</View>
 				</View>
-				 <Modal visible={this.state.Lvisible}
-			                        style={{height:Dimensions.get('window').height,
-			                                    width:Dimensions.get('window').width,top:0,bottom:0,left:0,right:0,backgroundColor:'rgba(0,0,0,0.1)'}}>
-			                               <TouchableOpacity onPress={()=>this.closeModal()} style={styles.modalStyle}>
-
-			                               </TouchableOpacity>
-			                             
-			              </Modal>
 				<LoadingModal ref='loadModal'/>
 			</View>
 		);
@@ -341,14 +360,6 @@ const styles = StyleSheet.create({
 		justifyContent:'center',
 		alignItems:'center',
 		flex:1,
-	},
-	tdViewTwo:{
-		flex:2,
-		justifyContent:'center',
-		alignItems:'center',
-		marginLeft:1,
-		borderRadius:Dimensions.get('window').width*0.75/16,
-
 	},
 	modalStyle:{
 	      top:(Dimensions.get('window').height-300)/2,
