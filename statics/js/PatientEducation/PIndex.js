@@ -212,10 +212,19 @@ addPatient(){
                 style={{height:Dimensions.get('window').height,width:Dimensions.get('window').width}}
                 >
        <View style={styles.container}>
+            <View style={styles.tittle}>
+                  <View style={styles.titleContent}>
+                 
+                    <Text style={styles.name}>
+                                                 患者教育
+                                             </Text>
+                 
+                  </View>
+          </View>
             <View style={styles.radioContainer}>{this.optionNodes()}</View>
             <View style={{ flexDirection:'row',justifyContent:'flex-end'}}>
                     <TouchableOpacity  onPress={()=>this.addPatient()}  style={styles.add}>
-                          <Image style={{height:32,width:32}} resizeMode='contain' source={require('../../images/icon/addPatient.png')} /> 
+                          <Image  source={require('../../images/icon/add.png')} /> 
                     </TouchableOpacity>
             </View>
            <ScrollView style={styles.patientMsg}>
@@ -237,7 +246,7 @@ addPatient(){
                         selectedValue={this.state.dickMsg[0]}/>
 
        </View>
-       <View style={{height:70}}></View>
+       <View style={{height:100}}></View>
        </Image>
        
     );
@@ -269,6 +278,22 @@ const styles = StyleSheet.create({
        marginLeft:20,
        marginRight:20,
   },
+    tittle:{
+    backgroundColor:'#878181',
+    flexDirection: 'column',
+    height:40,
+    justifyContent: 'center',
+  },
+  titleContent:{
+    flexDirection: 'row',
+    justifyContent: 'center',
+    marginLeft:10,
+    marginRight:10,
+  },
+  name:{
+    color:'white',
+     fontSize:18,
+  },
   textBaseStyle:{
         color: '#F08300',
         flex: 1,
@@ -294,6 +319,7 @@ baseStyle:{
         
           justifyContent:'center',
           alignItems:'center',
+          margin:10,
         
       },
       rowPaT:{

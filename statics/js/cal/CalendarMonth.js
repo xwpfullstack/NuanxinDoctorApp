@@ -14,9 +14,10 @@ import MonthBody from './MonthBody';
 const DAYDIFF=86400000;
 
 function initMonthDayData(monthShowed) {
-  monthShowed.setDate(1);
-  let index = monthShowed.getDay();
-  let pageFirstDay = new Date(monthShowed.getTime() - DAYDIFF * index);
+  let tmp = new Date(monthShowed.getTime());
+  tmp.setDate(1);
+  let index = tmp.getDay();
+  let pageFirstDay = new Date(tmp.getTime() - DAYDIFF * index);
   let monthDayData = new Array(6);
   let i = 0;
   let j = 0;
