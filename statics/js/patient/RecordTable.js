@@ -76,7 +76,7 @@ class RecordTable extends Component {
             <Text style = {styles.rowContentText}>{this.props.recordData.department}</Text>
           </View>
         </View>
-        <View style = {styles.tableRow}>
+        <View style = {[styles.tableRow,{height:60}]}>
           <View style = {styles.rowHeader}>
             <Text style = {styles.rowHeaderText}>诊断</Text>
           </View>
@@ -104,13 +104,13 @@ class RecordTable extends Component {
             {deleteButton}
           </View>
           <View style = {styles.prescriptionRowContent}>
-            <View style = {{padding:11}}>
+            <View>
               {
                 this.props.recordData.methods.map((pres, index)=>(
                   <View key = {index}>
                     <Text style = {styles.rowContentText}>{pres.name}</Text>
-                    <Text style = {styles.rowContentText}>{this.getPeriod(this.props.recordData.ctime,pres.begin,pres.days)}</Text>
-                    <Text style = {styles.rowContentText}>{this.getAmount(pres.dosage,pres.unit)}</Text>
+                    <Text style = {[styles.rowContentText,{color:'#DDDDDD'}]}>{this.getPeriod(this.props.recordData.ctime,pres.begin,pres.days)}</Text>
+                    <Text style = {[styles.rowContentText,{color:'#DDDDDD'}]}>{this.getAmount(pres.dosage,pres.unit)}</Text>
                     {/*<View style = {styles.buttonRow}>
                         <TouchableHighlight
                           underlayColor='rgba(34,26,38,0.1)'
@@ -175,12 +175,13 @@ const styles = StyleSheet.create({
   },
   rowContent: {
     flex: 3,
-    alignItems: 'center',
+    // alignItems: 'center',
     justifyContent: 'center',
     borderLeftWidth: 1,
     borderLeftColor: '#AAAAAA',
   },
   rowContentText: {
+    marginLeft: 11,
     fontFamily: 'PingFang-SC-Regular',
     fontSize: 16,
     fontWeight: '100',
@@ -194,6 +195,7 @@ const styles = StyleSheet.create({
       flex: 3,
       borderLeftWidth: 1,
       borderLeftColor: '#AAAAAA',
+      paddingVertical: 11,
   },
   buttonStyle: {
     justifyContent: 'center',

@@ -110,7 +110,7 @@ class NuanXinDoctorApp extends Component {
         return  <DoctorRecord navigator={navigator} doctorId={doctorId} patientName={route.patientName} openid={route.openid}/>;
         break;
       case 'WriteTable':
-        return  <WriteTable navigator={navigator}/>;
+        return  <WriteTable navigator={navigator} openid={route.openid} doctorId={doctorId}/>;
         break;
       case 'prescription':
         return  <Prescription navigator={navigator} doctorId={doctorId}/>;
@@ -149,6 +149,7 @@ class NuanXinDoctorApp extends Component {
             medname={route.drugName}
             navigator={navigator} />;
             break;
+
       case 'changePhoto':
         return <ChangePhoto
             navigator={navigator} /> 

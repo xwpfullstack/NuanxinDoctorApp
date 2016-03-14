@@ -10,11 +10,13 @@ import React, {
   ListView,
   TextInput,
   Alert,
+  ToastAndroid,
  TouchableHighlight,
  TouchableOpacity,
 } from 'react-native';
 
 import {RadioButtons } from 'react-native-radio-buttons';
+import Loading from './Loading';
 
 var TableMsg={
   'name':'',
@@ -32,6 +34,7 @@ class WriteTable extends Component{
     super();
     this.state={
         TableMsg:TableMsg,
+        data:[],
         options: [],
         isLoad:false,
         isSuccess:true,
@@ -59,8 +62,15 @@ postData(){
       })
       .then((responseData)=>{
         // console.log(responseData);
-        this.setState({isLoad:true, data:responseData.records,isSuccess:true})
+        let tmp = [];
+        for (var i = 0; i < responseData.tests.length; ++i) {
+          tmp.push(responseData.tests[i].name);
+          // Alert.alert(responseData.tests[i].name);
+        }
+        this.setState({isLoad:true, data:responseData.tests, options:tmp, isSuccess:true})
+
         // Alert.alert('',JSON.stringify(responseData));
+        // Alert.alert('',tmp.join(',')+'');
 
       })
       .catch((err)=>{
@@ -78,8 +88,50 @@ changeTxt(type,txt){
     //this.setState({TableMsg:this.state.TableMsg});
 };
 submit(){
-    console.log(this.state.TableMsg);
+  let selectId=-1;
+    for (var i = 0; i < this.state.data.length;++i) {
+      if (this.state.TableMsg['option']==this.state.data[i].name) {
+        selectId=this.state.data[i].id;
+      }
+    }
+    this.postId(selectId);
+    // Alert.alert('', selectId+'');
 };
+postId(selectId) {
+  // Alert.alert('', 'doctorId:'+this.props.doctorId+' '+this.props.openid+' '+selectId+' '+this.state.TableMsg['option']);
+  fetch(SendTest_URL,{
+          method: 'post',
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            doctorId:this.props.doctorId,
+            openid: this.props.openid,
+            testId:selectId,
+            testName: this.state.TableMsg['option']
+          })
+    })
+    .then((response) => {
+        // Alert.alert('', 'response');
+         return response.json();
+    })
+    .then((responseData)=>{
+      // console.log(responseData);
+      if (responseData.status==='success') {
+        ToastAndroid.show('提交成功', ToastAndroid.LONG);
+      }
+      // Alert.alert('',JSON.stringify(responseData));
+      // Alert.alert('',tmp.join(',')+'');
+
+    })
+    .catch((err)=>{
+      ToastAndroid.show('提交失败，请重试。', ToastAndroid.LONG);
+        // Alert.alert('catch error',err.toString())
+        // console.log(err.toString());
+    })
+    .done();
+}
 renderContainer(optionNodes){
   //width:Dimensions.get('window').width
       return <View style={styles.radioContainer}>{optionNodes}</View>;
@@ -129,37 +181,64 @@ select(option){
     this.state.TableMsg['option']=option;
 };
 render(){
-    return  (
-      <Image
-        source={require('../../images/load/background.png')}
-        style={styles.backgroundImage}
-      >
-          <View style={styles.tittle}>
-              <View style={styles.titleContent}>
-                  <TouchableOpacity onPress={()=>this.handleBack()} style={{ flexDirection: 'row',}}>
-                      <Image  source={require('../../images/icon/back.png')} style={{marginRight:5,}}/>
-                  </TouchableOpacity>
-                  <Text style={[styles.txtColor,{fontSize:15}]}>填写量表</Text>
-                  <TouchableOpacity onPress={()=>this.submit()}>
-                  <Text style={[styles.txtColor,{fontSize:15}]}>提交</Text>
-                  </TouchableOpacity>
-              </View>
-          </View>
-          <View style={styles.inputGroup}>
-                    <Text style={[styles.normalText,{margin:11, alignSelf:'flex-start'}]}>患者姓名</Text>
-                    <View style={{flex:1,justifyContent:'center',height:40,backgroundColor:'#F08300',alignSelf:'stretch',alignItems:'center'}}>
-                      <Text style={{fontSize:16,fontWeight:'bold'}}>选择量表类型</Text>
-                    </View>
-                   <RadioButtons
-                        style={{flex:1}}
-                        options={options}
-                        onSelection={(option)=>this.select(option)}
-                        renderContainer={(optionNodes)=>this.renderContainer(optionNodes) }
-                        renderOption={(option, selected, onSelect, index)=>this.renderOption(option, selected, onSelect, index)}/>
-              </View>
+  if (this.state.isLoad) {
+    if (this.state.isSuccess) {
+      return  (
+        <Image
+          source={require('../../images/load/background.png')}
+          style={styles.backgroundImage}
+        >
+            <View style={styles.tittle}>
+                <View style={styles.titleContent}>
+                    <TouchableOpacity onPress={()=>this.handleBack()} style={{ flexDirection: 'row',}}>
+                        <Image  source={require('../../images/icon/back.png')} style={{marginRight:5,}}/>
+                    </TouchableOpacity>
+                    <Text style={[styles.txtColor,{fontSize:15}]}>填写量表</Text>
+                    <TouchableOpacity onPress={()=>this.submit()}>
+                    <Text style={[styles.txtColor,{fontSize:15}]}>提交</Text>
+                    </TouchableOpacity>
+                </View>
+            </View>
+            <View style={styles.inputGroup}>
+                      <Text style={[styles.normalText,{margin:11, alignSelf:'flex-start'}]}>患者姓名</Text>
+                      <View style={{flex:1,justifyContent:'center',height:40,backgroundColor:'#F08300',alignSelf:'stretch',alignItems:'center'}}>
+                        <Text style={{fontSize:16,fontWeight:'bold'}}>选择量表类型</Text>
+                      </View>
+                     <RadioButtons
+                          style={{flex:1}}
+                          options={this.state.options}
+                          onSelection={(option)=>this.select(option)}
+                          renderContainer={(optionNodes)=>this.renderContainer(optionNodes) }
+                          renderOption={(option, selected, onSelect, index)=>this.renderOption(option, selected, onSelect, index)}/>
+                </View>
 
-        </Image>
-      );
+          </Image>
+        );
+      } else{
+          return (
+              <Image
+                  source={require('../../images/load/background.png')}
+                  style={styles.background}
+                  >
+                     <View
+                          style={{flex:1,
+                                      width:Dimensions.get('window').width,
+                                      flexDirection: 'column',alignItems: 'center',justifyContent: 'center',}}>
+                          <Text style={{color:'#F08300',fontSize:16,}}>加载失败</Text>
+                          <TouchableOpacity onPress={()=>this.postData()}
+                                  style={{borderWidth:1,height:50,width:100,borderRadius:25,borderColor:'#0094ff',justifyContent:'center',alignItems:'center'}}>
+                                 <Text style={{color:'#F08300',fontSize:16,}}>重新加载</Text>
+                          </TouchableOpacity>
+                    </View>
+             </Image>
+          );
+        };
+    }
+    else{
+        return (
+                  <Loading />
+          );
+    };
 };
 };
 
