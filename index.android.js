@@ -53,6 +53,7 @@ BackAndroid.addEventListener('hardwareBackPress', ()=>{
 })
 
 var doctorId;
+var doctorNum;
 var diags;
 class NuanXinDoctorApp extends Component {
   constructor(props) {
@@ -96,6 +97,7 @@ class NuanXinDoctorApp extends Component {
         break;
       case 'doctorHomePage':
         doctorId=route.doctorId;
+        doctorNum=route.doctorNum;
         return  <DoctorMainScreen navigator={navigator} doctorId={route.doctorId}/>;
         break;
       case 'modifyPwd':
@@ -154,7 +156,10 @@ class NuanXinDoctorApp extends Component {
 
       case 'changePhoto':
         return <ChangePhoto
-            navigator={navigator} /> 
+            navigator={navigator} 
+            doctorId={doctorId}  
+            doctorNum={doctorNum}
+          /> 
         break;
       case 'addMedModel':
         return <AddMedModel 
@@ -188,6 +193,7 @@ class NuanXinDoctorApp extends Component {
           routeInfo:{
             name: 'doctorHomePage',
             doctorId: ret.userId,
+            doctorNum: ret.num,
           }
         })
       }else{

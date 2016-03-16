@@ -120,6 +120,7 @@ class DoctorLogIn extends Component {
             rawData: {
               userId: data['doctorId'],
               state: 'success',
+              num: data['num'],
             },
             expires: null,
           })
@@ -130,12 +131,13 @@ class DoctorLogIn extends Component {
         }else if(data['state'] === '2') {
           Alert.alert(
             '提示',
-            '您的注册信息为通过审核,请您重新注册或者联系管理员。'
+            '您的注册信息未通过审核,请您重新注册或者联系管理员。'
           )
         }
       }
     })
     .catch((err)=>{
+      this.setState({loading: false});
       Alert.alert(
         '提示',
         '网络连接错误，登陆失败',

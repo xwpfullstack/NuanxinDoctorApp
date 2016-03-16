@@ -40,7 +40,7 @@ class ChangePhoto extends Component {
       aspectX: 1,
       aspectY: 2,
       quality: 1,
-      angle:270,
+      angle:0,
       allowEditing: true,
       noData: false,
       storageOpations: {
@@ -65,17 +65,18 @@ class ChangePhoto extends Component {
     })
   }
 
-  _uploadphoto(num) {
+  _uploadphoto() {
     var pathArray = this.state.sourceUrl['uri'].split('/');
     var imageName = pathArray[pathArray.length-1];
     var obj = {
-      uploadUrl: SaveDocInfo,
+      uploadUrl: Uploadphoto_URL,
       method: 'POST',
       headers: {
         'Accept': 'application/json',
       },
       fields: {
-        'num':''+num,
+        'num':''+this.props.doctorNum,
+        'class':'doctor',
       },
       files: [
         {
@@ -87,8 +88,13 @@ class ChangePhoto extends Component {
       ]
     };
     FileUpload.upload(obj,(err,result)=>{
+      this.props.navigator.pop();
       console.log('upload',err,result);
     })
+  }
+  
+  _submitPersonInfo() {
+    this.props.navigator.pop();
   }
 
   _onPressSubmit() {
@@ -154,7 +160,7 @@ class ChangePhoto extends Component {
           </View>
         </TouchableOpacity>
         <TouchableOpacity
-          onPress={() => {this._uploadphoto(1)}}
+          onPress={() => {this._onPressSubmit()}}
         >
           <View
             style={{
