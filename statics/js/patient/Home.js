@@ -33,11 +33,12 @@ class Hometwo extends Component{
     };
 
   };
-RouteMapper(route, navigator){
-
-changediags(diag){
+  changediags(diag){
     this.props.changediags(diag);
 }
+RouteMapper(route, navigator){
+
+
 
       if (route.name === 'home') {
        return (

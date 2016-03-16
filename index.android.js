@@ -177,7 +177,7 @@ class NuanXinDoctorApp extends Component {
             return <AddLessons  navigator={navigator}/>
         break;
         case 'MedineOrder':
-            return <MedineOrder backMain={route.back} navigator={navigator} datas={route.datas} />
+            return <MedineOrder doctorId={doctorId} backMain={route.back} navigator={navigator} datas={route.datas} />
           break;
     };
   };
