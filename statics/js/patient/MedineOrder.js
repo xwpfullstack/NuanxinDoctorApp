@@ -70,11 +70,11 @@ postPatient(){
       .then((responseData)=>{
         console.log(responseData);
           this.refs['modal'].tiggleModel(false);
-         // this.handleBack();
-          //this.props.backMain();
-          this.props.popToRoute({
-            name:'doctorHomePage',
-          });
+        //this.handleBack();
+         //this.props.backMain();
+         //console.log();
+          let routes= this.props.navigator.getCurrentRoutes();
+          this.props.navigator.popToRoute(routes[routes.length-3]);
       })
       .catch((err)=>{
           console.log(err.toString());
