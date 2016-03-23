@@ -40,7 +40,7 @@ class DoctorPhoto extends Component {
       aspectX: 1,
       aspectY: 2,
       quality: 1,
-      angle:270,
+      angle:0,
       allowEditing: true,
       noData: false,
       storageOpations: {
@@ -169,8 +169,10 @@ class DoctorPhoto extends Component {
     return(
       <View
         style={{
-          justifyContent: 'center',
           alignItems: 'center',
+          backgroundColor: '#E6E6E6',
+          height: _height,
+          paddingTop: 60,
         }}
       >
          {this.state.sourceUrl ? 
@@ -181,9 +183,14 @@ class DoctorPhoto extends Component {
               />) : 
             (
               <View 
-                style={{width:120,height: 120,borderColor:'grey',borderWidth:1}}
+                style={{width:120,height: 120,borderColor:'grey',borderWidth:1,borderRadius:60}}
               >
-                <Text>
+                <Text
+                  style={{
+                    marginTop: 50,
+                    textAlign: 'center',
+                  }}
+                >
                  上传您的头像
                 </Text>
               </View>)
