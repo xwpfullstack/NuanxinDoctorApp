@@ -38,9 +38,12 @@ import DoctorMsgEdit from './statics/js/me/doctorMsgEdit';
 import Prescription from './statics/js/me/prescription';
 import DrugDetailed from './statics/js/me/drugDetailed';
 import ChangePhoto from './statics/js/me/changePhoto';
-import AddLessons from './statics/js/PatientEducation/addLessons'; 
+import AddLessons from './statics/js/PatientEducation/addLessons';
 import MedineOrder from './statics/js/patient/MedineOrder';
 import AddMedModel from './statics/js/me/addMedModel';
+import CreatePage from  './statics/js/PatientEducation/CreatePage';
+import ManagerPage from './statics/js/PatientEducation/ManagerPage';
+import Manager from './statics/js/PatientEducation/Manager';
 
 var _navigator;
 //监听硬件返回功能
@@ -156,14 +159,14 @@ class NuanXinDoctorApp extends Component {
 
       case 'changePhoto':
         return <ChangePhoto
-            navigator={navigator} 
-            doctorId={doctorId}  
+            navigator={navigator}
+            doctorId={doctorId}
             doctorNum={doctorNum}
             checkPage={route.func}
-          /> 
+          />
         break;
       case 'addMedModel':
-        return <AddMedModel 
+        return <AddMedModel
             carryData={route.carryData}
             doctorId={doctorId}
             navigator={navigator} />
@@ -175,10 +178,19 @@ class NuanXinDoctorApp extends Component {
         return <AddCase doctorId={doctorId} navigator={navigator} />;
         break;
         case 'AddLessons':
-            return <AddLessons  navigator={navigator}/>
+            return <AddLessons doctorId={doctorId} navigator={navigator} diags={route.diags} type={route.type}/>
         break;
         case 'MedineOrder':
             return <MedineOrder doctorId={doctorId} backMain={route.back} navigator={navigator} datas={route.datas} />
+          break;
+          case 'CreatePage':
+            return <CreatePage doctorId={doctorId} diags={route.diags} navigator={navigator} />
+          break;
+          case 'ManagerPage':
+            return <ManagerPage doctorId={doctorId} diags={route.diags} navigator={navigator} />
+          break;
+           case 'Manager':
+            return <Manager doctorId={doctorId} diag={route.diag} navigator={navigator} />
           break;
     };
   };

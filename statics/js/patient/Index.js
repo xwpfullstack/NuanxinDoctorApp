@@ -28,6 +28,7 @@ class nuanxin extends Component {
 
   changediags(diag){
     diags=diag;
+    this.refs['PE'].changeDiags(diag);
   }
 
   render() {
@@ -43,7 +44,7 @@ class nuanxin extends Component {
             <Release navigator={this.props.mainNavigator} doctorId={this.props.doctorId}/>
           </View>
           <View tabLabel='four'>
-            <PIndex doctorId={this.props.doctorId} navigator={this.props.mainNavigator} />
+            <PIndex ref='PE' doctorId={this.props.doctorId} navigator={this.props.mainNavigator} />
           </View>
           <View tabLabel='five'>
             <DoctorMainMessage navigator={this.props.mainNavigator} doctorId={this.props.doctorId}/>

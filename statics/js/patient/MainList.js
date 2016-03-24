@@ -138,12 +138,14 @@ handlePatient(rowdata){
       rowDiaStr=rowDiaStr[rowDiaStr.length-1]=='、' ?rowDiaStr.substring(0,rowDiaStr.length-1):rowDiaStr;
       rowDiaStr+='……';
     };
+    var photo_now=rowdata['photo']?{uri:rowdata['photo']}:require('../../images/load/default.png');
+    rowdata['photo_now']=photo_now;
     return (
     <TouchableOpacity onPress={()=>this.handlePatient(rowdata)}>
         <View style={styles.item}>
             <View style={styles.itemImage}>
               <Image
-                source={require('../../images/load/default.png')}
+                source={photo_now}
                 style={styles.image} />
             </View>
 
@@ -212,17 +214,17 @@ onRefresh(){
                         style={{width:Dimensions.get('window').width}}>
                           <ScrollView style={{height:Dimensions.get('window').height-185,}}>
                                   <ListView
-                                                  ref="listview"
-                                                  style={styles.listview}
-                                                  pageSize={1}
-                                                  initialListSize={this.state.length}
-                                                  renderFooter={()=>this._renderFooter()}
-                                                  dataSource={this.state.dataSource}
-                                                  scrollRenderAheadDistance={5}
-                                                  onEndReachedThreshold={20}
-                                                  renderRow={(data)=>{return this.renderRow(data);}}
-                                                  onEndReached={()=>this.onEndReached()}
-                                                  renderSectionHeader={this.renderSectionHeader} />
+                                       ref="listview"
+                                       style={styles.listview}
+                                       pageSize={1}
+                                       initialListSize={this.state.length}
+                                       renderFooter={()=>this._renderFooter()}
+                                       dataSource={this.state.dataSource}
+                                       scrollRenderAheadDistance={5}
+                                       onEndReachedThreshold={20}
+                                       renderRow={(data)=>{return this.renderRow(data);}}
+                                       onEndReached={()=>this.onEndReached()}
+                                       renderSectionHeader={this.renderSectionHeader} />
 
                           </ScrollView>
                     </PullToRefreshViewAndroid>
