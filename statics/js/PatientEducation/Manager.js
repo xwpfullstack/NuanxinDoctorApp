@@ -296,17 +296,14 @@ renderRow(rowData){
       return (
         <View style={styles.rowStyle}>
             <View style={styles.mainRow}>
-                  <Image source={require('../../images/PE/pothoB.png')}>
-                        <Image style={{height:106,width:131}} resizeMode='stretch' source={require('../../images/PE/doctorSay.png')}/>
-                  </Image>
-                  <Image resizeMode='stretch' style={styles.rowImageContent}  source={require('../../images/PE/titleB.png')}>
+                    <Image style={{height:106,flex:1,}} resizeMode='stretch' source={require('../../images/PE/doctorSay.png')}/>
+                
+                  <View style={styles.rowImageContent} >
                         <Text style={{fontFamily:'PingFang-SC-Bold',fontSize:22,color:'white'}}>{rowData.title}</Text>
-                     
                              <TouchableOpacity onPress={()=>this.changePEStatus(rowData)}  style={{height:37,width:37,top:-35}}>
                                     <Image  source={rowData.selected?require('../../images/PE/radioed.png'):require('../../images/PE/radio.png')} />
                             </TouchableOpacity>
-                        
-                  </Image>
+                  </View>
             </View>
             <Image source={require('../../images/PE/pushTimeT.png')} />
         </View>
@@ -422,13 +419,19 @@ const styles = StyleSheet.create({
   },
   mainRow:{
         flexDirection: 'row',
-       
+        height:106,
+        backgroundColor:'rgba(255,255,255,0.4)',
+        borderRadius:5,
+        marginLeft:5,
+        marginRight:5,
+        width:Dimensions.get('window').width-10,
   },
   rowImageContent:{
        flexDirection: 'row',
         justifyContent:'space-between',
         paddingLeft:20,
-        width:260,
+        //width:Dimensions.get('window').width-141,
+        flex:2,
         alignItems:'center',
   },
   listview:{
