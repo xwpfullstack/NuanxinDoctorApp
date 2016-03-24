@@ -101,3 +101,7 @@ global.GetTablelist_URL = Test_URL + 'getTablelist/';
 global.GetNewsList_URL = Basic_URL + 'AppNewsList/';
 //删除发布消息
 global.DelNews_URL = Basic_URL + 'delNews/';
+
+//上传患教图片同上传医生头像URL，以class区分
+//新增患教信息
+global.AddLesson_URL = Basic_URL + 'AddAppLessonList/';

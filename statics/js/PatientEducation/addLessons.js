@@ -13,49 +13,177 @@ import React, {
   ScrollView,
   ProgressBarAndroid,
   TextInput,
+  ToastAndroid,
 } from 'react-native';
 import Modal from 'react-native-root-modal';
-const DiseaseList=[
-  {id:-1,name:'---请选择疾病---'},
-  {id:123,name:'抑郁焦虑'},
-  {id:124,name:'精神分裂'},
-  {id:125,name:'失眠'},
-  {id:126,name:'双相'},
-  {id:127,name:'帕金森'},
-  {id:128,name:'运动神经症'},
-  {id:129,name:'睡眠行为障碍'},
-  {id:130,name:'抑郁焦虑'},
-  {id:131,name:'精神分裂'},
-  {id:132,name:'失眠'},
-  {id:133,name:'双相'},
-  {id:134,name:'帕金森'},
-  {id:135,name:'运动神经症'},
-  {id:136,name:'睡眠行为障碍'},
-  {id:137,name:'抑郁焦虑'},
-  {id:138,name:'精神分裂'},
-  {id:139,name:'失眠'},
-  {id:140,name:'双相'},
-  {id:141,name:'帕金森'},
-  {id:142,name:'运动神经症'},
-  {id:143,name:'睡眠行为障碍'}
-];
+
+var ImagePickerManager = require('NativeModules').ImagePickerManager;
+var FileUpload = require('NativeModules').FileUpload;
+// const DiseaseList=[
+//   {id:-1,name:'---请选择疾病---'},
+//   {id:123,name:'抑郁焦虑'},
+//   {id:124,name:'精神分裂'},
+//   {id:125,name:'失眠'},
+//   {id:126,name:'双相'},
+//   {id:127,name:'帕金森'},
+//   {id:128,name:'运动神经症'},
+//   {id:129,name:'睡眠行为障碍'},
+//   {id:130,name:'抑郁焦虑'},
+//   {id:131,name:'精神分裂'},
+//   {id:132,name:'失眠'},
+//   {id:133,name:'双相'},
+//   {id:134,name:'帕金森'},
+//   {id:135,name:'运动神经症'},
+//   {id:136,name:'睡眠行为障碍'},
+//   {id:137,name:'抑郁焦虑'},
+//   {id:138,name:'精神分裂'},
+//   {id:139,name:'失眠'},
+//   {id:140,name:'双相'},
+//   {id:141,name:'帕金森'},
+//   {id:142,name:'运动神经症'},
+//   {id:143,name:'睡眠行为障碍'}
+// ];
+//
+const type=2;
+
 class AddLessons extends Component {
   constructor(){
     super();
     this.state={
-        isLoad:true,
-        disease:-1,
+        // isLoad:true,
+        isSelected:false,
+        isUploaded:false,
+        photoUrl:'',
+        // disease:-1,
         title:'',
         content:'',
-        link:'',
-        delayDays:''
+        url:'',
+        delayDays:'',
+        updatePicPrompt:'点此选择图片',
     };
 };
 cancel() {
   this.setState({disease:-1,title:'',content:'',link:'',delayDays:''});
 }
+chooseAndUpdate() {
+  if (!this.state.isSelected) {
+    chooseFile();
+  } else if (!this.state.isUploaded) {
+    update();
+  } else {
+    ToastAndroid.show('图片已上传', ToastAndroid.LONG);
+  }
+}
+chooseFile(){
+  var options = {
+    title: '选择图片',
+    cancelButtonTitle: '取消',
+    takePhotoButtonTitle: '拍照',
+    chooseFromLibraryButtonTitle: '从相册获取',
+    cameraType: 'front',
+    mediaType: 'photo',
+    videoQuality: 'high',
+    maxWidth: 1000,
+    maxHeight: 1000,
+    aspectX: 1,
+    aspectY: 2,
+    quality: 1,
+    angle:270,
+    allowEditing: true,
+    noData: false,
+    isUploaded: false,
+    isSelected: false,
+    storageOpations: {
+      skipBackup: false,
+      path: 'images'
+    }
+  };
+  ImagePickerManager.showImagePicker(options,(response) => {
+    if(response.error) {
+      console.log('ImagePickerManager Error: ',response.error);
+    }else if(response.didCancel) {
+      console.log('User cancelled image picker');
+    }else if(response.customButton) {
+      console.log('User tapped custom button: ', response.customButton);
+    }else {
+      /*const source = {uri: 'data:image/jpeg;base64,' + response.data,isStatic: true};*/
+      const source = {uri: response.uri,isStatic: true};
+      this.setState({
+        isSelected: true,
+        photoUrl: source,
+        updatePicPrompt:'点此上传图片',
+      });
+    }
+  })
+}
+
+update() {
+  var pathArray = this.state.photoUrl['uri'].split('/');
+  var imageName = pathArray[pathArray.length-1];
+  var obj = {
+    uploadUrl: Uploadphoto_URL,
+    method: 'POST',
+    headers: {
+      'Accept': 'application/json',
+    },
+    fields: {
+      'class':'lesson',
+    },
+    files: [
+      {
+        name: '',
+        filename: imageName,
+        filepath: this.state.photoUrl['uri'],
+        filetype: null,
+      },
+    ]
+  };
+  FileUpload.upload(obj,(err,result)=>{
+    var data = result['data'];
+    var obj = eval("("+data+")");
+    this.setState({
+      isUploaded: true,
+      updatePicPrompt:'上传成功'，
+      medicine:{
+        id:obj['medId'],
+        medImg:obj['name'],
+      }
+    })
+  })
+
+}
 commit() {
-  Alert.alert('', this.state.title+' '+ this.state.content+' '+this.state.link+' '+this.state.delayDays);
+  if (this.state.title === '') {
+    Alert.alert('提醒', '请输入主题。');
+    return;
+  }
+  if (type===1) {
+    if (this.state.content === '') {
+      Alert.alert('提醒', '请输入内容。');
+      return;
+    }
+  } else {
+    if (this.state.url === '') {
+      Alert.alert('提醒', '请输入链接。');
+      return;
+    }
+  }
+  if (!this.state.isSelected || !this.state.isUploaded) {
+    Alert.alert('提醒', '请上传图片。');
+    return;
+  }
+  if (this.state.delayDays === '') {
+    Alert.alert('提醒', '请输入推送时间。');
+    return;
+  }
+  // this.setState({isLoad: false});
+  // Alert.alert('','doctorId:'+this.props.doctorId+' '+
+  //                'title:'+this.state.title+' '+
+  //                'context:'+this.state.content+' '+
+  //                'link:'+this.state.url+' '+
+  //                'pushtime:'+this.state.delayDays+' '+
+  //                'ttype:'+type);
+  this.postData();
 }
 popOut() {
   this.props.navigator.pop();
@@ -64,7 +192,64 @@ changeTxt(key,value){
   this.state[key]=value;
     this.setState({DocMsg:this.state.DocMsg});
 };
+postData(){
+    fetch(AddLesson_URL,{
+            method: 'post',
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+               doctor_id:this.props.doctorId,
+               title:this.state.title,
+               pic:'tobecontinued..',
+               context:this.state.content,
+               link:this.state.url,
+               pushtime:this.state.delayDays,
+               ttype:type,
+            })
+      })
+      .then((response) => {
+          // Alert.alert('', 'response');
+           return response.json();
+      })
+      .then((responseData)=>{
+        // console.log(responseData);
+          // this.setState({isLoad:true, data:responseData,isSuccess:true,})
+          ToastAndroid.show('发送成功', ToastAndroid.LONG);
+          Alert.alert('',JSON.stringify(responseData));
+        // this.setState({isLoad:true, data:responseData.patients,isSuccess:true,})
+        // this.BaseCreateData(this.state.data,'date');
+                  // Alert.alert('',this.state.data[0].date);
+      })
+      .catch((err)=>{
+          // Alert.alert('catch err',err.toString())
+          // this.setState({isSuccess:false,isLoad:true});
+          // console.log(err.toString());
+      })
+      .done();
+};
   render() {
+    let mainInput=(type==1)?
+      <TextInput
+        style={[styles.textInput,{height: 120}]}
+        placeholder='编辑患教正文内容...'
+        value={this.state.content}
+        placeholderTextColor='#BFBFBF'
+        onChangeText={(txt)=>this.changeTxt('content',txt)}
+        underlineColorAndroid='transparent'
+        multiline={true}
+        numberOfLines={5}
+      /> :
+      <TextInput
+        style={[styles.textInput,{height: 45}]}
+        placeholder='编辑网页链接地址...'
+        keyboardType='url'
+        value={this.state.url}
+        placeholderTextColor='#BFBFBF'
+        onChangeText={(txt)=>this.changeTxt('url',txt)}
+        underlineColorAndroid='transparent'
+      />
     return (
       <Image
         source={require('../../images/load/background.png')}
@@ -78,7 +263,7 @@ changeTxt(key,value){
           </View>
         </View>
         <ScrollView style={styles.container}>
-          <View style={{marginLeft:11,marginTop:11}}>
+          {/*<View style={{marginLeft:11,marginTop:11}}>
             <Text style={[styles.normalText,{color: '#F08300'}]}>疾病</Text>
           </View>
             <Picker
@@ -91,43 +276,28 @@ changeTxt(key,value){
                 DiseaseList.map((data,index)=>(
                 <Picker.Item key={index} label={data.name} value={data.id} />
               ))}
-            </Picker>
-            <View style={{marginLeft:11}}>
+            </Picker>*/}
+            <View style={{marginLeft:11,marginTop:11}}>
               <Text style={[styles.normalText,{color: '#F08300'}]}>标题</Text>
             </View>
             <TextInput
               style={[styles.textInput,{height: 45}]}
-              placeholder='标题...'
+              placeholder='简单介绍...'
               value={this.state.title}
               placeholderTextColor='#BFBFBF'
               onChangeText={(txt)=>this.changeTxt('title',txt)}
               underlineColorAndroid='transparent'
             />
             <View style={{marginLeft:11}}>
-              <Text style={[styles.normalText,{color: '#F08300'}]}>正文</Text>
+              <Text style={[styles.normalText,{color: '#F08300'}]}>内容</Text>
             </View>
-            <TextInput
-              style={[styles.textInput,{height: 120}]}
-              placeholder='正文内容...'
-              value={this.state.content}
-              placeholderTextColor='#BFBFBF'
-              onChangeText={(txt)=>this.changeTxt('content',txt)}
-              underlineColorAndroid='transparent'
-              multiline={true}
-              numberOfLines={5}
-            />
+            {mainInput}
             <View style={{marginLeft:11}}>
-              <Text style={[styles.normalText,{color: '#F08300'}]}>链接</Text>
+              <Text style={[styles.normalText,{color: '#F08300'}]}>上传图片</Text>
             </View>
-            <TextInput
-              style={[styles.textInput,{height: 45}]}
-              placeholder='网页链接...'
-              keyboardType='url'
-              value={this.state.link}
-              placeholderTextColor='#BFBFBF'
-              onChangeText={(txt)=>this.changeTxt('link',txt)}
-              underlineColorAndroid='transparent'
-            />
+            <TouchableOpacity onPress={()=>this.chooseAndUpdate()} style={[styles.textInput,{alignItems: 'center',backgroundColor: '#DDDDDD',borderRadius:6}]}>
+              <Text style={[styles.normalText,{color: '#666666'}]}>{this.state.updatePicPrompt}</Text>
+            </TouchableOpacity>
             <View style={styles.rowSet}>
               <Text style={[styles.normalText,{color: '#F08300'}]}>推送时间</Text>
               <View style={{flexDirection: 'row', alignItems: 'center'}}>
@@ -146,9 +316,9 @@ changeTxt(key,value){
               </View>
             </View>
             <View style={[styles.rowSet, {justifyContent: 'space-around',backgroundColor:'transparent'}]}>
-              <TouchableOpacity onPress={()=>this.cancel()} style={styles.deleteButton}>
+              {/*<TouchableOpacity onPress={()=>this.cancel()} style={styles.deleteButton}>
                 <Text style={[styles.normalText,{color: '#666666'}]}>取消</Text>
-              </TouchableOpacity>
+              </TouchableOpacity>*/}
 
               <TouchableOpacity onPress={()=>this.commit()} style={styles.deleteButton}>
                 <Text style={[styles.normalText,{color: '#666666'}]}>提交</Text>
@@ -191,7 +361,8 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     backgroundColor: 'rgba(255,255,255,0.3)',
-    margin: 11,
+    marginHorizontal: 11,
+    marginVertical: 22,
     padding:11,
   },
   normalText: {
@@ -201,8 +372,6 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
   },
   textInput: {
-    borderRadius: 6,
-    borderWidth: 2,
     backgroundColor: 'rgba(255,255,255,0.3)',
     margin: 11,
     padding:11,
