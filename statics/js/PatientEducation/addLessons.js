@@ -55,6 +55,7 @@ class AddLessons extends Component {
         photoUrl:'',
         // disease:-1,
         title:'',
+        imageName:'',
         content:'',
         url:'',
         delayDays:'',
@@ -66,9 +67,9 @@ cancel() {
 }
 chooseAndUpdate() {
   if (!this.state.isSelected) {
-    chooseFile();
+    this.chooseFile();
   } else if (!this.state.isUploaded) {
-    update();
+    this.update();
   } else {
     ToastAndroid.show('图片已上传', ToastAndroid.LONG);
   }
@@ -110,7 +111,7 @@ chooseFile(){
       this.setState({
         isSelected: true,
         photoUrl: source,
-        updatePicPrompt:'点此上传图片',
+        updatePicPrompt:'选择完成,点此上传图片',
       });
     }
   })
@@ -143,10 +144,7 @@ update() {
     this.setState({
       isUploaded: true,
       updatePicPrompt:'上传成功',
-      medicine:{
-        id:obj['medId'],
-        medImg:obj['name'],
-      }
+      imageName:obj['pic'],
     })
   })
 
