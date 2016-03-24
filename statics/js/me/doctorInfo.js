@@ -29,10 +29,9 @@ class DoctorInfo extends Component {
             modalStyle:{},
             modalContent:{},
 	        dctmsg: {},
-	        photo:'../../images/me/default.png',
+	        photo:'../../images/me/defaultUser.png',
             worktime:{},
         }
-        this.postDoctorData();
     }
     _onPressEditButton(){
         this.props.navigator.push({
@@ -43,7 +42,18 @@ class DoctorInfo extends Component {
     _ChangePhoto() {
         this.props.navigator.push({
             name:'changePhoto',
+            func:(uri)=>{this._CheckPage(uri)},
         })
+    }
+    
+    _CheckPage(url) {
+        this.setState({
+            photo: url['uri'],
+        })
+    }
+    
+    componentDidMount() {
+      this.postDoctorData();
     }
 
     closeModal(){
@@ -141,7 +151,6 @@ class DoctorInfo extends Component {
     		    photo:PHOTO_URL+responseData.photo,
                 worktime:responseData.worktime
     		})
-            console.log(dctmsg);
           })
           .catch((err)=>{
               this.setState({isSuccess:false,isLoad:true});
@@ -157,7 +166,6 @@ class DoctorInfo extends Component {
                     this._MenuModal();
                     break;
                 case 'ShowCode':
-                    console.log('hajha');
                     this._CodeModal();
                     break;
                 case 'ShowJobview':

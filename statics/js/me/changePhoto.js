@@ -40,7 +40,7 @@ class ChangePhoto extends Component {
       aspectX: 1,
       aspectY: 2,
       quality: 1,
-      angle:270,
+      angle:0,
       allowEditing: true,
       noData: false,
       storageOpations: {
@@ -65,17 +65,18 @@ class ChangePhoto extends Component {
     })
   }
 
-  _uploadphoto(num) {
+  _uploadphoto() {
     var pathArray = this.state.sourceUrl['uri'].split('/');
     var imageName = pathArray[pathArray.length-1];
     var obj = {
-      uploadUrl: SaveDocInfo,
+      uploadUrl: Uploadphoto_URL,
       method: 'POST',
       headers: {
         'Accept': 'application/json',
       },
       fields: {
-        'num':''+num,
+        'num':''+this.props.doctorNum,
+        'class':'doctor',
       },
       files: [
         {
@@ -87,8 +88,14 @@ class ChangePhoto extends Component {
       ]
     };
     FileUpload.upload(obj,(err,result)=>{
+      this.props.checkPage(this.state.sourceUrl);
       console.log('upload',err,result);
     })
+      this.props.navigator.pop();
+  }
+  
+  _submitPersonInfo() {
+    this.props.navigator.pop();
   }
 
   _onPressSubmit() {
@@ -110,8 +117,10 @@ class ChangePhoto extends Component {
     return(
       <View
         style={{
-          justifyContent: 'center',
           alignItems: 'center',
+          backgroundColor: '#E6E6E6',
+          height: _height,
+          paddingTop: 60,
         }}
       >
          {this.state.sourceUrl ?
@@ -122,9 +131,14 @@ class ChangePhoto extends Component {
               />) :
             (
               <View
-                style={{width:120,height: 120,borderColor:'grey',borderWidth:1}}
+                style={{width:120,height: 120,borderColor:'grey',borderWidth:1,borderRadius:60}}
               >
-                <Text>
+                <Text
+                  style={{
+                    marginTop:50,
+                    textAlign: 'center',
+                  }}
+                >
                  上传您的头像
                 </Text>
               </View>)
@@ -154,7 +168,7 @@ class ChangePhoto extends Component {
           </View>
         </TouchableOpacity>
         <TouchableOpacity
-          onPress={() => {this._uploadphoto(1)}}
+          onPress={() => {this._onPressSubmit()}}
         >
           <View
             style={{

@@ -227,6 +227,7 @@ chooseFile(){
   update() {
     var pathArray = this.state.photoUrl['uri'].split('/');
     var imageName = pathArray[pathArray.length-1];
+    alert(''+this.props.doctorId);
     var obj = {
       uploadUrl: Uploadphoto_URL,
       method: 'POST',
@@ -235,6 +236,7 @@ chooseFile(){
       },
       fields: {
         'class':'medicine',
+        'doctorId':''+this.props.doctorId,
       },
       files: [
         {

@@ -21,13 +21,21 @@ import Schedule from '../cal/Schedule';
 import Release from '../cal/Release';
 import PIndex from '../PatientEducation/PIndex';
 
+var diags=[];
+
 class nuanxin extends Component {
+
+
+  changediags(diag){
+    diags=diag;
+    this.refs['PE'].changeDiags(diag);
+  }
 
   render() {
     return (
         <ViewPager tabBarPosition='bottom'  locked='true' renderTabBar={()=><BottomTabBar />}>
           <View tabLabel='one'>
-            <Home mainNavigator={this.props.mainNavigator} doctorId={this.props.doctorId}/>
+            <Home changediags={(diag)=>this.changediags(diag)}  mainNavigator={this.props.mainNavigator} doctorId={this.props.doctorId}/>
           </View>
           <View tabLabel='two'>
             <Schedule navigator={this.props.mainNavigator} doctorId={this.props.doctorId}/>
@@ -36,7 +44,7 @@ class nuanxin extends Component {
             <Release navigator={this.props.mainNavigator} doctorId={this.props.doctorId}/>
           </View>
           <View tabLabel='four'>
-            <PIndex doctorId={this.props.doctorId} navigator={this.props.mainNavigator} />
+            <PIndex ref='PE' doctorId={this.props.doctorId} navigator={this.props.mainNavigator} />
           </View>
           <View tabLabel='five'>
             <DoctorMainMessage navigator={this.props.mainNavigator} doctorId={this.props.doctorId}/>

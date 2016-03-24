@@ -41,6 +41,9 @@ import ChangePhoto from './statics/js/me/changePhoto';
 import AddLessons from './statics/js/PatientEducation/addLessons';
 import MedineOrder from './statics/js/patient/MedineOrder';
 import AddMedModel from './statics/js/me/addMedModel';
+import CreatePage from  './statics/js/PatientEducation/CreatePage';
+import ManagerPage from './statics/js/PatientEducation/ManagerPage';
+import Manager from './statics/js/PatientEducation/Manager';
 
 var _navigator;
 //监听硬件返回功能
@@ -53,6 +56,7 @@ BackAndroid.addEventListener('hardwareBackPress', ()=>{
 })
 
 var doctorId;
+var doctorNum;
 var diags;
 class NuanXinDoctorApp extends Component {
   constructor(props) {
@@ -96,6 +100,7 @@ class NuanXinDoctorApp extends Component {
         break;
       case 'doctorHomePage':
         doctorId=route.doctorId;
+        doctorNum=route.doctorNum;
         return  <DoctorMainScreen navigator={navigator} doctorId={route.doctorId}/>;
         break;
       case 'modifyPwd':
@@ -154,7 +159,11 @@ class NuanXinDoctorApp extends Component {
 
       case 'changePhoto':
         return <ChangePhoto
-            navigator={navigator} />
+            navigator={navigator}
+            doctorId={doctorId}
+            doctorNum={doctorNum}
+            checkPage={route.func}
+          /> 
         break;
       case 'addMedModel':
         return <AddMedModel
@@ -172,7 +181,16 @@ class NuanXinDoctorApp extends Component {
             return <AddLessons doctorId={doctorId} navigator={navigator}/>
         break;
         case 'MedineOrder':
-            return <MedineOrder backMain={route.back} navigator={navigator} datas={route.datas} />
+            return <MedineOrder doctorId={doctorId} backMain={route.back} navigator={navigator} datas={route.datas} />
+          break;
+          case 'CreatePage':
+            return <CreatePage doctorId={doctorId} diags={route.diags} navigator={navigator} />
+          break;
+          case 'ManagerPage':
+            return <ManagerPage doctorId={doctorId} diags={route.diags} navigator={navigator} />
+          break;
+           case 'Manager':
+            return <Manager doctorId={doctorId} diag={route.diag} navigator={navigator} />
           break;
     };
   };
@@ -188,6 +206,7 @@ class NuanXinDoctorApp extends Component {
           routeInfo:{
             name: 'doctorHomePage',
             doctorId: ret.userId,
+            doctorNum: ret.num,
           }
         })
       }else{

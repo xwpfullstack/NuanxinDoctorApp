@@ -160,7 +160,7 @@ import AddModal from './AddModal'
 
 					            <View style={styles.itemImage}>
 					              <Image
-					                source={require('../../images/load/kobe.jpg')}
+					                source={this.props.patientData['photo_now']}
 					                style={styles.image} />
 					            </View>
 

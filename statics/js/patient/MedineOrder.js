@@ -42,10 +42,13 @@ handleBack(){
 
 postPatient(){
   this.refs['modal'].tiggleModel(true);
+  let tempdiags=PatientMsg['diag'].map((value)=>{
+      return value['name'];
+  });
   console.log(JSON.stringify({
                doctor_id:PatientMsg['doctor_id'],
                patient_id:PatientMsg['patient_id'],
-               diag:PatientMsg['diag'],
+               diag:tempdiags,
                med:PatientMsg['med'],
             }));
     fetch(SavePrescript_URL,{
@@ -57,7 +60,7 @@ postPatient(){
             body: JSON.stringify({
                doctor_id:PatientMsg['doctor_id'],
                patient_id:PatientMsg['patient_id'],
-               diag:PatientMsg['diag'],
+               diag:tempdiags,
                med:PatientMsg['med'],
             })
       })
@@ -67,8 +70,11 @@ postPatient(){
       .then((responseData)=>{
         console.log(responseData);
           this.refs['modal'].tiggleModel(false);
-          this.handleBack();
-          this.props.backMain();
+        //this.handleBack();
+         //this.props.backMain();
+         //console.log();
+          let routes= this.props.navigator.getCurrentRoutes();
+          this.props.navigator.popToRoute(routes[routes.length-3]);
       })
       .catch((err)=>{
           console.log(err.toString());
