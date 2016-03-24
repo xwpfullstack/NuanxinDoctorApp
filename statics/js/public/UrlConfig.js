@@ -33,6 +33,11 @@ global.PatRecordsDetails_URL = Basic_URL + 'pat_records_details/';
 global.Collection_URL = Basic_URL + 'collection/';
 //获取疾病列表
 global.GetdocDiags_URL = Basic_URL + 'docDiags/';
+//根据疾病类型获取患者教育信息
+global.GetAppLesson_URL = Basic_URL + 'getAppLesson/';
+//修改是否选择患教
+global.ModAppLessonList_URL = Basic_URL + 'modAppLessonList/';
+
 
 //医生订单列表
 global.GetDocOrder_URL = Basic_URL + 'docOrders/';

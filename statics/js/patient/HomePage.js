@@ -134,6 +134,7 @@ postData(){
         console.log(responseData);
         let dlength= this.getlength(responseData.patients);
         this.setState({todaylength:dlength,isLoad:true,mainListData:responseData.patients, data:responseData.patients,isSuccess:true,diags:responseData.diags,})
+        this.props.changediags(this.state.diags);
       })
       .catch((err)=>{
           this.setState({isSuccess:false,isLoad:true});

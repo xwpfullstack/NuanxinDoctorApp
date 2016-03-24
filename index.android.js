@@ -41,6 +41,9 @@ import ChangePhoto from './statics/js/me/changePhoto';
 import AddLessons from './statics/js/PatientEducation/addLessons'; 
 import MedineOrder from './statics/js/patient/MedineOrder';
 import AddMedModel from './statics/js/me/addMedModel';
+import CreatePage from  './statics/js/PatientEducation/CreatePage';
+import ManagerPage from './statics/js/PatientEducation/ManagerPage';
+import Manager from './statics/js/PatientEducation/Manager';
 
 var _navigator;
 //监听硬件返回功能
@@ -178,6 +181,15 @@ class NuanXinDoctorApp extends Component {
         break;
         case 'MedineOrder':
             return <MedineOrder doctorId={doctorId} backMain={route.back} navigator={navigator} datas={route.datas} />
+          break;
+          case 'CreatePage':
+            return <CreatePage doctorId={doctorId} diags={route.diags} navigator={navigator} />
+          break;
+          case 'ManagerPage':
+            return <ManagerPage doctorId={doctorId} diags={route.diags} navigator={navigator} />
+          break;
+           case 'Manager':
+            return <Manager doctorId={doctorId} diag={route.diag} navigator={navigator} />
           break;
     };
   };
