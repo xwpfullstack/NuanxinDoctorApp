@@ -88,9 +88,10 @@ class ChangePhoto extends Component {
       ]
     };
     FileUpload.upload(obj,(err,result)=>{
-      this.props.navigator.pop();
+      this.props.checkPage(this.state.sourceUrl);
       console.log('upload',err,result);
     })
+      this.props.navigator.pop();
   }
   
   _submitPersonInfo() {
@@ -116,8 +117,10 @@ class ChangePhoto extends Component {
     return(
       <View
         style={{
-          justifyContent: 'center',
           alignItems: 'center',
+          backgroundColor: '#E6E6E6',
+          height: _height,
+          paddingTop: 60,
         }}
       >
          {this.state.sourceUrl ?
@@ -128,9 +131,14 @@ class ChangePhoto extends Component {
               />) :
             (
               <View
-                style={{width:120,height: 120,borderColor:'grey',borderWidth:1}}
+                style={{width:120,height: 120,borderColor:'grey',borderWidth:1,borderRadius:60}}
               >
-                <Text>
+                <Text
+                  style={{
+                    marginTop:50,
+                    textAlign: 'center',
+                  }}
+                >
                  上传您的头像
                 </Text>
               </View>)

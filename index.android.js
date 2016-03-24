@@ -162,6 +162,7 @@ class NuanXinDoctorApp extends Component {
             navigator={navigator} 
             doctorId={doctorId}  
             doctorNum={doctorNum}
+            checkPage={route.func}
           /> 
         break;
       case 'addMedModel':
