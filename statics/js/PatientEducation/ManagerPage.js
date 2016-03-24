@@ -84,6 +84,7 @@ renderRow(data){
                                  onEndReachedThreshold={20}
                                  renderRow={(data)=>{return this.renderRow(data);}}/>
               </ScrollView>
+              <View style={{height:50}}></View>
           </View>
         </Image>
         );

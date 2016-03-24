@@ -29,6 +29,7 @@ var PatientMsg={
 };
 
 var is_update=false;
+var med_is_update=false;
 
 class AddOrder extends Component{
   constructor(props){
@@ -92,7 +93,13 @@ handleSubmit(position){
             is_update=false;
         }
       }
-    
+  }
+  else if(position == 2){
+       if (med_is_update) {
+            this.refs['EM'].reDrawPage(PatientMsg);
+            med_is_update=false;
+       }
+         
   }
 }
 
@@ -100,6 +107,9 @@ changeMedia(media,isdel,name){
   if (name == 'diag') {
     //标记数据已经被修改过 需要重新上传数据
       is_update=true;
+  }
+  else{
+      med_is_update=true;
   }
     if (isdel) {
         for (var i = 0; i <PatientMsg[name].length ; i++) {
@@ -111,7 +121,7 @@ changeMedia(media,isdel,name){
     else{
         PatientMsg[name].push(media);       
     }  
-    this.refs['EM'].reDrawPage(PatientMsg);
+  
 };
 render(){
     return  (

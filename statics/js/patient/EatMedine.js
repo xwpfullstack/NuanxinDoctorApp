@@ -17,13 +17,14 @@ import React, {
 import EatMedineItem from './EatMedineItem';
 import DatePicker from '../cal/DatePicker';
 import NoSelect from './NoSelect';
+import Loading from './Loading';
 class EatMedine extends Component{
   constructor(props){
     super(props);  
 
    // let value=this.props.PatientMsg;
     this.state={
-      isLoad:true,
+      isLoad:false,
       PatientMsg:this.props.PatientMsg,
       pickerData: '',
       changeColor:'',
@@ -33,6 +34,14 @@ class EatMedine extends Component{
 reDrawPage(Msg){
     this.setState({PatientMsg:Msg})
 };
+
+componentWillMount(){
+
+}
+
+componentDidMount(){
+      this.setState({isLoad:true});
+}
 
 more(index){
   //console.log(this.refs[index]);
@@ -136,7 +145,7 @@ mediaControl(){
         );
       }
        else{
-            return <Text>AAAA</Text>;
+            return <Loading style={{height:Dimensions.get('window').height-200}}/>;;
         };
 };
 };
