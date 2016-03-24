@@ -163,7 +163,7 @@ class NuanXinDoctorApp extends Component {
             doctorId={doctorId}
             doctorNum={doctorNum}
             checkPage={route.func}
-          /> 
+          />
         break;
       case 'addMedModel':
         return <AddMedModel
@@ -178,7 +178,7 @@ class NuanXinDoctorApp extends Component {
         return <AddCase doctorId={doctorId} navigator={navigator} />;
         break;
         case 'AddLessons':
-            return <AddLessons doctorId={doctorId} navigator={navigator}/>
+            return <AddLessons doctorId={doctorId} navigator={navigator} diags={route.diags} type={route.type}/>
         break;
         case 'MedineOrder':
             return <MedineOrder doctorId={doctorId} backMain={route.back} navigator={navigator} datas={route.datas} />

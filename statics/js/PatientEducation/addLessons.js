@@ -44,7 +44,6 @@ var FileUpload = require('NativeModules').FileUpload;
 //   {id:143,name:'睡眠行为障碍'}
 // ];
 //
-const type=2;
 
 class AddLessons extends Component {
   constructor(){
@@ -143,7 +142,7 @@ update() {
     var obj = eval("("+data+")");
     this.setState({
       isUploaded: true,
-      updatePicPrompt:'上传成功'，
+      updatePicPrompt:'上传成功',
       medicine:{
         id:obj['medId'],
         medImg:obj['name'],
@@ -157,7 +156,7 @@ commit() {
     Alert.alert('提醒', '请输入主题。');
     return;
   }
-  if (type===1) {
+  if (this.props.type==='word') {
     if (this.state.content === '') {
       Alert.alert('提醒', '请输入内容。');
       return;
@@ -168,10 +167,10 @@ commit() {
       return;
     }
   }
-  if (!this.state.isSelected || !this.state.isUploaded) {
-    Alert.alert('提醒', '请上传图片。');
-    return;
-  }
+  // if (!this.state.isSelected || !this.state.isUploaded) {
+  //   Alert.alert('提醒', '请上传图片。');
+  //   return;
+  // }
   if (this.state.delayDays === '') {
     Alert.alert('提醒', '请输入推送时间。');
     return;
@@ -205,8 +204,10 @@ postData(){
                pic:'tobecontinued..',
                context:this.state.content,
                link:this.state.url,
-               pushtime:this.state.delayDays,
-               ttype:type,
+               pushtime:parseInt(this.state.delayDays),
+               ttype:(this.props.type==='word'?0:
+                      this.props.type==='url'?1:2),
+               diags:this.props.diags,
             })
       })
       .then((response) => {
@@ -216,8 +217,10 @@ postData(){
       .then((responseData)=>{
         // console.log(responseData);
           // this.setState({isLoad:true, data:responseData,isSuccess:true,})
-          ToastAndroid.show('发送成功', ToastAndroid.LONG);
-          Alert.alert('',JSON.stringify(responseData));
+          // if (responseData.status === 'success') {          }
+            ToastAndroid.show('发送成功', ToastAndroid.LONG);
+
+          // Alert.alert('',JSON.stringify(responseData));
         // this.setState({isLoad:true, data:responseData.patients,isSuccess:true,})
         // this.BaseCreateData(this.state.data,'date');
                   // Alert.alert('',this.state.data[0].date);
@@ -230,7 +233,7 @@ postData(){
       .done();
 };
   render() {
-    let mainInput=(type==1)?
+    let mainInput=(this.props.type=='word')?
       <TextInput
         style={[styles.textInput,{height: 120}]}
         placeholder='编辑患教正文内容...'
@@ -252,7 +255,7 @@ postData(){
       />
     return (
       <Image
-        source={require('../../images/load/background.png')}
+        source={require('../../images/PE/back.png')}
         style={styles.backgroundImage}
       >
         <View style={styles.tittle}>
