@@ -13,7 +13,7 @@ import React, {
   ScrollView,
   Picker,
 } from 'react-native';
-                
+
 var DataJson=[];
 var PatientMsg=[];
 var ischeack=[];
@@ -30,7 +30,7 @@ class CreatePage extends Component{
 };
 
 createFullData(){
-   let dataJson=[]; 
+   let dataJson=[];
       let tempJson;
       //
      for (let i = 0; i <this.props.diags.length; i++) {
@@ -68,8 +68,8 @@ changeMedia(data,isdel){
         }
     }
     else{
-        PatientMsg.push(data);       
-    }  
+        PatientMsg.push(data);
+    }
 }
 
 
@@ -80,7 +80,7 @@ pushLoad(data){
       this.createFullData();
 };
 
-handleCheack(index,Msg){    
+handleCheack(index,Msg){
     if (ischeack[index] === false) {
         ischeack[index] =true;
           this.changeMedia(Msg,false);
@@ -100,8 +100,12 @@ addDiannosis(){
 };
 
 dSubmit(){
-    console.log({checkDiag:PatientMsg,type:this.state.language});
-
+    // console.log({checkDiag:PatientMsg,type:this.state.language});
+    this.props.navigator.push({
+        name:'AddLessons',
+        diags:PatientMsg,
+        type:this.state.language
+    })
   };
 
   render(){
@@ -111,9 +115,9 @@ dSubmit(){
 
         var two=(index+1)*2-1;
         if (data[1]) {
-          temp= <TouchableOpacity 
+          temp= <TouchableOpacity
                 activeOpacity={1}
-                onPress={()=>this.handleCheack(two,data[1])} 
+                onPress={()=>this.handleCheack(two,data[1])}
                 style={[styles.rowData,{marginRight:20,backgroundColor:this.state.isCheack[two]?'#FE9300':'rgb(244,241,245)'}]}>
                 <Text style={[styles.rowDataText,{color:this.state.isCheack[two]?'white':'black'}]}>
                   {data[1]['name']}
@@ -121,7 +125,7 @@ dSubmit(){
               </TouchableOpacity>;
         }
         else{
-            temp= <TouchableOpacity 
+            temp= <TouchableOpacity
                 style={[styles.rowData,{marginRight:20,backgroundColor:'rgba(0,0,0,0)',borderWidth:0,}]}>
                 <Text style={[styles.rowDataText]}>
                 </Text>
@@ -130,9 +134,9 @@ dSubmit(){
 
         return (
           <View key={index} style={styles.row}>
-              <TouchableOpacity 
+              <TouchableOpacity
               activeOpacity={1}
-              onPress={()=>this.handleCheack((index*2),data[0])} 
+              onPress={()=>this.handleCheack((index*2),data[0])}
               style={[styles.rowData,{backgroundColor:this.state.isCheack[(index*2)]?'#FE9300':'rgb(244,241,245)'}]}>
                   <Text style={[styles.rowDataText,{color:this.state.isCheack[(index*2)]?'white':'black'}]}>{data[0]['name']}</Text>
               </TouchableOpacity>
@@ -174,8 +178,8 @@ dSubmit(){
                     </View>
               </ScrollView>
 
-                 
-                  
+
+
           </View>
         );
       }
@@ -194,7 +198,7 @@ const styles = StyleSheet.create({
   },
   MainMB:{
       margin:10,
-   
+
       backgroundColor:'white',
       borderRadius:5,
       borderWidth:1,
