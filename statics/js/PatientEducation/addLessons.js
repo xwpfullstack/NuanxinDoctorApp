@@ -55,6 +55,7 @@ class AddLessons extends Component {
         photoUrl:'',
         // disease:-1,
         title:'',
+        style:{},
         imageName:'',
         content:'',
         url:'',
@@ -111,6 +112,7 @@ chooseFile(){
       this.setState({
         isSelected: true,
         photoUrl: source,
+        style:{backgroundColor: '#FF6633'},
         updatePicPrompt:'选择完成,点此上传图片',
       });
     }
@@ -144,6 +146,7 @@ update() {
     this.setState({
       isUploaded: true,
       updatePicPrompt:'上传成功',
+      style:{backgroundColor: '#66AA66'},
       imageName:obj['pic'],
     })
   })
@@ -165,10 +168,10 @@ commit() {
       return;
     }
   }
-  // if (!this.state.isSelected || !this.state.isUploaded) {
-  //   Alert.alert('提醒', '请上传图片。');
-  //   return;
-  // }
+  if (!this.state.isSelected || !this.state.isUploaded) {
+    Alert.alert('提醒', '请上传图片。');
+    return;
+  }
   if (this.state.delayDays === '') {
     Alert.alert('提醒', '请输入推送时间。');
     return;
@@ -199,7 +202,7 @@ postData(){
             body: JSON.stringify({
                doctor_id:this.props.doctorId,
                title:this.state.title,
-               pic:'tobecontinued..',
+               pic:this.state.imageName,
                context:this.state.content,
                link:this.state.url,
                pushtime:parseInt(this.state.delayDays),
@@ -296,7 +299,7 @@ postData(){
             <View style={{marginLeft:11}}>
               <Text style={[styles.normalText,{color: '#F08300'}]}>上传图片</Text>
             </View>
-            <TouchableOpacity onPress={()=>this.chooseAndUpdate()} style={[styles.textInput,{alignItems: 'center',backgroundColor: '#DDDDDD',borderRadius:6}]}>
+            <TouchableOpacity onPress={()=>this.chooseAndUpdate()} style={[styles.textInput,{alignItems: 'center',backgroundColor: '#DDDDDD',borderRadius:6},this.state.style]}>
               <Text style={[styles.normalText,{color: '#666666'}]}>{this.state.updatePicPrompt}</Text>
             </TouchableOpacity>
             <View style={styles.rowSet}>
