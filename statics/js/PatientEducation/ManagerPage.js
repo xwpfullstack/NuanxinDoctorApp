@@ -13,6 +13,14 @@ import React, {
   ScrollView,
 } from 'react-native';
                 
+var COLOR=[
+    '#DC5947',
+    '#6C6CC6',
+    '#53AD55',
+    '#DC5947',
+    '#26BC8F',
+    '#E9A737'
+];
 
 class ManagerPage extends Component{
   constructor(props){
@@ -40,8 +48,12 @@ jumpSelf(data){
 }
 
 renderRow(data){
+  var num=Math.ceil(Math.random()*5)
   return(
         <TouchableOpacity onPress={()=>this.jumpSelf(data)} style={styles.touchStyle}>
+               <View style={[styles.drugLogo,{backgroundColor:COLOR[num]}]}>
+                    <Text style={{fontSize:23,color:'#fff'}}>{data.name[0]}</Text>
+              </View>
               <Text style={styles.touchTxt}>{data.name}</Text>
         </TouchableOpacity>
         );
@@ -95,15 +107,26 @@ const styles = StyleSheet.create({
   },
 
   touchStyle:{
-      height:40,
+      height:50,
+       flexDirection: 'row',
       borderBottomWidth:1,
-      justifyContent:'center',
       alignItems:'center',
-      backgroundColor:'white',
+      paddingLeft:10,
   },
   touchTxt:{
       fontSize:15,
+      color:'white',
   },
+
+  drugLogo: {
+    marginRight:10,
+    width:40,
+    height:40,
+    borderRadius:20,
+    backgroundColor:'#53AD55',
+    alignItems:'center',
+    justifyContent:'center'
+},
 
   Submit:{
      marginTop:20,
