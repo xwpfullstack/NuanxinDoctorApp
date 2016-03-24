@@ -43,6 +43,11 @@ class MenuModal extends Component{
             name:menuname,
             dctmsg:this.props.dctmsg,
         });
+        if(menuname == 'logIn') {
+          storage.remove({
+            key: 'loginState'
+          });
+        }
     };
 
     _loadCodeImg() {
