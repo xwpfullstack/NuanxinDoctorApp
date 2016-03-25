@@ -170,7 +170,7 @@ import AddModal from './AddModal'
 					            <View style={styles.wordMSg}>
 					             	<Text
                                                           style={styles.itemHeader}>
-                                                            {this.state.patientData.sex=='m'?'男':'女'}  {this.state.patientData.area==''?'暂无地址':this.state.patientData.area}  {this.state.patientData.age}
+                                                            {this.state.patientData.sex==''?'未知':(this.state.patientData.sex=='m'?'男':'女')}  {this.state.patientData.area==''?'暂无地址':this.state.patientData.area}  {this.state.patientData.age}
                                                     </Text>
 					             	<Text style={styles.itemTwoHeader}>{this.state.patientData.tel}</Text>
 					             	<Text style={styles.itemTwoHeader}>{this.getDia(this.state.patientData)}</Text>
