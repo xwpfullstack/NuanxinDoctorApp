@@ -18,6 +18,7 @@ class BackTitle extends Component {
         this.props.navigator.push({
             name:this.props.addName,
             carryData:this.props.carryData,
+            postCaseData:this.props.postCaseData,
         })
     }
     addBtn(){

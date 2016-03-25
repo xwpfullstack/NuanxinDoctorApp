@@ -107,7 +107,7 @@ class DoctorMsgEdit extends Component {
                   '提示',
                   '修改成功',
                   [
-                    {text: '确定',onPress:()=>{this.props.navigator.pop()}}
+                    {text: '确定',onPress:()=>{this.props.navigator.pop();this.props.postDoctorData();}}
                   ]
                 )
             }
@@ -121,6 +121,7 @@ class DoctorMsgEdit extends Component {
 
     _onPressSubmit(){
         this.submitDoctorData();
+
     }
 
     //回调函数,返回已修改的工作安排
@@ -275,6 +276,7 @@ class DoctorMsgEdit extends Component {
                     <View style={styles.psnInfoLineValue}>
                         <JobViewEdit
                             setworktime={(value)=>{this.setworktime(value)}}
+                            worktime={this.props.worktime}
                         />
                     </View>{/*出诊安排*/}
                 </View>

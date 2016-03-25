@@ -74,6 +74,8 @@ class DoctorInfo extends Component {
             modalContent:<MenuModal
                 close={()=>this.closeModal()}
                 doctorId={this.props.doctorId}
+                postDoctorData={()=>this.postDoctorData()}
+                worktime={this.state.worktime}
                 navigator={this.props.navigator}
                 dctmsg={this.state.dctmsg}
                 name='menuModal'/>,
@@ -149,7 +151,7 @@ class DoctorInfo extends Component {
     		this.setState({
     		    dctmsg:responseData,
     		    photo:PHOTO_URL+responseData.photo,
-                worktime:responseData.worktime
+                              worktime:responseData.worktime
     		})
           })
           .catch((err)=>{

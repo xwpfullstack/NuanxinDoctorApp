@@ -54,10 +54,10 @@ class PIndex extends Component {
                <Image
                resizeMode='stretch'
                 source={require('../../images/PE/doctorSay.png')}
-                style={{margin:20,height:300,width:Dimensions.get('window').width-40}}/>
+                style={{height:300,width:Dimensions.get('window').width,marginBottom:10}}/>
                     <TouchableOpacity style={styles.touchStyle} onPress={()=>this.jump('CreatePage')}>
                           <Image style={{marginRight:10}} source={require('../../images/me/price.png')}/>
-                            <Text style={[styles.touchTxt,{borderBottomWidth:0}]}>创建患教</Text>
+                            <Text style={[styles.touchTxt]}>创建患教</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.touchStyle}  onPress={()=>this.jump('ManagerPage')}>
                            <Image style={{marginRight:10}} source={require('../../images/me/hospital.png')}/>
@@ -100,6 +100,7 @@ const styles = StyleSheet.create({
       backgroundColor:'white',
       alignItems:'center',
       borderBottomWidth:1,
+       borderBottomColor:'#E6E6E6',
     padding:10,
   },
   touchTxt:{
