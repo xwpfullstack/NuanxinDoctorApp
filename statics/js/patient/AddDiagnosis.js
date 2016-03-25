@@ -41,12 +41,15 @@ postData(data){
            return response.json();
       })
       .then((responseData)=>{
-        //Alert.alert('ok');
-        console.log(responseData);
-        //this.props.diags.push(data);
-        this.refs['loading'].tiggleModel(false);
-        this.popOut();
-        this.props.pushLoad(data);
+        if (responseData.status != 'error'){
+                this.popOut();
+                this.props.pushLoad(responseData.diag);
+        }
+        else{
+             ToastAndroid.show(responseData.message, ToastAndroid.SHORT);
+        }
+           this.refs['loading'].tiggleModel(false);
+       
       })
       .catch((err)=>{
         this.refs['loading'].tiggleModel(false);

@@ -55,10 +55,10 @@ componentDidMount(){
 }
 
 pushLoad(data){
-      //Alert.alert(data+'');
       this.state.diags.push(data);
       this.setState({diags:this.state.diags});
       this.createFullData();
+      
 };
 
 handleCheack(index,Msg){    
