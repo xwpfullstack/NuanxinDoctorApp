@@ -27,7 +27,7 @@ class JobViewEdit extends Component {
           }else {
             val = 4;
           }
-          tableArray[i][j] = {check: false,value: val}
+          tableArray[i][j] = {check: this.props.worktime[i][j],value: val}
         }
       }
       this.state={

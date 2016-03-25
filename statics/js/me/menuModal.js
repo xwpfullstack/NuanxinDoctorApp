@@ -42,6 +42,8 @@ class MenuModal extends Component{
         this.props.navigator.push({
             name:menuname,
             dctmsg:this.props.dctmsg,
+            postDoctorData:this.props.postDoctorData,
+            worktime:this.props.worktime,
         });
         if(menuname == 'logIn') {
           storage.remove({

@@ -24,7 +24,7 @@ class EatMedine extends Component{
 
    // let value=this.props.PatientMsg;
     this.state={
-      isLoad:false,
+      isLoad:true,
       PatientMsg:this.props.PatientMsg,
       pickerData: '',
       changeColor:'',
@@ -40,7 +40,7 @@ componentWillMount(){
 }
 
 componentDidMount(){
-      this.setState({isLoad:true});
+      //this.setState({isLoad:true});
 }
 
 more(index){
@@ -121,28 +121,28 @@ mediaControl(){
     var Content;
      
     if (this.state.isLoad) {
+              if (this.state.PatientMsg['med'].length>0){
+                Content=  <ScrollView>
+                      {this.mediaControl()}
+                      <View style={styles.Submit}>
+                              <TouchableOpacity style={[styles.submitContent,{borderWidth:0,backgroundColor:'rgba(0,0,0,0)'}]}><Text></Text></TouchableOpacity>
+                              <TouchableOpacity onPress={()=>this.submit()}  style={[styles.submitContent,{marginRight:50,}]}><Text style={styles.txtSubStyle}>提交</Text></TouchableOpacity>
+                      </View>
+                      <View style={{height:150}}></View>
+                </ScrollView>
+            }
+            else{
+                return <NoSelect txt='还没有选择任何药物...'  style={{height:Dimensions.get('window').height-200,}}/> ;
+            }
 
-          if (this.state.PatientMsg['med'].length>0){
-            Content=  <ScrollView>
-                  {this.mediaControl()}
-                  <View style={styles.Submit}>
-                          <TouchableOpacity style={[styles.submitContent,{borderWidth:0,backgroundColor:'rgba(0,0,0,0)'}]}><Text></Text></TouchableOpacity>
-                          <TouchableOpacity onPress={()=>this.submit()}  style={[styles.submitContent,{marginRight:50,}]}><Text style={styles.txtSubStyle}>提交</Text></TouchableOpacity>
-                  </View>
-                  <View style={{height:150}}></View>
-            </ScrollView>
-        }
-        else{
-            return <NoSelect txt='还没有选择任何药物...'  style={{height:Dimensions.get('window').height-200,}}/> ;
-        }
-      return  (
-        <View style={{flex:1,flexDirection:'column',height:Dimensions.get('window').height}}>
-          <View style={styles.container}>
-            {Content}
-          </View>
-        <DatePicker changeColor={this.state.changeColor} data={this.state.pickerData} ref='datepicker' style={{flex:1,}}/>
-        </View>
-        );
+          return  (
+            <View style={{flex:1,flexDirection:'column',height:Dimensions.get('window').height}}>
+              <View style={styles.container}>
+                {Content}
+              </View>
+            <DatePicker changeColor={this.state.changeColor} data={this.state.pickerData} ref='datepicker' style={{flex:1,}}/>
+            </View>
+            );
       }
        else{
             return <Loading style={{height:Dimensions.get('window').height-200}}/>;;

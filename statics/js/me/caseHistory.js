@@ -8,6 +8,8 @@ import React, {
   ScrollView,
   Dimensions,
   Image,
+  TouchableOpacity,
+  ToastAndroid,
 } from 'react-native';
 
 var WINDOW_HEIGHT = Dimensions.get('window').height;
@@ -23,30 +25,74 @@ class CaseHistory extends Component {
         super(props);
         var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
         this.state={
-            caseData:false,
-            dataSource:ds.cloneWithRows(['1','2','3']),
+            caseData:[],
+            dataSource:ds,
         }
-        this.postCaseData();
+     
+    }
+
+
+    componentDidMount(){
+               this.postCaseData();
     }
 
     _classicCaseList() {
         return (
             <ListView
-                dataSource={this.state.dataSource}
-                renderRow={(rowdata)=>{return this._renderRow(rowdata)}}
-            />
+                dataSource={this.state.dataSource.cloneWithRows(this.state.caseData)}
+                renderRow={(rowdata)=>{return this._renderRow(rowdata)}}/>
 
         );
+    }
+
+
+
+    delP(rowdata){
+        
+             fetch(DelTypicalCase_URL,{
+                method: 'post',
+                headers: {
+                  'Accept': 'application/json',
+                  'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                  typical_id:rowdata.id,
+                })
+          })
+          .then((response) => {
+               //console.log(response);
+               return response.json();
+          })
+          .then((responseData)=>{
+             let tempData = this.state.caseData.filter((value)=>{
+                        return rowdata.id != value.id;
+                });
+                this.setState({
+                caseData:tempData,
+                });
+                ToastAndroid.show('删除成功！', ToastAndroid.SHORT);
+          })
+          .catch((err)=>{
+            ToastAndroid.show('数据请求错误'+err.toString(), ToastAndroid.SHORT)
+              console.log(err.toString());
+          })
+          .done();
+          
     }
 
     //病例显示数据
     _renderRow(rowdata) {
         return (
             <View style={{paddingTop:20}}>
-                <View style={{paddingBottom:10}}>
+                <View style={{paddingBottom:10, flexDirection: 'row',justifyContent: 'space-between',alignItems: 'center',}}>
                     <Text style={styles.caseHistoryTitle}>
                         {rowdata.description}
                     </Text>
+                    <TouchableOpacity
+                        onPress={()=>this.delP(rowdata)}
+                        style={{backgroundColor:'#F08300',alignItems:'center',justifyContent:'center',borderRadius:12.5,width:70,height:25}}>
+                            <Text style={styles.caseText}>删除</Text>
+                    </TouchableOpacity>
                 </View>
                 <View style={{backgroundColor:'rgba(255,255,255,0.2)',borderRadius:5,padding:5}}>
                     <View style={styles.caseLine}>
@@ -138,11 +184,10 @@ class CaseHistory extends Component {
                return response.json();
           })
           .then((responseData)=>{
+            console.log(responseData);
             this.setState({
                 caseData:responseData,
-                dataSource:this.state.dataSource.cloneWithRows(responseData),
             })
-            console.log(this.state.dataSource);
           })
           .catch((err)=>{
               console.log(err.toString());
@@ -157,6 +202,7 @@ class CaseHistory extends Component {
             <BackTitle
                 navigator={this.props.navigator}
                 addName={'addCase'}
+                postCaseData={()=>this.postCaseData()}
                 addBtn={true}
                 title={'经典病例'} />
                 <Image

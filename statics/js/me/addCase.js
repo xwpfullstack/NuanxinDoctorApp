@@ -24,6 +24,7 @@ class AddCase extends Component {
             <ScrollView style={styles.ScrollViewBody}>
                 <CaseView
                 doctorId={this.props.doctorId}
+                postCaseData={this.props.postCaseData}
                 navigator={this.props.navigator}/>
             </ScrollView>
         </View>
