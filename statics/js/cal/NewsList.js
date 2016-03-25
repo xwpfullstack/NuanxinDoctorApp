@@ -69,7 +69,7 @@ class NewsList extends Component {
     // Alert.alert('', 'case_id:'+case_id);
     Alert.alert(
       '提示',
-      '确定要删除订单吗？',
+      '确定要删除消息吗？',
       [
         {text: '确定',onPress:() => {this.postDeleteId(case_id)}},
         {text: '取消',onPress:() => {}},
@@ -96,6 +96,7 @@ class NewsList extends Component {
           // console.log(responseData);
           // this.setState({data:responseData.records})
           if (responseData.status==='success') {
+            this.props.navigator.pop();
             this.postData();
           }
           else {

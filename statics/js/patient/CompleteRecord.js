@@ -85,6 +85,7 @@ class CompleteRecord extends Component {
     //  Alert.alert(this.state.data+'');
   }
   postData(){
+    // Alert.alert('', this.props.patientId+'')
     this.setState({isLoad:false});
       // Alert.alert('fetch');
       fetch(PatientCaseBook_URL,{
@@ -103,8 +104,13 @@ class CompleteRecord extends Component {
         })
         .then((responseData)=>{
           // console.log(responseData);
-          this.setState({isLoad:true, data:responseData.records,isSuccess:true})
           // Alert.alert('',JSON.stringify(responseData));
+          if (responseData.status !=='failed') {
+            this.setState({isLoad:true, data:responseData.records,isSuccess:true})
+          } else {
+            this.setState({isLoad:true, data:[],isSuccess:true})
+          }
+
 
         })
         .catch((err)=>{

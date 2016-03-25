@@ -75,8 +75,12 @@ postData(){
         // console.log(responseData);
 
         this.setState({isLoad:true, data:responseData,isSuccess:true,})
-        if (responseData.status==='success')
+        if (responseData.status==='success') {
           ToastAndroid.show('发送成功', ToastAndroid.LONG);
+          this.state.DocMsg['title']='';
+          this.state.DocMsg['content']='';
+          this.setState({DocMsg:this.state.DocMsg});
+        }
         else {
           ToastAndroid.show(responseData.msg, ToastAndroid.LONG);
         }
@@ -114,32 +118,36 @@ render(){
                 </View>
             </View>
             <View style={styles.inputGroup}>
-                      <TextInput
-                                style={styles.TextInput}
-                                placeholder='标题'
-                                value={this.state.DocMsg['title']}
-                                placeholderTextColor='#BFBFBF'
-                                onChangeText={(txt)=>this.changeTxt('title',txt)}
-                                underlineColorAndroid='black'/>
-                                <View style={{alignSelf: 'flex-start', marginVertical:11}}>
-                                  <Text style={styles.normalText}>To: {this.props.patientName}</Text>
-                                </View>
-                            <View style={{marginTop:15,borderWidth:1,borderColor: '#AAAAAA'}}>
-                                 <TextInput
-                                         style={[styles.TextInput,{marginTop:0}]}
-                                        placeholder='内容'
-                                         value={this.state.DocMsg['content']}
-                                        placeholderTextColor='#BFBFBF'
-                                        onChangeText={(txt)=>this.changeTxt('content',txt)}
-                                        underlineColorAndroid='transparent'
-                                        multiline={true}
-                                        numberOfLines={5} />
-                            </View>
+                <View style={styles.TextInput}>
+                    <TextInput
+                      style={styles.TextInputText}
+                      placeholder='标题'
+                      value={this.state.DocMsg['title']}
+                      placeholderTextColor='#BFBFBF'
+                      onChangeText={(txt)=>this.changeTxt('title',txt)}
+                      underlineColorAndroid='black'
+                    />
                 </View>
-                <Modal
-                    style={{top: 0,right: 0,bottom: 0,left: 0,backgroundColor: 'transparent',}}
-                    visible={!this.state.isLoad}
-                >
+                <View style={{alignSelf: 'flex-start', marginVertical:11}}>
+                  <Text style={styles.normalText}>To: {this.props.patientName}</Text>
+                </View>
+                  <View style={[styles.TextInput,{marginTop:15,borderWidth:1,borderColor: '#AAAAAA'}]}>
+                       <TextInput
+                          style={styles.TextInputText}
+                          placeholder='内容'
+                          value={this.state.DocMsg['content']}
+                          placeholderTextColor='#BFBFBF'
+                          onChangeText={(txt)=>this.changeTxt('content',txt)}
+                          underlineColorAndroid='transparent'
+                          multiline={true}
+                          numberOfLines={5}
+                        />
+                  </View>
+              </View>
+              <Modal
+                  style={{top: 0,right: 0,bottom: 0,left: 0,backgroundColor: 'transparent',}}
+                  visible={!this.state.isLoad}
+              >
                     <View style={styles.waiting}>
                       <ProgressBarAndroid />
                     </View>
@@ -212,9 +220,11 @@ const styles = StyleSheet.create({
        backgroundColor:'rgba(255,255,255,0.3)',
   },
   TextInput:{
+
+  },
+  TextInputText:{
       fontSize:15,
-      color:'#000000',
-      marginTop:15,
+      color:'#BFBFBF',
   },
   mainView:{
     flex:1,
