@@ -40,6 +40,7 @@ class AddModal extends Component{
           this.props.mainNavigator.push({
             name: 'WriteTable',
             openid: this.props.openid,
+            patientName: this.props.patientName,
           });
     }
 
