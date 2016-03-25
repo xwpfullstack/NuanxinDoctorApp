@@ -117,7 +117,7 @@ class NuanXinDoctorApp extends Component {
         return  <DoctorRecord navigator={navigator} doctorId={doctorId} patientName={route.patientName} openid={route.openid}/>;
         break;
       case 'WriteTable':
-        return  <WriteTable navigator={navigator} openid={route.openid} doctorId={doctorId}/>;
+        return  <WriteTable navigator={navigator} openid={route.openid} patientName={route.patientName} doctorId={doctorId}/>;
         break;
       case 'prescription':
         return  <Prescription navigator={navigator} doctorId={doctorId}/>;

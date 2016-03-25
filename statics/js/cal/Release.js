@@ -96,8 +96,9 @@ class Release extends Component {
         })
         .then((responseData)=>{
           // console.log(responseData);
-            this.setState({isLoad:true, data:responseData,isSuccess:true,})
+            this.setState({isLoad:true, data:responseData, isSuccess:true});
             ToastAndroid.show('发送成功', ToastAndroid.LONG);
+            this.refs.newsList.postData();
             // Alert.alert('',JSON.stringify(responseData));
           // this.setState({isLoad:true, data:responseData.patients,isSuccess:true,})
           // this.BaseCreateData(this.state.data,'date');
@@ -127,28 +128,34 @@ class Release extends Component {
               </TouchableHighlight>
             </View>
             <ScrollView style = {styles.container}>
-              <TextInput
-                placeholder = {'主题...'}
-                onChangeText = {(text) => this.setState({subject: text})}
-                style = {styles.subjectBox}
-                value = {this.state.subject}
-              />
-              <TextInput
-                ref = 'contentBox'
-                placeholder = {'你想说的...'}
-                onChangeText = {(text) => this.setState({content: text})}
-                textAlignVertical = {'top'}
-                multiline = {true}
-                numberOfLines = {6}
-                style = {styles.contentBox}
-                value = {this.state.content}
-              />
+              <View style = {styles.subjectBox}>
+                <TextInput
+                  placeholder = {'主题...'}
+                  onChangeText = {(text) => this.setState({subject: text})}
+                  style = {styles.inputBoxText}
+                  value = {this.state.subject}
+                  underlineColorAndroid='transparent'
+                />
+              </View>
+              <View style = {styles.contentBox}>
+                <TextInput
+                  ref = 'contentBox'
+                  placeholder = {'你想说的...'}
+                  onChangeText = {(text) => this.setState({content: text})}
+                  textAlignVertical = {'top'}
+                  multiline = {true}
+                  numberOfLines = {6}
+                  underlineColorAndroid='transparent'
+                  style = {styles.inputBoxText}
+                  value = {this.state.content}
+                />
+              </View>
 
               {/*<View style={styles.releaseTo}>
                <Text style={styles.releaseToText}>所有患者</Text>
               </View>*/}
 
-              <NewsList navigator={this.props.navigator} doctorId={this.props.doctorId}/>
+              <NewsList navigator={this.props.navigator} doctorId={this.props.doctorId} ref='newsList'/>
               <View style={{height:85,}}></View>
             </ScrollView>
             <Modal
@@ -214,13 +221,20 @@ const styles = StyleSheet.create({
   contentBox: {
     backgroundColor: '#FFFFFF',
     height: 180,
+    justifyContent: 'center',
+    alignItems:'center',
   },
   subjectBox: {
     backgroundColor: '#FFFFFF',
     height: 40,
-    borderWidth: 1,
-    borderColor: 'gray',
+    justifyContent: 'center',
+    alignItems:'center',
     marginVertical: 4,
+  },
+  inputBoxText: {
+    fontSize: 16,
+    fontWeight: '100',
+    color:'#BFBFBF',
   },
   releaseTo: {
     backgroundColor: '#F08300',

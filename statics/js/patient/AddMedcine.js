@@ -459,7 +459,7 @@ const styles = StyleSheet.create({
   },
 	searchInput: {
 		fontSize: 12,
-             color:'white',
+    color:'white',
 	},
   buttonStyle: {
     justifyContent: 'center',

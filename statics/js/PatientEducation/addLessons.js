@@ -235,25 +235,29 @@ postData(){
 };
   render() {
     let mainInput=(this.props.type=='word')?
-      <TextInput
-        style={[styles.textInput,{height: 120}]}
-        placeholder='编辑患教正文内容...'
-        value={this.state.content}
-        placeholderTextColor='#BFBFBF'
-        onChangeText={(txt)=>this.changeTxt('content',txt)}
-        underlineColorAndroid='transparent'
-        multiline={true}
-        numberOfLines={5}
-      /> :
-      <TextInput
-        style={[styles.textInput,{height: 45}]}
-        placeholder='编辑网页链接地址...'
-        keyboardType='url'
-        value={this.state.url}
-        placeholderTextColor='#BFBFBF'
-        onChangeText={(txt)=>this.changeTxt('url',txt)}
-        underlineColorAndroid='transparent'
-      />
+      <View style={[styles.textInput,{height: 120}]}>
+        <TextInput
+          style={styles.textInputText}
+          placeholder='编辑患教正文内容...'
+          value={this.state.content}
+          placeholderTextColor='#BFBFBF'
+          onChangeText={(txt)=>this.changeTxt('content',txt)}
+          underlineColorAndroid='transparent'
+          multiline={true}
+          numberOfLines={5}
+        />
+      </View> :
+      <View style={[styles.textInput,{height: 45}]}>
+        <TextInput
+          style={styles.textInputText}
+          placeholder='编辑网页链接地址...'
+          keyboardType='url'
+          value={this.state.url}
+          placeholderTextColor='#BFBFBF'
+          onChangeText={(txt)=>this.changeTxt('url',txt)}
+          underlineColorAndroid='transparent'
+        />
+      </View>
     return (
       <Image
         source={require('../../images/PE/back.png')}
@@ -284,14 +288,17 @@ postData(){
             <View style={{marginLeft:11,marginTop:11}}>
               <Text style={[styles.normalText,{color: '#F08300'}]}>标题</Text>
             </View>
-            <TextInput
-              style={[styles.textInput,{height: 45}]}
-              placeholder='简单介绍...'
-              value={this.state.title}
-              placeholderTextColor='#BFBFBF'
-              onChangeText={(txt)=>this.changeTxt('title',txt)}
-              underlineColorAndroid='transparent'
-            />
+            <View style={[styles.textInput,{height: 45}]}>
+              <TextInput
+                style={styles.textInputText}
+                Styles={{color:'#BFBFBF'}}
+                placeholder='简单介绍...'
+                value={this.state.title}
+                placeholderTextColor='#BFBFBF'
+                onChangeText={(txt)=>this.changeTxt('title',txt)}
+                underlineColorAndroid='transparent'
+              />
+            </View>
             <View style={{marginLeft:11}}>
               <Text style={[styles.normalText,{color: '#F08300'}]}>内容</Text>
             </View>
@@ -299,21 +306,21 @@ postData(){
             <View style={{marginLeft:11}}>
               <Text style={[styles.normalText,{color: '#F08300'}]}>上传图片</Text>
             </View>
-            <TouchableOpacity onPress={()=>this.chooseAndUpdate()} style={[styles.textInput,{alignItems: 'center',backgroundColor: '#DDDDDD',borderRadius:6},this.state.style]}>
+            <TouchableOpacity onPress={()=>this.chooseAndUpdate()} style={[styles.textInput,{padding:11,alignItems: 'center',backgroundColor: '#DDDDDD',borderRadius:6},this.state.style]}>
               <Text style={[styles.normalText,{color: '#666666'}]}>{this.state.updatePicPrompt}</Text>
             </TouchableOpacity>
             <View style={styles.rowSet}>
               <Text style={[styles.normalText,{color: '#F08300'}]}>推送时间</Text>
-              <View style={{flexDirection: 'row', alignItems: 'center'}}>
+              <View style={{flexDirection: 'row',height: 30, alignItems: 'center'}}>
                 <Text style={styles.normalText}>第</Text>
-                <View style={{borderBottomWidth:1,borderBottomColor: '#AAAAAA',height: 30,justifyContent: 'center'}}>
+                <View style={[styles.textInput,{height: 45, width: 60,borderBottomWidth:1,borderBottomColor: '#AAAAAA',justifyContent: 'center', backgroundColor:'transparent'}]}>
                   <TextInput
-                    style={[styles.textInput,{height: 45, width: 60, backgroundColor:'transparent'}]}
+                    style={styles.textInputText}
                     value={this.state.delayDays}
                     keyboardType='numeric'
                     placeholderTextColor='#BFBFBF'
                     onChangeText={(txt)=>this.changeTxt('delayDays',txt)}
-                    underlineColorAndroid='#FF0000'
+                    underlineColorAndroid='transparent'
                   />
                 </View>
                 <Text style={styles.normalText}>天</Text>
@@ -377,8 +384,14 @@ const styles = StyleSheet.create({
   },
   textInput: {
     backgroundColor: 'rgba(255,255,255,0.3)',
+    alignItems:'center',
+    justifyContent:'center',
     margin: 11,
-    padding:11,
+  },
+  textInputText: {
+    fontSize: 16,
+    fontWeight: '100',
+    color:'#BFBFBF',
   },
   deleteButton: {
     justifyContent: 'center',

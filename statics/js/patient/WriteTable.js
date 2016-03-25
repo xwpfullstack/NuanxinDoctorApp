@@ -22,13 +22,13 @@ var TableMsg={
   'name':'',
   'option':'',
 };
-const options=[
-  '抑郁自测量表',
-  '焦虑自测量表',
-  '睡眠信念量表',
-  '匹兹堡测试量表' ,
-  '阿森斯测试量表'
-];
+// const options=[
+//   '抑郁自测量表',
+//   '焦虑自测量表',
+//   '睡眠信念量表',
+//   '匹兹堡测试量表' ,
+//   '阿森斯测试量表'
+// ];
 class WriteTable extends Component{
   constructor(){
     super();
@@ -200,7 +200,7 @@ render(){
                 </View>
             </View>
             <View style={styles.inputGroup}>
-                      <Text style={[styles.normalText,{margin:11, alignSelf:'flex-start'}]}>患者姓名</Text>
+                      <Text style={[styles.normalText,{margin:11, alignSelf:'flex-start'}]}>To: {this.props.patientName}</Text>
                       <View style={{flex:1,justifyContent:'center',height:40,backgroundColor:'#F08300',alignSelf:'stretch',alignItems:'center'}}>
                         <Text style={{fontSize:16,fontWeight:'bold'}}>选择量表类型</Text>
                       </View>
