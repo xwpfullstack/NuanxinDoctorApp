@@ -36,6 +36,8 @@ class AddOrder extends Component{
     super(props);
     PatientMsg['doctor_id']=this.props.doctorId;
      PatientMsg['patient_id']=this.props.patientId;
+     PatientMsg['diag']=[];
+     PatientMsg['med']=[];
 };
 handleBack(){
   this.props.navigator.pop();
@@ -45,10 +47,6 @@ gotoPage(num){
 };
 
 postSick(){
-  var tempDiag=PatientMsg['diag'].map((value)=>{
-        return value['name'];
-  });
-  //console.log(tempDiag);
   this.refs['Media'].tigglePar('isLoad',false);
   fetch(Meds_URL,{
             method: 'post',
@@ -58,7 +56,7 @@ postSick(){
             },
             body: JSON.stringify({
                doctor_id:this.props.doctorId,
-               'diags':tempDiag,
+               'diags':PatientMsg['diag'],
             })
       })
       .then((response) => {
@@ -121,7 +119,6 @@ changeMedia(media,isdel,name){
     else{
         PatientMsg[name].push(media);       
     }  
-  
 };
 render(){
     return  (
