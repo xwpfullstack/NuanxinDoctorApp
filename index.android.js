@@ -123,7 +123,7 @@ class NuanXinDoctorApp extends Component {
         return  <Prescription navigator={navigator} doctorId={doctorId}/>;
         break;
       case 'doctorMsgEdit':
-        return  <DoctorMsgEdit navigator={navigator} doctorId={doctorId}/>;
+        return  <DoctorMsgEdit  worktime={route.worktime} postDoctorData={route.postDoctorData} navigator={navigator} doctorId={doctorId}/>;
         break;
       case 'webMainPage':
         return  <WebMainPage navigator={navigator} doctorId={doctorId}/>;
@@ -175,7 +175,7 @@ class NuanXinDoctorApp extends Component {
         return <CaseHistory navigator={navigator} doctorId={doctorId}/>;
         break;
       case 'addCase':
-        return <AddCase doctorId={doctorId} navigator={navigator} />;
+        return <AddCase postCaseData={route.postCaseData} doctorId={doctorId} navigator={navigator} />;
         break;
         case 'AddLessons':
             return <AddLessons doctorId={doctorId} navigator={navigator} diags={route.diags} type={route.type}/>

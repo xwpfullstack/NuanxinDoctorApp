@@ -67,7 +67,7 @@ class CaseView extends Component{
               '提示',
               '添加成功',
               [
-                {text: '确定',onPress:()=>{this.props.navigator.pop()}}
+                {text: '确定',onPress:()=>{this.props.navigator.pop();this.props.postCaseData();}}
               ]
             )
         }
@@ -96,7 +96,20 @@ class CaseView extends Component{
             )
         }
         else{
-            this._submitCaseInfo();
+            var caseinfo = this.state.case;
+            let is_sub=true;
+            for (let key in caseinfo){
+                    if (!caseinfo[key] || caseinfo[key] == '') {
+                            is_sub=false;
+                    }
+            }
+            if (is_sub) {
+                    this._submitCaseInfo();
+            }
+            else{
+                        Alert.alert('提示','请填写完整数据');
+            }
+            
         }
     }
     render(){
