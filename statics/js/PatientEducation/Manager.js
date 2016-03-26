@@ -263,6 +263,17 @@ addPatient(){
   })
 };
 
+changePEIsOk(data){
+    Alert.alert(
+      '提示',
+      '确定要改变当前推送状态',
+      [
+             {text: '确定', onPress: () => this.changePEStatus(data)},
+              {text: '取消'},
+      ]
+      );
+}
+
 changePEStatus(data){
    fetch(ModAppLessonList_URL,{
             method: 'post',
@@ -300,7 +311,7 @@ renderRow(rowData){
                 
                   <View style={styles.rowImageContent} >
                         <Text style={{fontFamily:'PingFang-SC-Bold',fontSize:22,color:'white'}}>{rowData.title}</Text>
-                             <TouchableOpacity onPress={()=>this.changePEStatus(rowData)}  style={{height:37,width:37,top:-35}}>
+                             <TouchableOpacity onPress={()=>this.changePEIsOk(rowData)}  style={{height:37,width:37,top:-35}}>
                                     <Image  source={rowData.selected?require('../../images/PE/radioed.png'):require('../../images/PE/radio.png')} />
                             </TouchableOpacity>
                   </View>

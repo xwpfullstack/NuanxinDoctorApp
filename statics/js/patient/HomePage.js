@@ -75,6 +75,7 @@ search(txt){
 
 getlength(datas){
     let date=new Date();
+  
     let tempdata=datas.filter((value)=>{
         let timeList = value['newfollowTime'].split('-');
         if (timeList[0] == date.getFullYear() && timeList[1] == date.getMonth()+1 && timeList[2] == date.getDate()) {
@@ -84,6 +85,7 @@ getlength(datas){
           return false;
         }
     });
+    console.log(1+'');
     return tempdata.length;
 }
 
@@ -103,10 +105,10 @@ fetch(Apppatlist_URL,{
            return response.json();
       })
       .then((responseData)=>{
-        //Alert.alert('asd');
         console.log(responseData);
         let dlength= this.getlength(responseData.patients);
-        this.setState({todaylength:dlength,mainListData:responseData.patients, data:responseData.patients,isSuccess:true,diags:responseData.diags,})
+        console.log(dlength+'');
+         this.setState({todaylength:dlength,mainListData:responseData.patients, data:responseData.patients,isSuccess:true,diags:responseData.diags,})
         this.refs['mainlist'].changeRefresh(false);
         this.props.changediags(this.state.diags);
       })
