@@ -168,10 +168,10 @@ commit() {
       return;
     }
   }
-  if (!this.state.isSelected || !this.state.isUploaded) {
-    Alert.alert('提醒', '请上传图片。');
-    return;
-  }
+  // if (!this.state.isSelected || !this.state.isUploaded) {
+  //   Alert.alert('提醒', '请上传图片。');
+  //   return;
+  // }
   if (this.state.delayDays === '') {
     Alert.alert('提醒', '请输入推送时间。');
     return;
@@ -220,7 +220,7 @@ postData(){
           // this.setState({isLoad:true, data:responseData,isSuccess:true,})
           // if (responseData.status === 'success') {          }
             ToastAndroid.show('发送成功', ToastAndroid.LONG);
-
+            this.props.navigator.pop()
           // Alert.alert('',JSON.stringify(responseData));
         // this.setState({isLoad:true, data:responseData.patients,isSuccess:true,})
         // this.BaseCreateData(this.state.data,'date');

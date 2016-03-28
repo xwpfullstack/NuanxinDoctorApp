@@ -104,7 +104,7 @@ class CompleteRecord extends Component {
         })
         .then((responseData)=>{
           // console.log(responseData);
-          Alert.alert('',JSON.stringify(responseData));
+          // Alert.alert('',JSON.stringify(responseData));
           if (responseData.status !=='failed') {
             this.setState({isLoad:true, data:responseData.records,isSuccess:true})
           } else {
