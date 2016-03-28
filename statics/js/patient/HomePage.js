@@ -53,9 +53,10 @@ componentDidMount(){
 
 
 search(txt){
+ //rowdata.name==''?(==''?rowdata.openid.substring(0,9):rowdata.nickname):rowdata.name
     if (txt.length>0) {
         let tempdata=this.state.data.filter((value)=>{
-            return value.name == txt || value.tel == txt;
+            return (value.name == txt || value.nickname == txt || value.openid.substring(0,9) == txt) || value.tel == txt;
         });
         if (tempdata.length <= 0) {
             Alert.alert('没有您输入信息的相关病人');
@@ -66,10 +67,15 @@ search(txt){
             this.refs['mainlist'].reload();
         }
     }
+    else{
+              this.setState({mainListData:this.state.data});
+              this.refs['mainlist'].reload();
+        }
 };
 
 getlength(datas){
     let date=new Date();
+  
     let tempdata=datas.filter((value)=>{
         let timeList = value['newfollowTime'].split('-');
         if (timeList[0] == date.getFullYear() && timeList[1] == date.getMonth()+1 && timeList[2] == date.getDate()) {
@@ -79,6 +85,7 @@ getlength(datas){
           return false;
         }
     });
+    console.log(1+'');
     return tempdata.length;
 }
 
@@ -98,10 +105,10 @@ fetch(Apppatlist_URL,{
            return response.json();
       })
       .then((responseData)=>{
-        //Alert.alert('asd');
         console.log(responseData);
         let dlength= this.getlength(responseData.patients);
-        this.setState({todaylength:dlength,mainListData:responseData.patients, data:responseData.patients,isSuccess:true,diags:responseData.diags,})
+        console.log(dlength+'');
+         this.setState({todaylength:dlength,mainListData:responseData.patients, data:responseData.patients,isSuccess:true,diags:responseData.diags,})
         this.refs['mainlist'].changeRefresh(false);
         this.props.changediags(this.state.diags);
       })
