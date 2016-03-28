@@ -120,6 +120,7 @@ postId(selectId) {
       // console.log(responseData);
       if (responseData.status==='success') {
         ToastAndroid.show('提交成功', ToastAndroid.LONG);
+        this.props.navigator.pop();
       }
       // Alert.alert('',JSON.stringify(responseData));
       // Alert.alert('',tmp.join(',')+'');
