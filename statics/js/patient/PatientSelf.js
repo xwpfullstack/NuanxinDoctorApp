@@ -55,7 +55,7 @@ import AddModal from './AddModal'
                                                 width:150,
                                                 backgroundColor: 'rgba(0, 0, 0,0.8)',}}>
                                                     <AddModal patientId={this.props.patientData.id} openid={this.props.patientData.openid}
-                                                      patientName={this.props.patientData.name==''?(this.props.patientData.nickname==''?this.props.patientData.openid.substring(0,9):this.props.patientData.nickname):rowdata.name} 
+                                                      patientName={this.props.patientData.name==''?(this.props.patientData.nickname==''?this.props.patientData.openid.substring(0,9):this.props.patientData.nickname):this.props.patientData.name}
                                                       diags={this.props.diags} mainNavigator={this.props.mainNavigator} close={()=>this.closeAddModal()}/>
                                             </View>
                                       </TouchableOpacity>
@@ -170,7 +170,7 @@ import AddModal from './AddModal'
 					            <View style={styles.wordMSg}>
 					             	<Text
                                                           style={styles.itemHeader}>
-                                                            {this.state.patientData.sex==''?'未知':(this.state.patientData.sex=='m'?'男':'女')}  {this.state.patientData.area==''?'暂无地址':this.state.patientData.area}  {this.state.patientData.age}
+                                                            {this.state.patientData.sex=='m'?'男':'女'}  {this.state.patientData.area==''?'暂无地址':this.state.patientData.area}  {this.state.patientData.age}
                                                     </Text>
 					             	<Text style={styles.itemTwoHeader}>{this.state.patientData.tel}</Text>
 					             	<Text style={styles.itemTwoHeader}>{this.getDia(this.state.patientData)}</Text>
