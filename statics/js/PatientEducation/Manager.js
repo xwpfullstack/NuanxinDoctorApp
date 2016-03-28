@@ -296,19 +296,26 @@ changePEStatus(data){
             this.setState({msgList:this.state.msgList});
       })
       .catch((err)=>{
-              ToastAndroid.show('数据错误'+err.toString(), ToastAndroid.SHORT)
+              ToastAndroid.show('数据错误'+err.toString(), ToastAndroid.SHORT);
               console.log(err.toString());
       })
       .done();
 } 
 
 
+showLink(data){
+    //console.log(data);
+    this.props.navigator.push({
+        name:'Pwebview',
+        data:data,
+    });
+}
+
 renderRow(rowData){
       return (
-        <View style={styles.rowStyle}>
+        <TouchableOpacity onPress={()=>this.showLink(rowData)} style={styles.rowStyle}>
             <View style={styles.mainRow}>
                     <Image style={{height:106,flex:1,}} resizeMode='stretch' source={require('../../images/PE/doctorSay.png')}/>
-                
                   <View style={styles.rowImageContent} >
                         <Text style={{fontFamily:'PingFang-SC-Bold',fontSize:22,color:'white'}}>{rowData.title}</Text>
                              <TouchableOpacity onPress={()=>this.changePEIsOk(rowData)}  style={{height:37,width:37,top:-35}}>
@@ -317,7 +324,7 @@ renderRow(rowData){
                   </View>
             </View>
             <Image source={require('../../images/PE/pushTimeT.png')} />
-        </View>
+        </TouchableOpacity>
       );
 }
 

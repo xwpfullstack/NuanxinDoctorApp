@@ -44,6 +44,7 @@ import AddMedModel from './statics/js/me/addMedModel';
 import CreatePage from  './statics/js/PatientEducation/CreatePage';
 import ManagerPage from './statics/js/PatientEducation/ManagerPage';
 import Manager from './statics/js/PatientEducation/Manager';
+import Pwebview from './statics/js/PatientEducation/Pwebview';
 
 var _navigator;
 //监听硬件返回功能
@@ -192,6 +193,10 @@ class NuanXinDoctorApp extends Component {
            case 'Manager':
             return <Manager doctorId={doctorId} diag={route.diag} navigator={navigator} />
           break;
+            case  'Pwebview':
+            return <Pwebview  data={route.data} navigator={navigator} />
+          break;
+         
     };
   };
 
