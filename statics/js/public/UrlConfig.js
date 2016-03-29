@@ -6,6 +6,8 @@ global.Basic_URL = 'http://www.xingwenpeng.com/doctor/';
 global.Wechat_URL = 'http://www.xingwenpeng.com/wechat/';
 global.Test_URL = 'http://www.xingwenpeng.com/test_online/';
 
+global.PE_URL = 'http://www.xingwenpeng.com/patient/showTextTeachPat/';
+
 var patient_openid = 'obOsUs50ZDJn0X14VuC_91WJREFg';
 global.Homepage_URL = 'http://www.xingwenpeng.com/patient/mydoctor/mydoctor_homepage/?patient_openid='+patient_openid+'&new_doctor_id=&doctor_id=';
 //验证医生用户名密码

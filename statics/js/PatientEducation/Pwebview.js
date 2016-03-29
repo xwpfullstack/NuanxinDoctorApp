@@ -10,8 +10,9 @@ import React, {
 import Loading from '../patient/Loading';
 
 class Pwebview extends Component{
-  constructor(){
-    super();
+  constructor(props){
+    super(props);
+    console.log(this.props.data.link?this.props.data.link:PE_URL+`?type=${this.props.data.type}&id=${this.props.data.id}`);
  };
 
 renderLoading(){
@@ -27,7 +28,7 @@ renderLoading(){
                           ref='webView'
                           automaticallyAdjustContentInsets={false}
                           style={styles.webView}
-                          source={{uri: this.props.data.link}}
+                          source={{uri: this.props.data.link?this.props.data.link:PE_URL+`?type=${this.props.data.type}&id=${this.props.data.id}`}}
                           javaScriptEnabled={true}
                           domStorageEnabled={true}
                           decelerationRate="normal"

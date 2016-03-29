@@ -317,7 +317,7 @@ renderRow(rowData){
             <View style={styles.mainRow}>
                     <Image style={{height:106,flex:1,}} resizeMode='stretch' source={require('../../images/PE/doctorSay.png')}/>
                   <View style={styles.rowImageContent} >
-                        <Text style={{fontFamily:'PingFang-SC-Bold',fontSize:22,color:'white'}}>{rowData.title}</Text>
+                        <Text numberOfLines={3}  style={{fontFamily:'PingFang-SC-Bold',fontSize:20,color:'white',width:Dimensions.get('window').width-200}}>{rowData.title}</Text>
                              <TouchableOpacity onPress={()=>this.changePEIsOk(rowData)}  style={{height:37,width:37,top:-35}}>
                                     <Image  source={rowData.selected?require('../../images/PE/radioed.png'):require('../../images/PE/radio.png')} />
                             </TouchableOpacity>
