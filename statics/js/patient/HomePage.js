@@ -109,6 +109,7 @@ fetch(Apppatlist_URL,{
         let dlength= this.getlength(responseData.patients);
         console.log(dlength+'');
          this.setState({todaylength:dlength,mainListData:responseData.patients, data:responseData.patients,isSuccess:true,diags:responseData.diags,})
+        this.refs['mainlist'].reload();
         this.refs['mainlist'].changeRefresh(false);
         this.props.changediags(this.state.diags);
       })
