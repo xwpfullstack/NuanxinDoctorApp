@@ -90,7 +90,7 @@ postData(){
                   // Alert.alert('',this.state.data[0].date);
       })
       .catch((err)=>{
-          Alert.alert('catch err',err.toString())
+          // Alert.alert('catch err',err.toString())
           this.setState({isSuccess:false,isLoad:true});
           // console.log(err.toString());
       })

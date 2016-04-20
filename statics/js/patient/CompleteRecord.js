@@ -85,7 +85,7 @@ class CompleteRecord extends Component {
     //  Alert.alert(this.state.data+'');
   }
   postData(){
-    Alert.alert('', this.props.patientId+'')
+    // Alert.alert('', this.props.patientId+'')
     this.setState({isLoad:false});
       // Alert.alert('fetch');
       fetch(PatientCaseBook_URL,{
@@ -114,7 +114,7 @@ class CompleteRecord extends Component {
 
         })
         .catch((err)=>{
-            Alert.alert('catch error',err.toString())
+            // Alert.alert('catch error',err.toString())
             this.setState({isSuccess:false,isLoad:true});
             // console.log(err.toString());
         })
